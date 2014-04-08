@@ -44,6 +44,9 @@
 		65BC975D18F3D144006063CA /* wishlist.png in Resources */ = {isa = PBXBuildFile; fileRef = 65BC974E18F3D144006063CA /* wishlist.png */; };
 		65BC976118F3DCE6006063CA /* NationBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 65BC976018F3DCE6006063CA /* NationBuilder.m */; };
 		65BC976418F3DCF2006063CA /* OAuthLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65BC976318F3DCF2006063CA /* OAuthLoginViewController.m */; };
+		65BC977418F3F3B0006063CA /* appIcon58x58.png in Resources */ = {isa = PBXBuildFile; fileRef = 65BC977118F3F3B0006063CA /* appIcon58x58.png */; };
+		65BC977518F3F3B0006063CA /* appIcon80x80.png in Resources */ = {isa = PBXBuildFile; fileRef = 65BC977218F3F3B0006063CA /* appIcon80x80.png */; };
+		65BC977618F3F3B0006063CA /* appIcon120x120.png in Resources */ = {isa = PBXBuildFile; fileRef = 65BC977318F3F3B0006063CA /* appIcon120x120.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +105,9 @@
 		65BC976018F3DCE6006063CA /* NationBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NationBuilder.m; sourceTree = "<group>"; };
 		65BC976218F3DCF2006063CA /* OAuthLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAuthLoginViewController.h; sourceTree = "<group>"; };
 		65BC976318F3DCF2006063CA /* OAuthLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAuthLoginViewController.m; sourceTree = "<group>"; };
+		65BC977118F3F3B0006063CA /* appIcon58x58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon58x58.png; sourceTree = "<group>"; };
+		65BC977218F3F3B0006063CA /* appIcon80x80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon80x80.png; sourceTree = "<group>"; };
+		65BC977318F3F3B0006063CA /* appIcon120x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon120x120.png; sourceTree = "<group>"; };
 		950AE0EADB7042F4B10AC436 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -188,11 +194,11 @@
 		65BC96E718F3BBE3006063CA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				65BC96EE18F3BBE3006063CA /* TheGreensLeadOrganizerApp-Prefix.pch */,
 				65BC972318F3CFE7006063CA /* Images */,
 				65BC96E818F3BBE3006063CA /* TheGreensLeadOrganizerApp-Info.plist */,
 				65BC96E918F3BBE3006063CA /* InfoPlist.strings */,
 				65BC96EC18F3BBE3006063CA /* main.m */,
-				65BC96EE18F3BBE3006063CA /* TheGreensLeadOrganizerApp-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -218,6 +224,9 @@
 		65BC972318F3CFE7006063CA /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				65BC977118F3F3B0006063CA /* appIcon58x58.png */,
+				65BC977218F3F3B0006063CA /* appIcon80x80.png */,
+				65BC977318F3F3B0006063CA /* appIcon120x120.png */,
 				65BC974018F3D144006063CA /* bookmark.png */,
 				65BC974118F3D144006063CA /* calendar.png */,
 				65BC974218F3D144006063CA /* comments.png */,
@@ -331,17 +340,20 @@
 				65BC975718F3D144006063CA /* menu@2x.png in Resources */,
 				65BC975A18F3D144006063CA /* photo.png in Resources */,
 				65BC974F18F3D144006063CA /* bookmark.png in Resources */,
+				65BC977618F3F3B0006063CA /* appIcon120x120.png in Resources */,
 				65BC975018F3D144006063CA /* calendar.png in Resources */,
 				65BC975918F3D144006063CA /* news.png in Resources */,
 				65BC975418F3D144006063CA /* Default@2x.png in Resources */,
 				65BC975C18F3D144006063CA /* tag.png in Resources */,
 				65BC975518F3D144006063CA /* map.png in Resources */,
+				65BC977418F3F3B0006063CA /* appIcon58x58.png in Resources */,
 				65BC975318F3D144006063CA /* Default.png in Resources */,
 				65BC975118F3D144006063CA /* comments.png in Resources */,
 				65BC96EB18F3BBE3006063CA /* InfoPlist.strings in Resources */,
 				65BC975618F3D144006063CA /* menu.png in Resources */,
 				65BC975D18F3D144006063CA /* wishlist.png in Resources */,
 				65BC975218F3D144006063CA /* Default-568h@2x.png in Resources */,
+				65BC977518F3F3B0006063CA /* appIcon80x80.png in Resources */,
 				65BC975818F3D144006063CA /* nav_bg.png in Resources */,
 				65BC96F618F3BBE3006063CA /* Images.xcassets in Resources */,
 			);
