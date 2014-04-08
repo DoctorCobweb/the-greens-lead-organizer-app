@@ -1,0 +1,5 @@
+*.sw?
+/Pods
+tmp
+.DS_STORE
+.env

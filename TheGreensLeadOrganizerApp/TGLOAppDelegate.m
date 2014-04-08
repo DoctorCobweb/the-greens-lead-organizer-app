@@ -16,11 +16,40 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    //self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    [self initAppearance];
     // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
-    [self.window makeKeyAndVisible];
+    
+    
+    NSString *token = @"HH";
+    NSString *controllerId = token ? @"signedIn" : @"login";
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    NSLog(@"storyboard: %@", storyboard);
+    UIViewController *initViewController = [storyboard instantiateViewControllerWithIdentifier:controllerId];
+    NSLog(@"initViewController: %@", initViewController); //UINavigationController
+    
+    // always assumes token is valid - should probably check in a real app
+    if (token) {
+        [self.window setRootViewController:initViewController];
+    } else {
+        [(UINavigationController *)self.window.rootViewController pushViewController:initViewController animated:NO];
+        NSLog(@"self.window.rootViewController: %@", self.window.rootViewController);
+    }
+    
     return YES;
+}
+
+- (void)initAppearance
+{
+    UIColor * theGreens = [UIColor colorWithRed:107/255.0f green:203/255.0f blue:64/255.0f alpha:1.0f];
+    // Set appearance info
+    [[UITabBar appearance] setBarTintColor:theGreens];
+    [[UINavigationBar appearance] setBarStyle:UIBarStyleBlackOpaque];
+    [[UINavigationBar appearance] setBarTintColor:theGreens];
+    
+    [[UIToolbar appearance] setBarStyle:UIBarStyleBlackOpaque];
+    [[UIToolbar appearance] setBarTintColor:theGreens];
+    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
