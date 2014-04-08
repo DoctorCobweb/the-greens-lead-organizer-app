@@ -1,23 +1,15 @@
-//
-//  TGLOLoginViewController.m
-//  TheGreensLeadOrganizerApp
-//
-//  Created by andre on 8/04/2014.
-//  Copyright (c) 2014 andre trosky. All rights reserved.
-//
 
-#import "TGLOLoginViewController.h"
+#import "OAuthLoginViewController.h"
 #import "NationBuilder.h"
 
-@interface TGLOLoginViewController ()
-//@property (weak, nonatomic) IBOutlet UITextView *loginView;
-//@property (weak, nonatomic) IBOutlet UIButton *loginButton;
+@interface OAuthLoginViewController ()
+@property (weak, nonatomic) IBOutlet UITextView *loginView;
+@property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (nonatomic, strong) UIAlertView *tokenAlert;
 
 @end
 
-@implementation TGLOLoginViewController
-
+@implementation OAuthLoginViewController
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -36,23 +28,6 @@
 }
 
 
-- (IBAction)signIn:(id)sender {
-    
-    // show alert view saying we are getting token
-    _tokenAlert = [[UIAlertView alloc] initWithTitle:@"Getting token"
-                                                            message:@"Logging into Nation Builder"
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"Cancel"
-                                                  otherButtonTitles:nil];
-    [_tokenAlert show];
-
-    [self getOAuthRequestToken];
-    
-}
-
-
-
-/*
 - (IBAction)signIn:(id)sender
 {
     
@@ -66,7 +41,6 @@
 
     [self getOAuthRequestToken];
 }
-*/
 
 # pragma mark - OAUTH 2 STEP 1
 -(void)getOAuthRequestToken

@@ -10,4 +10,5 @@
 
 @interface TGLOLoginViewController : UIViewController
 
+@property (strong, nonatomic) NSString *userToken;
 @end

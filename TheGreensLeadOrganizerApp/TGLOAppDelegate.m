@@ -7,6 +7,7 @@
 //
 
 #import "TGLOAppDelegate.h"
+#import "NationBuilder.h"
 
 @implementation TGLOAppDelegate
 
@@ -21,7 +22,7 @@
     // Override point for customization after application launch.
     
     
-    NSString *token = @"HH";
+    NSString *token = nil;
     NSString *controllerId = token ? @"signedIn" : @"login";
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     NSLog(@"storyboard: %@", storyboard);
@@ -174,5 +175,107 @@
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
+
+
+
+
+
+#pragma mark - OAuth login flow and url scheme handling
+// this method is invoked as a result of the heroku hosted 'cryptic-tundra-9564'
+// app redirecting backing this app, all inside the mobile safari browser.
+// had to use an external heroku app in order to get the code=... vale returned from
+// nationbuilder to a VALIDE redirect_uri. i.e. nation builder does not allow for
+// redirect_uris other than https for the uri scheme! => cannot use leadorganizerapp as
+// scheme directly during oauth2 but instead need a hack like this redirect heroku app!
+-(BOOL)application:(UIApplication *)application
+           openURL:(NSURL *)url
+ sourceApplication:(NSString *)sourceApplication
+        annotation:(id)annotation
+{
+    NSLog(@"IN APP DELEGATE AND CHECKING SCHEME");
+    if ([[url scheme] isEqualToString:@"leadorganizerapp"]) {
+        NSLog(@"sourceApplication: %@", sourceApplication);
+        NSLog(@"annotation: %@", annotation);
+        NSLog(@"url: %@", url);
+        
+        //need to put code=.... value into UserDefaults for later OAuth2 process
+        NSString * queryString = [url query];
+        NSLog(@"query string of url: %@", queryString);
+        
+        NSArray *tokens = [queryString componentsSeparatedByString:@"&"];
+        NSLog(@"%@", tokens);
+        NSMutableDictionary *oAuth2Dict = [[NSMutableDictionary alloc] initWithCapacity:5];
+        
+        for(NSString *t in tokens) {
+            NSArray *entry = [t componentsSeparatedByString:@"="];
+            NSString *key = entry[0];
+            NSString *val = entry[1];
+            [oAuth2Dict setValue:val forKey:key];
+        }
+        
+        NSDictionary * params = [NSDictionary dictionaryWithDictionary:oAuth2Dict];
+        NSLog(@"params dic: %@", params);
+        
+        //put code key/val into UserDefaults obj
+        [[NSUserDefaults standardUserDefaults] setObject:oAuth2Dict[@"code"] forKey:@"code"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        [self exchangeRequestTokenForAccessToken];
+    }
+    return NO;
+}
+
+- (void)exchangeRequestTokenForAccessToken
+{
+    // OAUTH Step 2 - exchange request token for user access token
+    [NationBuilder exchangeTokenForUserAccessTokenURLWithCompletionHandler:^(NSData *data,NSURLResponse *response,NSError *error) {
+        if (!error) {
+            NSHTTPURLResponse *httpResp = (NSHTTPURLResponse*) response;
+            
+            NSLog(@"token response: %@", httpResp);
+            if (httpResp.statusCode == 200) {
+                NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                
+                NSError *error;
+                NSDictionary *dict_resp = (NSDictionary *)[NSJSONSerialization JSONObjectWithData:data options:NSUTF8StringEncoding error:&error];
+                NSLog(@"dict_resp[access_token]: %@",[dict_resp objectForKey:@"access_token"]);
+                
+                //response is JSON format
+                NSLog(@"response: %@",response);
+                
+                
+                //put code key/val into UserDefaults obj
+                [[NSUserDefaults standardUserDefaults] setObject:dict_resp[@"access_token"] forKey:@"access_token"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                
+                NSString *token = [[NSUserDefaults standardUserDefaults] valueForKey:@"access_token"];
+                NSLog(@"TOKEN FROM UserDefaults: %@", token);
+                
+                // now load main part of application
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    
+                    NSString *segueId = @"signedIn";
+                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                    UITabBarController *initViewController = [storyboard instantiateViewControllerWithIdentifier:segueId];
+                    
+                    UINavigationController *nav = (UINavigationController *) self.window.rootViewController;
+                    nav.navigationBar.hidden = YES;
+                    [nav pushViewController:initViewController animated:NO];
+                });
+                
+            } else {
+                // HANDLE BAD RESPONSE //
+                NSLog(@"exchange request for access token unexpected response %@",
+                      [NSHTTPURLResponse localizedStringForStatusCode:httpResp.statusCode]);
+            }
+        } else {
+            // ALWAYS HANDLE ERRORS :-] //
+            NSLog(@"ERROR in app delegate.m exchangeRequestTokenForAccessToken method");
+        }
+    }];
+}
+
+
 
 @end

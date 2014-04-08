@@ -42,6 +42,8 @@
 		65BC975B18F3D144006063CA /* tag_photo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65BC974C18F3D144006063CA /* tag_photo.jpg */; };
 		65BC975C18F3D144006063CA /* tag.png in Resources */ = {isa = PBXBuildFile; fileRef = 65BC974D18F3D144006063CA /* tag.png */; };
 		65BC975D18F3D144006063CA /* wishlist.png in Resources */ = {isa = PBXBuildFile; fileRef = 65BC974E18F3D144006063CA /* wishlist.png */; };
+		65BC976118F3DCE6006063CA /* NationBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 65BC976018F3DCE6006063CA /* NationBuilder.m */; };
+		65BC976418F3DCF2006063CA /* OAuthLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65BC976318F3DCF2006063CA /* OAuthLoginViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +98,10 @@
 		65BC974C18F3D144006063CA /* tag_photo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = tag_photo.jpg; sourceTree = "<group>"; };
 		65BC974D18F3D144006063CA /* tag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tag.png; sourceTree = "<group>"; };
 		65BC974E18F3D144006063CA /* wishlist.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wishlist.png; sourceTree = "<group>"; };
+		65BC975F18F3DCE6006063CA /* NationBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NationBuilder.h; sourceTree = "<group>"; };
+		65BC976018F3DCE6006063CA /* NationBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NationBuilder.m; sourceTree = "<group>"; };
+		65BC976218F3DCF2006063CA /* OAuthLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAuthLoginViewController.h; sourceTree = "<group>"; };
+		65BC976318F3DCF2006063CA /* OAuthLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAuthLoginViewController.m; sourceTree = "<group>"; };
 		950AE0EADB7042F4B10AC436 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -162,11 +168,11 @@
 		65BC96E618F3BBE3006063CA /* TheGreensLeadOrganizerApp */ = {
 			isa = PBXGroup;
 			children = (
+				65BC975E18F3DCAA006063CA /* OAuth2 */,
 				65BC96EF18F3BBE3006063CA /* TGLOAppDelegate.h */,
 				65BC96F018F3BBE3006063CA /* TGLOAppDelegate.m */,
 				65BC96F518F3BBE3006063CA /* Images.xcassets */,
 				65BC96F218F3BBE3006063CA /* TheGreensLeadOrganizerApp.xcdatamodeld */,
-				65BC96E718F3BBE3006063CA /* Supporting Files */,
 				65BC971818F3C54B006063CA /* Main.storyboard */,
 				65BC971A18F3C611006063CA /* TGLOLoginViewController.h */,
 				65BC971B18F3C611006063CA /* TGLOLoginViewController.m */,
@@ -174,6 +180,7 @@
 				65BC971E18F3CDA8006063CA /* TGLOSideBarViewController.m */,
 				65BC972018F3CE52006063CA /* TGLOMainViewController.h */,
 				65BC972118F3CE52006063CA /* TGLOMainViewController.m */,
+				65BC96E718F3BBE3006063CA /* Supporting Files */,
 			);
 			path = TheGreensLeadOrganizerApp;
 			sourceTree = "<group>";
@@ -228,6 +235,17 @@
 				65BC974E18F3D144006063CA /* wishlist.png */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		65BC975E18F3DCAA006063CA /* OAuth2 */ = {
+			isa = PBXGroup;
+			children = (
+				65BC976218F3DCF2006063CA /* OAuthLoginViewController.h */,
+				65BC976318F3DCF2006063CA /* OAuthLoginViewController.m */,
+				65BC975F18F3DCE6006063CA /* NationBuilder.h */,
+				65BC976018F3DCE6006063CA /* NationBuilder.m */,
+			);
+			name = OAuth2;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -381,7 +399,9 @@
 				65BC972218F3CE52006063CA /* TGLOMainViewController.m in Sources */,
 				65BC96F418F3BBE3006063CA /* TheGreensLeadOrganizerApp.xcdatamodeld in Sources */,
 				65BC96F118F3BBE3006063CA /* TGLOAppDelegate.m in Sources */,
+				65BC976118F3DCE6006063CA /* NationBuilder.m in Sources */,
 				65BC971C18F3C611006063CA /* TGLOLoginViewController.m in Sources */,
+				65BC976418F3DCF2006063CA /* OAuthLoginViewController.m in Sources */,
 				65BC96ED18F3BBE3006063CA /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
