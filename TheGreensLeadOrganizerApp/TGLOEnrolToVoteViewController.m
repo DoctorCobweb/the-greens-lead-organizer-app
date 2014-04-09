@@ -1,19 +1,19 @@
 //
-//  TGLOMainViewController.m
+//  TGLOEnrolToVoteViewController.m
 //  TheGreensLeadOrganizerApp
 //
-//  Created by andre on 8/04/2014.
+//  Created by andre on 9/04/2014.
 //  Copyright (c) 2014 andre trosky. All rights reserved.
 //
 
-#import "TGLOMainViewController.h"
+#import "TGLOEnrolToVoteViewController.h"
 #import "SWRevealViewController.h"
 
-@interface TGLOMainViewController ()
+@interface TGLOEnrolToVoteViewController ()
 
 @end
 
-@implementation TGLOMainViewController
+@implementation TGLOEnrolToVoteViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,7 +28,23 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.title = @"My Profile";
+    
+    [self setUpAppearance];
+    NSString *enrolToVoteAddress= @"http://www.aec.gov.au/enrol/";
+    
+    NSURL *enrolToVoteUrl= [[NSURL alloc] initWithString:enrolToVoteAddress];
+    
+    NSURLRequest *enrolToVoteRequest= [[NSURLRequest alloc] initWithURL:enrolToVoteUrl];
+    
+    [self.webView loadRequest:enrolToVoteRequest];
+    
+    
+}
+
+- (void) setUpAppearance
+{
+
+    self.title = @"Enrol To Vote";
     
     // Change button color
     //self.sidebarButton.tintColor = [UIColor colorWithWhite:0.04f alpha:0.9f];
@@ -41,6 +57,8 @@
     // Set the gesture
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     
+
+
 
 }
 

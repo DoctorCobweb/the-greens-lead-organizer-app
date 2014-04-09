@@ -8,6 +8,7 @@
 
 #import "TGLOAppDelegate.h"
 #import "NationBuilder.h"
+#import "AFNetworkActivityIndicatorManager.h"
 
 @implementation TGLOAppDelegate
 
@@ -17,12 +18,15 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    //self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    //enable afnetworking to show spinner in top bar
     [self initAppearance];
+    
+    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
     // Override point for customization after application launch.
+
+    NSString *token = [[NSUserDefaults standardUserDefaults] valueForKey:@"access_token"];
+    NSLog(@"IN APP DELEGATE, TOKEN FROM UserDefaults: %@", token);
     
-    
-    NSString *token = nil;
     NSString *controllerId = token ? @"signedIn" : @"login";
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     NSLog(@"storyboard: %@", storyboard);

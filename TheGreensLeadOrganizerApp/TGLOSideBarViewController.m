@@ -9,6 +9,8 @@
 #import "TGLOSideBarViewController.h"
 #import "SWRevealViewController.h"
 
+#import "TGLOPeopleViewController.h"
+
 
 @interface TGLOSideBarViewController ()
 
@@ -48,7 +50,7 @@
     self.tableView.backgroundColor = theGreens;
     self.tableView.separatorColor = [UIColor colorWithWhite:0.15f alpha:0.2f];
     
-    _menuItems = @[@"title", @"people", @"lists", @"donations", @"extra"];
+    _menuItems = @[@"theGreens", @"myProfile", @"people", @"lists", @"donations", @"enrolToVote"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -131,5 +133,41 @@
 }
 
  */
+
+- (void) prepareForSegue: (UIStoryboardSegue *) segue sender: (id) sender
+{
+    // Set the title of navigation bar by using the menu items
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    UINavigationController *destViewController = (UINavigationController*)segue.destinationViewController;
+    destViewController.title = [[_menuItems objectAtIndex:indexPath.row] capitalizedString];
+    
+    // Set the photo if it navigates to the PhotoView
+    if ([segue.identifier isEqualToString:@"showPeople"]) {
+        TGLOPeopleViewController *peopleController = (TGLOPeopleViewController*)segue.destinationViewController;
+        //NSString *photoFilename = [NSString stringWithFormat:@"%@_photo.jpg", [_menuItems objectAtIndex:indexPath.row]];
+        //NSLog(@"photo filename: %@", photoFilename);
+        //photoController.photoFilename = photoFilename;
+    }
+    
+    if ( [segue isKindOfClass: [SWRevealViewControllerSegue class]] ) {
+        
+        SWRevealViewControllerSegue *swSegue = (SWRevealViewControllerSegue*) segue;
+        
+        //SWRevealViewControllerSegue overrides the UIStoryboardSegue method 'perform'
+        //which gets called when a segue happens. inside the perform method a call to
+        //performBlock is made:
+        //_performBlock( self, self.sourceViewController, self.destinationViewController );
+        swSegue.performBlock = ^(SWRevealViewControllerSegue* rvc_segue, UIViewController* svc, UIViewController* dvc) {
+            
+            //now we have the source (scv) and destination(dsv) view controllers we push them
+            //onto the navigation controller's stack.
+            UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
+            [navController setViewControllers: @[dvc] animated: NO ];
+            [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
+        };
+        
+    }
+    
+}
 
 @end

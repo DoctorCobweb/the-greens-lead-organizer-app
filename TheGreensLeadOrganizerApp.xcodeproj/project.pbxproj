@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		298431D28BB34DADBA901474 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3459715E65554AD7BBE218F0 /* libPods.a */; };
+		651626CB18F4F46B00DCC064 /* TGLOPeopleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 651626CA18F4F46B00DCC064 /* TGLOPeopleViewController.m */; };
+		651626D118F4FCBA00DCC064 /* TGLOListsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 651626D018F4FCBA00DCC064 /* TGLOListsViewController.m */; };
+		651626D418F4FEDF00DCC064 /* TGLODonationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 651626D318F4FEDF00DCC064 /* TGLODonationsViewController.m */; };
+		651626D718F525F700DCC064 /* TGLOTheGreensViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 651626D618F525F700DCC064 /* TGLOTheGreensViewController.m */; };
+		651626DA18F52A0400DCC064 /* TGLOEnrolToVoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 651626D918F52A0400DCC064 /* TGLOEnrolToVoteViewController.m */; };
 		65BC96DF18F3BBE3006063CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BC96DE18F3BBE3006063CA /* Foundation.framework */; };
 		65BC96E118F3BBE3006063CA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BC96E018F3BBE3006063CA /* CoreGraphics.framework */; };
 		65BC96E318F3BBE3006063CA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BC96E218F3BBE3006063CA /* UIKit.framework */; };
@@ -61,6 +66,16 @@
 
 /* Begin PBXFileReference section */
 		3459715E65554AD7BBE218F0 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		651626C918F4F46B00DCC064 /* TGLOPeopleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOPeopleViewController.h; sourceTree = "<group>"; };
+		651626CA18F4F46B00DCC064 /* TGLOPeopleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOPeopleViewController.m; sourceTree = "<group>"; };
+		651626CF18F4FCBA00DCC064 /* TGLOListsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOListsViewController.h; sourceTree = "<group>"; };
+		651626D018F4FCBA00DCC064 /* TGLOListsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOListsViewController.m; sourceTree = "<group>"; };
+		651626D218F4FEDF00DCC064 /* TGLODonationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLODonationsViewController.h; sourceTree = "<group>"; };
+		651626D318F4FEDF00DCC064 /* TGLODonationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLODonationsViewController.m; sourceTree = "<group>"; };
+		651626D518F525F700DCC064 /* TGLOTheGreensViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOTheGreensViewController.h; sourceTree = "<group>"; };
+		651626D618F525F700DCC064 /* TGLOTheGreensViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOTheGreensViewController.m; sourceTree = "<group>"; };
+		651626D818F52A0400DCC064 /* TGLOEnrolToVoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOEnrolToVoteViewController.h; sourceTree = "<group>"; };
+		651626D918F52A0400DCC064 /* TGLOEnrolToVoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOEnrolToVoteViewController.m; sourceTree = "<group>"; };
 		65BC96DB18F3BBE3006063CA /* TheGreensLeadOrganizerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheGreensLeadOrganizerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65BC96DE18F3BBE3006063CA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65BC96E018F3BBE3006063CA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -187,6 +202,16 @@
 				65BC972018F3CE52006063CA /* TGLOMainViewController.h */,
 				65BC972118F3CE52006063CA /* TGLOMainViewController.m */,
 				65BC96E718F3BBE3006063CA /* Supporting Files */,
+				651626C918F4F46B00DCC064 /* TGLOPeopleViewController.h */,
+				651626CA18F4F46B00DCC064 /* TGLOPeopleViewController.m */,
+				651626CF18F4FCBA00DCC064 /* TGLOListsViewController.h */,
+				651626D018F4FCBA00DCC064 /* TGLOListsViewController.m */,
+				651626D218F4FEDF00DCC064 /* TGLODonationsViewController.h */,
+				651626D318F4FEDF00DCC064 /* TGLODonationsViewController.m */,
+				651626D518F525F700DCC064 /* TGLOTheGreensViewController.h */,
+				651626D618F525F700DCC064 /* TGLOTheGreensViewController.m */,
+				651626D818F52A0400DCC064 /* TGLOEnrolToVoteViewController.h */,
+				651626D918F52A0400DCC064 /* TGLOEnrolToVoteViewController.m */,
 			);
 			path = TheGreensLeadOrganizerApp;
 			sourceTree = "<group>";
@@ -409,9 +434,14 @@
 			files = (
 				65BC971F18F3CDA8006063CA /* TGLOSideBarViewController.m in Sources */,
 				65BC972218F3CE52006063CA /* TGLOMainViewController.m in Sources */,
+				651626DA18F52A0400DCC064 /* TGLOEnrolToVoteViewController.m in Sources */,
+				651626CB18F4F46B00DCC064 /* TGLOPeopleViewController.m in Sources */,
 				65BC96F418F3BBE3006063CA /* TheGreensLeadOrganizerApp.xcdatamodeld in Sources */,
 				65BC96F118F3BBE3006063CA /* TGLOAppDelegate.m in Sources */,
+				651626D418F4FEDF00DCC064 /* TGLODonationsViewController.m in Sources */,
+				651626D718F525F700DCC064 /* TGLOTheGreensViewController.m in Sources */,
 				65BC976118F3DCE6006063CA /* NationBuilder.m in Sources */,
+				651626D118F4FCBA00DCC064 /* TGLOListsViewController.m in Sources */,
 				65BC971C18F3C611006063CA /* TGLOLoginViewController.m in Sources */,
 				65BC976418F3DCF2006063CA /* OAuthLoginViewController.m in Sources */,
 				65BC96ED18F3BBE3006063CA /* main.m in Sources */,

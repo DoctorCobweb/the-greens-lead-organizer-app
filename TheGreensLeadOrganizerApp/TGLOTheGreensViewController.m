@@ -1,19 +1,19 @@
 //
-//  TGLOMainViewController.m
+//  TGLOTheGreensViewController.m
 //  TheGreensLeadOrganizerApp
 //
-//  Created by andre on 8/04/2014.
+//  Created by andre on 9/04/2014.
 //  Copyright (c) 2014 andre trosky. All rights reserved.
 //
 
-#import "TGLOMainViewController.h"
+#import "TGLOTheGreensViewController.h"
 #import "SWRevealViewController.h"
 
-@interface TGLOMainViewController ()
+@interface TGLOTheGreensViewController ()
 
 @end
 
-@implementation TGLOMainViewController
+@implementation TGLOTheGreensViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,7 +28,25 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.title = @"My Profile";
+    
+    [self setUpAppearance];
+    NSString *theGreensAddress = @"https://greens.org.au";
+    
+    NSURL *theGreensUrl = [[NSURL alloc] initWithString:theGreensAddress];
+    
+    NSURLRequest *theGreensRequest = [[NSURLRequest alloc] initWithURL:theGreensUrl];
+    
+    [self.webView loadRequest:theGreensRequest];
+    
+    
+    
+    
+    
+}
+
+- (void)setUpAppearance
+{
+    self.title = @"The Greens";
     
     // Change button color
     //self.sidebarButton.tintColor = [UIColor colorWithWhite:0.04f alpha:0.9f];
@@ -41,7 +59,7 @@
     // Set the gesture
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     
-
+    
 }
 
 - (void)didReceiveMemoryWarning
