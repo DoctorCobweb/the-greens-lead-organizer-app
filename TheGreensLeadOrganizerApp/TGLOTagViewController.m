@@ -9,6 +9,7 @@
 #import "TGLOTagViewController.h"
 #import "AFNetworking.h"
 #import "AFNetworkActivityIndicatorManager.h"
+#import "TGLOPersonViewController.h"
 
 static NSString *accessToken= @"access_token";
 
@@ -197,5 +198,16 @@ static NSString *accessToken= @"access_token";
 }
 
  */
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"showPersonInTag"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        
+        TGLOPersonViewController *destViewController = (TGLOPersonViewController *) segue.destinationViewController;
+        destViewController.personName = [people objectAtIndex:indexPath.row];
+        //NSLog(@"%@", ((PersonDetailViewController *)segue.destinationViewController).person);
+    }
+}
 
 @end

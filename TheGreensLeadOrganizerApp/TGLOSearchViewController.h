@@ -1,5 +1,5 @@
 //
-//  TGLOPeopleViewController.h
+//  TGLOSearchViewController.h
 //  TheGreensLeadOrganizerApp
 //
 //  Created by andre on 9/04/2014.
@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TGLOPeopleViewController : UIViewController
+@interface TGLOSearchViewController : UIViewController
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
+
 
 @end

@@ -1,19 +1,19 @@
 //
-//  TGLOPeopleViewController.m
+//  TGLOSearchViewController.m
 //  TheGreensLeadOrganizerApp
 //
 //  Created by andre on 9/04/2014.
 //  Copyright (c) 2014 andre trosky. All rights reserved.
 //
 
-#import "TGLOPeopleViewController.h"
+#import "TGLOSearchViewController.h"
 #import "SWRevealViewController.h"
 
-@interface TGLOPeopleViewController ()
+@interface TGLOSearchViewController ()
 
 @end
 
-@implementation TGLOPeopleViewController
+@implementation TGLOSearchViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,7 +28,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.title = @"People";
+    self.title = @"Search";
     
     // Change button color
     //self.sidebarButton.tintColor = [UIColor colorWithWhite:0.04f alpha:0.9f];
@@ -41,6 +41,7 @@
     // Set the gesture
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     
+
 }
 
 - (void)didReceiveMemoryWarning
