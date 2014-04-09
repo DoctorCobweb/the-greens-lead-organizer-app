@@ -10,6 +10,7 @@
 #import "SWRevealViewController.h"
 #import "AFNetworking.h"
 #import "AFNetworkActivityIndicatorManager.h"
+#import "TGLOTagViewController.h"
 
 static NSString *myNationBuilderId = @"my_nation_builder_id";
 static NSString *accessToken= @"access_token";
@@ -217,7 +218,7 @@ static NSString *accessToken= @"access_token";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"tagCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
@@ -276,5 +277,16 @@ static NSString *accessToken= @"access_token";
 }
 
  */
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"showPeopleInTag"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        
+        TGLOTagViewController *destViewController = (TGLOTagViewController *) segue.destinationViewController;
+        destViewController.tag = [taggings objectAtIndex:indexPath.row];
+        //NSLog(@"%@", ((PersonDetailViewController *)segue.destinationViewController).person);
+    }
+}
 
 @end
