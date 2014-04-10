@@ -205,7 +205,7 @@ static NSString *accessToken= @"access_token";
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         
         TGLOPersonViewController *destViewController = (TGLOPersonViewController *) segue.destinationViewController;
-        destViewController.personName = [people objectAtIndex:indexPath.row];
+        //destViewController.person = [people objectAtIndex:indexPath.row];
         //NSLog(@"%@", ((PersonDetailViewController *)segue.destinationViewController).person);
     }
 }

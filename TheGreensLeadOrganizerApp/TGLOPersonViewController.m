@@ -28,7 +28,18 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     self.title = @"Person";
-    self.randomLabel.text = self.personName;
+    
+    self.scrollView.contentSize =CGSizeMake(320, 800);
+    
+    //get the person object passed through from segue
+    self.firstName.text = @"firstName";
+    self.lastName.text = @"lastName";
+    self.supportLevel.text = @"3";
+    self.email.text = @"email";
+    self.phone.text = @"phone";
+    self.mobile.text = @"mobile";
+    
+    
 }
 
 - (void)didReceiveMemoryWarning

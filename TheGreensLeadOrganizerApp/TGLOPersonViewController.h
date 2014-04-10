@@ -10,6 +10,14 @@
 
 @interface TGLOPersonViewController : UIViewController
 
-@property (strong, nonatomic) NSString *personName;
-@property (strong, nonatomic) IBOutlet UILabel *randomLabel;
+
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UITextField *firstName;
+@property (weak, nonatomic) IBOutlet UITextField *lastName;
+@property (weak, nonatomic) IBOutlet UITextField *email;
+@property (weak, nonatomic) IBOutlet UITextField *phone;
+@property (weak, nonatomic) IBOutlet UITextField *mobile;
+@property (weak, nonatomic) IBOutlet UITextField *supportLevel;
+
+
 @end

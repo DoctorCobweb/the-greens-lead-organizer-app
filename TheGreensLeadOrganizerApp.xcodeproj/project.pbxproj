@@ -162,6 +162,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		651626E718F5840C00DCC064 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		65BC96D218F3BBE3006063CA = {
 			isa = PBXGroup;
 			children = (
@@ -198,6 +205,7 @@
 		65BC96E618F3BBE3006063CA /* TheGreensLeadOrganizerApp */ = {
 			isa = PBXGroup;
 			children = (
+				651626E718F5840C00DCC064 /* Models */,
 				65BC975E18F3DCAA006063CA /* OAuth2 */,
 				65BC96EF18F3BBE3006063CA /* TGLOAppDelegate.h */,
 				65BC96F018F3BBE3006063CA /* TGLOAppDelegate.m */,
