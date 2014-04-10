@@ -90,7 +90,7 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.41960784309999999" green="0.79607843140000001" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
-                                    <segue destination="Qne-Lg-Qb6" kind="custom" customClass="SWRevealViewControllerSegue" id="FKz-nn-Nfr"/>
+                                    <segue destination="Qne-Lg-Qb6" kind="custom" identifier="showEnrolToVote" customClass="SWRevealViewControllerSegue" id="FKz-nn-Nfr"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="myTags" textLabel="mGv-kL-6Cb" imageView="bxO-I5-gib" style="IBUITableViewCellStyleDefault" id="bXN-QZ-5CW">
@@ -140,7 +140,7 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.41960784309999999" green="0.79607843140000001" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
-                                    <segue destination="4wt-Jg-wKJ" kind="custom" identifier="showLists" customClass="SWRevealViewControllerSegue" id="Du6-B6-RST"/>
+                                    <segue destination="4wt-Jg-wKJ" kind="custom" identifier="showDonations" customClass="SWRevealViewControllerSegue" id="Du6-B6-RST"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="donations" textLabel="BBf-cA-ily" imageView="nro-q6-NhT" style="IBUITableViewCellStyleDefault" id="fRP-OI-tvg">
@@ -165,7 +165,7 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.41960784309999999" green="0.79607843140000001" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
-                                    <segue destination="oIw-av-SJd" kind="custom" identifier="showDonations" customClass="SWRevealViewControllerSegue" id="BUe-pT-hhz"/>
+                                    <segue destination="oIw-av-SJd" kind="custom" identifier="showMainView" customClass="SWRevealViewControllerSegue" id="BUe-pT-hhz"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="enrolToVote" textLabel="o96-kM-NOp" imageView="415-U5-6f2" style="IBUITableViewCellStyleDefault" id="Fxj-LX-yOM">
@@ -190,7 +190,7 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.41960784309999999" green="0.79607843140000001" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
-                                    <segue destination="62w-RU-hd6" kind="custom" identifier="showEnrolToVote" customClass="SWRevealViewControllerSegue" id="rxe-Dv-Iw6"/>
+                                    <segue destination="62w-RU-hd6" kind="custom" identifier="showSearch" customClass="SWRevealViewControllerSegue" id="rxe-Dv-Iw6"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="search" textLabel="sMJ-sF-EiH" imageView="5VG-RD-yXX" style="IBUITableViewCellStyleDefault" id="aAg-Su-5pu">
@@ -215,7 +215,7 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.41960784309999999" green="0.79607843140000001" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
-                                    <segue destination="BzX-qj-lAV" kind="custom" identifier="showSearch" customClass="SWRevealViewControllerSegue" id="hW7-M7-T3E"/>
+                                    <segue destination="BzX-qj-lAV" kind="custom" identifier="showLists" customClass="SWRevealViewControllerSegue" id="hW7-M7-T3E"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -665,6 +665,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="3od-6s-Pm2"/>
+        <segue reference="FKz-nn-Nfr"/>
     </inferredMetricsTieBreakers>
 </document>
