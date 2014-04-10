@@ -9,6 +9,7 @@
 #import "TGLOPersonViewController.h"
 
 
+
 @interface TGLOPersonViewController ()
 @property (nonatomic, strong) UIAlertView *tokenAlert;
 
@@ -51,9 +52,6 @@
       [self.mobile setTitle:self.person.mobile forState:UIControlStateNormal];
       [self.mobile setTitleColor:white_color forState:UIControlStateNormal];
         
-      NSLog(@"button contentEdgeInsets: %@", [self.mobile contentEdgeInsets]);
-        
-      NSLog(@"button type: %d", [self.mobile buttonType ]);
     }
     
     

@@ -73,9 +73,6 @@ static NSString *accessToken= @"access_token";
 
 - (void) getPeopleInTag
 {
-
-
-    
     #warning TODO: default to getting 100 people for now
     //do pagination later
     NSString * peopleForTagUrl= [NSString stringWithFormat:@"https://agtest.nationbuilder.com/api/v1/tags/%@/people?page=1&per_page=100&access_token=%@", self.tag, token];
@@ -90,12 +87,12 @@ static NSString *accessToken= @"access_token";
         //NSSet.
         //in this set then there are NSDictionary objects for each person
         //the following will thus get all people returned from the api call
-        NSSet * people_set = [responseObject objectForKey:@"results"];
+        NSSet *people_set = [responseObject objectForKey:@"results"];
         //NSLog(@"people_set SET: %@", people_set);
         
         //an array of dicts e.g.
         //{"person_id":9; tag=xyz}
-        NSArray * people_array = [people_set allObjects];
+        NSArray *people_array = [people_set allObjects];
         NSLog(@"%d people records returned", [people_array count]);
         
         //alloc and init the people array
