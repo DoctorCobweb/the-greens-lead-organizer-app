@@ -31,7 +31,6 @@
     self.title = @"My Profile";
     
     // Change button color
-    //self.sidebarButton.tintColor = [UIColor colorWithWhite:0.04f alpha:0.9f];
     self.sidebarButton.tintColor = [UIColor colorWithWhite:0.05f alpha:1.0f];
     
     // Set the side bar button action. When it's tapped, it'll show up the sidebar.

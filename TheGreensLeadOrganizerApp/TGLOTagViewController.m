@@ -39,11 +39,19 @@ static NSString *accessToken= @"access_token";
 {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    //preserve selection between presentations.
+    self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    UINavigationBar *navbar = [[self navigationController] navigationBar];
+    
+    NSLog(@"navigation bar: %@", navbar);
+    UIColor * black_color = [UIColor colorWithRed:0/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f];
+    
+    //this will set the 'back button' to be black
+    navbar.tintColor = black_color;
+    
     
     //enable afnetworking to show spinner in top bar
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
@@ -95,7 +103,6 @@ static NSString *accessToken= @"access_token";
         
         
         for (NSDictionary *person in people_array) {
-            //NSLog(@"%@", person);
             
             //get a properly parsed TGLOPerson
             //then add it to people array
@@ -103,7 +110,6 @@ static NSString *accessToken= @"access_token";
             [people addObject:_person];
         }
         
-        //check taggings now has all the tags for person
         NSLog(@"people: %@", people);
         
         //reload tableview to display new data returned from server
@@ -119,7 +125,7 @@ static NSString *accessToken= @"access_token";
 //get arbitrary fields from each person.
 -(TGLOPerson *) personFieldsForObject:(NSDictionary*)person
 {
-    NSLog(@"personFieldsForObject, person: %@", person);
+    //NSLog(@"personFieldsForObject, person: %@", person);
     
     //create a temp person to which we will
     //return the reference to to caller
