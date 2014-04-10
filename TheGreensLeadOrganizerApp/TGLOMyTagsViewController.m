@@ -137,6 +137,7 @@ static NSString *accessToken= @"access_token";
     NSString * myTaggingsUrl= [NSString stringWithFormat:@"https://agtest.nationbuilder.com/api/v1/people/%@/taggings?access_token=%@", myNBId, token];
     
     
+    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     [manager GET:myTaggingsUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {

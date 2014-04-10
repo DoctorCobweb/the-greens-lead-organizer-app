@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TGLOPerson.h"
+
 
 @interface TGLOTagViewController : UITableViewController
 
 @property (strong, nonatomic) NSString *tag;
 
 -(void)getPeopleInTag;
+-(TGLOPerson *)personFieldsForObject:(NSDictionary *)person;
 
 @end

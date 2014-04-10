@@ -10,6 +10,8 @@
 #import "AFNetworking.h"
 #import "AFNetworkActivityIndicatorManager.h"
 #import "TGLOPersonViewController.h"
+#import "TGLOPerson.h"
+
 
 static NSString *accessToken= @"access_token";
 
@@ -64,8 +66,11 @@ static NSString *accessToken= @"access_token";
 - (void) getPeopleInTag
 {
 
+
     
-    NSString * peopleForTagUrl= [NSString stringWithFormat:@"https://agtest.nationbuilder.com/api/v1/tags/%@/people?page=1&per_page=50&access_token=%@", self.tag, token];
+    #warning TODO: default to getting 100 people for now
+    //do pagination later
+    NSString * peopleForTagUrl= [NSString stringWithFormat:@"https://agtest.nationbuilder.com/api/v1/tags/%@/people?page=1&per_page=100&access_token=%@", self.tag, token];
     
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -90,19 +95,16 @@ static NSString *accessToken= @"access_token";
         
         
         for (NSDictionary *person in people_array) {
-            NSLog(@"%@", person);
-            NSString *firstName = [person objectForKey:@"first_name"];
-            NSString *lastName = [person objectForKey:@"last_name"];
-            NSString *combinedName = [[NSString alloc] initWithFormat:@"%@ %@", firstName, lastName];
+            //NSLog(@"%@", person);
             
-            [people addObject:combinedName];
-            
+            //get a properly parsed TGLOPerson
+            //then add it to people array
+            TGLOPerson *_person = [self personFieldsForObject:person];
+            [people addObject:_person];
         }
         
-        //taggings now has all the tags for person
+        //check taggings now has all the tags for person
         NSLog(@"people: %@", people);
-        
-        
         
         //reload tableview to display new data returned from server
         [self.tableView reloadData];
@@ -110,11 +112,87 @@ static NSString *accessToken= @"access_token";
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
+}
+
+
+
+//get arbitrary fields from each person.
+-(TGLOPerson *) personFieldsForObject:(NSDictionary*)person
+{
+    NSLog(@"personFieldsForObject, person: %@", person);
+    
+    //create a temp person to which we will
+    //return the reference to to caller
+    TGLOPerson * _person = [[TGLOPerson alloc] init];
     
     
-
-
-
+    //check to see if any of the entries are equal to the
+    //null singleton returned by [NSNull null]
+    //from inspection some fields in the console print out to
+    //"<null>" which is how [NSNull null] is printed out
+    if ([person objectForKey:@"id"] == [NSNull null]) {
+        _person.recordID = nil;
+    } else {
+        _person.recordID = [person objectForKey:@"id"];
+    }
+    
+    
+    if ([person objectForKey:@"first_name"] == [NSNull null]) {
+        _person.firstName = nil;
+    } else {
+        _person.firstName = [person objectForKey:@"first_name"];
+    }
+    
+    
+    if ([person objectForKey:@"last_name"] == [NSNull null]) {
+        _person.lastName = nil;
+    } else {
+        _person.lastName = [person objectForKey:@"last_name"];
+    }
+    
+    
+    if ([person objectForKey:@"email"] == [NSNull null]) {
+        _person.email = nil;
+    } else {
+        _person.email = [person objectForKey:@"email"];
+    }
+    
+    
+    if ([person objectForKey:@"phone"] == [NSNull null]) {
+        _person.phone = nil;
+    } else {
+        _person.phone = [person objectForKey:@"phone"];
+    }
+    
+    
+    if ([person objectForKey:@"mobile"] == [NSNull null]) {
+        _person.mobile= nil;
+    } else {
+        _person.mobile= [person objectForKey:@"mobile"];
+    }
+    
+    
+    if ([person objectForKey:@"note"] == [NSNull null]) {
+        _person.note= nil;
+    } else {
+        _person.note = [person objectForKey:@"note"];
+    }
+    
+    
+    if ([person objectForKey:@"support_level"] == [NSNull null]) {
+        _person.supportLevel= nil;
+    } else {
+        _person.supportLevel= [person objectForKey:@"support_level"];
+    }
+    
+    
+    if ([person objectForKey:@"tags"] == [NSNull null]) {
+        _person.tags= nil;
+    } else {
+        _person.tags = [person objectForKey:@"tags"];
+    }
+    
+    return _person;
 }
 
 - (void)didReceiveMemoryWarning
@@ -142,8 +220,10 @@ static NSString *accessToken= @"access_token";
     static NSString *CellIdentifier = @"tagPersonCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
+    NSString *_firstName = ((TGLOPerson *)[people objectAtIndex:indexPath.row]).firstName;
+    NSString *_lastName = ((TGLOPerson *)[people objectAtIndex:indexPath.row]).lastName;
     // Configure the cell...
-    cell.textLabel.text = [people objectAtIndex:indexPath.row];
+    cell.textLabel.text = [[NSString alloc] initWithFormat:@"%@ %@", _firstName, _lastName ];
     
     return cell;
 }
@@ -205,7 +285,7 @@ static NSString *accessToken= @"access_token";
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         
         TGLOPersonViewController *destViewController = (TGLOPersonViewController *) segue.destinationViewController;
-        //destViewController.person = [people objectAtIndex:indexPath.row];
+        destViewController.person = [people objectAtIndex:indexPath.row];
         //NSLog(@"%@", ((PersonDetailViewController *)segue.destinationViewController).person);
     }
 }
