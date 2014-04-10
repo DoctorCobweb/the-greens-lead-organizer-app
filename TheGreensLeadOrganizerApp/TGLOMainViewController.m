@@ -102,6 +102,8 @@ static NSString *NBSlug = @"agtest";
 - (void)populateTheUIWith:(TGLOPerson *)me
 {
     UIColor * white_color = [UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:1.0f];
+    
+    self.scrollView.contentSize =CGSizeMake(320, 800);
 
     self.firstName.text = me.firstName;
     self.lastName.text = me.lastName;
