@@ -15,8 +15,9 @@ static NSString * nationBuilderClientSecret = @"5faca3b8f58b91696f07fc499b5674f6
 static NSString * nationBuilderRedirectUri= @"https://cryptic-tundra-9564.herokuapp.com/oauth2callback";
 static NSString * nationBuilderGrantType = @"authorization_code";
 static NSString * nationBuilderCode = @"code";
-static NSString * nationBuilderAuthorizeUri = @"https://agtest.nationbuilder.com/oauth/authorize";
-static NSString * nationBuilderTokenUri = @"https://agtest.nationbuilder.com/oauth/token";
+static NSString * nationBuilderAuthorizeUri = @"https://%@.nationbuilder.com/oauth/authorize?response_type=code&client_id=%@&redirect_uri=%@";
+static NSString * nationBuilderTokenUri = @"https://%@.nationbuilder.com/oauth/token";
+static NSString *nationBuilderSlugKey = @"nationBuilderSlug";
 
 
 #pragma mark - saved in NSUserDefaults
@@ -28,10 +29,24 @@ NSString * const nationBuilderAccessToken = @"nation_builder_access_token";
 
 
 @implementation NationBuilder
+{
+    
+}
 
 +(NSString *)constructNationBuilderAuthorizeUri
 {
-    return [NSString stringWithFormat:@"%@?response_type=code&client_id=%@&redirect_uri=%@", nationBuilderAuthorizeUri,nationBuilderClientID,nationBuilderRedirectUri];
+    NSString *nationBuilderSlug = [[NSUserDefaults standardUserDefaults] objectForKey:nationBuilderSlugKey];
+    
+    if (!nationBuilderSlug) {
+        NSLog(@"ERROR: nationBuilderSlug NOT set in user defaults");
+    
+        return @"ERROR: nationBuilderSlug NOT set";
+    } else {
+       
+        NSString *authorize_string = [[NSString alloc] initWithFormat:nationBuilderAuthorizeUri, nationBuilderSlug, nationBuilderClientID, nationBuilderRedirectUri];
+        
+        return authorize_string;
+    }
 }
 
 
@@ -41,10 +56,10 @@ NSString * const nationBuilderAccessToken = @"nation_builder_access_token";
     [NSURLSessionConfiguration defaultSessionConfiguration];
     NSLog(@"%@", sessionConfig);
     
-    //hardcoded for now...
-    //NSString * authorize_url = @"https://agtest.nationbuilder.com/oauth/authorize?response_type=code&client_id=ecc44472c84d126f006ccad6485f5dc127ae1400f0f937cf0167a60a12cfabc6&redirect_uri=https://cryptic-tundra-9564.herokuapp.com/oauth2callback";
     
     NSString * authorize_url = [self constructNationBuilderAuthorizeUri];
+    
+    NSLog(@"authorize_url: %@", authorize_url);
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:authorize_url]];
     [request setHTTPMethod:@"GET"];
@@ -93,9 +108,15 @@ NSString * const nationBuilderAccessToken = @"nation_builder_access_token";
 
 +(void)exchangeTokenForUserAccessTokenURLWithCompletionHandler:(NationBuilderRequestTokenCompletionHandler)completionBlock
 {
-    //NSString *urlString = [NSString stringWithFormat:nationBuilderTokenUri];
+    NSString *nationBuilderSlug = [[NSUserDefaults standardUserDefaults] objectForKey:nationBuilderSlugKey];
     
-    NSURL *requestTokenURL = [NSURL URLWithString:nationBuilderTokenUri];
+    //TODO better error handling
+    if (!nationBuilderSlug) {
+        NSLog(@"ERROR: nation builder slug not set in user defaults");
+    }
+    
+    NSString *tokenUri = [[NSString alloc] initWithFormat:nationBuilderTokenUri, nationBuilderSlug];
+    NSURL *requestTokenURL = [NSURL URLWithString:tokenUri];
     
     NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:requestTokenURL];
@@ -103,9 +124,14 @@ NSString * const nationBuilderAccessToken = @"nation_builder_access_token";
     
     NSString * code_val = [[NSUserDefaults standardUserDefaults] objectForKey:nationBuilderCode];
     
-    //hard coding JSON!!!!!! for the body
-    NSString *body_string = [NSString stringWithFormat:@"{\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\"}",@"client_id",nationBuilderClientID, @"redirect_uri", nationBuilderRedirectUri, @"grant_type", nationBuilderGrantType, @"client_secret", nationBuilderClientSecret, @"code", code_val];
+    if (!code_val) {
+        NSLog(@"ERROR: code_val == nil");
+        //if code_val is nil, AFNetworking will
+        //throw an error later on after response
+        //=>dont handle error here
+    }
     
+    NSString *body_string = [self createTokenRequestBody:code_val];
     NSLog(@"body_string of JSON: %@", body_string);
     
     NSData * body_data = [body_string dataUsingEncoding:NSUTF8StringEncoding];
@@ -120,5 +146,13 @@ NSString * const nationBuilderAccessToken = @"nation_builder_access_token";
     [[session dataTaskWithRequest:request completionHandler:completionBlock] resume];
 }
 
+
++ (NSString *)createTokenRequestBody:(NSString *)code_val
+{
+    //hard coding JSON!!!!!! for the body
+    NSString *body_string = [NSString stringWithFormat:@"{\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\"}",@"client_id",nationBuilderClientID, @"redirect_uri", nationBuilderRedirectUri, @"grant_type", nationBuilderGrantType, @"client_secret", nationBuilderClientSecret, @"code", code_val];
+    
+    return body_string;
+}
 
 @end

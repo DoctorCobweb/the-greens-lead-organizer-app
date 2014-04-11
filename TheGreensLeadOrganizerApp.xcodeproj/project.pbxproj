@@ -17,6 +17,7 @@
 		651626E618F55ABF00DCC064 /* TGLOSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 651626E518F55ABF00DCC064 /* TGLOSearchViewController.m */; };
 		651626ED18F6253900DCC064 /* TGLOPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 651626EC18F6253900DCC064 /* TGLOPerson.m */; };
 		651626F718F6DB4F00DCC064 /* TGLOSearchResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 651626F618F6DB4F00DCC064 /* TGLOSearchResultsViewController.m */; };
+		651626F918F7A13100DCC064 /* theGreens.png in Resources */ = {isa = PBXBuildFile; fileRef = 651626F818F7A13100DCC064 /* theGreens.png */; };
 		65BC96DF18F3BBE3006063CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BC96DE18F3BBE3006063CA /* Foundation.framework */; };
 		65BC96E118F3BBE3006063CA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BC96E018F3BBE3006063CA /* CoreGraphics.framework */; };
 		65BC96E318F3BBE3006063CA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BC96E218F3BBE3006063CA /* UIKit.framework */; };
@@ -88,6 +89,7 @@
 		651626EC18F6253900DCC064 /* TGLOPerson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOPerson.m; sourceTree = "<group>"; };
 		651626F518F6DB4F00DCC064 /* TGLOSearchResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOSearchResultsViewController.h; sourceTree = "<group>"; };
 		651626F618F6DB4F00DCC064 /* TGLOSearchResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOSearchResultsViewController.m; sourceTree = "<group>"; };
+		651626F818F7A13100DCC064 /* theGreens.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = theGreens.png; sourceTree = "<group>"; };
 		65BC96DB18F3BBE3006063CA /* TheGreensLeadOrganizerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheGreensLeadOrganizerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65BC96DE18F3BBE3006063CA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65BC96E018F3BBE3006063CA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -269,6 +271,7 @@
 		65BC972318F3CFE7006063CA /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				651626F818F7A13100DCC064 /* theGreens.png */,
 				65BC977118F3F3B0006063CA /* appIcon58x58.png */,
 				65BC977218F3F3B0006063CA /* appIcon80x80.png */,
 				65BC977318F3F3B0006063CA /* appIcon120x120.png */,
@@ -387,6 +390,7 @@
 				65BC974F18F3D144006063CA /* bookmark.png in Resources */,
 				65BC977618F3F3B0006063CA /* appIcon120x120.png in Resources */,
 				65BC975018F3D144006063CA /* calendar.png in Resources */,
+				651626F918F7A13100DCC064 /* theGreens.png in Resources */,
 				65BC975918F3D144006063CA /* news.png in Resources */,
 				65BC975418F3D144006063CA /* Default@2x.png in Resources */,
 				65BC975C18F3D144006063CA /* tag.png in Resources */,

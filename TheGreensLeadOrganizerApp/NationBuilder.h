@@ -17,8 +17,11 @@ typedef void (^NationBuilderRequestTokenCompletionHandler)(NSData *data, NSURLRe
 
 @interface NationBuilder : NSObject
 
++ (NSString *)createTokenRequestBody:(NSString *)code_val;
+
 + (void)requestTokenWithCompletionHandler:(NationBuilderRequestTokenCompletionHandler)completionBlock;
 + (void)exchangeTokenForUserAccessTokenURLWithCompletionHandler:(NationBuilderRequestTokenCompletionHandler)completionBlock;
 
 +(NSString *)constructNationBuilderAuthorizeUri;
+
 @end

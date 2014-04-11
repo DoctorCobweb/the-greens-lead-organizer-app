@@ -2,6 +2,8 @@
 #import "OAuthLoginViewController.h"
 #import "NationBuilder.h"
 
+static NSString *nationBuilderSlugKey = @"nationBuilderSlug";
+
 @interface OAuthLoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextView *loginView;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
@@ -10,6 +12,9 @@
 @end
 
 @implementation OAuthLoginViewController
+{
+    NSUserDefaults *userDefaults;
+}
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -55,7 +60,6 @@
             NSHTTPURLResponse *httpResp = (NSHTTPURLResponse*) response;
             if (httpResp.statusCode == 200) {
                 
-                
                 /*
                  oauth_token The request token that was just authorized. The request token secret isn't sent back.
                  If the user chooses not to authorize the application,
@@ -64,8 +68,6 @@
                 
                 
                 [_tokenAlert dismissWithClickedButtonIndex:0 animated:NO];
-                
-                //NSString * authorize_url = @"https://agtest.nationbuilder.com/oauth/authorize?response_type=code&client_id=ecc44472c84d126f006ccad6485f5dc127ae1400f0f937cf0167a60a12cfabc6&redirect_uri=https://cryptic-tundra-9564.herokuapp.com/oauth2callback";
                 
                 NSString * authorize_url = [NationBuilder constructNationBuilderAuthorizeUri];
                 

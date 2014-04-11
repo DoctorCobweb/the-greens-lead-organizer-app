@@ -10,7 +10,16 @@
 #import "NationBuilder.h"
 #import "AFNetworkActivityIndicatorManager.h"
 
+
+//app wide identifier used to construct urls for api calls
+//stored in UserDefaults object
+static NSString *nationBuilderSlugKey= @"nationBuilderSlug";
+static NSString *nationBuilderSlugValue = @"agtest";
+
 @implementation TGLOAppDelegate
+{
+    NSUserDefaults *userDefaults;
+}
 
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
@@ -18,13 +27,27 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+#warning TODO: refator all URIs to use userdefaults NB slug!!!!
     //enable afnetworking to show spinner in top bar
     [self initAppearance];
     
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
     // Override point for customization after application launch.
+    
+    userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    //set the NB slug if not already set
+    if (![userDefaults valueForKey:nationBuilderSlugKey]) {
+        NSLog(@"NB slug has NOT been set in user defaults. setting it in now...");
+        
+        [userDefaults setObject:nationBuilderSlugValue forKey:nationBuilderSlugKey];
+        [userDefaults synchronize];
+    } else {
+        NSLog(@"user defaults has ALREADY set the nation builder slug: %@", nationBuilderSlugValue);
+    }
+    
 
-    NSString *token = [[NSUserDefaults standardUserDefaults] valueForKey:@"access_token"];
+    NSString *token = [userDefaults valueForKey:@"access_token"];
     NSLog(@"IN APP DELEGATE, TOKEN FROM UserDefaults: %@", token);
     
     NSString *controllerId = token ? @"signedIn" : @"login";
@@ -221,8 +244,8 @@
         NSLog(@"params dic: %@", params);
         
         //put code key/val into UserDefaults obj
-        [[NSUserDefaults standardUserDefaults] setObject:oAuth2Dict[@"code"] forKey:@"code"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [userDefaults setObject:oAuth2Dict[@"code"] forKey:@"code"];
+        [userDefaults synchronize];
         
         [self exchangeRequestTokenForAccessToken];
     }
@@ -249,10 +272,10 @@
                 
                 
                 //put code key/val into UserDefaults obj
-                [[NSUserDefaults standardUserDefaults] setObject:dict_resp[@"access_token"] forKey:@"access_token"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
+                [userDefaults setObject:dict_resp[@"access_token"] forKey:@"access_token"];
+                [userDefaults synchronize];
                 
-                NSString *token = [[NSUserDefaults standardUserDefaults] valueForKey:@"access_token"];
+                NSString *token = [userDefaults valueForKey:@"access_token"];
                 NSLog(@"TOKEN FROM UserDefaults: %@", token);
                 
                 // now load main part of application

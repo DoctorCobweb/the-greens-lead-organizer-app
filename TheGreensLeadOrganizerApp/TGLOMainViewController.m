@@ -12,7 +12,9 @@
 
 static NSString *myNationBuilderId = @"my_nation_builder_id";
 static NSString *accessToken= @"access_token";
-static NSString *NBSlug = @"agtest";
+//static NSString *NBSlug = @"agtest";
+
+static NSString *nationBuilderSlugKey = @"nationBuilderSlug";
 
 @interface TGLOMainViewController ()
 {
@@ -57,7 +59,9 @@ static NSString *NBSlug = @"agtest";
 
 - (void)getMyNationBuilderDetails
 {
-    NSString * meUrl= [NSString stringWithFormat:@"https://%@.nationbuilder.com/api/v1/people/me?access_token=%@", NBSlug, token];
+    NSString *nationBuilderSlug = [[NSUserDefaults standardUserDefaults] objectForKey:nationBuilderSlugKey];
+    
+    NSString * meUrl= [NSString stringWithFormat:@"https://%@.nationbuilder.com/api/v1/people/me?access_token=%@", nationBuilderSlug, token];
     
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
