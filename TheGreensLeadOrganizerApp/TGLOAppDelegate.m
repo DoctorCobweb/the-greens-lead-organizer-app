@@ -13,8 +13,9 @@
 
 //app wide identifier used to construct urls for api calls
 //stored in UserDefaults object
-static NSString *nationBuilderSlugKey= @"nationBuilderSlug";
-static NSString *nationBuilderSlugValue = @"agtest";
+NSString * const nationBuilderSlugKey = @"nationBuilderSlug";
+NSString * const nationBuilderSlugValue = @"agtest";
+
 
 @implementation TGLOAppDelegate
 {
@@ -31,11 +32,16 @@ static NSString *nationBuilderSlugValue = @"agtest";
     //enable afnetworking to show spinner in top bar
     [self initAppearance];
     
+    //testing extern variable stuff
+    NSLog(@"EXTERN: nationBuilderAuthorizeUrl: %@", nationBuilderRequestToken);
+    NSLog(@"EXTERN: nationBuilderAuthorizeUrl: %@", nationBuilderAccessToken);
+    
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
     // Override point for customization after application launch.
     
     userDefaults = [NSUserDefaults standardUserDefaults];
     
+    /*
     //set the NB slug if not already set
     if (![userDefaults valueForKey:nationBuilderSlugKey]) {
         NSLog(@"NB slug has NOT been set in user defaults. setting it in now...");
@@ -45,6 +51,7 @@ static NSString *nationBuilderSlugValue = @"agtest";
     } else {
         NSLog(@"user defaults has ALREADY set the nation builder slug: %@", nationBuilderSlugValue);
     }
+     */
     
 
     NSString *token = [userDefaults valueForKey:@"access_token"];

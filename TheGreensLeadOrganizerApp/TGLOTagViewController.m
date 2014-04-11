@@ -11,15 +11,16 @@
 #import "AFNetworkActivityIndicatorManager.h"
 #import "TGLOPersonViewController.h"
 #import "TGLOPerson.h"
+#import "TGLOAppDelegate.h"
 
 
 static NSString *accessToken= @"access_token";
+static NSString *peopleForTagUrl= @"https://%@.nationbuilder.com/api/v1/tags/%@/people?page=1&per_page=100&access_token=%@";
 
 @interface TGLOTagViewController ()
 {
     NSString *token;
     NSMutableArray *people;
-    
 }
 
 @end
@@ -75,12 +76,12 @@ static NSString *accessToken= @"access_token";
 {
     #warning TODO: default to getting 100 people for now
     //do pagination later
-    NSString * peopleForTagUrl= [NSString stringWithFormat:@"https://agtest.nationbuilder.com/api/v1/tags/%@/people?page=1&per_page=100&access_token=%@", self.tag, token];
+    NSString * peopleForTagUrl_ = [NSString stringWithFormat:peopleForTagUrl, nationBuilderSlugValue, self.tag, token];
     
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
-    [manager GET:peopleForTagUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager GET:peopleForTagUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //NSLog(@"PEOPLE IN TAG VIEW CONTROLLER and response: %@", responseObject);
         
         //responseObject is an NSDictionary with a "results" key with value of type
@@ -289,7 +290,6 @@ static NSString *accessToken= @"access_token";
         
         TGLOPersonViewController *destViewController = (TGLOPersonViewController *) segue.destinationViewController;
         destViewController.person = [people objectAtIndex:indexPath.row];
-        //NSLog(@"%@", ((PersonDetailViewController *)segue.destinationViewController).person);
     }
 }
 

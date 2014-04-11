@@ -50,24 +50,6 @@
     
 }
 
-
-
-/*
-- (IBAction)signIn:(id)sender
-{
-    
-    // show alert view saying we are getting token
-    _tokenAlert = [[UIAlertView alloc] initWithTitle:@"Getting token"
-                                                            message:@"Logging into Nation Builder"
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"Cancel"
-                                                  otherButtonTitles:nil];
-    [_tokenAlert show];
-
-    [self getOAuthRequestToken];
-}
-*/
-
 # pragma mark - OAUTH 2 STEP 1
 -(void)getOAuthRequestToken
 {
@@ -91,8 +73,6 @@
                 
                 [_tokenAlert dismissWithClickedButtonIndex:0 animated:NO];
                 
-                //NSString * authorize_url = @"https://agtest.nationbuilder.com/oauth/authorize?response_type=code&client_id=ecc44472c84d126f006ccad6485f5dc127ae1400f0f937cf0167a60a12cfabc6&redirect_uri=https://cryptic-tundra-9564.herokuapp.com/oauth2callback";
-                
                 NSString * authorize_url = [NationBuilder constructNationBuilderAuthorizeUri];
                 
                 //opens to user auth page in safari
@@ -104,6 +84,7 @@
             }
         } else {
             // ALWAYS HANDLE ERRORS :-] //
+            NSLog(@"ERROR: %@", error);
         }
     }];
 }

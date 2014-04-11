@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+extern NSString *const nationBuilderSlugKey;
+extern NSString *const nationBuilderSlugValue;
+
 @interface TGLOAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

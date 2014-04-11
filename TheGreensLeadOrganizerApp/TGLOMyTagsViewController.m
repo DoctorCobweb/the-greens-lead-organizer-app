@@ -11,9 +11,14 @@
 #import "AFNetworking.h"
 #import "AFNetworkActivityIndicatorManager.h"
 #import "TGLOTagViewController.h"
+#import "TGLOAppDelegate.h"
 
 static NSString *myNationBuilderId = @"my_nation_builder_id";
 static NSString *accessToken= @"access_token";
+
+static NSString * meUrl = @"https://%@.nationbuilder.com/api/v1/people/me?access_token=%@";
+
+static NSString * myTaggingsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/taggings?access_token=%@";
 
 @interface TGLOMyTagsViewController ()
 {
@@ -22,7 +27,6 @@ static NSString *accessToken= @"access_token";
     //contains all the tags for the user
     //used to populate table cells
     NSMutableArray *taggings;
-
 }
 
 @end
@@ -67,7 +71,7 @@ static NSString *accessToken= @"access_token";
 
 - (void)getMyNationBuilderDetails
 {
-    NSString * meUrl= [NSString stringWithFormat:@"https://agtest.nationbuilder.com/api/v1/people/me?access_token=%@", token];
+    NSString * meUrl_ = [NSString stringWithFormat:meUrl, nationBuilderSlugValue, token];
     
     //check to see if UserDefaults has a non nil
     //value for key @"my_nb_id"
@@ -87,7 +91,7 @@ static NSString *accessToken= @"access_token";
         NSLog(@"NO NB USER ID set for this app. getting them...");
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         
-        [manager GET:meUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [manager GET:meUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
             //NSLog(@"in TAGS TABLE VIEW CONTROLLER and response: %@", responseObject);
             
             //responseObject is an NSDictionary with a "results" key with value of type
@@ -116,10 +120,6 @@ static NSString *accessToken= @"access_token";
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"Error: %@", error);
         }];
-        
-        
-        
-    
     } else {
         NSLog(@"in TGLOMyTagsViewController.m ALREADY HAVE MY PROFILE ID in  UserDefaults");
         
@@ -134,13 +134,11 @@ static NSString *accessToken= @"access_token";
 {
     NSString *myNBId = [[NSUserDefaults standardUserDefaults] objectForKey:myNationBuilderId];
     
-    NSString * myTaggingsUrl= [NSString stringWithFormat:@"https://agtest.nationbuilder.com/api/v1/people/%@/taggings?access_token=%@", myNBId, token];
-    
-    
+    NSString * myTaggingsUrl_ = [NSString stringWithFormat:myTaggingsUrl, nationBuilderSlugValue, myNBId, token];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
-    [manager GET:myTaggingsUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager GET:myTaggingsUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"TAGGINGS TABLE VIEW CONTROLLER and response for taggings: %@", responseObject);
         
         //responseObject is an NSDictionary with a "results" key with value of type
@@ -167,17 +165,12 @@ static NSString *accessToken= @"access_token";
         //taggings now has all the tags for person
         NSLog(@"taggings: %@", taggings);
         
-        
-        
         //reload tableview to display new data returned from server
         [self.tableView reloadData];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
-    
-
-
 }
 
 - (void)setUpAppearance
@@ -185,7 +178,6 @@ static NSString *accessToken= @"access_token";
     self.title = @"My Tags";
     
     // Change button color
-    //self.sidebarButton.tintColor = [UIColor colorWithWhite:0.04f alpha:0.9f];
     self.sidebarButton.tintColor = [UIColor colorWithWhite:0.05f alpha:1.0f];
     
     // Set the side bar button action. When it's tapped, it'll show up the sidebar.
@@ -286,7 +278,6 @@ static NSString *accessToken= @"access_token";
         
         TGLOTagViewController *destViewController = (TGLOTagViewController *) segue.destinationViewController;
         destViewController.tag = [taggings objectAtIndex:indexPath.row];
-        //NSLog(@"%@", ((PersonDetailViewController *)segue.destinationViewController).person);
     }
 }
 

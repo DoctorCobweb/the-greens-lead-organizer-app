@@ -9,6 +9,8 @@
 #import "TGLOEnrolToVoteViewController.h"
 #import "SWRevealViewController.h"
 
+NSString * const enrolToVoteAddress= @"http://www.aec.gov.au/enrol/";
+
 @interface TGLOEnrolToVoteViewController ()
 
 @end
@@ -30,7 +32,7 @@
 	// Do any additional setup after loading the view.
     
     [self setUpAppearance];
-    NSString *enrolToVoteAddress= @"http://www.aec.gov.au/enrol/";
+    
     
     NSURL *enrolToVoteUrl= [[NSURL alloc] initWithString:enrolToVoteAddress];
     
@@ -56,10 +58,6 @@
     
     // Set the gesture
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
-    
-
-
-
 }
 
 - (void)didReceiveMemoryWarning

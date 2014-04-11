@@ -2,7 +2,6 @@
 #import "OAuthLoginViewController.h"
 #import "NationBuilder.h"
 
-static NSString *nationBuilderSlugKey = @"nationBuilderSlug";
 
 @interface OAuthLoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextView *loginView;
@@ -12,9 +11,6 @@ static NSString *nationBuilderSlugKey = @"nationBuilderSlug";
 @end
 
 @implementation OAuthLoginViewController
-{
-    NSUserDefaults *userDefaults;
-}
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -80,6 +76,7 @@ static NSString *nationBuilderSlugKey = @"nationBuilderSlug";
             }
         } else {
             // ALWAYS HANDLE ERRORS :-] //
+            NSLog(@"ERROR: in OAuthLoginViewController: %@", error);
         }
     }];
 }

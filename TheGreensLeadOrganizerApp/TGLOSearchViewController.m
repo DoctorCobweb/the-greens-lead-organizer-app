@@ -8,11 +8,13 @@
 
 #import "TGLOSearchViewController.h"
 #import "SWRevealViewController.h"
-#import "AFNetworking.h"
+//#import "AFNetworking.h"
 #import "TGLOSearchResultsViewController.h"
+#import "TGLOAppDelegate.h"
 
 static NSString *NBSlug = @"agtest";
 static NSString *accessToken = @"access_token";
+static NSString *searchUrl = @"https://%@.nationbuilder.com/api/v1/people/search?%@page=1&per_page=100&access_token=%@";
 
 @interface TGLOSearchViewController ()
 {
@@ -102,7 +104,7 @@ static NSString *accessToken = @"access_token";
     
     NSLog(@"querystring: %@", queryString_);
     
-    searchUrl_ = [[NSString alloc] initWithFormat:@"https://%@.nationbuilder.com/api/v1/people/search?%@page=1&per_page=100&access_token=%@", NBSlug, queryString_, token];
+    searchUrl_ = [[NSString alloc] initWithFormat:searchUrl, nationBuilderSlugValue, queryString_, token];
     
     NSLog(@"searchUrl is: %@", searchUrl_);
     

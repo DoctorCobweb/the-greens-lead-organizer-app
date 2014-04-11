@@ -9,6 +9,10 @@
 #import "TGLOTheGreensViewController.h"
 #import "SWRevealViewController.h"
 
+
+NSString * const theGreensAddress = @"https://greens.org.au";
+
+
 @interface TGLOTheGreensViewController ()
 
 @end
@@ -30,18 +34,12 @@
 	// Do any additional setup after loading the view.
     
     [self setUpAppearance];
-    NSString *theGreensAddress = @"https://greens.org.au";
     
     NSURL *theGreensUrl = [[NSURL alloc] initWithString:theGreensAddress];
     
     NSURLRequest *theGreensRequest = [[NSURLRequest alloc] initWithURL:theGreensUrl];
     
     [self.webView loadRequest:theGreensRequest];
-    
-    
-    
-    
-    
 }
 
 - (void)setUpAppearance
@@ -58,8 +56,6 @@
     
     // Set the gesture
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
-    
-    
 }
 
 - (void)didReceiveMemoryWarning

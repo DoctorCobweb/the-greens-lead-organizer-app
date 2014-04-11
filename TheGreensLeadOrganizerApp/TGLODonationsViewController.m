@@ -9,6 +9,8 @@
 #import "TGLODonationsViewController.h"
 #import "SWRevealViewController.h"
 
+NSString * const donationsAddress = @"https://greens.org.au/civicrm/contribute/transact?reset=1&id=372";
+
 @interface TGLODonationsViewController ()
 
 @end
@@ -29,7 +31,6 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     self.title = @"Donations";
-    NSString *donationsAddress = @"https://greens.org.au/civicrm/contribute/transact?reset=1&id=372";
     
     NSURL *donationsUrl = [[NSURL alloc] initWithString:donationsAddress];
     
@@ -48,8 +49,6 @@
     
     // Set the gesture
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
-    
-
 }
 
 - (void)didReceiveMemoryWarning

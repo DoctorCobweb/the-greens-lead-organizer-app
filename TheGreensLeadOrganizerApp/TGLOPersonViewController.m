@@ -60,7 +60,6 @@
 -(void)makeCall:(id)sender
 {
 
-    //NSString *number = [[NSString alloc] initWithFormat:"%@", (UITextField *)sender.labelText.text];
     NSLog(@"makeCall method called, sender is: %@", sender);
     NSString *title = [((UIButton *) sender) currentTitle];
     NSLog(@"currentTitle: %@", title);

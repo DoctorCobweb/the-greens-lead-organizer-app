@@ -8,6 +8,8 @@
 
 #import "NationBuilder.h"
 #import "AFNetworking.h"
+#import "TGLOAppDelegate.h"
+
 
 // NATION BUILDER API KEY and SECRET HERE
 static NSString * nationBuilderClientID = @"ecc44472c84d126f006ccad6485f5dc127ae1400f0f937cf0167a60a12cfabc6";
@@ -17,15 +19,11 @@ static NSString * nationBuilderGrantType = @"authorization_code";
 static NSString * nationBuilderCode = @"code";
 static NSString * nationBuilderAuthorizeUri = @"https://%@.nationbuilder.com/oauth/authorize?response_type=code&client_id=%@&redirect_uri=%@";
 static NSString * nationBuilderTokenUri = @"https://%@.nationbuilder.com/oauth/token";
-static NSString *nationBuilderSlugKey = @"nationBuilderSlug";
 
 
 #pragma mark - saved in NSUserDefaults
 NSString * const nationBuilderRequestToken = @"nation_builder_request_token";
 NSString * const nationBuilderAccessToken = @"nation_builder_access_token";
-
-
-
 
 
 @implementation NationBuilder
@@ -35,18 +33,9 @@ NSString * const nationBuilderAccessToken = @"nation_builder_access_token";
 
 +(NSString *)constructNationBuilderAuthorizeUri
 {
-    NSString *nationBuilderSlug = [[NSUserDefaults standardUserDefaults] objectForKey:nationBuilderSlugKey];
-    
-    if (!nationBuilderSlug) {
-        NSLog(@"ERROR: nationBuilderSlug NOT set in user defaults");
-    
-        return @"ERROR: nationBuilderSlug NOT set";
-    } else {
-       
-        NSString *authorize_string = [[NSString alloc] initWithFormat:nationBuilderAuthorizeUri, nationBuilderSlug, nationBuilderClientID, nationBuilderRedirectUri];
+    NSString *authorize_string = [[NSString alloc] initWithFormat:nationBuilderAuthorizeUri, nationBuilderSlugValue, nationBuilderClientID, nationBuilderRedirectUri];
         
-        return authorize_string;
-    }
+    return authorize_string;
 }
 
 
@@ -108,14 +97,8 @@ NSString * const nationBuilderAccessToken = @"nation_builder_access_token";
 
 +(void)exchangeTokenForUserAccessTokenURLWithCompletionHandler:(NationBuilderRequestTokenCompletionHandler)completionBlock
 {
-    NSString *nationBuilderSlug = [[NSUserDefaults standardUserDefaults] objectForKey:nationBuilderSlugKey];
     
-    //TODO better error handling
-    if (!nationBuilderSlug) {
-        NSLog(@"ERROR: nation builder slug not set in user defaults");
-    }
-    
-    NSString *tokenUri = [[NSString alloc] initWithFormat:nationBuilderTokenUri, nationBuilderSlug];
+    NSString *tokenUri = [[NSString alloc] initWithFormat:nationBuilderTokenUri, nationBuilderSlugValue];
     NSURL *requestTokenURL = [NSURL URLWithString:tokenUri];
     
     NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
