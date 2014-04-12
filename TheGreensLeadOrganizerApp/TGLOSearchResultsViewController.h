@@ -15,5 +15,6 @@
 @property (strong, nonatomic) NSString *searchUrl;
 
 - (void) makeSearch;
+-(TGLOPerson *) personFieldsForObject:(NSDictionary *)person;
 
 @end

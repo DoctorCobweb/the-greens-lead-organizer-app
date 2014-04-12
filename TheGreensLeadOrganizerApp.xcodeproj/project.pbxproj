@@ -18,6 +18,7 @@
 		651626ED18F6253900DCC064 /* TGLOPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 651626EC18F6253900DCC064 /* TGLOPerson.m */; };
 		651626F718F6DB4F00DCC064 /* TGLOSearchResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 651626F618F6DB4F00DCC064 /* TGLOSearchResultsViewController.m */; };
 		651626F918F7A13100DCC064 /* theGreens.png in Resources */ = {isa = PBXBuildFile; fileRef = 651626F818F7A13100DCC064 /* theGreens.png */; };
+		651626FC18F90D5300DCC064 /* TGLOPersonFromSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 651626FB18F90D5300DCC064 /* TGLOPersonFromSearchViewController.m */; };
 		65BC96DF18F3BBE3006063CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BC96DE18F3BBE3006063CA /* Foundation.framework */; };
 		65BC96E118F3BBE3006063CA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BC96E018F3BBE3006063CA /* CoreGraphics.framework */; };
 		65BC96E318F3BBE3006063CA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BC96E218F3BBE3006063CA /* UIKit.framework */; };
@@ -90,6 +91,8 @@
 		651626F518F6DB4F00DCC064 /* TGLOSearchResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOSearchResultsViewController.h; sourceTree = "<group>"; };
 		651626F618F6DB4F00DCC064 /* TGLOSearchResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOSearchResultsViewController.m; sourceTree = "<group>"; };
 		651626F818F7A13100DCC064 /* theGreens.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = theGreens.png; sourceTree = "<group>"; };
+		651626FA18F90D5300DCC064 /* TGLOPersonFromSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOPersonFromSearchViewController.h; sourceTree = "<group>"; };
+		651626FB18F90D5300DCC064 /* TGLOPersonFromSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOPersonFromSearchViewController.m; sourceTree = "<group>"; };
 		65BC96DB18F3BBE3006063CA /* TheGreensLeadOrganizerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheGreensLeadOrganizerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65BC96DE18F3BBE3006063CA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65BC96E018F3BBE3006063CA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -234,6 +237,8 @@
 				651626F618F6DB4F00DCC064 /* TGLOSearchResultsViewController.m */,
 				651626EB18F6253900DCC064 /* TGLOPerson.h */,
 				651626EC18F6253900DCC064 /* TGLOPerson.m */,
+				651626FA18F90D5300DCC064 /* TGLOPersonFromSearchViewController.h */,
+				651626FB18F90D5300DCC064 /* TGLOPersonFromSearchViewController.m */,
 			);
 			path = TheGreensLeadOrganizerApp;
 			sourceTree = "<group>";
@@ -457,6 +462,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65BC971F18F3CDA8006063CA /* TGLOSideBarViewController.m in Sources */,
+				651626FC18F90D5300DCC064 /* TGLOPersonFromSearchViewController.m in Sources */,
 				651626E618F55ABF00DCC064 /* TGLOSearchViewController.m in Sources */,
 				651626E318F557D500DCC064 /* TGLOPersonViewController.m in Sources */,
 				65BC972218F3CE52006063CA /* TGLOMainViewController.m in Sources */,

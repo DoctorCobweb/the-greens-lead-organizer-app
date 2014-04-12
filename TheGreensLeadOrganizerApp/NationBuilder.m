@@ -1,6 +1,6 @@
 //
 //  NationBuilder.m
-//  ByteClub
+//  
 //
 //  Created by andre on 30/03/2014.
 //  Copyright (c) 2014 Razeware. All rights reserved.
