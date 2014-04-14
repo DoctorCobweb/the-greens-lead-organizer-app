@@ -12,6 +12,7 @@
 @interface TGLOMainViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (strong, nonatomic) IBOutlet UIView *containerView;
 @property (weak, nonatomic) IBOutlet UITextField *firstName;
 @property (weak, nonatomic) IBOutlet UITextField *lastName;
 @property (weak, nonatomic) IBOutlet UIButton *email;
@@ -28,4 +29,5 @@
 - (void)setupPerson:(NSDictionary *)me_dic;
 - (TGLOPerson *)personFieldsForObject:(NSDictionary*)person;
 - (void)populateTheUIWith:(TGLOPerson *)me;
+- (void)addAnotherTagView;
 @end

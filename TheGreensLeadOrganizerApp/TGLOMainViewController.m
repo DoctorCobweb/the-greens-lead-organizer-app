@@ -51,8 +51,101 @@ static NSString *accessToken= @"access_token";
     } else {
         NSLog(@"ERROR in TGLOMyTagsViewController.m. access_token is nil");
     }
+    
+    //set an initial scroll view size
+    self.scrollView.contentSize =CGSizeMake(320, 700);
+    
+    //set the initial container view to be equal
+    //to scroll view size
+    self.containerView.frame = CGRectMake(0, 0, 320, 700);
+    
+    //testing by adding in 18 new labels
+    [self addAnotherTagView];
+    [self addAnotherTagView];
+    [self addAnotherTagView];
+    [self addAnotherTagView];
+    [self addAnotherTagView];
+    [self addAnotherTagView];
+    [self addAnotherTagView];
+    [self addAnotherTagView];
+    [self addAnotherTagView];
+    [self addAnotherTagView];
+    [self addAnotherTagView];
+    [self addAnotherTagView];
+    [self addAnotherTagView];
+    [self addAnotherTagView];
+    [self addAnotherTagView];
+    [self addAnotherTagView];
+    [self addAnotherTagView];
+    [self addAnotherTagView];
+    
 }
 
+
+- (void)addAnotherTagView
+{
+    //define some spacing between views when adding
+    //them programmatically.
+    CGFloat labelSpacing = 10;
+    
+    //make sure that scrollview and contentview
+    //make at least as much extra room as the
+    //height of the new label and its lablespacing
+    CGFloat makeMoreRoom = 40;
+    CGFloat labelWidth = 280;
+    CGFloat labelHeight= 30;
+    
+    //demo: try to add a subview to containerView
+    //programmatically
+    NSLog(@"self.containerView frame: %@",NSStringFromCGRect([self.containerView frame]));
+    
+    CGRect containerFrame = [self.containerView frame];
+    CGFloat containerHeight = CGRectGetHeight(containerFrame);
+    CGFloat containerWidth = CGRectGetWidth(containerFrame);
+    
+    NSLog(@"containerFrame height: %f", containerHeight);
+    NSLog(@"containerFrame width: %f", containerWidth);
+    
+    
+    NSArray *containerSubviews = [self.containerView subviews];
+    
+    CGRect lastViewFrame = ((UILabel *)[containerSubviews lastObject]).frame;
+    NSLog(@"lastViewFrame: %@", NSStringFromCGRect(lastViewFrame));
+    
+    //get dimensions of the lower left corner of
+    //last subview of containerView
+    CGFloat lastViewYLocation = CGRectGetMaxY(lastViewFrame);
+    CGFloat lastViewXLocation = CGRectGetMinX(lastViewFrame);
+    NSLog(@"lastViewYLocation: %f, lastViewXLocation: %f", lastViewYLocation, lastViewXLocation);
+    
+    //now create a new rect, taking into account
+    //location of last subview
+    CGRect viewRect = CGRectMake(lastViewXLocation, lastViewYLocation + labelSpacing, labelWidth, labelHeight);
+    UILabel *newLabel = [[UILabel alloc] initWithFrame:viewRect];
+    newLabel.text = @"added programmatically";
+    
+
+    //update the scroll height to accomodate for
+    //new added view
+    CGSize contentSize = self.scrollView.contentSize;
+    CGFloat scrollHeight = contentSize.height;
+
+    self.scrollView.contentSize =CGSizeMake(320, scrollHeight + makeMoreRoom);
+    NSLog(@"self.scrollView.contentSize: %@", NSStringFromCGSize(self.scrollView.contentSize));
+    
+    
+    //must also update the containerView height
+    CGRect containerViewFrame = self.containerView.frame;
+
+    NSLog(@"self.containerView.frame Max X: %f", CGRectGetMaxX(containerViewFrame));
+    NSLog(@"self.containerView.frame Max Y: %f", CGRectGetMaxY(containerViewFrame));
+    
+    self.containerView.frame = CGRectMake(0, 0, (CGRectGetMaxX(containerViewFrame)), (CGRectGetMaxY(containerViewFrame)) + makeMoreRoom);
+    
+    
+    //finally add the new view to as last subview
+    [self.containerView addSubview:newLabel];
+}
 
 
 - (void)getMyNationBuilderDetails
@@ -71,7 +164,7 @@ static NSString *accessToken= @"access_token";
          //in this set then there are NSDictionary objects for each person
          //the following will thus get all people returned from the api call
          NSDictionary * me_dic = [responseObject objectForKey:@"person"];
-         NSLog(@"me_set: %@", me_dic);
+         //NSLog(@"me_set: %@", me_dic);
          
          NSLog(@"me_dic[id] SET: %@", [me_dic valueForKey:@"id"]);
          //go and setup userdefaults somemore
@@ -104,7 +197,6 @@ static NSString *accessToken= @"access_token";
 {
     UIColor * white_color = [UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:1.0f];
     
-    self.scrollView.contentSize =CGSizeMake(320, 800);
 
     self.firstName.text = me.firstName;
     self.lastName.text = me.lastName;
