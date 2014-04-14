@@ -29,5 +29,12 @@
 - (void)setupPerson:(NSDictionary *)me_dic;
 - (TGLOPerson *)personFieldsForObject:(NSDictionary*)person;
 - (void)populateTheUIWith:(TGLOPerson *)me;
-- (void)addAnotherTagView;
+- (void)getAllMyTags;
+- (void)addTagViews;
+- (void)addASingleTag:(NSString *)tag;
+- (void)getAllMyContacts;
+- (void)addContactsLabel;
+- (void)addContactViews;
+- (void)addASingleContact:(int)index;
+
 @end

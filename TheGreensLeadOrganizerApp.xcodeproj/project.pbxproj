@@ -21,6 +21,7 @@
 		651626FC18F90D5300DCC064 /* TGLOPersonFromSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 651626FB18F90D5300DCC064 /* TGLOPersonFromSearchViewController.m */; };
 		655572A218FAAF3B00FA4297 /* TGLOMyListsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 655572A118FAAF3B00FA4297 /* TGLOMyListsViewController.m */; };
 		655572A518FAB34C00FA4297 /* TGLOListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 655572A418FAB34C00FA4297 /* TGLOListViewController.m */; };
+		655572B418FBD5AD00FA4297 /* TGLOCustomContactView.m in Sources */ = {isa = PBXBuildFile; fileRef = 655572B318FBD5AD00FA4297 /* TGLOCustomContactView.m */; };
 		65BC96DF18F3BBE3006063CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BC96DE18F3BBE3006063CA /* Foundation.framework */; };
 		65BC96E118F3BBE3006063CA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BC96E018F3BBE3006063CA /* CoreGraphics.framework */; };
 		65BC96E318F3BBE3006063CA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BC96E218F3BBE3006063CA /* UIKit.framework */; };
@@ -99,6 +100,8 @@
 		655572A118FAAF3B00FA4297 /* TGLOMyListsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOMyListsViewController.m; sourceTree = "<group>"; };
 		655572A318FAB34C00FA4297 /* TGLOListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOListViewController.h; sourceTree = "<group>"; };
 		655572A418FAB34C00FA4297 /* TGLOListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOListViewController.m; sourceTree = "<group>"; };
+		655572B218FBD5AD00FA4297 /* TGLOCustomContactView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOCustomContactView.h; sourceTree = "<group>"; };
+		655572B318FBD5AD00FA4297 /* TGLOCustomContactView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOCustomContactView.m; sourceTree = "<group>"; };
 		65BC96DB18F3BBE3006063CA /* TheGreensLeadOrganizerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheGreensLeadOrganizerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65BC96DE18F3BBE3006063CA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65BC96E018F3BBE3006063CA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -176,6 +179,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		655572A618FBC7C800FA4297 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				655572B218FBD5AD00FA4297 /* TGLOCustomContactView.h */,
+				655572B318FBD5AD00FA4297 /* TGLOCustomContactView.m */,
+			);
+			name = CustomViews;
+			sourceTree = "<group>";
+		};
 		65BC96D218F3BBE3006063CA = {
 			isa = PBXGroup;
 			children = (
@@ -212,6 +224,7 @@
 		65BC96E618F3BBE3006063CA /* TheGreensLeadOrganizerApp */ = {
 			isa = PBXGroup;
 			children = (
+				655572A618FBC7C800FA4297 /* CustomViews */,
 				65BC975E18F3DCAA006063CA /* OAuth2 */,
 				65BC96EF18F3BBE3006063CA /* TGLOAppDelegate.h */,
 				65BC96F018F3BBE3006063CA /* TGLOAppDelegate.m */,
@@ -481,6 +494,7 @@
 				65BC96F418F3BBE3006063CA /* TheGreensLeadOrganizerApp.xcdatamodeld in Sources */,
 				651626E018F54D8100DCC064 /* TGLOTagViewController.m in Sources */,
 				655572A218FAAF3B00FA4297 /* TGLOMyListsViewController.m in Sources */,
+				655572B418FBD5AD00FA4297 /* TGLOCustomContactView.m in Sources */,
 				65BC96F118F3BBE3006063CA /* TGLOAppDelegate.m in Sources */,
 				651626D418F4FEDF00DCC064 /* TGLODonationsViewController.m in Sources */,
 				651626D718F525F700DCC064 /* TGLOTheGreensViewController.m in Sources */,

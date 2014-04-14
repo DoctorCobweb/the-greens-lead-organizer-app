@@ -10,16 +10,24 @@
 #import "SWRevealViewController.h"
 #import "AFNetworking.h"
 #import "TGLOAppDelegate.h"
+#import "TGLOCustomContactView.h"
+
 
 static NSString *myNationBuilderId = @"my_nation_builder_id";
 static NSString *accessToken= @"access_token";
 
+
+NSString * const meUrl= @"https://%@.nationbuilder.com/api/v1/people/me?access_token=%@";
+NSString * const myTaggingsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/taggings?access_token=%@";
+NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=10&access_token=%@";
+
 @interface TGLOMainViewController ()
 {
-   NSString *token;
+    NSString *token;
+    NSMutableArray *taggings;
+    NSMutableArray *contacts;
 }
 @property (nonatomic, strong) UIAlertView *tokenAlert;
-
 
 @end
 
@@ -38,6 +46,7 @@ static NSString *accessToken= @"access_token";
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
     [self setUpAppearance];
  
     
@@ -59,31 +68,68 @@ static NSString *accessToken= @"access_token";
     //to scroll view size
     self.containerView.frame = CGRectMake(0, 0, 320, 700);
     
-    //testing by adding in 18 new labels
-    [self addAnotherTagView];
-    [self addAnotherTagView];
-    [self addAnotherTagView];
-    [self addAnotherTagView];
-    [self addAnotherTagView];
-    [self addAnotherTagView];
-    [self addAnotherTagView];
-    [self addAnotherTagView];
-    [self addAnotherTagView];
-    [self addAnotherTagView];
-    [self addAnotherTagView];
-    [self addAnotherTagView];
-    [self addAnotherTagView];
-    [self addAnotherTagView];
-    [self addAnotherTagView];
-    [self addAnotherTagView];
-    [self addAnotherTagView];
-    [self addAnotherTagView];
     
 }
 
 
-- (void)addAnotherTagView
+
+
+- (void)getAllMyContacts
 {
+    //this method is always called after all
+    //the tags have rendered. therefore, before
+    //going off to call the contacts api, create
+    //the contact label and add it to ui
+    [self addContactsLabel];
+    
+    
+    //now go onto getting all the contacts
+    //and eventually rendering them too.
+    NSString *myNBId = [[NSUserDefaults standardUserDefaults] objectForKey:myNationBuilderId];
+    
+    NSString * myContactsUrl_ = [NSString stringWithFormat:myContactsUrl, nationBuilderSlugValue, myNBId , token];
+
+    
+    //need to get notes on the person from a different api, namely
+    // the contacts api
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    
+    [manager GET:myContactsUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //NSLog(@" got contacts in MAIN DETAIL VIEW CONTROLLER and CONTACTS response: %@", responseObject);
+        
+        NSSet * contacts_set = [responseObject objectForKey:@"results"];
+        NSArray *contacts_ = [contacts_set allObjects];
+        
+        contacts = [[NSMutableArray alloc] initWithArray:contacts_];
+        
+        //NSLog(@"contacts: %@", contacts);
+        //NSLog(@"%d contact records returned", [contacts count]);
+        
+        [self addContactViews];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+
+- (void)addContactViews
+{
+    NSLog(@"adding in the contact views...");
+    
+    int number_of_contacts = [contacts count];
+    for (int i = 0; i < number_of_contacts; i++) {
+        [self addASingleContact:i];
+    }
+}
+
+
+- (void)addASingleContact:(int)index
+{
+    NSLog(@"adding contact[i]: %@", contacts[index]);
+    //use contacts array and index to fillout
+    //the custom contacts view
     //define some spacing between views when adding
     //them programmatically.
     CGFloat labelSpacing = 10;
@@ -91,12 +137,11 @@ static NSString *accessToken= @"access_token";
     //make sure that scrollview and contentview
     //make at least as much extra room as the
     //height of the new label and its lablespacing
-    CGFloat makeMoreRoom = 40;
+    CGFloat makeMoreRoom = 250;
     CGFloat labelWidth = 280;
-    CGFloat labelHeight= 30;
+    CGFloat labelHeight= 300;
     
-    //demo: try to add a subview to containerView
-    //programmatically
+    
     NSLog(@"self.containerView frame: %@",NSStringFromCGRect([self.containerView frame]));
     
     CGRect containerFrame = [self.containerView frame];
@@ -121,8 +166,253 @@ static NSString *accessToken= @"access_token";
     //now create a new rect, taking into account
     //location of last subview
     CGRect viewRect = CGRectMake(lastViewXLocation, lastViewYLocation + labelSpacing, labelWidth, labelHeight);
+    
+    
+    //create the custom contact object
+    TGLOCustomContactView *customView = [[TGLOCustomContactView alloc] initWithFrame:viewRect];
+    
+    customView.clipsToBounds = YES;
+    customView.opaque = NO;
+    
+    
+    //get all the subview objects from our custom
+    //view. we need to set the text to be what our
+    //contacts are
+    NSArray *customViews_ = [customView subviews];
+    
+    
+    //make sure we dont try to assign null to
+    //text property of a view
+    NSNull *null = [NSNull null];
+    NSNumber *typeValue = [contacts[index] objectForKey:@"type_id"];
+    NSLog(@"typeValue: %@", typeValue);
+    if ([contacts[index] objectForKey:@"type_id"] != null ) {
+        ((UILabel *)customViews_[4]).text = [typeValue stringValue];
+    }
+    
+    NSString *methodValue = [contacts[index] objectForKey:@"method"];
+    NSLog(@"methodValue: %@", methodValue);
+    if ([contacts[index] objectForKey:@"method"] != null) {
+        ((UILabel *)customViews_[5]).text = methodValue;
+    }
+    
+    NSString *statusValue = [contacts[index] objectForKey:@"status"];
+    NSLog(@"statusValue: %@", statusValue);
+    if ([contacts[index] objectForKey:@"status"] != null) {
+        ((UILabel *)customViews_[6]).text = statusValue;
+    }
+    
+    NSString *noteValue = [contacts[index] objectForKey:@"note"];
+    NSLog(@"noteValue: %@", noteValue);
+    if ([contacts[index] objectForKey:@"note"] != null) {
+        ((UITextView *)[customView subviews][7]).text =noteValue;
+    }
+    
+    
+    NSLog(@"customView.frame: %@",NSStringFromCGRect(customView.frame));
+    //NSLog(@"customView subviews: %@", [customView subviews]);
+    
+    
+    //update the scroll height to accomodate for
+    //new added view
+    CGSize contentSize = self.scrollView.contentSize;
+    CGFloat scrollHeight = contentSize.height;
+    
+    self.scrollView.contentSize =CGSizeMake(320, scrollHeight + makeMoreRoom);
+    NSLog(@"self.scrollView.contentSize: %@", NSStringFromCGSize(self.scrollView.contentSize));
+    
+    
+    //must also update the containerView height
+    CGRect containerViewFrame = self.containerView.frame;
+    
+    NSLog(@"self.containerView.frame Max X: %f", CGRectGetMaxX(containerViewFrame));
+    NSLog(@"self.containerView.frame Max Y: %f", CGRectGetMaxY(containerViewFrame));
+    
+    self.containerView.frame = CGRectMake(0, 0, (CGRectGetMaxX(containerViewFrame)), (CGRectGetMaxY(containerViewFrame)) + makeMoreRoom);
+    
+    
+    //finally add the new custom contact view
+    [self.containerView addSubview:customView];
+}
+
+
+- (void)addContactsLabel
+{
+    //define some spacing between views when adding
+    //them programmatically.
+    CGFloat labelSpacing = 10;
+    
+    //make sure that scrollview and contentview
+    //make at least as much extra room as the
+    //height of the new label and its lablespacing
+    CGFloat makeMoreRoom = 40;
+    CGFloat labelWidth = 280;
+    CGFloat labelHeight= 30;
+    
+    
+    NSLog(@"self.containerView frame: %@",NSStringFromCGRect([self.containerView frame]));
+    
+    CGRect containerFrame = [self.containerView frame];
+    CGFloat containerHeight = CGRectGetHeight(containerFrame);
+    CGFloat containerWidth = CGRectGetWidth(containerFrame);
+    
+    NSLog(@"containerFrame height: %f", containerHeight);
+    NSLog(@"containerFrame width: %f", containerWidth);
+    
+    
+    NSArray *containerSubviews = [self.containerView subviews];
+    
+    CGRect lastViewFrame = ((UILabel *)[containerSubviews lastObject]).frame;
+    NSLog(@"lastViewFrame: %@", NSStringFromCGRect(lastViewFrame));
+    
+    //get dimensions of the lower left corner of
+    //last subview of containerView
+    CGFloat lastViewYLocation = CGRectGetMaxY(lastViewFrame);
+    CGFloat lastViewXLocation = CGRectGetMinX(lastViewFrame);
+    NSLog(@"lastViewYLocation: %f, lastViewXLocation: %f", lastViewYLocation, lastViewXLocation);
+    
+    //now create a new rect, taking into account
+    //location of last subview
+    CGRect viewRect = CGRectMake(lastViewXLocation, lastViewYLocation + labelSpacing, labelWidth, labelHeight);
+    
+    
     UILabel *newLabel = [[UILabel alloc] initWithFrame:viewRect];
-    newLabel.text = @"added programmatically";
+    
+    
+    
+    newLabel.text = @"Contacts";
+    newLabel.font = [UIFont boldSystemFontOfSize:13];
+    
+    
+    //update the scroll height to accomodate for
+    //new added view
+    CGSize contentSize = self.scrollView.contentSize;
+    CGFloat scrollHeight = contentSize.height;
+    
+    self.scrollView.contentSize =CGSizeMake(320, scrollHeight + makeMoreRoom);
+    NSLog(@"self.scrollView.contentSize: %@", NSStringFromCGSize(self.scrollView.contentSize));
+    
+    
+    //must also update the containerView height
+    CGRect containerViewFrame = self.containerView.frame;
+    
+    NSLog(@"self.containerView.frame Max X: %f", CGRectGetMaxX(containerViewFrame));
+    NSLog(@"self.containerView.frame Max Y: %f", CGRectGetMaxY(containerViewFrame));
+    
+    self.containerView.frame = CGRectMake(0, 0, (CGRectGetMaxX(containerViewFrame)), (CGRectGetMaxY(containerViewFrame)) + makeMoreRoom);
+    
+    
+    //finally add the new view to as last subview
+    [self.containerView addSubview:newLabel];
+}
+
+
+- (void)getAllMyTags
+{
+    NSString *myNBId = [[NSUserDefaults standardUserDefaults] objectForKey:myNationBuilderId];
+    
+    NSString * myTaggingsUrl_ = [NSString stringWithFormat:myTaggingsUrl, nationBuilderSlugValue, myNBId, token];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    [manager GET:myTaggingsUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"TAGGINGS in MAIN VIEW CONTROLLER and response for taggings: %@", responseObject);
+        
+        //responseObject is an NSDictionary with a "results" key with value of type
+        //NSSet.
+        //in this set then there are NSDictionary objects for each person
+        //the following will thus get all people returned from the api call
+        NSSet * taggings_set = [responseObject objectForKey:@"taggings"];
+        //NSLog(@"taggins_set SET: %@", taggings_set);
+        
+        //an array of dicts e.g.
+        //{"person_id":9; tag=xyz}
+        NSArray * taggings_array = [taggings_set allObjects];
+        NSLog(@"%d taggings records returned", [taggings_array count]);
+        
+        //alloc and init the people array
+        taggings = [[NSMutableArray alloc] initWithCapacity:[taggings_array count]];
+        
+        
+        for (NSDictionary *tag in taggings_array) {
+            NSLog(@"%@", tag);
+            [taggings addObject:[tag objectForKey:@"tag"]];
+        }
+        
+        //taggings now has all the tags for person
+        NSLog(@"taggings array: %@", taggings);
+        
+        //reload tableview to display new data returned from server
+        //[self.tableView reloadData];
+        [self addTagViews];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+    
+    
+}
+
+
+- (void)addTagViews
+{
+    
+    
+    for (NSString *tag in taggings) {
+        [self addASingleTag:tag];
+    }
+    
+    [self getAllMyContacts];
+}
+
+- (void) addASingleTag:(NSString*)tag
+{
+    //define some spacing between views when adding
+    //them programmatically.
+    CGFloat labelSpacing = 10;
+    
+    //make sure that scrollview and contentview
+    //make at least as much extra room as the
+    //height of the new label and its lablespacing
+    CGFloat makeMoreRoom = 40;
+    CGFloat labelWidth = 280;
+    CGFloat labelHeight= 30;
+
+    
+    
+    
+    NSLog(@"self.containerView frame: %@",NSStringFromCGRect([self.containerView frame]));
+    
+    CGRect containerFrame = [self.containerView frame];
+    CGFloat containerHeight = CGRectGetHeight(containerFrame);
+    CGFloat containerWidth = CGRectGetWidth(containerFrame);
+    
+    NSLog(@"containerFrame height: %f", containerHeight);
+    NSLog(@"containerFrame width: %f", containerWidth);
+    
+    
+    NSArray *containerSubviews = [self.containerView subviews];
+    
+    CGRect lastViewFrame = ((UILabel *)[containerSubviews lastObject]).frame;
+    NSLog(@"lastViewFrame: %@", NSStringFromCGRect(lastViewFrame));
+    
+    //get dimensions of the lower left corner of
+    //last subview of containerView
+    CGFloat lastViewYLocation = CGRectGetMaxY(lastViewFrame);
+    CGFloat lastViewXLocation = CGRectGetMinX(lastViewFrame);
+    NSLog(@"lastViewYLocation: %f, lastViewXLocation: %f", lastViewYLocation, lastViewXLocation);
+    
+    //now create a new rect, taking into account
+    //location of last subview
+    CGRect viewRect = CGRectMake(lastViewXLocation, lastViewYLocation + labelSpacing, labelWidth, labelHeight);
+    
+    
+    UITextField *newTextField = [[UITextField alloc] initWithFrame:viewRect];
+    
+    newTextField.borderStyle = UITextBorderStyleRoundedRect;
+        
+        
+    newTextField.text = tag;
     
 
     //update the scroll height to accomodate for
@@ -144,19 +434,20 @@ static NSString *accessToken= @"access_token";
     
     
     //finally add the new view to as last subview
-    [self.containerView addSubview:newLabel];
-}
+    [self.containerView addSubview:newTextField];
 
+}
 
 - (void)getMyNationBuilderDetails
 {
     
-    NSString * meUrl= [NSString stringWithFormat:@"https://%@.nationbuilder.com/api/v1/people/me?access_token=%@", nationBuilderSlugValue, token];
+    
+    NSString * meUrl_ = [NSString stringWithFormat:meUrl, nationBuilderSlugValue, token];
     
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
-     [manager GET:meUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+     [manager GET:meUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
          //NSLog(@"in MAIN VIEW CONTROLLER and response: %@", responseObject);
          
          //responseObject is an NSDictionary with a "results" key with value of type
@@ -167,9 +458,9 @@ static NSString *accessToken= @"access_token";
          //NSLog(@"me_set: %@", me_dic);
          
          NSLog(@"me_dic[id] SET: %@", [me_dic valueForKey:@"id"]);
+         
          //go and setup userdefaults somemore
          [self setMyNBId:[me_dic valueForKey:@"id"]];
-         
          
          [self setupPerson: me_dic];
          
@@ -310,7 +601,16 @@ static NSString *accessToken= @"access_token";
         [[NSUserDefaults standardUserDefaults] synchronize];
     } else {
         NSLog(@"in TGLOMainViewController.m ALREADY HAVE MY PROFILE ID in  UserDefaults");
+        
+        //set the flag
     }
+    
+    
+    //now we can be sure that we have myNBId in
+    //user defaults. onwards to getting tags and
+    //contacts API calls, which rely on having
+    //myNBId non-nil.
+    [self getAllMyTags];
 }
 
 
