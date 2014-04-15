@@ -28,10 +28,10 @@
 - (void)setMyNBId:(NSString *)myNBId;
 - (void)setupPerson:(NSDictionary *)me_dic;
 - (TGLOPerson *)personFieldsForObject:(NSDictionary*)person;
-- (void)populateTheUIWith:(TGLOPerson *)me;
-- (void)getAllMyTags;
 - (void)addTagViews;
 - (void)addASingleTag:(NSString *)tag;
+- (id) fabricateANewView:(NSString *)viewType width:(CGFloat)width height:(CGFloat)viewHeight spacing: (CGFloat)viewSpacing;
+- (void)updateScrollAndContainerViewSize:(CGFloat)makeMoreRoom;
 - (void)getAllMyContacts;
 - (void)addContactsLabel;
 - (void)addContactViews;
