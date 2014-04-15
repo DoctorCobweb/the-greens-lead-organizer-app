@@ -15,5 +15,10 @@
 @property (strong, nonatomic) IBOutlet UILabel *statusLabel;
 @property (strong, nonatomic) IBOutlet UILabel *noteLabel;
 
+- (NSString *)getFormattedTypeValue:(NSString *)typeValue;
+- (NSString *)getFormattedMethodValue:(NSString *)methodValue;
+- (NSString *)getFormattedStatusesValue:(NSString *)statusValue;
+
+
 
 @end
