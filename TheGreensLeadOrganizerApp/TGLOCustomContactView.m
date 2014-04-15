@@ -24,10 +24,10 @@
         UILabel *statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 70, 80, 30)];
         UILabel *noteLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 105, 320, 30)];
         
-        typeLabel.text =   @"Type: ";
-        methodLabel.text = @"Method: ";
-        statusLabel.text = @"Status: ";
-        noteLabel.text =   @"Note: ";
+        typeLabel.text =   @"Type";
+        methodLabel.text = @"Method";
+        statusLabel.text = @"Status";
+        noteLabel.text =   @"Note";
         
         //set the font
         typeLabel.font = [UIFont boldSystemFontOfSize:14];
@@ -51,7 +51,7 @@
         //set the font
         UIFont *font_ = [UIFont systemFontOfSize:14];
         UIColor *backgroundValue = [UIColor colorWithRed:255/255.0f green:237/255.0f blue:74/255.0f alpha:1.0f];
-        UIColor *backgroundLabel = [UIColor colorWithRed:255/255.0f green:130/255.0f blue:44/255.0f alpha:1.0f];
+        UIColor *backgroundLabel = [UIColor colorWithRed:220/255.0f green:220/255.0f blue:220/255.0f alpha:1.0f];;
         
         typeValue.font = font_;
         methodValue.font = font_;

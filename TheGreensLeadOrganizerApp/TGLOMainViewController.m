@@ -25,6 +25,9 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     NSString *token;
     NSMutableArray *taggings;
     NSMutableArray *contacts;
+    NSDictionary *contactTypes;
+    NSDictionary *methodTypes;
+    NSDictionary *statusTypes;
 }
 @property (nonatomic, strong) UIAlertView *tokenAlert;
 
@@ -46,12 +49,19 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    [self setUpAppearance];
  
+    contactTypes = @{ @"1": @"Event debrief", @"2": @"Event confirmation", @"3":@"Inbox response", @"4":@"Donation thank-you", @"5":@"Donation request", @"6":@"Volunteer recruitment", @"7": @"Meeting 1:1", @"8": @"Volunteer intake",@"9": @"Voter outreach election",@"10": @"Voter outreach issue",@"11": @"Voter persuasion",@"12": @"diggity"};
+    
+    
+    methodTypes = @{@"delivery":@"Delivery",@"door_knock":@"Door knock",@"email":@"Email",@"email_blast":@"Email blast",@"face_to_face":@"Face to face",@"facebook":@"Facebook",@"meeting":@"Meeting",@"phone_call":@"Phone call",@"robocall":@"Robocall",@"snail_mail":@"Snail mail",@"text":@"Text",@"text_blast":@"Text blast",@"tweet":@"Tweet",@"video_call":@"Video call",@"webinar":@"Webinar",@"other":@"Other"};
+    
+    statusTypes = @{@"answered":@"Answered",@"bad_info":@"Bad info",@"inaccessible":@"Inaccessible",@"left_message":@"Left message",@"meaningful_interaction":@"Meaningful interaction",@"not_interested":@"Not interested",@"no_answer":@"No answer",@"refused":@"Refused",@"send_information":@"Send information",@"other":@"Other"};
+    
     
     token = [[NSUserDefaults standardUserDefaults] valueForKey:accessToken];
     NSLog(@"access_token: %@", token);
     
+    [self setUpAppearance];
     
     if (token) {
         [self getMyNationBuilderDetails];
@@ -331,20 +341,20 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     NSNull *null = [NSNull null];
     NSNumber *typeValue = [contacts[index] objectForKey:@"type_id"];
     NSLog(@"typeValue: %@", typeValue);
-    if ([contacts[index] objectForKey:@"type_id"] != null ) {
-        ((UILabel *)customViews_[4]).text = [typeValue stringValue];
+    if ([contacts[index] objectForKey:@"type_id"] != null && !![contactTypes objectForKey:([typeValue stringValue])]) {
+        ((UILabel *)customViews_[4]).text = [contactTypes objectForKey:([typeValue stringValue])];
     }
     
     NSString *methodValue = [contacts[index] objectForKey:@"method"];
     NSLog(@"methodValue: %@", methodValue);
-    if ([contacts[index] objectForKey:@"method"] != null) {
-        ((UILabel *)customViews_[5]).text = methodValue;
+    if ([contacts[index] objectForKey:@"method"] != null && !![methodTypes objectForKey:methodValue]) {
+        ((UILabel *)customViews_[5]).text = [methodTypes objectForKey:methodValue];
     }
     
     NSString *statusValue = [contacts[index] objectForKey:@"status"];
     NSLog(@"statusValue: %@", statusValue);
-    if ([contacts[index] objectForKey:@"status"] != null) {
-        ((UILabel *)customViews_[6]).text = statusValue;
+    if ([contacts[index] objectForKey:@"status"] != null && !![statusTypes objectForKey:  statusValue]) {
+        ((UILabel *)customViews_[6]).text = [statusTypes objectForKey:  statusValue];
     }
     
     NSString *noteValue = [contacts[index] objectForKey:@"note"];
