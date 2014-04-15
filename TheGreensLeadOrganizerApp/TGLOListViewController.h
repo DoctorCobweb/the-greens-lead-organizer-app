@@ -10,4 +10,8 @@
 
 @interface TGLOListViewController : UITableViewController
 
+@property (strong, nonatomic) NSDictionary *list;
+
+- (void) getPeopleInList;
+
 @end

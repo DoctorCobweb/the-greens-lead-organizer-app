@@ -19,6 +19,7 @@ static NSString *accessToken= @"access_token";
 static NSString * meUrl = @"https://%@.nationbuilder.com/api/v1/people/me?access_token=%@";
 
 static NSString * myListsUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/people?page=1&per_page=100&access_token=%@";
+static NSString * allListsUrl = @"https://%@.nationbuilder.com/api/v1/lists?page=1&per_page=100&access_token=%@";
 
 @interface TGLOMyListsViewController ()
 {
@@ -26,7 +27,7 @@ static NSString * myListsUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/pe
     
     //contains all the listsfor the user
     //used to populate table cells
-    NSMutableArray *lists;
+    NSMutableArray *allLists;
 }
 
 @end
@@ -128,7 +129,7 @@ static NSString * myListsUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/pe
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 
                 //now go onto getting the taggings
-                [self getAllMyLists];
+                [self getAllLists];
                 
             } else {
                 NSLog(@"ERROR: NB ID is nil. after GET people/me in lists view controller");
@@ -142,50 +143,42 @@ static NSString * myListsUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/pe
         
         //go onto calling the tags for user's
         //profile
-        [self getAllMyLists];
+        [self getAllLists];
     }
 }
 
 
-- (void) getAllMyLists
+- (void) getAllLists
 {
-    
-#warning /lists/:id is NOT working. 404 type resp
-    NSString * myListsUrl_ = [NSString stringWithFormat:myListsUrl, nationBuilderSlugValue, @"11", token];
+    //NSString * myListsUrl_ = [NSString stringWithFormat:myListsUrl, nationBuilderSlugValue, @"23", token];
+    NSString *allListsUrl_ = [NSString stringWithFormat:allListsUrl, nationBuilderSlugValue, token];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
-    [manager GET:myListsUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"LISTS TABLE VIEW CONTROLLER and response for lists: %@", responseObject);
+    [manager GET:allListsUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //NSLog(@"LISTS TABLE VIEW CONTROLLER and response for lists: %@", responseObject);
         
-        /*
         //responseObject is an NSDictionary with a "results" key with value of type
         //NSSet.
         //in this set then there are NSDictionary objects for each person
         //the following will thus get all people returned from the api call
-        NSSet * taggings_set = [responseObject objectForKey:@"taggings"];
-        NSLog(@"taggins_set SET: %@", taggings_set);
+        NSSet * results_set = [responseObject objectForKey:@"results"];
+        //NSLog(@"results_set SET: %@", results_set);
         
         //an array of dicts e.g.
         //{"person_id":9; tag=xyz}
-        NSArray * taggings_array = [taggings_set allObjects];
-        NSLog(@"%d taggings records returned", [taggings_array count]);
+        NSArray * results_array = [results_set allObjects];
+        NSLog(@"%d results records returned", [results_array count]);
         
         //alloc and init the people array
-        taggings = [[NSMutableArray alloc] initWithCapacity:[taggings_array count]];
         
-        
-        for (NSDictionary *tag in taggings_array) {
-            NSLog(@"%@", tag);
-            [taggings addObject:[tag objectForKey:@"tag"]];
-        }
+        allLists = [[NSMutableArray alloc] initWithArray:results_array];
         
         //taggings now has all the tags for person
-        NSLog(@"taggings: %@", taggings);
+        NSLog(@"allLists array: %@", allLists);
         
         //reload tableview to display new data returned from server
         [self.tableView reloadData];
-         */
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
@@ -204,16 +197,14 @@ static NSString * myListsUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/pe
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return [allLists count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -222,6 +213,7 @@ static NSString * myListsUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/pe
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
+    cell.textLabel.text = [allLists[indexPath.row] objectForKey:@"name"];
     
     return cell;
 }
@@ -265,16 +257,15 @@ static NSString * myListsUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/pe
 }
 */
 
-/*
 #pragma mark - Navigation
-
-// In a story board-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"showList"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        
+        TGLOListViewController *destViewController = (TGLOListViewController *) segue.destinationViewController;
+        destViewController.list= [allLists objectAtIndex:indexPath.row];
+    }
 }
-
- */
 
 @end

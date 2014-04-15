@@ -7,8 +7,21 @@
 //
 
 #import "TGLOListViewController.h"
+#import "AFNetworking.h"
+#import "AFNetworkActivityIndicatorManager.h"
+#import "TGLOAppDelegate.h"
+#import "TGLOPersonFromListViewController.h"
+
+
+static NSString *myNationBuilderId = @"my_nation_builder_id";
+static NSString *accessToken= @"access_token";
+static NSString * aListUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/people?page=1&per_page=100&access_token=%@";
 
 @interface TGLOListViewController ()
+{
+    NSMutableArray *peopleInList;
+    NSString *token;
+}
 
 @end
 
@@ -27,11 +40,72 @@
 {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
+    //preserve selection between presentations.
+    self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    token = [[NSUserDefaults standardUserDefaults] valueForKey:accessToken];
+    NSLog(@"access_token: %@", token);
+    
+    
+    UINavigationBar *navbar = [[self navigationController] navigationBar];
+    NSLog(@"navigation bar: %@", navbar);
+    UIColor * black_color = [UIColor colorWithRed:0/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f];
+    //this will set the 'back button' to be black
+    navbar.tintColor = black_color;
+    
+    
+    NSLog(@"list is: %@", self.list);
+    self.title = [self.list objectForKey:@"name"];
+    
+    if (token) {
+        [self getPeopleInList];
+        
+    } else {
+        NSLog(@"ERROR in TGLOListViewController.m. access_token is nil");
+    }
+
+    
+}
+
+
+- (void) getPeopleInList
+{
+    NSString * aListUrl_ = [NSString stringWithFormat:aListUrl, nationBuilderSlugValue, [self.list objectForKey:@"id"], token];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    [manager GET:aListUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //NSLog(@"A LIST TABLE VIEW CONTROLLER and response for lists: %@", responseObject);
+        
+        //responseObject is an NSDictionary with a "results" key with value of type
+        //NSSet.
+        //in this set then there are NSDictionary objects for each person
+        //the following will thus get all people returned from the api call
+        NSSet * results_set = [responseObject objectForKey:@"results"];
+        //NSLog(@"results_set SET: %@", results_set);
+        
+        //an array of dicts e.g.
+        //{"person_id":9; tag=xyz}
+        NSArray * results_array = [results_set allObjects];
+        NSLog(@"%d results records returned", [results_array count]);
+        
+        //alloc and init the people array
+        
+        peopleInList = [[NSMutableArray alloc] initWithArray:results_array];
+        
+        //taggings now has all the tags for person
+        NSLog(@"peopleInList array: %@", peopleInList);
+        
+        //reload tableview to display new data returned from server
+        [self.tableView reloadData];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -44,24 +118,25 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return [peopleInList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"listPersonCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
+    NSString *firstName = [peopleInList[indexPath.row] objectForKey:@"first_name"];
+    NSString *lastName = [peopleInList[indexPath.row] objectForKey:@"last_name"];
+    cell.textLabel.text = [[NSString alloc]initWithFormat:@"%@ %@", firstName, lastName];
     
     return cell;
 }
@@ -105,16 +180,17 @@
 }
 */
 
-/*
-#pragma mark - Navigation
 
-// In a story board-based application, you will often want to do a little preparation before navigation
+#pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"showListPerson"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        
+        TGLOPersonFromListViewController *destViewController = (TGLOPersonFromListViewController *) segue.destinationViewController;
+        destViewController.rawPerson = [peopleInList objectAtIndex:indexPath.row];
+    }
 }
 
- */
 
 @end

@@ -14,6 +14,6 @@
 
 - (void)setUpAppearance;
 - (void)getMyNationBuilderDetails;
-- (void)getAllMyLists;
+- (void)getAllLists;
 
 @end
