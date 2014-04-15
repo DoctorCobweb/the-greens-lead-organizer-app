@@ -18,7 +18,6 @@ static NSString *accessToken= @"access_token";
 
 
 NSString * const meUrl= @"https://%@.nationbuilder.com/api/v1/people/me?access_token=%@";
-NSString * const myTaggingsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/taggings?access_token=%@";
 NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=10&access_token=%@";
 
 @interface TGLOMainViewController ()
@@ -58,15 +57,8 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
         [self getMyNationBuilderDetails];
         
     } else {
-        NSLog(@"ERROR in TGLOMyTagsViewController.m. access_token is nil");
+        NSLog(@"ERROR in TGLOMainViewController.m. access_token is nil");
     }
-    
-    //set an initial scroll view size
-    self.scrollView.contentSize =CGSizeMake(320, 550);
-    
-    //set the initial container view to be equal
-    //to scroll view size
-    self.containerView.frame = CGRectMake(0, 0, 320, 550);
     
     
 }
@@ -77,6 +69,15 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
 - (void)setUpAppearance
 {
     self.title = @"My Profile";
+    
+    //set an initial scroll view size
+    self.scrollView.contentSize =CGSizeMake(320, 550);
+    
+    //set the initial container view to be equal
+    //to scroll view size
+    self.containerView.frame = CGRectMake(0, 0, 320, 550);
+    
+    
     
     // Change button color
     //self.sidebarButton.tintColor = [UIColor colorWithWhite:0.04f alpha:0.9f];

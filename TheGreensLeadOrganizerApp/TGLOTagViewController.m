@@ -20,7 +20,7 @@ static NSString *peopleForTagUrl= @"https://%@.nationbuilder.com/api/v1/tags/%@/
 @interface TGLOTagViewController ()
 {
     NSString *token;
-    NSMutableArray *people;
+    NSMutableArray *people; //holds all people in tag. sanitized.
 }
 
 @end
@@ -105,10 +105,11 @@ static NSString *peopleForTagUrl= @"https://%@.nationbuilder.com/api/v1/tags/%@/
             //get a properly parsed TGLOPerson
             //then add it to people array
             TGLOPerson *_person = [self personFieldsForObject:person];
+            NSLog(@"person recordID : %@", _person.recordID);
             [people addObject:_person];
         }
         
-        NSLog(@"people: %@", people);
+        //NSLog(@"people: %@", people);
         
         //reload tableview to display new data returned from server
         [self.tableView reloadData];

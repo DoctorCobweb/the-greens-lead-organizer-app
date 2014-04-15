@@ -50,22 +50,22 @@
         
         //set the font
         UIFont *font_ = [UIFont systemFontOfSize:14];
-        UIColor *backgroundGreen = [UIColor colorWithRed:255/255.0f green:237/255.0f blue:74/255.0f alpha:1.0f];
-        UIColor *backgroundOrange = [UIColor colorWithRed:255/255.0f green:130/255.0f blue:44/255.0f alpha:1.0f];
+        UIColor *backgroundValue = [UIColor colorWithRed:255/255.0f green:237/255.0f blue:74/255.0f alpha:1.0f];
+        UIColor *backgroundLabel = [UIColor colorWithRed:255/255.0f green:130/255.0f blue:44/255.0f alpha:1.0f];
         
         typeValue.font = font_;
         methodValue.font = font_;
         statusValue.font = font_;
         
         //colors
-        typeLabel.backgroundColor = backgroundOrange;
-        methodLabel.backgroundColor = backgroundOrange;
-        statusLabel.backgroundColor = backgroundOrange;
-        noteLabel.backgroundColor = backgroundOrange;
-        typeValue.backgroundColor = backgroundGreen;
-        methodValue.backgroundColor = backgroundGreen;
-        statusValue.backgroundColor = backgroundGreen;
-        noteValue.backgroundColor = backgroundGreen;
+        typeLabel.backgroundColor = backgroundLabel;
+        methodLabel.backgroundColor = backgroundLabel;
+        statusLabel.backgroundColor = backgroundLabel;
+        noteLabel.backgroundColor = backgroundLabel;
+        typeValue.backgroundColor = backgroundValue;
+        methodValue.backgroundColor = backgroundValue;
+        statusValue.backgroundColor = backgroundValue;
+        noteValue.backgroundColor = backgroundValue;
         
         
         [self addSubview:typeLabel];

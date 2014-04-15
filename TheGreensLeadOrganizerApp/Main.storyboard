@@ -508,6 +508,12 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tags" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EIo-xo-Ytp">
+                                        <rect key="frame" x="20" y="460" width="288" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
@@ -516,6 +522,7 @@
                     <navigationItem key="navigationItem" id="Ivm-gz-a5h"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="containerView" destination="BGv-Ka-zQc" id="h6I-Hi-dp5"/>
                         <outlet property="email" destination="Bdb-vY-3si" id="OlV-Iv-apv"/>
                         <outlet property="firstName" destination="7mU-pu-68T" id="8kn-sC-YDS"/>
                         <outlet property="lastName" destination="UKP-Gq-exE" id="BXy-e1-Bu3"/>
@@ -988,6 +995,12 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tags" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mH3-gk-0vm">
+                                        <rect key="frame" x="20" y="462" width="288" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
@@ -996,6 +1009,7 @@
                     <navigationItem key="navigationItem" id="S22-cl-BmQ"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="containerView" destination="KQT-vy-bRE" id="p3G-zh-X2e"/>
                         <outlet property="email" destination="zj8-gO-2h7" id="kRR-xf-wPQ"/>
                         <outlet property="firstName" destination="Ov6-bP-EIx" id="a3b-ll-mO1"/>
                         <outlet property="lastName" destination="kv1-fo-3cd" id="4Fs-If-uQV"/>
