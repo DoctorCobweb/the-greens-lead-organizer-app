@@ -150,6 +150,7 @@ static NSString * allListsUrl = @"https://%@.nationbuilder.com/api/v1/lists?page
 
 - (void) getAllLists
 {
+#warning ALL LISTS for a NATION atm!!! what about lists for a user??
     //NSString * myListsUrl_ = [NSString stringWithFormat:myListsUrl, nationBuilderSlugValue, @"23", token];
     NSString *allListsUrl_ = [NSString stringWithFormat:allListsUrl, nationBuilderSlugValue, token];
     

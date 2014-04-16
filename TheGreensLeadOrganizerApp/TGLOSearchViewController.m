@@ -69,6 +69,7 @@ static NSString *searchUrl = @"https://%@.nationbuilder.com/api/v1/people/search
 
 - (NSString *)makeSearchUrl
 {
+#warning TODO: have to url encode spaces for search params
     NSLog(@"startSearch button hit");
     NSMutableString *queryString_ = [[NSMutableString alloc] init];
     
@@ -85,19 +86,27 @@ static NSString *searchUrl = @"https://%@.nationbuilder.com/api/v1/people/search
         NSLog(@"firstName_ != empyty String");
         [queryString_ appendFormat:@"first_name=%@&", firstName_ ];
     
-    } else if (![lastName_ isEqualToString:@""]) {
+    }
+    
+    if (![lastName_ isEqualToString:@""]) {
         NSLog(@"lastName_ != empyty String");
         [queryString_ appendFormat:@"last_name=%@&", lastName_];
         
-    } else if (![city_ isEqualToString:@""]) {
+    }
+    
+    if (![city_ isEqualToString:@""]) {
         NSLog(@"city_ != empyty String");
         [queryString_ appendFormat:@"city=%@&", city_];
     
-    } else if (![state_ isEqualToString:@""]) {
+    }
+    
+    if (![state_ isEqualToString:@""]) {
         NSLog(@"state_ != empyty String");
         [queryString_ appendFormat:@"state=%@&", state_];
     
-    } else if (![mobile_ isEqualToString:@""]) {
+    }
+    
+    if (![mobile_ isEqualToString:@""]) {
         NSLog(@"mobile_ != empyty String");
         [queryString_ appendFormat:@"with_mobile=%@&", mobile_];
     }

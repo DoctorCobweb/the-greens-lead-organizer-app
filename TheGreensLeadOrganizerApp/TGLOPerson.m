@@ -18,4 +18,14 @@
 @synthesize note;
 @synthesize supportLevel;
 
+
+
++ (NSString *)formattedSupportLevel:(NSNumber *)level
+{
+    NSDictionary *supportLevel = @{ @"1":@"Strong support", @"2":@"Weak support", @"3":@"Undecided", @"4":@"Weak oppose", @"5":@"Strong oppose"};
+
+    return [supportLevel objectForKey:[level stringValue]];
+
+}
+
 @end

@@ -12,8 +12,14 @@
 
 
 // NATION BUILDER API KEY and SECRET HERE
+//AGTEST
 static NSString * nationBuilderClientID = @"ecc44472c84d126f006ccad6485f5dc127ae1400f0f937cf0167a60a12cfabc6";
 static NSString * nationBuilderClientSecret = @"5faca3b8f58b91696f07fc499b5674f6d12de149a0d6e9616aae42fba387701f";
+
+//AGV => must create/register app in agv to get these 
+//static NSString * nationBuilderClientID = @"";
+//static NSString * nationBuilderClientSecret = @"";
+
 static NSString * nationBuilderRedirectUri= @"https://cryptic-tundra-9564.herokuapp.com/oauth2callback";
 static NSString * nationBuilderGrantType = @"authorization_code";
 static NSString * nationBuilderCode = @"code";
