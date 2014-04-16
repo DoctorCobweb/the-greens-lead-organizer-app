@@ -9,7 +9,7 @@
 #import "TGLOTagViewController.h"
 #import "AFNetworking.h"
 #import "AFNetworkActivityIndicatorManager.h"
-#import "TGLOPersonViewController.h"
+#import "TGLOPersonFromTagViewController.h"
 #import "TGLOPerson.h"
 #import "TGLOAppDelegate.h"
 
@@ -289,7 +289,7 @@ static NSString *peopleForTagUrl= @"https://%@.nationbuilder.com/api/v1/tags/%@/
     if ([segue.identifier isEqualToString:@"showPersonInTag"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         
-        TGLOPersonViewController *destViewController = (TGLOPersonViewController *) segue.destinationViewController;
+        TGLOPersonFromTagViewController *destViewController = (TGLOPersonFromTagViewController *) segue.destinationViewController;
         destViewController.person = [people objectAtIndex:indexPath.row];
     }
 }

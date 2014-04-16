@@ -1,12 +1,11 @@
 //
-//  TGLOPersonViewController.m
+//  TGLOPersonFromTagViewController.m
 //  TheGreensLeadOrganizerApp
 //
-//  Created by andre on 9/04/2014.
+//  Created by andre on 16/04/2014.
 //  Copyright (c) 2014 andre trosky. All rights reserved.
 //
-
-#import "TGLOPersonViewController.h"
+#import "TGLOPersonFromTagViewController.h"
 #import "TGLOAppDelegate.h"
 #import "TGLOCustomContactView.h"
 #import "AFNetworking.h"
@@ -16,18 +15,18 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
 
 
 
-@interface TGLOPersonViewController ()
+@interface TGLOPersonFromTagViewController ()
 {
     NSString *token;
     NSMutableArray *contacts;
-
+    
 }
 @property (nonatomic, strong) UIAlertView *tokenAlert;
 
 
 @end
 
-@implementation TGLOPersonViewController
+@implementation TGLOPersonFromTagViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -44,7 +43,7 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     
     token = [[NSUserDefaults standardUserDefaults] valueForKey:accessToken];
     NSLog(@"access_token: %@", token);
-
+    
     
     [self setUpAppearance];
 }
@@ -65,28 +64,26 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     self.containerView.frame = CGRectMake(0, 0, 320, 550);
     
     if(self.person){
-      //get the person object passed through from segue
-      self.firstName.text = self.person.firstName;
-      self.lastName.text = self.person.lastName;
+        //get the person object passed through from segue
+        self.firstName.text = self.person.firstName;
+        self.lastName.text = self.person.lastName;
         self.supportLevel.text = [TGLOPerson formattedSupportLevel:self.person.supportLevel];
-      //self.supportLevel.text = [self.person.supportLevel stringValue];
         
-      
-    
-      [self.email setTitle:self.person.email forState:UIControlStateNormal];
-      //[self.email setTitleColor:white_color forState:UIControlStateNormal];
         
-      [self.phone setTitle:self.person.phone forState:UIControlStateNormal];
-      //[self.phone setTitleColor:white_color forState:UIControlStateNormal];
+        [self.email setTitle:self.person.email forState:UIControlStateNormal];
+        //[self.email setTitleColor:white_color forState:UIControlStateNormal];
         
-      [self.mobile setTitle:self.person.mobile forState:UIControlStateNormal];
-      //[self.mobile setTitleColor:white_color forState:UIControlStateNormal];
+        [self.phone setTitle:self.person.phone forState:UIControlStateNormal];
+        //[self.phone setTitleColor:white_color forState:UIControlStateNormal];
+        
+        [self.mobile setTitle:self.person.mobile forState:UIControlStateNormal];
+        //[self.mobile setTitleColor:white_color forState:UIControlStateNormal];
         
     }
     
     [self addTagViews];
-
-
+    
+    
 }
 
 -(void)addTagViews
@@ -98,13 +95,9 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     }
     
     [self getAllMyContacts];
-
-
+    
+    
 }
-
-
-
-
 
 
 - (void)addASingleTag:(NSString *)tag
@@ -126,14 +119,14 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     
     //finally add the new view to as last subview
     [self.containerView addSubview:newTextField];
-
+    
 }
 
 
 
 - (void)getAllMyContacts
 {
-
+    
     //this method is always called after all
     //the tags have rendered. therefore, before
     //going off to call the contacts api, create
@@ -146,11 +139,11 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     
     if ([token isEqual:nil]){
         NSLog(@"token is equal to nil");
-    
+        
     }
     if ([token isEqual:Nil]){
         NSLog(@"token is equal to Nil");
-    
+        
     }
     if ([token isEqual:[NSNull null]]){
         NSLog(@"token is equal to [NSNull null]");
@@ -158,7 +151,7 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     
     //this evals to true if token is not set
     if (!token) {
-    
+        
         NSLog(@"!token is true");
     }
     
@@ -360,7 +353,7 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
 
 -(void)makeCall:(id)sender
 {
-
+    
     NSLog(@"makeCall method called, sender is: %@", sender);
     NSString *title = [((UIButton *) sender) currentTitle];
     NSLog(@"currentTitle: %@", title);
@@ -380,7 +373,7 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     //check to see if the app can make calls before making the call
     if ([myApp canOpenURL:theCallUrl]) {
         NSLog(@"this app can open the url %@", theCallUrl);
-       [myApp openURL:theCallUrl];
+        [myApp openURL:theCallUrl];
     } else {
         NSLog(@"ERROR: this app can NOT open the url: %@", theCallUrl);
         
@@ -411,7 +404,7 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     //check to see if the app can make calls before making the call
     if ([myApp canOpenURL:theEmailUrl]) {
         NSLog(@"this app can open the url %@", theEmailUrl);
-       [myApp openURL:theEmailUrl];
+        [myApp openURL:theEmailUrl];
     } else {
         NSLog(@"ERROR: this app can NOT open the url: %@", theEmailUrl);
         

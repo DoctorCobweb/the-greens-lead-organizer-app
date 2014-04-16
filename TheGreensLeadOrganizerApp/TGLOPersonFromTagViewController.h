@@ -1,16 +1,15 @@
 //
-//  TGLOPersonViewController.h
+//  TGLOPersonFromTagViewController.h
 //  TheGreensLeadOrganizerApp
 //
-//  Created by andre on 9/04/2014.
+//  Created by andre on 16/04/2014.
 //  Copyright (c) 2014 andre trosky. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "TGLOPerson.h"
 
-@interface TGLOPersonViewController : UIViewController
-
+@interface TGLOPersonFromTagViewController : UIViewController
 
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UIView *containerView;

@@ -548,10 +548,10 @@
             </objects>
             <point key="canvasLocation" x="1571" y="-698"/>
         </scene>
-        <!--Person View Controller-->
+        <!--Person From Tag View Controller-->
         <scene sceneID="WBf-sj-ktX">
             <objects>
-                <viewController id="q7g-Zv-wJE" customClass="TGLOPersonViewController" sceneMemberID="viewController">
+                <viewController id="q7g-Zv-wJE" customClass="TGLOPersonFromTagViewController" sceneMemberID="viewController">
                     <scrollView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="tfp-vf-Lyu">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

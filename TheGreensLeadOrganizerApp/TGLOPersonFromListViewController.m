@@ -74,7 +74,6 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
         //get the person object passed through from segue
         self.firstName.text = self.person.firstName;
         self.lastName.text = self.person.lastName;
-        //self.supportLevel.text = [self.person.supportLevel stringValue];
         self.supportLevel.text = [TGLOPerson formattedSupportLevel:self.person.supportLevel];
         
         

@@ -160,7 +160,6 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     self.firstName.text = me.firstName;
     self.lastName.text = me.lastName;
     self.supportLevel.text = [TGLOPerson formattedSupportLevel:me.supportLevel];
-    //self.supportLevel.text = [me.supportLevel stringValue];
     
     [self.email setTitle:me.email forState:UIControlStateNormal];
     //[self.email setTitleColor:white_color forState:UIControlStateNormal];
