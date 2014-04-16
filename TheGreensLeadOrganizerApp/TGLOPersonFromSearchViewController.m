@@ -10,6 +10,7 @@
 #import "TGLOAppDelegate.h"
 #import "AFNetworking.h"
 #import "TGLOCustomContactView.h"
+#import "TGLOEditPersonFromSearchViewController.h"
 
 static NSString *accessToken= @"access_token";
 static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=10&access_token=%@";
@@ -19,7 +20,7 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
 @interface TGLOPersonFromSearchViewController ()
 {
     NSString *token;
-    NSMutableArray *contacts;
+    //NSMutableArray *contacts;
     
 }
 @property (nonatomic, strong) UIAlertView *tokenAlert;
@@ -28,6 +29,7 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
 @end
 
 @implementation TGLOPersonFromSearchViewController
+@synthesize contacts;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -434,5 +436,15 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"showEditPersonFromSearch"]) {
+        
+        TGLOEditPersonFromSearchViewController *destViewController = (TGLOEditPersonFromSearchViewController *) segue.destinationViewController;
+        destViewController.person = self.person;
+        destViewController.contacts= self.contacts;
+    }
+}
 
 @end

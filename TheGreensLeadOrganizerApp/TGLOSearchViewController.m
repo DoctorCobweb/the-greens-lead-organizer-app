@@ -70,7 +70,6 @@ static NSString *searchUrl = @"https://%@.nationbuilder.com/api/v1/people/search
 
 - (NSString *)makeSearchUrl
 {
-#warning TODO: have to url encode spaces for search params
     NSLog(@"startSearch button hit");
     NSMutableString *queryString_ = [[NSMutableString alloc] init];
     
@@ -82,11 +81,6 @@ static NSString *searchUrl = @"https://%@.nationbuilder.com/api/v1/people/search
     NSString *state_     = [self percentEncodeString:self.state.text];
     NSString *mobile_    = [self percentEncodeString:self.mobile.text];
     
-    
-    
-    //NSURL *baseURL = [NSURL URLWithString:@"http://example.com/v1/"];
-    //NSURL *test = [NSURL URLWithString:@"f oo" relativeToURL:baseURL];
-    //NSLog(@"test URL: %@", test);
     
     if (![firstName_ isEqualToString:@""]) {
         NSLog(@"firstName_ != empyty String");
@@ -121,7 +115,7 @@ static NSString *searchUrl = @"https://%@.nationbuilder.com/api/v1/people/search
     
     searchUrl_ = [[NSString alloc] initWithFormat:searchUrl, nationBuilderSlugValue, queryString_, token];
     
-    NSLog(@"searchUrl is: %@", searchUrl_);
+    //NSLog(@"searchUrl is: %@", searchUrl_);
     
     return searchUrl_;
 }
