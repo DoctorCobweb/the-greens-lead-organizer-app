@@ -23,5 +23,8 @@
 @property (nonatomic, strong) NSNumber * recordID;
 
 + (NSString *)formattedSupportLevel:(NSNumber *)level;
++ (NSNumber *)inverseFormattedSupportLevel:(NSString *)word;
++ (NSDictionary *)getSupportLevelDic;
++ (NSDictionary *)swapKeysAndValuesForDic:(NSDictionary *)dic;
 
 @end

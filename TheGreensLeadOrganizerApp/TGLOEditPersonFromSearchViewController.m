@@ -288,7 +288,23 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
 - (IBAction)saveChanges:(id)sender {
     NSLog(@"saveChanges button hit");
     
+    //1. personal fields update
+    //TODO: check for nil ?
+    NSString *firstName_ = self.firstName.text;
+    NSString *lastName_ = self.lastName.text;
+    NSString *email_ = self.email.text;
+    NSString *phone_ = self.phone.text;
+    NSString *mobile_ = self.mobile.text;
     
+    NSNumber *supportLevelNumber = [TGLOPerson inverseFormattedSupportLevel:self.supportLevel.text];
+    NSLog(@"supportLevelNumber: %@", supportLevelNumber );
+    NSString *supportLevel_ = [[NSString alloc] initWithFormat:@"%@", supportLevelNumber];
+    
+    NSLog(@"supportLevel_: %@", supportLevel_);
+    
+    
+
+    //2. tags update
     //construct the body for PUT request. contains surviving tags
     //which still have a value of @"1" in tagsToDelete array
     int number_of_tags = [tagsToDelete count];
@@ -306,10 +322,10 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     
     //tagsToDelete dic should only hold tags we want to keep
     //=> can use this tagsToDelete as body obj for PUT request below
-    NSDictionary *updateTagsBody =@{@"person":@{@"tags":[tagsToKeep allKeys]}};
+    NSDictionary *updateBody =@{@"person":@{@"tags":[tagsToKeep allKeys], @"first_name":firstName_, @"last_name":lastName_, @"email1":email_, @"phone":phone_, @"mobile":mobile_, @"support_level":supportLevel_}};
     
     NSLog(@"KEEPing tags: %@", [tagsToKeep allKeys]);
-    NSLog(@"%@", updateTagsBody);
+    NSLog(@"%@", updateBody);
     
     
     
@@ -326,8 +342,8 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     NSLog(@"manager.requestSerializer: %@", manager.requestSerializer);
     
     
-    [manager PUT:updatePeopleUrl_ parameters:updateTagsBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        //NSLog(@" PUT => updating tags with response %@",responseObject);
+    [manager PUT:updatePeopleUrl_ parameters:updateBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@" PUT => updating tags with response %@",responseObject);
         
         NSLog(@"SUCCESSfully deleted tag.");
         
