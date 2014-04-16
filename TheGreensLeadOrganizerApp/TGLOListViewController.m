@@ -97,7 +97,6 @@ static NSString * aListUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/peop
         
         peopleInList = [[NSMutableArray alloc] initWithArray:results_array];
         
-        //taggings now has all the tags for person
         NSLog(@"peopleInList array: %@", peopleInList);
         
         //reload tableview to display new data returned from server

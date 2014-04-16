@@ -137,17 +137,6 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     NSLog(@"self.person.recordID: %@", self.person.recordID);
     NSLog(@"token: %@", token);
     
-    if ([token isEqual:nil]){
-        NSLog(@"token is equal to nil");
-        
-    }
-    if ([token isEqual:Nil]){
-        NSLog(@"token is equal to Nil");
-        
-    }
-    if ([token isEqual:[NSNull null]]){
-        NSLog(@"token is equal to [NSNull null]");
-    }
     
     //this evals to true if token is not set
     if (!token) {

@@ -11,9 +11,11 @@
 #import "TGLOCustomEditTagView.h"
 #import "AFNetworking.h"
 #import "AFNetworkActivityIndicatorManager.h"
+#import "TGLOAppDelegate.h"
 
 static NSString *accessToken= @"access_token";
 static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=10&access_token=%@";
+static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people/%@?access_token=%@";
 
 
 @interface TGLOEditPersonFromSearchViewController ()
@@ -227,8 +229,12 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
         NSString *imageLocation = [[NSString alloc] initWithFormat:@"%@/grey120x120.png", bundlePath ];
         UIImage *backgroundImage = [[UIImage alloc] initWithContentsOfFile:imageLocation];
         NSLog(@"backgroundImage: %@", backgroundImage);
+       
+        //tag the parent view to say delete it. 1 == 'delete'
+        superView.tag = 123;
         
-         [correspondingButton setBackgroundImage:backgroundImage forState:UIControlStateNormal];
+        
+        [correspondingButton setBackgroundImage:backgroundImage forState:UIControlStateNormal];
         
         [tagsToDelete setObject:@"0" forKey:correspondingButton.titleLabel.text];
         
@@ -239,7 +245,10 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
         UIImage *backgroundImage = [[UIImage alloc] initWithContentsOfFile:imageLocation];
         NSLog(@"backgroundImage: %@", backgroundImage);
         
-         [correspondingButton setBackgroundImage:backgroundImage forState:UIControlStateNormal];
+        [correspondingButton setBackgroundImage:backgroundImage forState:UIControlStateNormal];
+        
+        //reset the tag to defualt value of 0
+        superView.tag = 0;
         
         [tagsToDelete setObject:@"1" forKey:correspondingButton.titleLabel.text];
     }
@@ -278,5 +287,84 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
 
 - (IBAction)saveChanges:(id)sender {
     NSLog(@"saveChanges button hit");
+    
+    
+    //construct the body for PUT request. contains surviving tags
+    //which still have a value of @"1" in tagsToDelete array
+    int number_of_tags = [tagsToDelete count];
+    NSArray *tagsKey = [tagsToDelete allKeys];
+    NSMutableDictionary *tagsToKeep = [[NSMutableDictionary alloc] initWithCapacity:number_of_tags];
+    
+    for (int i = 0; i < number_of_tags; i++) {
+        NSString *key_ = tagsKey[i];
+        NSString *value_ = [tagsToDelete objectForKey:tagsKey[i]];
+        
+        if (![value_ isEqualToString:@"0"]) {
+            [tagsToKeep setObject:value_ forKey:key_];
+        }
+    }
+    
+    //tagsToDelete dic should only hold tags we want to keep
+    //=> can use this tagsToDelete as body obj for PUT request below
+    NSDictionary *updateTagsBody =@{@"person":@{@"tags":[tagsToKeep allKeys]}};
+    
+    NSLog(@"KEEPing tags: %@", [tagsToKeep allKeys]);
+    NSLog(@"%@", updateTagsBody);
+    
+    
+    
+    //update taggings
+    NSString * updatePeopleUrl_ = [NSString stringWithFormat:updatePeopleUrl, nationBuilderSlugValue, self.person.recordID, token];
+    
+    //need to get notes on the person from a different api, namely
+    // the contacts api
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    //must set request serializer to application/json. otherwise 406
+    //is responded
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    NSLog(@"manager.requestSerializer: %@", manager.requestSerializer);
+    
+    
+    [manager PUT:updatePeopleUrl_ parameters:updateTagsBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //NSLog(@" PUT => updating tags with response %@",responseObject);
+        
+        NSLog(@"SUCCESSfully deleted tag.");
+        
+        //update UI
+        //find the elements to delete using the 123 tag
+        while (!![self.containerView viewWithTag:123]) {
+            TGLOCustomEditTagView *oldTag = (TGLOCustomEditTagView *)[self.containerView viewWithTag:123];
+            
+            [oldTag removeFromSuperview];
+            
+#warning TODO: update self.person.tags also. get rid of removed tag
+            
+        }
+        
+        //also set the person.tags mutable array to updated tags
+        //[self.person.tags removeAllObjects];
+        //NSMutableArray *tempArray = [[NSMutableArray alloc] initWithArray:[tagsToKeep allKeys]];
+        //self.person.tags = tempArray;
+        
+        
+        //[self addTagViews];
+        
+        
+        //NSSet * contacts_set = [responseObject objectForKey:@"results"];
+        //NSArray *contacts_ = [contacts_set allObjects];
+        
+        //contacts = [[NSMutableArray alloc] initWithArray:contacts_];
+        
+        //NSLog(@"contacts: %@", contacts);
+        //NSLog(@"%d contact records returned", [contacts count]);
+        
+        //[self addContactViews];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+    
+    
 }
 @end

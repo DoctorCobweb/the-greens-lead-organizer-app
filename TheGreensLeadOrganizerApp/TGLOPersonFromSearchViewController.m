@@ -145,6 +145,7 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     NSLog(@"self.person.recordID: %@", self.person.recordID);
     NSLog(@"token: %@", token);
     
+    //playing with 'nothing'
     if ([token isEqual:nil]){
         NSLog(@"token is equal to nil");
         
