@@ -67,6 +67,7 @@ static NSString *searchUrl = @"https://%@.nationbuilder.com/api/v1/people/search
     // Dispose of any resources that can be recreated.
 }
 
+
 - (NSString *)makeSearchUrl
 {
 #warning TODO: have to url encode spaces for search params
@@ -75,12 +76,17 @@ static NSString *searchUrl = @"https://%@.nationbuilder.com/api/v1/people/search
     
     NSString *searchUrl_ = [[NSString alloc] init];
     
-    NSString *firstName_ = self.firstName.text;
-    NSString *lastName_  = self.lastName.text;
-    NSString *city_      = self.city.text;
-    NSString *state_     = self.state.text;
-    NSString *mobile_    = self.mobile.text;
+    NSString *firstName_ = [self percentEncodeString:self.firstName.text];
+    NSString *lastName_  = [self percentEncodeString:self.lastName.text ];
+    NSString *city_      = [self percentEncodeString:self.city.text];
+    NSString *state_     = [self percentEncodeString:self.state.text];
+    NSString *mobile_    = [self percentEncodeString:self.mobile.text];
     
+    
+    
+    //NSURL *baseURL = [NSURL URLWithString:@"http://example.com/v1/"];
+    //NSURL *test = [NSURL URLWithString:@"f oo" relativeToURL:baseURL];
+    //NSLog(@"test URL: %@", test);
     
     if (![firstName_ isEqualToString:@""]) {
         NSLog(@"firstName_ != empyty String");
@@ -121,6 +127,55 @@ static NSString *searchUrl = @"https://%@.nationbuilder.com/api/v1/people/search
 }
 
 
+//percent encode all the search terms before calling search enpoint
+- (NSString *)percentEncodeString:(NSString *)unencodedString
+{
+    NSUInteger stringLength = [unencodedString length];
+    NSMutableString *encodedString = [[NSMutableString alloc] init];
+    
+    
+    //characters used in percent escaping:
+    //space!#$&'()*+,/:;=?@[]"%-.<>\^_`{|}~
+    NSDictionary *reservedCharacters = @{ @" ": @"%20", @"!":@"%21",@"#":@"%23",@"$":@"%24",@"&":@"%26",@"'":@"%27",@"(":@"%28",@")":@"%29",@"*":@"%2A",@"+":@"%2B",@",":@"%2C",@"/":@"%2F",@":":@"%3A",@";":@"%3B",@"=":@"%3D",@"?":@"%3F",@"hack@":@"%40",@"[":@"%5B",@"]":@"%5D",@"%":@"%25", @"\"":@"%22",@"%":@"%25",@"-":@"%2D",@".":@"%2E",@"<":@"%3C",@">":@"%3E",@"\\":@"%5C",@"^":@"%5E",@"_":@"%5F",@"`":@"%60",@"{":@"%7B",@"|":@"%7C",@"}":@"%7D",@"~":@"%7E"};
+    
+    
+    for (int i = 0; i < stringLength; i++) {
+        unichar c = [unencodedString characterAtIndex:i];
+        
+        NSString *characterAtIString = [[NSString alloc] initWithFormat:@"%c", c];
+        NSLog(@"%@",characterAtIString);
+        
+        //handle @ character separately
+        //there has to be a less hacky way to do this.
+        //but for now just do this
+        if([characterAtIString isEqualToString:@"@"]){
+            //handler @ differently @"@" -> @"hack@" as a key
+            //we have a reserved character
+            //NSLog(@"reserved char as string: %@", characterAtIString);
+            NSString *encodingValue = [reservedCharacters valueForKey:@"hack@"];
+            [encodedString appendString:encodingValue];
+            continue;
+        }
+        
+        
+        //all other characters are handled here
+        if (!![reservedCharacters valueForKey:characterAtIString]) {
+            //we have a reserved character
+            //NSLog(@"reserved char as string: %@", characterAtIString);
+            NSString *encodingValue = [reservedCharacters valueForKey:characterAtIString];
+            [encodedString appendString:encodingValue];
+            continue;
+        }
+        //NSLog(@"unreserved char: %@", characterAtIString);
+            [encodedString appendString:characterAtIString];
+    }
+    NSLog(@"unecoded string: %@", unencodedString);
+    NSLog(@"Percent encodedString: %@", encodedString);
+    
+    NSString * finalEncodedString = [NSString stringWithString:encodedString];
+    
+    return finalEncodedString;
+}
 
 #pragma mark - Navigation
 

@@ -367,6 +367,8 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     NSArray *title_split =  [title componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" -+()"]];
     
     NSString *title_cleaned= [title_split componentsJoinedByString:@""];
+    
+    
     NSLog(@"title_split: %@", title_split);
     NSLog(@"title_joined: %@", title_cleaned);
     
