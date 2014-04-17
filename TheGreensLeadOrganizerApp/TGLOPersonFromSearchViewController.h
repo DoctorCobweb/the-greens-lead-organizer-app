@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "TGLOPerson.h"
+#import "TGLOEditPersonFromSearchViewController.h"
 
-@interface TGLOPersonFromSearchViewController : UIViewController
+
+
+@interface TGLOPersonFromSearchViewController : UIViewController <UpdatePersonDelegate>
 
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UIView *containerView;
@@ -23,6 +26,8 @@
 @property (strong, nonatomic) TGLOPerson *person;
 @property (strong, nonatomic) NSMutableArray *contacts;
 
+
+
 - (void)setUpAppearance;
 - (void)getAllMyContacts;
 - (void)addTagViews;
@@ -35,3 +40,4 @@
 - (IBAction)writeEmail:(id)sender;
 
 @end
+

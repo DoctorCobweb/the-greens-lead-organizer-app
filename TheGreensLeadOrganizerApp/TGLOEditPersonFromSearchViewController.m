@@ -574,10 +574,10 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     TGLOCustomEditContactView *newContact = (TGLOCustomEditContactView *)[self.containerView viewWithTag:300];
 
     
-    NSString *contactType = ((UITextField *)[newContact viewWithTag:301]).text;
-    NSString *methodType =  ((UITextField *)[newContact viewWithTag:302]).text;
-    NSString *statusType =  ((UITextField *)[newContact viewWithTag:303]).text;
-    NSString *noteType =    ((UITextField *)[newContact viewWithTag:304]).text;
+    NSString *contactType = ((UITextField *)[newContact viewWithTag:305]).text;
+    NSString *methodType =  ((UITextField *)[newContact viewWithTag:306]).text;
+    NSString *statusType =  ((UITextField *)[newContact viewWithTag:307]).text;
+    NSString *noteType =    ((UITextField *)[newContact viewWithTag:308]).text;
     
     NSLog(@"contactType: %@", contactType);
     NSLog(@"methodType: %@", methodType);
@@ -683,6 +683,16 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     
     [self addTagViews];
     [self displaySuccessAlert];
+    [self reRenderPreviousControllerUI];
+}
+
+- (void)reRenderPreviousControllerUI
+{
+#warning TODO: check that delegate has implemented the following method
+    NSLog(@"calling didUpdatePerson....");
+    [self.delegate didUpdatePerson:self.person];
+
+
 }
 
 

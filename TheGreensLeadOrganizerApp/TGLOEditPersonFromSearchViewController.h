@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "TGLOPerson.h"
 
+@protocol UpdatePersonDelegate;
 
 @interface TGLOEditPersonFromSearchViewController : UIViewController
 
@@ -26,6 +27,7 @@
 @property (strong ,nonatomic) TGLOPerson *person;
 @property (strong, nonatomic) NSMutableArray *contacts;
 
+@property (nonatomic, weak) id<UpdatePersonDelegate>delegate;
 
 - (void)setUpAppearance;
 - (void)addTagViews;
@@ -38,9 +40,15 @@
 - (void)saveTheNewContact;
 - (void)displaySuccessAlert;
 - (void)reRenderUI;
+- (void)reRenderPreviousControllerUI;
 
 - (IBAction)saveChanges:(id)sender;
 - (void)toggleTag:(id)sender;
 - (void)toggleContact:(id)sender;
 
+@end
+
+@protocol UpdatePersonDelegate <NSObject>
+@optional
+-(void) didUpdatePerson:(TGLOPerson *)updatedPerson;
 @end
