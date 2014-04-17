@@ -33,7 +33,9 @@
 - (id) fabricateANewView:(NSString *)viewType width:(CGFloat)viewWidth height:(CGFloat)viewHeight spacing: (CGFloat)viewSpacing;
 - (void)updateScrollAndContainerViewSize:(CGFloat)makeMoreRoom;
 - (void)setupTagsToDeleteArray;
-
+- (void)addContactsLabel;
+- (void)makeABlankContactView;
+- (void)saveTheNewContact;
 
 - (IBAction)saveChanges:(id)sender;
 - (void)toggleTag:(id)sender;

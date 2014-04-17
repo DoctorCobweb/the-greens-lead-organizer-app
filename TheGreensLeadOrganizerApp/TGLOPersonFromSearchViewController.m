@@ -148,11 +148,9 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     //playing with 'nothing'
     if ([token isEqual:nil]){
         NSLog(@"token is equal to nil");
-        
     }
     if ([token isEqual:Nil]){
         NSLog(@"token is equal to Nil");
-        
     }
     if ([token isEqual:[NSNull null]]){
         NSLog(@"token is equal to [NSNull null]");
@@ -160,9 +158,10 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     
     //this evals to true if token is not set
     if (!token) {
-        
         NSLog(@"!token is true");
     }
+    
+    
     
     if (!!self.person.recordID && !!token) {
         
@@ -243,40 +242,36 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     //get all the subview objects from our custom
     //view. we need to set the text to be what our
     //contacts are
-    NSArray *customViews_ = [customView subviews];
+    //NSArray *customViews_ = [customView subviews];
     
     
     //make sure we dont try to assign null to
     //text property of a view
-    //with reference to the view heirachy of
-    //a TGLOCustomContactView instance:
-    //index 4 = type value field
-    //index 5 = method value field
-    //index 6 = status value field
-    //index 7 = note value field
+    //using view.tag to find respective views of
+    //TGLOCustomContactView
     NSNull *null = [NSNull null];
     NSNumber *typeValue = [contacts[index] objectForKey:@"type_id"];
     NSLog(@"typeValue: %@", typeValue);
     if ([contacts[index] objectForKey:@"type_id"] != null) {
-        ((UILabel *)customViews_[4]).text = [customView getFormattedTypeValue:[typeValue stringValue]];
+        ((UILabel *)[customView viewWithTag:1]).text = [customView getFormattedTypeValue:[typeValue stringValue]];
     }
     
     NSString *methodValue = [contacts[index] objectForKey:@"method"];
     NSLog(@"methodValue: %@", methodValue);
     if ([contacts[index] objectForKey:@"method"] != null) {
-        ((UILabel *)customViews_[5]).text = [customView getFormattedMethodValue:methodValue];
+        ((UILabel *)[customView viewWithTag:2]).text = [customView getFormattedMethodValue:methodValue];
     }
     
     NSString *statusValue = [contacts[index] objectForKey:@"status"];
     NSLog(@"statusValue: %@", statusValue);
     if ([contacts[index] objectForKey:@"status"] != null) {
-        ((UILabel *)customViews_[6]).text = [customView getFormattedStatusesValue:statusValue];
+        ((UILabel *)[customView viewWithTag:3]).text = [customView getFormattedStatusesValue:statusValue];
     }
     
     NSString *noteValue = [contacts[index] objectForKey:@"note"];
     NSLog(@"noteValue: %@", noteValue);
     if ([contacts[index] objectForKey:@"note"] != null) {
-        ((UITextView *)[customView subviews][7]).text =noteValue;
+        ((UITextView *)[customView viewWithTag:4]).text =noteValue;
     }
 
     

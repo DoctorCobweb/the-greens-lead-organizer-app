@@ -6,8 +6,17 @@
 //  Copyright (c) 2014 andre trosky. All rights reserved.
 //
 
+
+
+//IMPORTANT INFO on Views
+//1.views with tag = 123 are the tags to_be_removed when save button
+//is hit
+//2. the edit contact view has tag = 300 which allows us to get at
+//the text input when save button is hit
+
 #import "TGLOEditPersonFromSearchViewController.h"
 #import "TGLOCustomContactView.h"
+#import "TGLOCustomEditContactView.h"
 #import "TGLOCustomEditTagView.h"
 #import "AFNetworking.h"
 #import "AFNetworkActivityIndicatorManager.h"
@@ -100,8 +109,57 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         [self addASingleTag:tag];
     }
     
-    //[self getAllMyContacts];
+    [self addContactsLabel];
+    [self makeABlankContactView];
     //NSLog(@"self subviews: %@", [self.containerView subviews]);
+}
+
+- (void)addContactsLabel
+{
+    CGFloat labelSpacing = 10; //spacing between the views
+    CGFloat makeMoreRoom = 40; //additional room on end of scroll/container view
+    CGFloat labelWidth = 280;  //new label width
+    CGFloat labelHeight= 30;   //new label height
+    
+    
+    UILabel *newLabel = (UILabel *)[self fabricateANewView:@"UILabel" width:labelWidth height:labelHeight spacing:labelSpacing];
+    
+    newLabel.text = @"Log Contact";
+    newLabel.font = [UIFont boldSystemFontOfSize:13];
+    
+    
+    [self updateScrollAndContainerViewSize:makeMoreRoom];
+    
+    //finally add the new view to as last subview
+    [self.containerView addSubview:newLabel];
+}
+
+- (void)makeABlankContactView
+{
+    CGFloat labelSpacing = 20; //spacing between the views
+    CGFloat makeMoreRoom = 250; //additional room on end of scroll/container view
+    CGFloat labelWidth = 280;  //new label width
+    CGFloat labelHeight= 230;   //new label height
+    
+    
+    TGLOCustomEditContactView *customView = (TGLOCustomEditContactView*)[self fabricateANewView:@"TGLOCustomEditContactView" width:labelWidth height:labelHeight spacing:labelSpacing];
+    
+    customView.clipsToBounds = YES;
+    customView.opaque = NO;
+    
+    //add a tag number to this view. use it later to get values of
+    //its views during saving procedure
+    customView.tag = 300;
+    
+    NSLog(@"customView.frame: %@",NSStringFromCGRect(customView.frame));
+    
+    [self updateScrollAndContainerViewSize:makeMoreRoom];
+    
+    //finally add the new custom contact view
+    [self.containerView addSubview:customView];
+
+    
+ 
 }
 
 
@@ -176,10 +234,12 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         return [[UITextField alloc] initWithFrame:viewRect];
     } else if ([viewType isEqualToString:@"TGLOCustomContactView"]) {
         return [[TGLOCustomContactView alloc] initWithFrame:viewRect];
+    } else if ([viewType isEqualToString:@"TGLOCustomEditContactView"]) {
+        return [[TGLOCustomEditContactView alloc] initWithFrame:viewRect];
     } else if ([viewType isEqualToString:@"UIButton"]) {
         UIColor * blackColor = [UIColor colorWithRed:0/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f];
 
-        //return [[UIButton alloc] initWithFrame:viewRect];
+        //setting the background color of button etc
         UIButton *tempButton =[UIButton buttonWithType:UIButtonTypeSystem];
         tempButton.frame = viewRect;
         
@@ -347,6 +407,9 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         
         NSLog(@"SUCCESSfully deleted tag.");
         
+        //now go onto saving a new contact
+        [self saveTheNewContact];
+        
         //update UI
         //find the elements to delete using the 123 tag
         while (!![self.containerView viewWithTag:123]) {
@@ -382,5 +445,25 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     }];
     
     
+}
+
+
+- (void) saveTheNewContact
+{
+    TGLOCustomEditContactView *newContact = (TGLOCustomEditContactView *)[self.containerView viewWithTag:300];
+
+    
+    NSString *contactType = ((UITextField *)[newContact viewWithTag:1]).text;
+    NSString *methodType =  ((UITextField *)[newContact viewWithTag:2]).text;
+    NSString *statusType =  ((UITextField *)[newContact viewWithTag:3]).text;
+    NSString *noteType =    ((UITextField *)[newContact viewWithTag:4]).text;
+    
+    NSLog(@"contactType: %@", contactType);
+    NSLog(@"methodType: %@", methodType);
+    NSLog(@"statusType: %@", statusType);
+    NSLog(@"noteType: %@", noteType);
+
+
+
 }
 @end

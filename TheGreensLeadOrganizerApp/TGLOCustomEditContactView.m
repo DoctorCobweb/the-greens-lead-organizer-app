@@ -1,12 +1,12 @@
 //
-//  TGLOCustomContactView.m
+//  TGLOCustomEditContactView.m
 //  TheGreensLeadOrganizerApp
 //
-//  Created by andre on 14/04/2014.
+//  Created by andre on 17/04/2014.
 //  Copyright (c) 2014 andre trosky. All rights reserved.
 //
 
-#import "TGLOCustomContactView.h"
+#import "TGLOCustomEditContactView.h"
 
 static NSDictionary *contactTypes;
 static NSDictionary *contactMethods;
@@ -14,9 +14,7 @@ static NSDictionary *contactStatuses;
 
 
 
-@implementation TGLOCustomContactView
-
-
+@implementation TGLOCustomEditContactView
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -52,11 +50,10 @@ static NSDictionary *contactStatuses;
         
         
         
-        UILabel *typeValue = [[UILabel alloc] initWithFrame:CGRectMake(85, 0, 200, 30)];
-        UILabel *methodValue = [[UILabel alloc] initWithFrame:CGRectMake(85, 35, 200, 30)];
-        UILabel *statusValue = [[UILabel alloc] initWithFrame:CGRectMake(85, 70, 200, 30)];
+        UITextField *typeValue = [[UITextField alloc] initWithFrame:CGRectMake(85, 0, 200, 30)];
+        UITextField *methodValue = [[UITextField alloc] initWithFrame:CGRectMake(85, 35, 200, 30)];
+        UITextField *statusValue = [[UITextField alloc] initWithFrame:CGRectMake(85, 70, 200, 30)];
         UITextView *noteValue = [[UITextView alloc] initWithFrame:CGRectMake(0, 140, 320, 100)];
-        
         
         //add tags to these. used in other classes to get a ref
         //to them
@@ -66,9 +63,9 @@ static NSDictionary *contactStatuses;
         noteValue.tag =   4;
         
         //customize textview a bit more
-        noteValue.text = @"Default Custom Contact View note";
-        noteValue.editable = NO;
-        noteValue.scrollEnabled = NO;
+        noteValue.text = @"Add note content";
+        noteValue.editable = YES;
+        noteValue.scrollEnabled = YES;
         
         //set the font
         UIFont *font_ = [UIFont systemFontOfSize:14];
@@ -136,12 +133,12 @@ static NSDictionary *contactStatuses;
 
 
 /*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
+ // Only override drawRect: if you perform custom drawing.
+ // An empty implementation adversely affects performance during animation.
+ - (void)drawRect:(CGRect)rect
+ {
+ // Drawing code
+ }
+ */
 
 @end

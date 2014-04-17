@@ -12,6 +12,7 @@
 		651318BD18FE48F100995995 /* TGLOEditPersonFromSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 651318BC18FE48F100995995 /* TGLOEditPersonFromSearchViewController.m */; };
 		651318BF18FE679800995995 /* grey120x120.png in Resources */ = {isa = PBXBuildFile; fileRef = 651318BE18FE679800995995 /* grey120x120.png */; };
 		651318C418FE708D00995995 /* TGLOCustomEditTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 651318C318FE708D00995995 /* TGLOCustomEditTagView.m */; };
+		651318C718FF71B000995995 /* TGLOCustomEditContactView.m in Sources */ = {isa = PBXBuildFile; fileRef = 651318C618FF71B000995995 /* TGLOCustomEditContactView.m */; };
 		651626D418F4FEDF00DCC064 /* TGLODonationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 651626D318F4FEDF00DCC064 /* TGLODonationsViewController.m */; };
 		651626D718F525F700DCC064 /* TGLOTheGreensViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 651626D618F525F700DCC064 /* TGLOTheGreensViewController.m */; };
 		651626DA18F52A0400DCC064 /* TGLOEnrolToVoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 651626D918F52A0400DCC064 /* TGLOEnrolToVoteViewController.m */; };
@@ -86,6 +87,8 @@
 		651318BE18FE679800995995 /* grey120x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grey120x120.png; sourceTree = "<group>"; };
 		651318C218FE708D00995995 /* TGLOCustomEditTagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOCustomEditTagView.h; sourceTree = "<group>"; };
 		651318C318FE708D00995995 /* TGLOCustomEditTagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOCustomEditTagView.m; sourceTree = "<group>"; };
+		651318C518FF71B000995995 /* TGLOCustomEditContactView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOCustomEditContactView.h; sourceTree = "<group>"; };
+		651318C618FF71B000995995 /* TGLOCustomEditContactView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOCustomEditContactView.m; sourceTree = "<group>"; };
 		651626D218F4FEDF00DCC064 /* TGLODonationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLODonationsViewController.h; sourceTree = "<group>"; };
 		651626D318F4FEDF00DCC064 /* TGLODonationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLODonationsViewController.m; sourceTree = "<group>"; };
 		651626D518F525F700DCC064 /* TGLOTheGreensViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOTheGreensViewController.h; sourceTree = "<group>"; };
@@ -197,6 +200,8 @@
 				655572B318FBD5AD00FA4297 /* TGLOCustomContactView.m */,
 				651318C218FE708D00995995 /* TGLOCustomEditTagView.h */,
 				651318C318FE708D00995995 /* TGLOCustomEditTagView.m */,
+				651318C518FF71B000995995 /* TGLOCustomEditContactView.h */,
+				651318C618FF71B000995995 /* TGLOCustomEditContactView.m */,
 			);
 			name = CustomViews;
 			sourceTree = "<group>";
@@ -507,6 +512,7 @@
 				651626FC18F90D5300DCC064 /* TGLOPersonFromSearchViewController.m in Sources */,
 				651626E618F55ABF00DCC064 /* TGLOSearchViewController.m in Sources */,
 				651318BA18FE1A3F00995995 /* TGLOPersonFromTagViewController.m in Sources */,
+				651318C718FF71B000995995 /* TGLOCustomEditContactView.m in Sources */,
 				65BC972218F3CE52006063CA /* TGLOMainViewController.m in Sources */,
 				651626DA18F52A0400DCC064 /* TGLOEnrolToVoteViewController.m in Sources */,
 				651626DD18F5312300DCC064 /* TGLOMyTagsViewController.m in Sources */,

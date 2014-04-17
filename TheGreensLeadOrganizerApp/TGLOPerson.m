@@ -27,6 +27,7 @@
 @synthesize supportLevel;
 
 
+#warning TODO: rename methods and error checking etc
 
 + (NSString *)formattedSupportLevel:(NSNumber *)level
 {
