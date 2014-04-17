@@ -31,6 +31,7 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
 {
     NSString *token;
     NSMutableDictionary *tagsToDelete;
+    TGLOPerson *oldPersonDetails;
 }
 
 @end
@@ -96,6 +97,17 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         self.email.text = self.person.email;
         self.phone.text = self.person.phone;
         self.mobile.text = self.person.mobile;
+        
+        
+        //also store the details in oldPersonDetails as an undo
+        oldPersonDetails = [[TGLOPerson alloc] init];
+        oldPersonDetails.firstName = self.person.firstName;
+        oldPersonDetails.lastName = self.person.lastName;
+        oldPersonDetails.email = self.person.email;
+        oldPersonDetails.phone = self.person.phone;
+        oldPersonDetails.mobile = self.person.mobile;
+        oldPersonDetails.supportLevel = self.person.supportLevel;
+        oldPersonDetails.tags = self.person.tags;
     }
     
     [self addTagViews];
@@ -205,8 +217,8 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     //NSLog(@"self.containerView frame: %@",NSStringFromCGRect([self.containerView frame]));
     
     CGRect containerFrame = [self.containerView frame];
-    CGFloat containerHeight = CGRectGetHeight(containerFrame);
-    CGFloat containerWidth = CGRectGetWidth(containerFrame);
+    //CGFloat containerHeight = CGRectGetHeight(containerFrame);
+    //CGFloat containerWidth = CGRectGetWidth(containerFrame);
     
     //NSLog(@"containerFrame height: %f", containerHeight);
     //NSLog(@"containerFrame width: %f", containerWidth);
@@ -350,19 +362,34 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     
     //1. personal fields update
     //TODO: check for nil ?
-    NSString *firstName_ = self.firstName.text;
-    NSString *lastName_ = self.lastName.text;
-    NSString *email_ = self.email.text;
-    NSString *phone_ = self.phone.text;
-    NSString *mobile_ = self.mobile.text;
-    
-    NSNumber *supportLevelNumber = [TGLOPerson inverseFormattedSupportLevel:self.supportLevel.text];
-    NSLog(@"supportLevelNumber: %@", supportLevelNumber );
-    NSString *supportLevel_ = [[NSString alloc] initWithFormat:@"%@", supportLevelNumber];
-    
-    NSLog(@"supportLevel_: %@", supportLevel_);
+    //NSString *firstName_ = self.firstName.text;
+    //NSString *lastName_ = self.lastName.text;
+    //NSString *email_ = self.email.text;
+    //NSString *phone_ = self.phone.text;
+    //NSString *mobile_ = self.mobile.text;
     
     
+    //create an updated person
+    //NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+    NSNumber *supportLevelTranslatedToNumber = [TGLOPerson inverseFormattedSupportLevel:self.supportLevel.text];
+    NSString *supportLevelTranslated = [[NSString alloc] initWithFormat:@"%@", supportLevelTranslatedToNumber];
+    NSLog(@"supportLevelNumber: %@", supportLevelTranslatedToNumber );
+    
+    TGLOPerson *updatedPerson = [[TGLOPerson alloc] init];
+    updatedPerson.firstName = self.firstName.text;
+    updatedPerson.lastName = self.lastName.text;
+    updatedPerson.email = self.email.text;
+    updatedPerson.phone = self.phone.text;
+    updatedPerson.mobile = self.mobile.text;
+    updatedPerson.supportLevel = supportLevelTranslatedToNumber;
+    updatedPerson.recordID = self.person.recordID;  //dont change the recordID => copy it over!
+    
+    //[f setNumberStyle:NSNumberFormatterDecimalStyle];
+    //updatedPerson.supportLevel = [f numberFromString:supportLevelTranslated];
+    
+    
+    //need the string version of supportLevel in PUT req
+    //NSString *supportLevel_ = [[NSString alloc] initWithFormat:@"%@", updatedPerson.supportLevel];
 
     //2. tags update
     //construct the body for PUT request. contains surviving tags
@@ -380,13 +407,22 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         }
     }
     
+    
+    //also include the new tag from addNewTag property
+    //note: if user adds tags like "v_book, flow, gurkin"
+    //nation builder will parse these into individual tags
+    //separated by commas. cool!
+    [tagsToKeep setObject:@"1" forKey:self.addANewTag.text];
+    
+    updatedPerson.tags = [[NSMutableArray alloc] initWithArray:[tagsToKeep allKeys]];
+    
+    
     //tagsToDelete dic should only hold tags we want to keep
     //=> can use this tagsToDelete as body obj for PUT request below
-    NSDictionary *updateBody =@{@"person":@{@"tags":[tagsToKeep allKeys], @"first_name":firstName_, @"last_name":lastName_, @"email1":email_, @"phone":phone_, @"mobile":mobile_, @"support_level":supportLevel_}};
+    NSDictionary *updateBody =@{@"person":@{@"tags":[tagsToKeep allKeys], @"first_name":updatedPerson.firstName, @"last_name":updatedPerson.lastName, @"email1":updatedPerson.email, @"phone":updatedPerson.phone, @"mobile":updatedPerson.mobile, @"support_level":supportLevelTranslated}};
     
     NSLog(@"KEEPing tags: %@", [tagsToKeep allKeys]);
     NSLog(@"%@", updateBody);
-    
     
     
     //update taggings
@@ -404,21 +440,30 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     
     [manager PUT:updatePeopleUrl_ parameters:updateBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@" PUT => updating tags with response %@",responseObject);
-        
         NSLog(@"SUCCESSfully deleted tag.");
         
-        //now go onto saving a new contact
+        //we should go onto saving a new contact as soon as possible
         [self saveTheNewContact];
+        
+        //UPDATE PERSON DETAILS property
+        //because changes were successul we can now swap over the
+        //self.person to use updated details
+        //change over to use new person details. careful.
+        self.person = updatedPerson;
+        //sanity check:
+        NSLog(@"self.person.firstName: %@", self.person.firstName);
+        NSLog(@"oldPersonDetails.firstName: %@", oldPersonDetails.firstName);
+        NSLog(@"self.person.supportLevel: %@", self.person.supportLevel);
+        NSLog(@"oldPersonDetails.supportLevel: %@", oldPersonDetails.supportLevel);
+        NSLog(@"self.person.tags: %@", self.person.tags);
+        NSLog(@"oldPersonDetails.tags: %@", oldPersonDetails.tags);
+          
         
         //update UI
         //find the elements to delete using the 123 tag
         while (!![self.containerView viewWithTag:123]) {
             TGLOCustomEditTagView *oldTag = (TGLOCustomEditTagView *)[self.containerView viewWithTag:123];
-            
             [oldTag removeFromSuperview];
-            
-#warning TODO: update self.person.tags also. get rid of removed tag
-            
         }
         
         //also set the person.tags mutable array to updated tags
