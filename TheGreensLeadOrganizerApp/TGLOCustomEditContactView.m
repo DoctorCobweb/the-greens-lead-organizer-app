@@ -57,11 +57,15 @@ static NSDictionary *contactStatuses;
         
         //add tags to these. used in other classes to get a ref
         //to them
-        self.tag = 300;
-        typeValue.tag =   301;
-        methodValue.tag = 302;
-        statusValue.tag = 303;
-        noteValue.tag =   304;
+        self.tag =        300;
+        typeLabel.tag =   301;
+        methodLabel.tag = 302;
+        statusLabel.tag = 303;
+        noteLabel.tag =   304;
+        typeValue.tag =   305;
+        methodValue.tag = 306;
+        statusValue.tag = 307;
+        noteValue.tag =   308;
         
         //default editing is OFF
         typeValue.userInteractionEnabled = NO;
@@ -76,7 +80,6 @@ static NSDictionary *contactStatuses;
         
         //set the font
         UIFont *font_ = [UIFont systemFontOfSize:14];
-        UIColor *backgroundValue = [UIColor colorWithRed:255/255.0f green:237/255.0f blue:74/255.0f alpha:1.0f];
         UIColor *backgroundDark = [UIColor colorWithRed:220/255.0f green:220/255.0f blue:220/255.0f alpha:1.0f];;
         UIColor *backgroundLabel = [UIColor colorWithRed:230/255.0f green:230/255.0f blue:230/255.0f alpha:1.0f];;
         
@@ -95,11 +98,6 @@ static NSDictionary *contactStatuses;
         methodValue.backgroundColor = backgroundLabel;
         statusValue.backgroundColor = backgroundLabel;
         noteValue.backgroundColor = backgroundLabel;
-        
-        //typeValue.backgroundColor = backgroundValue;
-        //methodValue.backgroundColor = backgroundValue;
-        //statusValue.backgroundColor = backgroundValue;
-        //noteValue.backgroundColor = backgroundValue;
         
         
         [self addSubview:typeLabel];

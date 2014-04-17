@@ -16,6 +16,7 @@
     if (self) {
         // Initialization code
         //UIColor * blackColor = [UIColor colorWithRed:0/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f];
+        UIColor * greenColor = [UIColor colorWithRed:129/255.0f green:193/255.0f blue:87/255.0f alpha:1.0f];
         
         
         //setup the button
@@ -29,6 +30,7 @@
         UISwitch *contactSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(220,0, 70, 35)];
         
         contactSwitch.on = NO;
+        contactSwitch.onTintColor = greenColor;
         
         
         contactSwitch.tag = 1;

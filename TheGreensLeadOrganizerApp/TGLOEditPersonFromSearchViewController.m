@@ -162,16 +162,21 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
 {
     NSLog(@"in toggleContactTag");
     
-    UIColor *enabledEditing = [UIColor colorWithRed:255/255.0f green:237/255.0f blue:74/255.0f alpha:1.0f];
     UIColor *disabledEditing = [UIColor colorWithRed:230/255.0f green:230/255.0f blue:230/255.0f alpha:1.0f];;
-    
+    UIColor *backgroundValue = [UIColor colorWithRed:242/255.0f green:178/255.0f blue:210/255.0f alpha:1.0f];
+    UIColor *backgroundDark = [UIColor colorWithRed:235/255.0f green:230/255.0f blue:235/255.0f alpha:1.0f];;
+    UIColor *backgroundLabel = [UIColor colorWithRed:197/255.0f green:72/255.0f blue:148/255.0f alpha:1.0f];;
     
     UISwitch *theSwitch = (UISwitch *)sender;
     TGLOCustomEditContactView *theContact = (TGLOCustomEditContactView*) [self.containerView viewWithTag:300];
-    UITextField *type = ((UITextField *)[theContact viewWithTag:301]);
-    UITextField *method = ((UITextField *)[theContact viewWithTag:302]);
-    UITextField *status = ((UITextField *)[theContact viewWithTag:303]);
-    UITextView *note = ((UITextView*)[theContact viewWithTag:304]);
+    UILabel *typeLabel = ((UILabel *)[theContact viewWithTag:301]);
+    UILabel *methodLabel = ((UILabel *)[theContact viewWithTag:302]);
+    UILabel *statusLabel = ((UILabel *)[theContact viewWithTag:303]);
+    UILabel *noteLabel = ((UILabel *)[theContact viewWithTag:304]);
+    UITextField *typeValue = ((UITextField *)[theContact viewWithTag:305]);
+    UITextField *methodValue = ((UITextField *)[theContact viewWithTag:306]);
+    UITextField *statusValue = ((UITextField *)[theContact viewWithTag:307]);
+    UITextView *noteValue = ((UITextView*)[theContact viewWithTag:308]);
     
     
     if (theSwitch.on ) {
@@ -179,35 +184,47 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         //set flag
         sendInANewContact = YES;
         
-        //make contact available for editing
-        type.backgroundColor = enabledEditing;
-        method.backgroundColor = enabledEditing;
-        status.backgroundColor = enabledEditing;
-        note.backgroundColor = enabledEditing;
+        //make contact look available for editing
+        theContact.backgroundColor = backgroundDark;
+        typeLabel.backgroundColor = backgroundLabel;
+        methodLabel.backgroundColor = backgroundLabel;
+        statusLabel.backgroundColor = backgroundLabel;
+        noteLabel.backgroundColor = backgroundLabel;
         
-        //default editing is OFF
-        type.userInteractionEnabled = YES;
-        method.userInteractionEnabled = YES;
-        status.userInteractionEnabled = YES;
-        note.editable = YES;
-        note.scrollEnabled = YES;
+        typeValue.backgroundColor = backgroundValue;
+        methodValue.backgroundColor = backgroundValue;
+        statusValue.backgroundColor = backgroundValue;
+        noteValue.backgroundColor = backgroundValue;
+        
+        //default editing is ON
+        typeValue.userInteractionEnabled = YES;
+        methodValue.userInteractionEnabled = YES;
+        statusValue.userInteractionEnabled = YES;
+        noteValue.editable = YES;
+        noteValue.scrollEnabled = YES;
         
     } else {
         //set flag
         sendInANewContact = NO;
         
-        //make swith NOT available for editing
-        type.backgroundColor = disabledEditing;
-        method.backgroundColor = disabledEditing;
-        status.backgroundColor = disabledEditing;
-        note.backgroundColor = disabledEditing;
+        //make swith look NOT available for editing
+        theContact.backgroundColor = disabledEditing;
+        typeLabel.backgroundColor = disabledEditing;
+        methodLabel.backgroundColor = disabledEditing;
+        statusLabel.backgroundColor = disabledEditing;
+        noteLabel.backgroundColor = disabledEditing;
+        typeValue.backgroundColor = disabledEditing;
+        methodValue.backgroundColor = disabledEditing;
+        statusValue.backgroundColor = disabledEditing;
+        noteValue.backgroundColor = disabledEditing;
+        
         
         //default editing is OFF
-        type.userInteractionEnabled = NO;
-        method.userInteractionEnabled = NO;
-        status.userInteractionEnabled = NO;
-        note.editable = NO;
-        note.scrollEnabled = NO;
+        typeValue.userInteractionEnabled = NO;
+        methodValue.userInteractionEnabled = NO;
+        statusValue.userInteractionEnabled = NO;
+        noteValue.editable = NO;
+        noteValue.scrollEnabled = NO;
     }
 
 }

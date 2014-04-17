@@ -14,6 +14,9 @@
 		651318C418FE708D00995995 /* TGLOCustomEditTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 651318C318FE708D00995995 /* TGLOCustomEditTagView.m */; };
 		651318C718FF71B000995995 /* TGLOCustomEditContactView.m in Sources */ = {isa = PBXBuildFile; fileRef = 651318C618FF71B000995995 /* TGLOCustomEditContactView.m */; };
 		651318CA18FFA40C00995995 /* TGLOCustomEditContactHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 651318C918FFA40C00995995 /* TGLOCustomEditContactHeaderView.m */; };
+		651318CE18FFF22200995995 /* appIcon58x58.png in Resources */ = {isa = PBXBuildFile; fileRef = 651318CB18FFF22200995995 /* appIcon58x58.png */; };
+		651318CF18FFF22200995995 /* appIcon80x80.png in Resources */ = {isa = PBXBuildFile; fileRef = 651318CC18FFF22200995995 /* appIcon80x80.png */; };
+		651318D018FFF22200995995 /* appIcon120x120.png in Resources */ = {isa = PBXBuildFile; fileRef = 651318CD18FFF22200995995 /* appIcon120x120.png */; };
 		651626D418F4FEDF00DCC064 /* TGLODonationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 651626D318F4FEDF00DCC064 /* TGLODonationsViewController.m */; };
 		651626D718F525F700DCC064 /* TGLOTheGreensViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 651626D618F525F700DCC064 /* TGLOTheGreensViewController.m */; };
 		651626DA18F52A0400DCC064 /* TGLOEnrolToVoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 651626D918F52A0400DCC064 /* TGLOEnrolToVoteViewController.m */; };
@@ -64,9 +67,6 @@
 		65BC975D18F3D144006063CA /* wishlist.png in Resources */ = {isa = PBXBuildFile; fileRef = 65BC974E18F3D144006063CA /* wishlist.png */; };
 		65BC976118F3DCE6006063CA /* NationBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 65BC976018F3DCE6006063CA /* NationBuilder.m */; };
 		65BC976418F3DCF2006063CA /* OAuthLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65BC976318F3DCF2006063CA /* OAuthLoginViewController.m */; };
-		65BC977418F3F3B0006063CA /* appIcon58x58.png in Resources */ = {isa = PBXBuildFile; fileRef = 65BC977118F3F3B0006063CA /* appIcon58x58.png */; };
-		65BC977518F3F3B0006063CA /* appIcon80x80.png in Resources */ = {isa = PBXBuildFile; fileRef = 65BC977218F3F3B0006063CA /* appIcon80x80.png */; };
-		65BC977618F3F3B0006063CA /* appIcon120x120.png in Resources */ = {isa = PBXBuildFile; fileRef = 65BC977318F3F3B0006063CA /* appIcon120x120.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +92,9 @@
 		651318C618FF71B000995995 /* TGLOCustomEditContactView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOCustomEditContactView.m; sourceTree = "<group>"; };
 		651318C818FFA40C00995995 /* TGLOCustomEditContactHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOCustomEditContactHeaderView.h; sourceTree = "<group>"; };
 		651318C918FFA40C00995995 /* TGLOCustomEditContactHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOCustomEditContactHeaderView.m; sourceTree = "<group>"; };
+		651318CB18FFF22200995995 /* appIcon58x58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon58x58.png; sourceTree = "<group>"; };
+		651318CC18FFF22200995995 /* appIcon80x80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon80x80.png; sourceTree = "<group>"; };
+		651318CD18FFF22200995995 /* appIcon120x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon120x120.png; sourceTree = "<group>"; };
 		651626D218F4FEDF00DCC064 /* TGLODonationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLODonationsViewController.h; sourceTree = "<group>"; };
 		651626D318F4FEDF00DCC064 /* TGLODonationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLODonationsViewController.m; sourceTree = "<group>"; };
 		651626D518F525F700DCC064 /* TGLOTheGreensViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOTheGreensViewController.h; sourceTree = "<group>"; };
@@ -163,9 +166,6 @@
 		65BC976018F3DCE6006063CA /* NationBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NationBuilder.m; sourceTree = "<group>"; };
 		65BC976218F3DCF2006063CA /* OAuthLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAuthLoginViewController.h; sourceTree = "<group>"; };
 		65BC976318F3DCF2006063CA /* OAuthLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAuthLoginViewController.m; sourceTree = "<group>"; };
-		65BC977118F3F3B0006063CA /* appIcon58x58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon58x58.png; sourceTree = "<group>"; };
-		65BC977218F3F3B0006063CA /* appIcon80x80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon80x80.png; sourceTree = "<group>"; };
-		65BC977318F3F3B0006063CA /* appIcon120x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon120x120.png; sourceTree = "<group>"; };
 		950AE0EADB7042F4B10AC436 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -326,11 +326,11 @@
 		65BC972318F3CFE7006063CA /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				651318CB18FFF22200995995 /* appIcon58x58.png */,
+				651318CC18FFF22200995995 /* appIcon80x80.png */,
+				651318CD18FFF22200995995 /* appIcon120x120.png */,
 				651318BE18FE679800995995 /* grey120x120.png */,
 				651626F818F7A13100DCC064 /* theGreens.png */,
-				65BC977118F3F3B0006063CA /* appIcon58x58.png */,
-				65BC977218F3F3B0006063CA /* appIcon80x80.png */,
-				65BC977318F3F3B0006063CA /* appIcon120x120.png */,
 				65BC974018F3D144006063CA /* bookmark.png */,
 				65BC974118F3D144006063CA /* calendar.png */,
 				65BC974218F3D144006063CA /* comments.png */,
@@ -445,21 +445,21 @@
 				65BC975A18F3D144006063CA /* photo.png in Resources */,
 				65BC974F18F3D144006063CA /* bookmark.png in Resources */,
 				651318BF18FE679800995995 /* grey120x120.png in Resources */,
-				65BC977618F3F3B0006063CA /* appIcon120x120.png in Resources */,
 				65BC975018F3D144006063CA /* calendar.png in Resources */,
 				651626F918F7A13100DCC064 /* theGreens.png in Resources */,
 				65BC975918F3D144006063CA /* news.png in Resources */,
 				65BC975418F3D144006063CA /* Default@2x.png in Resources */,
 				65BC975C18F3D144006063CA /* tag.png in Resources */,
 				65BC975518F3D144006063CA /* map.png in Resources */,
-				65BC977418F3F3B0006063CA /* appIcon58x58.png in Resources */,
 				65BC975318F3D144006063CA /* Default.png in Resources */,
+				651318CE18FFF22200995995 /* appIcon58x58.png in Resources */,
+				651318D018FFF22200995995 /* appIcon120x120.png in Resources */,
 				65BC975118F3D144006063CA /* comments.png in Resources */,
+				651318CF18FFF22200995995 /* appIcon80x80.png in Resources */,
 				65BC96EB18F3BBE3006063CA /* InfoPlist.strings in Resources */,
 				65BC975618F3D144006063CA /* menu.png in Resources */,
 				65BC975D18F3D144006063CA /* wishlist.png in Resources */,
 				65BC975218F3D144006063CA /* Default-568h@2x.png in Resources */,
-				65BC977518F3F3B0006063CA /* appIcon80x80.png in Resources */,
 				65BC975818F3D144006063CA /* nav_bg.png in Resources */,
 				65BC96F618F3BBE3006063CA /* Images.xcassets in Resources */,
 			);

@@ -76,7 +76,7 @@ NSString * const nationBuilderSlugValue = @"agtest";
 
 - (void)initAppearance
 {
-    UIColor * theGreens = [UIColor colorWithRed:107/255.0f green:203/255.0f blue:64/255.0f alpha:1.0f];
+    UIColor * theGreens = [UIColor colorWithRed:129/255.0f green:183/255.0f blue:87/255.0f alpha:1.0f];
     // Set appearance info
     [[UITabBar appearance] setBarTintColor:theGreens];
     [[UINavigationBar appearance] setBarStyle:UIBarStyleBlackOpaque];

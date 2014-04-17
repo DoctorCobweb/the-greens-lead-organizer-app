@@ -32,6 +32,7 @@ static NSDictionary *contactStatuses;
         
         contactStatuses = @{@"answered":@"Answered",@"bad_info":@"Bad info",@"inaccessible":@"Inaccessible",@"left_message":@"Left message",@"meaningful_interaction":@"Meaningful interaction",@"not_interested":@"Not interested",@"no_answer":@"No answer",@"refused":@"Refused",@"send_information":@"Send information",@"other":@"Other"};
         
+        UIColor *white = [UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:1.0f];
         
         UILabel *typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 30)];
         UILabel *methodLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 35, 80, 30)];
@@ -43,11 +44,15 @@ static NSDictionary *contactStatuses;
         statusLabel.text = @"Status";
         noteLabel.text =   @"Note";
         
-        //set the font
+        //set the font and color
         typeLabel.font = [UIFont boldSystemFontOfSize:14];
+        typeLabel.textColor = white;
         methodLabel.font = [UIFont boldSystemFontOfSize:14];
+        methodLabel.textColor = white;
         statusLabel.font = [UIFont boldSystemFontOfSize:14];
+        statusLabel.textColor = white;
         noteLabel.font = [UIFont boldSystemFontOfSize:14];
+        noteLabel.textColor = white;
         
         
         
@@ -70,15 +75,21 @@ static NSDictionary *contactStatuses;
         noteValue.editable = NO;
         noteValue.scrollEnabled = NO;
         
-        //set the font
+        //set the font and colors
         UIFont *font_ = [UIFont systemFontOfSize:14];
-        UIColor *backgroundValue = [UIColor colorWithRed:255/255.0f green:237/255.0f blue:74/255.0f alpha:1.0f];
-        UIColor *backgroundDark = [UIColor colorWithRed:220/255.0f green:220/255.0f blue:220/255.0f alpha:1.0f];;
-        UIColor *backgroundLabel = [UIColor colorWithRed:230/255.0f green:230/255.0f blue:230/255.0f alpha:1.0f];;
+        //UIColor *backgroundValue = [UIColor colorWithRed:255/255.0f green:237/255.0f blue:74/255.0f alpha:1.0f];
+        UIColor *backgroundValue = [UIColor colorWithRed:242/255.0f green:178/255.0f blue:210/255.0f alpha:1.0f];
+        UIColor *backgroundDark = [UIColor colorWithRed:235/255.0f green:230/255.0f blue:235/255.0f alpha:1.0f];;
+        UIColor *backgroundLabel = [UIColor colorWithRed:197/255.0f green:72/255.0f blue:148/255.0f alpha:1.0f];;
         
         typeValue.font = font_;
+        //typeValue.textColor = white;
         methodValue.font = font_;
+        //methodValue.textColor = white;
         statusValue.font = font_;
+        //statusValue.textColor = white;
+        
+        //noteValue.textColor = white;
         
         //colors
         self.backgroundColor = backgroundDark;
