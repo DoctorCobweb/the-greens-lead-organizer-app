@@ -100,13 +100,7 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     }
     
     [self getAllMyContacts];
-    
-    
 }
-
-
-
-
 
 
 - (void)addASingleTag:(NSString *)tag
@@ -136,7 +130,6 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
 }
 
 
-
 - (void)getAllMyContacts
 {
     
@@ -146,7 +139,6 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     //the contact label and add it to ui
     [self addContactsLabel];
     
-    NSLog(@"in getAllMyContacts");
     NSLog(@"self.person.recordID: %@", self.person.recordID);
     NSLog(@"token: %@", token);
     

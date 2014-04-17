@@ -58,11 +58,7 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     } else {
         NSLog(@"ERROR in TGLOMainViewController.m. access_token is nil");
     }
-    
-    
 }
-
-
 
 
 - (void)setUpAppearance
@@ -322,31 +318,31 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     //TGLOCustomContactView
     NSNull *null = [NSNull null];
     NSNumber *typeValue = [contacts[index] objectForKey:@"type_id"];
-    NSLog(@"typeValue: %@", typeValue);
+    //NSLog(@"typeValue: %@", typeValue);
     if ([contacts[index] objectForKey:@"type_id"] != null) {
         ((UILabel *)[customView viewWithTag:1]).text = [customView getFormattedTypeValue:[typeValue stringValue]];
     }
     
     NSString *methodValue = [contacts[index] objectForKey:@"method"];
-    NSLog(@"methodValue: %@", methodValue);
+    //NSLog(@"methodValue: %@", methodValue);
     if ([contacts[index] objectForKey:@"method"] != null) {
         ((UILabel *)[customView viewWithTag:2]).text = [customView getFormattedMethodValue:methodValue];
     }
     
     NSString *statusValue = [contacts[index] objectForKey:@"status"];
-    NSLog(@"statusValue: %@", statusValue);
+    //NSLog(@"statusValue: %@", statusValue);
     if ([contacts[index] objectForKey:@"status"] != null) {
         ((UILabel *)[customView viewWithTag:3]).text = [customView getFormattedStatusesValue:statusValue];
     }
     
     NSString *noteValue = [contacts[index] objectForKey:@"note"];
-    NSLog(@"noteValue: %@", noteValue);
+    //NSLog(@"noteValue: %@", noteValue);
     if ([contacts[index] objectForKey:@"note"] != null) {
         ((UITextView *)[customView viewWithTag:4]).text =noteValue;
     }
     
     
-    NSLog(@"customView.frame: %@",NSStringFromCGRect(customView.frame));
+    //NSLog(@"customView.frame: %@",NSStringFromCGRect(customView.frame));
     
     [self updateScrollAndContainerViewSize:makeMoreRoom];
     
@@ -360,26 +356,26 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
 - (id) fabricateANewView:(NSString *)viewType width:(CGFloat)viewWidth height:(CGFloat)viewHeight spacing: (CGFloat)viewSpacing
 {
     
-    NSLog(@"self.containerView frame: %@",NSStringFromCGRect([self.containerView frame]));
+    //NSLog(@"self.containerView frame: %@",NSStringFromCGRect([self.containerView frame]));
     
     CGRect containerFrame = [self.containerView frame];
     CGFloat containerHeight = CGRectGetHeight(containerFrame);
     CGFloat containerWidth = CGRectGetWidth(containerFrame);
     
-    NSLog(@"containerFrame height: %f", containerHeight);
-    NSLog(@"containerFrame width: %f", containerWidth);
+    //NSLog(@"containerFrame height: %f", containerHeight);
+    //NSLog(@"containerFrame width: %f", containerWidth);
     
     
     NSArray *containerSubviews = [self.containerView subviews];
     
     CGRect lastViewFrame = ((UILabel *)[containerSubviews lastObject]).frame;
-    NSLog(@"lastViewFrame: %@", NSStringFromCGRect(lastViewFrame));
+    //NSLog(@"lastViewFrame: %@", NSStringFromCGRect(lastViewFrame));
     
     //get dimensions of the lower left corner of
     //last subview of containerView
     CGFloat lastViewYLocation = CGRectGetMaxY(lastViewFrame);
     CGFloat lastViewXLocation = CGRectGetMinX(lastViewFrame);
-    NSLog(@"lastViewYLocation: %f, lastViewXLocation: %f", lastViewYLocation, lastViewXLocation);
+    //NSLog(@"lastViewYLocation: %f, lastViewXLocation: %f", lastViewYLocation, lastViewXLocation);
     
     //now create a new rect, taking into account
     //location of last subview
@@ -401,21 +397,21 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
 //adding in more room to the scroll and container view to fit in newly added content
 - (void)updateScrollAndContainerViewSize:(CGFloat)makeMoreRoom
 {
-    NSLog(@"in updateScrollAndContainerViewSize");
+    //NSLog(@"in updateScrollAndContainerViewSize");
     //update the scroll height to accomodate for
     //new added view
     CGSize contentSize = self.scrollView.contentSize;
     CGFloat scrollHeight = contentSize.height;
     
     self.scrollView.contentSize =CGSizeMake(320, scrollHeight + makeMoreRoom);
-    NSLog(@"self.scrollView.contentSize: %@", NSStringFromCGSize(self.scrollView.contentSize));
+    //NSLog(@"self.scrollView.contentSize: %@", NSStringFromCGSize(self.scrollView.contentSize));
     
     
     //must also update the containerView height
     CGRect containerViewFrame = self.containerView.frame;
     
-    NSLog(@"self.containerView.frame Max X: %f", CGRectGetMaxX(containerViewFrame));
-    NSLog(@"self.containerView.frame Max Y: %f", CGRectGetMaxY(containerViewFrame));
+    //NSLog(@"self.containerView.frame Max X: %f", CGRectGetMaxX(containerViewFrame));
+    //NSLog(@"self.containerView.frame Max Y: %f", CGRectGetMaxY(containerViewFrame));
     
     self.containerView.frame = CGRectMake(0, 0, (CGRectGetMaxX(containerViewFrame)), (CGRectGetMaxY(containerViewFrame)) + makeMoreRoom);
 }

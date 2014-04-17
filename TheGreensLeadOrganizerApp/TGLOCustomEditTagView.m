@@ -25,11 +25,11 @@
         [tagButton setTitleColor:blackColor forState:UIControlStateNormal];
         
         [tagButton setTitle:@"TESTING" forState:UIControlStateNormal];
-        NSLog(@"tagButton currentTitle: %@", [tagButton currentTitle]);
+        //NSLog(@"tagButton currentTitle: %@", [tagButton currentTitle]);
         
         
         NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
-        NSLog(@"bundlePath: %@", bundlePath);
+        //NSLog(@"bundlePath: %@", bundlePath);
         NSString *imageLocation = [[NSString alloc] initWithFormat:@"%@/appIcon120x120.png", bundlePath ];
         UIImage *backgroundImage = [[UIImage alloc] initWithContentsOfFile:imageLocation];
         //NSLog(@"backgroundImage: %@", backgroundImage);

@@ -246,7 +246,7 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     customView.clipsToBounds = YES;
     customView.opaque = NO;
     
-    NSLog(@"customView.frame: %@",NSStringFromCGRect(customView.frame));
+    //NSLog(@"customView.frame: %@",NSStringFromCGRect(customView.frame));
     
     [self updateScrollAndContainerViewSize:makeMoreRoom];
     
@@ -343,10 +343,10 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         [tempButton setTitleColor:blackColor forState:UIControlStateNormal];
         
         NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
-        NSLog(@"bundlePath: %@", bundlePath);
+        //NSLog(@"bundlePath: %@", bundlePath);
         NSString *imageLocation = [[NSString alloc] initWithFormat:@"%@/appIcon120x120.png", bundlePath ];
         UIImage *backgroundImage = [[UIImage alloc] initWithContentsOfFile:imageLocation];
-        NSLog(@"backgroundImage: %@", backgroundImage);
+        //NSLog(@"backgroundImage: %@", backgroundImage);
         
         [tempButton setBackgroundImage:backgroundImage forState:UIControlStateNormal];
         
@@ -373,11 +373,11 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     NSArray *subviews = [superView subviews];
     UIButton *correspondingButton = (UIButton *) subviews[0];
     
-    NSLog(@"the state of the swith is now: %d", switch_.on);
+    //NSLog(@"the state of the swith is now: %d", switch_.on);
     
     //first, get the background and state of the button
     NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
-    NSLog(@"bundlePath: %@", bundlePath);
+    //NSLog(@"bundlePath: %@", bundlePath);
     
     if (!switch_.on) {
         //user wants to delete the corresponding tag
@@ -385,7 +385,7 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         
         NSString *imageLocation = [[NSString alloc] initWithFormat:@"%@/grey120x120.png", bundlePath ];
         UIImage *backgroundImage = [[UIImage alloc] initWithContentsOfFile:imageLocation];
-        NSLog(@"backgroundImage: %@", backgroundImage);
+        //NSLog(@"backgroundImage: %@", backgroundImage);
        
         //tag the parent view to say delete it. 1 == 'delete'
         //have to tag it here as it signifies the tag should
@@ -399,10 +399,10 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         
     } else {
         //user wants to keep the corresponding tag
-        NSLog(@"KEEP corresponding tag");
+        //NSLog(@"KEEP corresponding tag");
         NSString *imageLocation = [[NSString alloc] initWithFormat:@"%@/appIcon120x120.png", bundlePath ];
         UIImage *backgroundImage = [[UIImage alloc] initWithContentsOfFile:imageLocation];
-        NSLog(@"backgroundImage: %@", backgroundImage);
+        //NSLog(@"backgroundImage: %@", backgroundImage);
         
         [correspondingButton setBackgroundImage:backgroundImage forState:UIControlStateNormal];
         
@@ -419,21 +419,21 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
 //adding in more room to the scroll and container view to fit in newly added content
 - (void)updateScrollAndContainerViewSize:(CGFloat)makeMoreRoom
 {
-    NSLog(@"in updateScrollAndContainerViewSize");
+    //NSLog(@"in updateScrollAndContainerViewSize");
     //update the scroll height to accomodate for
     //new added view
     CGSize contentSize = self.scrollView.contentSize;
     CGFloat scrollHeight = contentSize.height;
     
     self.scrollView.contentSize =CGSizeMake(320, scrollHeight + makeMoreRoom);
-    NSLog(@"self.scrollView.contentSize: %@", NSStringFromCGSize(self.scrollView.contentSize));
+    //NSLog(@"self.scrollView.contentSize: %@", NSStringFromCGSize(self.scrollView.contentSize));
     
     
     //must also update the containerView height
     CGRect containerViewFrame = self.containerView.frame;
     
-    NSLog(@"self.containerView.frame Max X: %f", CGRectGetMaxX(containerViewFrame));
-    NSLog(@"self.containerView.frame Max Y: %f", CGRectGetMaxY(containerViewFrame));
+    //NSLog(@"self.containerView.frame Max X: %f", CGRectGetMaxX(containerViewFrame));
+    //NSLog(@"self.containerView.frame Max Y: %f", CGRectGetMaxY(containerViewFrame));
     
     self.containerView.frame = CGRectMake(0, 0, (CGRectGetMaxX(containerViewFrame)), (CGRectGetMaxY(containerViewFrame)) + makeMoreRoom);
 }
@@ -688,9 +688,11 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
 
 - (void)reRenderPreviousControllerUI
 {
-#warning TODO: check that delegate has implemented the following method
-    NSLog(@"calling didUpdatePerson....");
-    [self.delegate didUpdatePerson:self.person];
+    if([self.delegate respondsToSelector:@selector(didUpdatePerson:)])
+    {
+        NSLog(@"calling didUpdatePerson....");
+        [self.delegate didUpdatePerson:self.person];
+    }
 
 
 }
