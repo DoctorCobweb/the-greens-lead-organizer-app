@@ -37,6 +37,7 @@
 - (void)makeABlankContactView;
 - (void)saveTheNewContact;
 - (void)displaySuccessAlert;
+- (void)reRenderUI;
 
 - (IBAction)saveChanges:(id)sender;
 - (void)toggleTag:(id)sender;

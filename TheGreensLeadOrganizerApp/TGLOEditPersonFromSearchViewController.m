@@ -13,6 +13,8 @@
 //is hit
 //2. the edit contact view has tag = 300 which allows us to get at
 //the text input when save button is hit
+//3. the label "Current Tags" has tag = 50. set in storyboard.
+//we need this to rerender add/remove tags in ui after saving
 
 #import "TGLOEditPersonFromSearchViewController.h"
 #import "TGLOCustomContactView.h"
@@ -366,6 +368,8 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         NSLog(@"backgroundImage: %@", backgroundImage);
        
         //tag the parent view to say delete it. 1 == 'delete'
+        //have to tag it here as it signifies the tag should
+        //be deleted
         superView.tag = 123;
         
         
@@ -423,17 +427,9 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
 - (IBAction)saveChanges:(id)sender {
     NSLog(@"saveChanges button hit");
     
-    //1. personal fields update
-    //TODO: check for nil ?
-    //NSString *firstName_ = self.firstName.text;
-    //NSString *lastName_ = self.lastName.text;
-    //NSString *email_ = self.email.text;
-    //NSString *phone_ = self.phone.text;
-    //NSString *mobile_ = self.mobile.text;
     
-    
+    //1.
     //create an updated person
-    //NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
     NSNumber *supportLevelTranslatedToNumber = [TGLOPerson inverseFormattedSupportLevel:self.supportLevel.text];
     NSString *supportLevelTranslated = [[NSString alloc] initWithFormat:@"%@", supportLevelTranslatedToNumber];
     NSLog(@"supportLevelNumber: %@", supportLevelTranslatedToNumber );
@@ -447,13 +443,7 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     updatedPerson.supportLevel = supportLevelTranslatedToNumber;
     updatedPerson.recordID = self.person.recordID;  //dont change the recordID => copy it over!
     
-    //[f setNumberStyle:NSNumberFormatterDecimalStyle];
-    //updatedPerson.supportLevel = [f numberFromString:supportLevelTranslated];
     
-    
-    //need the string version of supportLevel in PUT req
-    //NSString *supportLevel_ = [[NSString alloc] initWithFormat:@"%@", updatedPerson.supportLevel];
-
     //2. tags update
     //construct the body for PUT request. contains surviving tags
     //which still have a value of @"1" in tagsToDelete array
@@ -477,6 +467,7 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     //separated by commas. cool!
     [tagsToKeep setObject:@"1" forKey:self.addANewTag.text];
     
+    NSLog(@"tagToKeep dic: %@", tagsToKeep);
     updatedPerson.tags = [[NSMutableArray alloc] initWithArray:[tagsToKeep allKeys]];
     
     
@@ -520,19 +511,47 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         NSLog(@"oldPersonDetails.tags: %@", oldPersonDetails.tags);
           
         
+        UILabel *currentTagsLabel = (UILabel *)[self.containerView viewWithTag:50];
+        NSArray *allSubViews = [self.containerView subviews];
+        
+        //this block of code removes all the views below
+        //currentTagsLabel in preparation of rerending updated details
+        NSLog(@"finding currentTagsLabel view...");
+        int no_of_subviews = [allSubViews count];
+        int current_tags_label_index;
+        BOOL foundIt = NO;
+        //this removes all subviews after currentTagsLabel
+        for (int j = 0; j < no_of_subviews; j++) {
+            
+            if (foundIt) {
+                [allSubViews[j] removeFromSuperview];
+            }
+            
+            if (allSubViews[j] == currentTagsLabel) {
+                current_tags_label_index = j;
+                NSLog(@"current_tags_label_index = %d", current_tags_label_index);
+                
+                foundIt = YES;
+            }
+        }
+        
+        
+        /*
         //update UI
         //find the elements to delete using the 123 tag
         while (!![self.containerView viewWithTag:123]) {
             TGLOCustomEditTagView *oldTag = (TGLOCustomEditTagView *)[self.containerView viewWithTag:123];
             [oldTag removeFromSuperview];
         }
+        */
+       
         
         //we should go onto saving a new contact as soon as possible
         //if it has been signalled to be added
         if (sendInANewContact) {
             [self saveTheNewContact];
         } else {
-            [self displaySuccessAlert];
+            [self reRenderUI];
         }
         
         //also set the person.tags mutable array to updated tags
@@ -603,7 +622,7 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         NSLog(@" POST => updating contact with response %@",responseObject);
         NSLog(@"SUCCESSfully added new contact.");
         
-        [self displaySuccessAlert];
+        [self reRenderUI];
         
         //also set the person.tags mutable array to updated tags
         //[self.person.tags removeAllObjects];
@@ -644,4 +663,37 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
 
 
 }
+
+- (void)reRenderUI
+{
+    
+    UILabel *currentTagsLabel = (UILabel *)[self.containerView viewWithTag:50];
+    NSArray *allSubViews = [self.containerView subviews];
+    
+    //this block of code removes all the views below
+    //currentTagsLabel in preparation of rerending updated details
+    NSLog(@"finding currentTagsLabel view...");
+    int no_of_subviews = [allSubViews count];
+    int current_tags_label_index;
+    BOOL foundIt = NO;
+    //this removes all subviews after currentTagsLabel
+    for (int j = 0; j < no_of_subviews; j++) {
+        
+        if (foundIt) {
+            [allSubViews[j] removeFromSuperview];
+        }
+        
+        if (allSubViews[j] == currentTagsLabel) {
+            current_tags_label_index = j;
+            NSLog(@"current_tags_label_index = %d", current_tags_label_index);
+            
+            foundIt = YES;
+        }
+     }
+    
+    [self addTagViews];
+    [self displaySuccessAlert];
+}
+
+
 @end
