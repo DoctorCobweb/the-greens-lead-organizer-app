@@ -206,11 +206,15 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     CGFloat labelWidth = 280;  //new label width
     CGFloat labelHeight= 30;   //new label height
     
+    UIColor * greenColor = [UIColor colorWithRed:129/255.0f green:193/255.0f blue:87/255.0f alpha:1.0f];
+    
     
     UITextField *newTextField = (UITextField *)[self fabricateANewView:@"UITextField" width:labelWidth height:labelHeight spacing:labelSpacing];
     
     newTextField.borderStyle = UITextBorderStyleRoundedRect;
     newTextField.text = tag;
+    newTextField.userInteractionEnabled = NO;
+    newTextField.backgroundColor = greenColor;
     
 
     //update the scroll and container view to fit/display new content

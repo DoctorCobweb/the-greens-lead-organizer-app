@@ -80,8 +80,8 @@ static NSDictionary *contactStatuses;
         
         //set the font
         UIFont *font_ = [UIFont systemFontOfSize:14];
-        UIColor *backgroundDark = [UIColor colorWithRed:220/255.0f green:220/255.0f blue:220/255.0f alpha:1.0f];;
-        UIColor *backgroundLabel = [UIColor colorWithRed:230/255.0f green:230/255.0f blue:230/255.0f alpha:1.0f];;
+        UIColor *backgroundDark = [UIColor colorWithRed:220/255.0f green:220/255.0f blue:220/255.0f alpha:1.0f];
+        UIColor *backgroundLabel = [UIColor colorWithRed:230/255.0f green:230/255.0f blue:230/255.0f alpha:1.0f];
         
         typeValue.font = font_;
         methodValue.font = font_;

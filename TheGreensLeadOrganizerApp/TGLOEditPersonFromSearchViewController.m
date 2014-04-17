@@ -163,9 +163,12 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     NSLog(@"in toggleContactTag");
     
     UIColor *disabledEditing = [UIColor colorWithRed:230/255.0f green:230/255.0f blue:230/255.0f alpha:1.0f];;
+    UIColor *disabledEditingDark = [UIColor colorWithRed:220/255.0f green:220/255.0f blue:220/255.0f alpha:1.0f];
     UIColor *backgroundValue = [UIColor colorWithRed:242/255.0f green:178/255.0f blue:210/255.0f alpha:1.0f];
     UIColor *backgroundDark = [UIColor colorWithRed:235/255.0f green:230/255.0f blue:235/255.0f alpha:1.0f];;
     UIColor *backgroundLabel = [UIColor colorWithRed:197/255.0f green:72/255.0f blue:148/255.0f alpha:1.0f];;
+    
+    
     
     UISwitch *theSwitch = (UISwitch *)sender;
     TGLOCustomEditContactView *theContact = (TGLOCustomEditContactView*) [self.containerView viewWithTag:300];
@@ -208,7 +211,7 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         sendInANewContact = NO;
         
         //make swith look NOT available for editing
-        theContact.backgroundColor = disabledEditing;
+        theContact.backgroundColor = disabledEditingDark;
         typeLabel.backgroundColor = disabledEditing;
         methodLabel.backgroundColor = disabledEditing;
         statusLabel.backgroundColor = disabledEditing;
