@@ -13,6 +13,7 @@
 		651318BF18FE679800995995 /* grey120x120.png in Resources */ = {isa = PBXBuildFile; fileRef = 651318BE18FE679800995995 /* grey120x120.png */; };
 		651318C418FE708D00995995 /* TGLOCustomEditTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 651318C318FE708D00995995 /* TGLOCustomEditTagView.m */; };
 		651318C718FF71B000995995 /* TGLOCustomEditContactView.m in Sources */ = {isa = PBXBuildFile; fileRef = 651318C618FF71B000995995 /* TGLOCustomEditContactView.m */; };
+		651318CA18FFA40C00995995 /* TGLOCustomEditContactHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 651318C918FFA40C00995995 /* TGLOCustomEditContactHeaderView.m */; };
 		651626D418F4FEDF00DCC064 /* TGLODonationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 651626D318F4FEDF00DCC064 /* TGLODonationsViewController.m */; };
 		651626D718F525F700DCC064 /* TGLOTheGreensViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 651626D618F525F700DCC064 /* TGLOTheGreensViewController.m */; };
 		651626DA18F52A0400DCC064 /* TGLOEnrolToVoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 651626D918F52A0400DCC064 /* TGLOEnrolToVoteViewController.m */; };
@@ -89,6 +90,8 @@
 		651318C318FE708D00995995 /* TGLOCustomEditTagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOCustomEditTagView.m; sourceTree = "<group>"; };
 		651318C518FF71B000995995 /* TGLOCustomEditContactView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOCustomEditContactView.h; sourceTree = "<group>"; };
 		651318C618FF71B000995995 /* TGLOCustomEditContactView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOCustomEditContactView.m; sourceTree = "<group>"; };
+		651318C818FFA40C00995995 /* TGLOCustomEditContactHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOCustomEditContactHeaderView.h; sourceTree = "<group>"; };
+		651318C918FFA40C00995995 /* TGLOCustomEditContactHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOCustomEditContactHeaderView.m; sourceTree = "<group>"; };
 		651626D218F4FEDF00DCC064 /* TGLODonationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLODonationsViewController.h; sourceTree = "<group>"; };
 		651626D318F4FEDF00DCC064 /* TGLODonationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLODonationsViewController.m; sourceTree = "<group>"; };
 		651626D518F525F700DCC064 /* TGLOTheGreensViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOTheGreensViewController.h; sourceTree = "<group>"; };
@@ -202,6 +205,8 @@
 				651318C318FE708D00995995 /* TGLOCustomEditTagView.m */,
 				651318C518FF71B000995995 /* TGLOCustomEditContactView.h */,
 				651318C618FF71B000995995 /* TGLOCustomEditContactView.m */,
+				651318C818FFA40C00995995 /* TGLOCustomEditContactHeaderView.h */,
+				651318C918FFA40C00995995 /* TGLOCustomEditContactHeaderView.m */,
 			);
 			name = CustomViews;
 			sourceTree = "<group>";
@@ -525,6 +530,7 @@
 				651626D418F4FEDF00DCC064 /* TGLODonationsViewController.m in Sources */,
 				651626D718F525F700DCC064 /* TGLOTheGreensViewController.m in Sources */,
 				65BC976118F3DCE6006063CA /* NationBuilder.m in Sources */,
+				651318CA18FFA40C00995995 /* TGLOCustomEditContactHeaderView.m in Sources */,
 				651626F718F6DB4F00DCC064 /* TGLOSearchResultsViewController.m in Sources */,
 				651318BD18FE48F100995995 /* TGLOEditPersonFromSearchViewController.m in Sources */,
 				65BC971C18F3C611006063CA /* TGLOLoginViewController.m in Sources */,

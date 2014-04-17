@@ -57,15 +57,22 @@ static NSDictionary *contactStatuses;
         
         //add tags to these. used in other classes to get a ref
         //to them
-        typeValue.tag =   1;
-        methodValue.tag = 2;
-        statusValue.tag = 3;
-        noteValue.tag =   4;
+        self.tag = 300;
+        typeValue.tag =   301;
+        methodValue.tag = 302;
+        statusValue.tag = 303;
+        noteValue.tag =   304;
+        
+        //default editing is OFF
+        typeValue.userInteractionEnabled = NO;
+        methodValue.userInteractionEnabled = NO;
+        statusValue.userInteractionEnabled = NO;
+        noteValue.editable = NO;
+        noteValue.scrollEnabled = NO;
+        
         
         //customize textview a bit more
         noteValue.text = @"Add note content";
-        noteValue.editable = YES;
-        noteValue.scrollEnabled = YES;
         
         //set the font
         UIFont *font_ = [UIFont systemFontOfSize:14];
@@ -78,15 +85,21 @@ static NSDictionary *contactStatuses;
         statusValue.font = font_;
         
         //colors
+        //default to all grey as editing is disabled by default
         self.backgroundColor = backgroundDark;
         typeLabel.backgroundColor = backgroundLabel;
         methodLabel.backgroundColor = backgroundLabel;
         statusLabel.backgroundColor = backgroundLabel;
         noteLabel.backgroundColor = backgroundLabel;
-        typeValue.backgroundColor = backgroundValue;
-        methodValue.backgroundColor = backgroundValue;
-        statusValue.backgroundColor = backgroundValue;
-        noteValue.backgroundColor = backgroundValue;
+        typeValue.backgroundColor = backgroundLabel;
+        methodValue.backgroundColor = backgroundLabel;
+        statusValue.backgroundColor = backgroundLabel;
+        noteValue.backgroundColor = backgroundLabel;
+        
+        //typeValue.backgroundColor = backgroundValue;
+        //methodValue.backgroundColor = backgroundValue;
+        //statusValue.backgroundColor = backgroundValue;
+        //noteValue.backgroundColor = backgroundValue;
         
         
         [self addSubview:typeLabel];

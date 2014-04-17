@@ -36,8 +36,10 @@
 - (void)addContactsLabel;
 - (void)makeABlankContactView;
 - (void)saveTheNewContact;
+- (void)displaySuccessAlert;
 
 - (IBAction)saveChanges:(id)sender;
 - (void)toggleTag:(id)sender;
+- (void)toggleContact:(id)sender;
 
 @end

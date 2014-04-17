@@ -17,6 +17,7 @@
 #import "TGLOEditPersonFromSearchViewController.h"
 #import "TGLOCustomContactView.h"
 #import "TGLOCustomEditContactView.h"
+#import "TGLOCustomEditContactHeaderView.h"
 #import "TGLOCustomEditTagView.h"
 #import "AFNetworking.h"
 #import "AFNetworkActivityIndicatorManager.h"
@@ -33,7 +34,10 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     NSString *token;
     NSMutableDictionary *tagsToDelete;
     TGLOPerson *oldPersonDetails;
+    BOOL sendInANewContact;
 }
+
+@property (nonatomic, strong) UIAlertView *updateAlert;
 
 @end
 
@@ -52,6 +56,10 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //used to determine if user has signified they want to
+    //add a new contact to  save
+    sendInANewContact = NO;
     
 	// Do any additional setup after loading the view.
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
@@ -130,22 +138,78 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
 - (void)addContactsLabel
 {
     CGFloat labelSpacing = 10; //spacing between the views
-    CGFloat makeMoreRoom = 40; //additional room on end of scroll/container view
+    CGFloat makeMoreRoom = 45; //additional room on end of scroll/container view
     CGFloat labelWidth = 280;  //new label width
-    CGFloat labelHeight= 30;   //new label height
+    CGFloat labelHeight= 35;   //new label height
     
+    TGLOCustomEditContactHeaderView *newContactHeader = (TGLOCustomEditContactHeaderView *)[self fabricateANewView:@"TGLOCustomEditContactHeaderView" width:labelWidth height:labelHeight spacing:labelSpacing];
     
-    UILabel *newLabel = (UILabel *)[self fabricateANewView:@"UILabel" width:labelWidth height:labelHeight spacing:labelSpacing];
+    //setup the switch toggle for logging a new contact
+    UISwitch *newContactSwitch = (UISwitch *)[newContactHeader viewWithTag:1];
     
-    newLabel.text = @"Log Contact";
-    newLabel.font = [UIFont boldSystemFontOfSize:13];
-    
+    [newContactSwitch addTarget:self action:@selector(toggleContact:) forControlEvents:UIControlEventTouchUpInside];
     
     [self updateScrollAndContainerViewSize:makeMoreRoom];
     
     //finally add the new view to as last subview
-    [self.containerView addSubview:newLabel];
+    [self.containerView addSubview:newContactHeader];
 }
+
+
+- (void)toggleContact:(id)sender
+{
+    NSLog(@"in toggleContactTag");
+    
+    UIColor *enabledEditing = [UIColor colorWithRed:255/255.0f green:237/255.0f blue:74/255.0f alpha:1.0f];
+    UIColor *disabledEditing = [UIColor colorWithRed:230/255.0f green:230/255.0f blue:230/255.0f alpha:1.0f];;
+    
+    
+    UISwitch *theSwitch = (UISwitch *)sender;
+    TGLOCustomEditContactView *theContact = (TGLOCustomEditContactView*) [self.containerView viewWithTag:300];
+    UITextField *type = ((UITextField *)[theContact viewWithTag:301]);
+    UITextField *method = ((UITextField *)[theContact viewWithTag:302]);
+    UITextField *status = ((UITextField *)[theContact viewWithTag:303]);
+    UITextView *note = ((UITextView*)[theContact viewWithTag:304]);
+    
+    
+    if (theSwitch.on ) {
+        
+        //set flag
+        sendInANewContact = YES;
+        
+        //make contact available for editing
+        type.backgroundColor = enabledEditing;
+        method.backgroundColor = enabledEditing;
+        status.backgroundColor = enabledEditing;
+        note.backgroundColor = enabledEditing;
+        
+        //default editing is OFF
+        type.userInteractionEnabled = YES;
+        method.userInteractionEnabled = YES;
+        status.userInteractionEnabled = YES;
+        note.editable = YES;
+        note.scrollEnabled = YES;
+        
+    } else {
+        //set flag
+        sendInANewContact = NO;
+        
+        //make swith NOT available for editing
+        type.backgroundColor = disabledEditing;
+        method.backgroundColor = disabledEditing;
+        status.backgroundColor = disabledEditing;
+        note.backgroundColor = disabledEditing;
+        
+        //default editing is OFF
+        type.userInteractionEnabled = NO;
+        method.userInteractionEnabled = NO;
+        status.userInteractionEnabled = NO;
+        note.editable = NO;
+        note.scrollEnabled = NO;
+    }
+
+}
+
 
 - (void)makeABlankContactView
 {
@@ -159,10 +223,6 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     
     customView.clipsToBounds = YES;
     customView.opaque = NO;
-    
-    //add a tag number to this view. use it later to get values of
-    //its views during saving procedure
-    customView.tag = 300;
     
     NSLog(@"customView.frame: %@",NSStringFromCGRect(customView.frame));
     
@@ -217,7 +277,7 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     
     //NSLog(@"self.containerView frame: %@",NSStringFromCGRect([self.containerView frame]));
     
-    CGRect containerFrame = [self.containerView frame];
+    //CGRect containerFrame = [self.containerView frame];
     //CGFloat containerHeight = CGRectGetHeight(containerFrame);
     //CGFloat containerWidth = CGRectGetWidth(containerFrame);
     
@@ -249,6 +309,8 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         return [[TGLOCustomContactView alloc] initWithFrame:viewRect];
     } else if ([viewType isEqualToString:@"TGLOCustomEditContactView"]) {
         return [[TGLOCustomEditContactView alloc] initWithFrame:viewRect];
+    } else if ([viewType isEqualToString:@"TGLOCustomEditContactHeaderView"]) {
+        return  [[TGLOCustomEditContactHeaderView alloc] initWithFrame:viewRect];
     } else if ([viewType isEqualToString:@"UIButton"]) {
         UIColor * blackColor = [UIColor colorWithRed:0/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f];
 
@@ -443,8 +505,6 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         NSLog(@" PUT => updating tags and person details with response %@",responseObject);
         NSLog(@"SUCCESSfully deleted tags, added a new tag and updated person details.");
         
-        //we should go onto saving a new contact as soon as possible
-        [self saveTheNewContact];
         
         //UPDATE PERSON DETAILS property
         //because changes were successul we can now swap over the
@@ -465,6 +525,14 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         while (!![self.containerView viewWithTag:123]) {
             TGLOCustomEditTagView *oldTag = (TGLOCustomEditTagView *)[self.containerView viewWithTag:123];
             [oldTag removeFromSuperview];
+        }
+        
+        //we should go onto saving a new contact as soon as possible
+        //if it has been signalled to be added
+        if (sendInANewContact) {
+            [self saveTheNewContact];
+        } else {
+            [self displaySuccessAlert];
         }
         
         //also set the person.tags mutable array to updated tags
@@ -499,10 +567,10 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     TGLOCustomEditContactView *newContact = (TGLOCustomEditContactView *)[self.containerView viewWithTag:300];
 
     
-    NSString *contactType = ((UITextField *)[newContact viewWithTag:1]).text;
-    NSString *methodType =  ((UITextField *)[newContact viewWithTag:2]).text;
-    NSString *statusType =  ((UITextField *)[newContact viewWithTag:3]).text;
-    NSString *noteType =    ((UITextField *)[newContact viewWithTag:4]).text;
+    NSString *contactType = ((UITextField *)[newContact viewWithTag:301]).text;
+    NSString *methodType =  ((UITextField *)[newContact viewWithTag:302]).text;
+    NSString *statusType =  ((UITextField *)[newContact viewWithTag:303]).text;
+    NSString *noteType =    ((UITextField *)[newContact viewWithTag:304]).text;
     
     NSLog(@"contactType: %@", contactType);
     NSLog(@"methodType: %@", methodType);
@@ -535,6 +603,8 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         NSLog(@" POST => updating contact with response %@",responseObject);
         NSLog(@"SUCCESSfully added new contact.");
         
+        [self displaySuccessAlert];
+        
         //also set the person.tags mutable array to updated tags
         //[self.person.tags removeAllObjects];
         //NSMutableArray *tempArray = [[NSMutableArray alloc] initWithArray:[tagsToKeep allKeys]];
@@ -558,6 +628,20 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         NSLog(@"Error: %@", error);
     }];
     
+
+}
+
+- (void)displaySuccessAlert
+{
+        NSString *message = @"You successfully updated the record for the person.";
+        // show alert view saying we are getting token
+        _updateAlert = [[UIAlertView alloc] initWithTitle:@"Update success"
+                                                 message:message
+                                                delegate:nil
+                                       cancelButtonTitle:@"Okay"
+                                       otherButtonTitles:nil];
+        [_updateAlert show];
+
 
 }
 @end
