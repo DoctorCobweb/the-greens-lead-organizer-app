@@ -22,6 +22,7 @@
 #import "AFNetworkActivityIndicatorManager.h"
 #import "TGLOAppDelegate.h"
 
+static NSString *myNationBuilderId = @"my_nation_builder_id";
 static NSString *accessToken= @"access_token";
 static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=10&access_token=%@";
 static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people/%@?access_token=%@";
@@ -439,8 +440,8 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     
     
     [manager PUT:updatePeopleUrl_ parameters:updateBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@" PUT => updating tags with response %@",responseObject);
-        NSLog(@"SUCCESSfully deleted tag.");
+        NSLog(@" PUT => updating tags and person details with response %@",responseObject);
+        NSLog(@"SUCCESSfully deleted tags, added a new tag and updated person details.");
         
         //we should go onto saving a new contact as soon as possible
         [self saveTheNewContact];
@@ -507,8 +508,56 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     NSLog(@"methodType: %@", methodType);
     NSLog(@"statusType: %@", statusType);
     NSLog(@"noteType: %@", noteType);
+    
+    NSString *myNBId = [[NSUserDefaults standardUserDefaults] objectForKey:myNationBuilderId];
 
+    //semantics:
+    //*sender_id" as *broadcaster_id* contacted *recipient_id* for *contact_type* via *method*.
+    //*note*
+    //
+    //if there's no id associated for *broadcaster_id* then broadcaster is left out of semantic string
+    NSDictionary *contactBody = @{ @"contact": @{@"note": noteType, @"type_id":contactType, @"method":methodType, @"sender_id":myNBId, @"status":statusType, @"broadcaster_id": @"1", @"recipient_id": self.person.recordID}  };
 
+    //post endpoint for making new contact
+    NSString * myContactsUrl_ = [NSString stringWithFormat:myContactsUrl, nationBuilderSlugValue, self.person.recordID, token];
+    
+    //need to get notes on the person from a different api, namely
+    // the contacts api
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    //must set request serializer to application/json. otherwise 406
+    //is responded
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    NSLog(@"manager.requestSerializer: %@", manager.requestSerializer);
+    
+    
+    [manager POST:myContactsUrl_ parameters:contactBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@" POST => updating contact with response %@",responseObject);
+        NSLog(@"SUCCESSfully added new contact.");
+        
+        //also set the person.tags mutable array to updated tags
+        //[self.person.tags removeAllObjects];
+        //NSMutableArray *tempArray = [[NSMutableArray alloc] initWithArray:[tagsToKeep allKeys]];
+        //self.person.tags = tempArray;
+        
+        
+        //[self addTagViews];
+        
+        
+        //NSSet * contacts_set = [responseObject objectForKey:@"results"];
+        //NSArray *contacts_ = [contacts_set allObjects];
+        
+        //contacts = [[NSMutableArray alloc] initWithArray:contacts_];
+        
+        //NSLog(@"contacts: %@", contacts);
+        //NSLog(@"%d contact records returned", [contacts count]);
+        
+        //[self addContactViews];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+    
 
 }
 @end
