@@ -465,7 +465,10 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     //note: if user adds tags like "v_book, flow, gurkin"
     //nation builder will parse these into individual tags
     //separated by commas. cool!
-    [tagsToKeep setObject:@"1" forKey:self.addANewTag.text];
+    if (![self.addANewTag.text isEqualToString:@""]) {
+        NSLog(@"adding in a new tag also: %@", self.addANewTag.text);
+        [tagsToKeep setObject:@"1" forKey:self.addANewTag.text];
+    }
     
     NSLog(@"tagToKeep dic: %@", tagsToKeep);
     updatedPerson.tags = [[NSMutableArray alloc] initWithArray:[tagsToKeep allKeys]];
@@ -510,41 +513,6 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         NSLog(@"self.person.tags: %@", self.person.tags);
         NSLog(@"oldPersonDetails.tags: %@", oldPersonDetails.tags);
           
-        
-        UILabel *currentTagsLabel = (UILabel *)[self.containerView viewWithTag:50];
-        NSArray *allSubViews = [self.containerView subviews];
-        
-        //this block of code removes all the views below
-        //currentTagsLabel in preparation of rerending updated details
-        NSLog(@"finding currentTagsLabel view...");
-        int no_of_subviews = [allSubViews count];
-        int current_tags_label_index;
-        BOOL foundIt = NO;
-        //this removes all subviews after currentTagsLabel
-        for (int j = 0; j < no_of_subviews; j++) {
-            
-            if (foundIt) {
-                [allSubViews[j] removeFromSuperview];
-            }
-            
-            if (allSubViews[j] == currentTagsLabel) {
-                current_tags_label_index = j;
-                NSLog(@"current_tags_label_index = %d", current_tags_label_index);
-                
-                foundIt = YES;
-            }
-        }
-        
-        
-        /*
-        //update UI
-        //find the elements to delete using the 123 tag
-        while (!![self.containerView viewWithTag:123]) {
-            TGLOCustomEditTagView *oldTag = (TGLOCustomEditTagView *)[self.containerView viewWithTag:123];
-            [oldTag removeFromSuperview];
-        }
-        */
-       
         
         //we should go onto saving a new contact as soon as possible
         //if it has been signalled to be added
@@ -666,6 +634,8 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
 
 - (void)reRenderUI
 {
+    //reset the field
+    self.addANewTag.text = @"";
     
     UILabel *currentTagsLabel = (UILabel *)[self.containerView viewWithTag:50];
     NSArray *allSubViews = [self.containerView subviews];
