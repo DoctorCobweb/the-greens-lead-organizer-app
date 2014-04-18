@@ -24,5 +24,8 @@
 - (NSString *)getFormattedStatusesValue:(NSString *)statusValue;
 
 
+- (NSString *)apiVersionOfContactType:(NSString *)contactType_;
+- (NSString *)apiVersionOfContactMethod:(NSString *)contactMethod_;
+- (NSString *)apiVersionOfContactStatus:(NSString *)contactStatus_;
 
 @end

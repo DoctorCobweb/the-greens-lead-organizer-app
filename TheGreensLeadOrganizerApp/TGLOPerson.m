@@ -29,6 +29,14 @@
 
 #warning TODO: rename methods and error checking etc
 
+- (NSString *) apiVersionOfSupportLevel:(NSString *)support_
+{
+
+    NSDictionary *supportDic = @{@"Strong support":@"1",@"Weak support":@"2",@"Undecided":@"3",@"Weak oppose":@"4",@"Strong oppose":@"5"};
+
+    return [supportDic valueForKey:support_];
+}
+
 + (NSString *)formattedSupportLevel:(NSNumber *)level
 {
     NSDictionary *supportLevel = [TGLOPerson getSupportLevelDic];
@@ -65,5 +73,6 @@
     return finalDic;
 
 }
+
 
 @end

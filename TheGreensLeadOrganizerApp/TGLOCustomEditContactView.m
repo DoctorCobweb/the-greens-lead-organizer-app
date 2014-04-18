@@ -58,18 +58,18 @@ static NSDictionary *contactStatuses;
         UIButton *typeValue =[UIButton buttonWithType:UIButtonTypeSystem];
         typeValue.frame = CGRectMake(85, 0, 200, 30);
         [typeValue setTitleColor:blackColor forState:UIControlStateNormal];
-        [typeValue setTitle:@"random TYPE text" forState:UIControlStateNormal];
+        //[typeValue setTitle:@"random TYPE text" forState:UIControlStateNormal];
         
         
         UIButton *methodValue =[UIButton buttonWithType:UIButtonTypeSystem];
         methodValue.frame = CGRectMake(85, 35, 200, 30);
         [methodValue setTitleColor:blackColor forState:UIControlStateNormal];
-        [methodValue setTitle:@"random METHOD text" forState:UIControlStateNormal];
+        //[methodValue setTitle:@"random METHOD text" forState:UIControlStateNormal];
         
         UIButton *statusValue =[UIButton buttonWithType:UIButtonTypeSystem];
         statusValue.frame = CGRectMake(85, 70, 200, 30);
         [statusValue setTitleColor:blackColor forState:UIControlStateNormal];
-        [statusValue setTitle:@"random STATUS text" forState:UIControlStateNormal];
+        //[statusValue setTitle:@"random STATUS text" forState:UIControlStateNormal];
         
         
         UITextView *noteValue = [[UITextView alloc] initWithFrame:CGRectMake(0, 140, 280, 100)];
@@ -162,6 +162,40 @@ static NSDictionary *contactStatuses;
 }
 
 
+- (NSString *)apiVersionOfContactType:(NSString *)contactType_
+{
+    NSMutableDictionary *switchedDic = [[NSMutableDictionary alloc] initWithCapacity:[contactTypes count]];
+    
+    for (NSString *key in contactTypes) {
+        [switchedDic setObject:key forKey:[contactTypes valueForKey:key]];
+    }
+    NSLog(@"CONTACT TYPE: switchedDic: %@", switchedDic);
+    return [switchedDic valueForKey:contactType_];
+}
+
+- (NSString *)apiVersionOfContactMethod:(NSString *)contactMethod_
+{
+    NSMutableDictionary *switchedDic = [[NSMutableDictionary alloc] initWithCapacity:[contactMethods count]];
+    
+    for (NSString *key in contactMethods) {
+        [switchedDic setObject:key forKey:[contactMethods valueForKey:key]];
+    }
+    NSLog(@"CONTACT METHOD: switchedDic: %@", switchedDic);
+    return [switchedDic valueForKey:contactMethod_];
+    
+}
+
+- (NSString *)apiVersionOfContactStatus:(NSString *)contactStatus_
+{
+    NSMutableDictionary *switchedDic = [[NSMutableDictionary alloc] initWithCapacity:[contactStatuses count]];
+    
+    for (NSString *key in contactStatuses) {
+        [switchedDic setObject:key forKey:[contactStatuses valueForKey:key]];
+    }
+    NSLog(@"CONTACT STATUS: switchedDic: %@", switchedDic);
+    return [switchedDic valueForKey:contactStatus_];
+
+}
 
 
 /*

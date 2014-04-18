@@ -22,6 +22,8 @@
 //this is the Nation Builder unique id for the person's record
 @property (nonatomic, strong) NSNumber * recordID;
 
+- (NSString *) apiVersionOfSupportLevel:(NSString *)supportLevel;
+
 + (NSString *)formattedSupportLevel:(NSNumber *)level;
 + (NSNumber *)inverseFormattedSupportLevel:(NSString *)word;
 + (NSDictionary *)getSupportLevelDic;

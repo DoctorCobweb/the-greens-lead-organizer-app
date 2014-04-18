@@ -21,7 +21,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *email;
 @property (weak, nonatomic) IBOutlet UITextField *phone;
 @property (weak, nonatomic) IBOutlet UITextField *mobile;
-@property (weak, nonatomic) IBOutlet UITextField *supportLevel;
+//@property (weak, nonatomic) IBOutlet UITextField *supportLevel;
+@property (weak, nonatomic) IBOutlet UIButton *supportLevel;
 @property (weak, nonatomic) IBOutlet UITextField *addANewTag;
 
 @property (strong ,nonatomic) TGLOPerson *person;
@@ -45,6 +46,7 @@
 - (void)typeValueHit:(id)sender;
 - (void)methodValueHit:(id)sender;
 - (void)statusValueHit:(id)sender;
+- (void)supportLevelButtonHit:(id)sender;
 
 
 - (IBAction)saveChanges:(id)sender;
@@ -54,6 +56,10 @@
 - (NSString *)translateContactType:(NSInteger)index;
 - (NSString *)translateContactMethod:(NSInteger)index;
 - (NSString *)translateContactStatus:(NSInteger)index;
+- (NSString *)translateSupportLevel:(NSInteger)index;
+
+
+
 @end
 
 @protocol UpdatePersonDelegate <NSObject>

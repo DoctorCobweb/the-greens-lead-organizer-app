@@ -8,13 +8,16 @@
 
 
 
-//IMPORTANT INFO on Views
+//IMPORTANT INFO on tags set for Views
+//
 //1.views with tag = 123 are the tags to_be_removed when save button
 //is hit
 //2. the edit contact view has tag = 300 which allows us to get at
 //the text input when save button is hit
 //3. the label "Current Tags" has tag = 50. set in storyboard.
 //we need this to rerender add/remove tags in ui after saving
+//4. the UIButton for Support Level has tag = 40. set in storyboard.
+
 
 #import "TGLOEditPersonFromSearchViewController.h"
 #import "TGLOCustomContactView.h"
@@ -70,6 +73,7 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     
     [self setupTagsToDeleteArray];
     [self setUpAppearance];
+    [self addTagViews];
 }
 
 - (void)setupTagsToDeleteArray
@@ -90,7 +94,8 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
 {
     self.title = @"Edit Person";
     
-    //UIColor * white_color = [UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:1.0f];
+    UIColor * whiteColor = [UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:1.0f];
+    UIColor * blackColor = [UIColor colorWithRed:0/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f];
     
     
     //set an initial scroll view size
@@ -100,11 +105,21 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     //to scroll view size
     self.containerView.frame = CGRectMake(0, 0, 320, 750);
     
+    //setup listern on the support level button
+    [self.supportLevel addTarget:self action:@selector(supportLevelButtonHit:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
     if(self.person){
         //get the person object passed through from segue
         self.firstName.text = self.person.firstName;
         self.lastName.text = self.person.lastName;
-        self.supportLevel.text = [TGLOPerson formattedSupportLevel:self.person.supportLevel];
+        
+        //self.supportLevel.text = [TGLOPerson formattedSupportLevel:self.person.supportLevel];
+        //self.supportLevel.titleLabel.text = [TGLOPerson formattedSupportLevel:self.person.supportLevel];
+        
+        [self.supportLevel setTitle:[TGLOPerson formattedSupportLevel:self.person.supportLevel] forState:UIControlStateNormal];
+        [self.supportLevel setTitleColor:blackColor forState:UIControlStateNormal];
+
         self.email.text = self.person.email;
         self.phone.text = self.person.phone;
         self.mobile.text = self.person.mobile;
@@ -121,7 +136,6 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         oldPersonDetails.tags = self.person.tags;
     }
     
-    [self addTagViews];
 }
 
 -(void)addTagViews
@@ -457,12 +471,13 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
 - (IBAction)saveChanges:(id)sender {
     NSLog(@"saveChanges button hit");
     
+    //NSString *contactType = [newContact apiVersionOfContactType:contactType_];
     
     //1.
     //create an updated person
-    NSNumber *supportLevelTranslatedToNumber = [TGLOPerson inverseFormattedSupportLevel:self.supportLevel.text];
-    NSString *supportLevelTranslated = [[NSString alloc] initWithFormat:@"%@", supportLevelTranslatedToNumber];
-    NSLog(@"supportLevelNumber: %@", supportLevelTranslatedToNumber );
+    //NSString *supportLevel = [[NSString alloc] initWithFormat:@"%@", self.supportLevel.titleLabel.text];
+    //NSLog(@"supportLevel: %@", supportLevel);
+    
     
     TGLOPerson *updatedPerson = [[TGLOPerson alloc] init];
     updatedPerson.firstName = self.firstName.text;
@@ -470,8 +485,15 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     updatedPerson.email = self.email.text;
     updatedPerson.phone = self.phone.text;
     updatedPerson.mobile = self.mobile.text;
-    updatedPerson.supportLevel = supportLevelTranslatedToNumber;
     updatedPerson.recordID = self.person.recordID;  //dont change the recordID => copy it over!
+    
+    //you have to handle supportLevel a bit differently
+    NSString *theSupportLevel = [updatedPerson apiVersionOfSupportLevel:self.supportLevel.titleLabel.text];
+    //needed for NSString -> NSNumber
+    NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
+    [f setNumberStyle:NSNumberFormatterDecimalStyle];
+    updatedPerson.supportLevel = [f numberFromString:theSupportLevel];
+    
     
     
     //2. tags update
@@ -506,7 +528,7 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     
     //tagsToDelete dic should only hold tags we want to keep
     //=> can use this tagsToDelete as body obj for PUT request below
-    NSDictionary *updateBody =@{@"person":@{@"tags":[tagsToKeep allKeys], @"first_name":updatedPerson.firstName, @"last_name":updatedPerson.lastName, @"email1":updatedPerson.email, @"phone":updatedPerson.phone, @"mobile":updatedPerson.mobile, @"support_level":supportLevelTranslated}};
+    NSDictionary *updateBody =@{@"person":@{@"tags":[tagsToKeep allKeys], @"first_name":updatedPerson.firstName, @"last_name":updatedPerson.lastName, @"email1":updatedPerson.email, @"phone":updatedPerson.phone, @"mobile":updatedPerson.mobile, @"support_level":theSupportLevel}};
     
     NSLog(@"KEEPing tags: %@", [tagsToKeep allKeys]);
     NSLog(@"%@", updateBody);
@@ -584,14 +606,19 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     TGLOCustomEditContactView *newContact = (TGLOCustomEditContactView *)[self.containerView viewWithTag:300];
 
     
-    NSString *contactType = ((UIButton *)[newContact viewWithTag:305]).titleLabel.text;
-    NSString *methodType =  ((UIButton *)[newContact viewWithTag:306]).titleLabel.text;
-    NSString *statusType =  ((UIButton *)[newContact viewWithTag:307]).titleLabel.text;
+    NSString *contactType_ = ((UIButton *)[newContact viewWithTag:305]).titleLabel.text;
+    NSString *contactMethod_ =  ((UIButton *)[newContact viewWithTag:306]).titleLabel.text;
+    NSString *contactStatus_ =  ((UIButton *)[newContact viewWithTag:307]).titleLabel.text;
     NSString *noteType =    ((UITextField *)[newContact viewWithTag:308]).text;
     
+    //need to translate the 3 button values to api values for contact api call
+    NSString *contactType = [newContact apiVersionOfContactType:contactType_];
+    NSString *contactMethod = [newContact apiVersionOfContactMethod:contactMethod_];
+    NSString *contactStatus = [newContact apiVersionOfContactStatus:contactStatus_];
+    
     NSLog(@"contactType: %@", contactType);
-    NSLog(@"methodType: %@", methodType);
-    NSLog(@"statusType: %@", statusType);
+    NSLog(@"contactMethod: %@", contactMethod);
+    NSLog(@"contactStatus: %@", contactStatus);
     NSLog(@"noteType: %@", noteType);
     
     NSString *myNBId = [[NSUserDefaults standardUserDefaults] objectForKey:myNationBuilderId];
@@ -601,7 +628,7 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     //*note*
     //
     //if there's no id associated for *broadcaster_id* then broadcaster is left out of semantic string
-    NSDictionary *contactBody = @{ @"contact": @{@"note": noteType, @"type_id":contactType, @"method":methodType, @"sender_id":myNBId, @"status":statusType, @"broadcaster_id": @"1", @"recipient_id": self.person.recordID}  };
+    NSDictionary *contactBody = @{ @"contact": @{@"note": noteType, @"type_id":contactType, @"method":contactMethod, @"sender_id":myNBId, @"status":contactStatus, @"broadcaster_id": @"1", @"recipient_id": self.person.recordID}  };
 
     //post endpoint for making new contact
     NSString * myContactsUrl_ = [NSString stringWithFormat:myContactsUrl, nationBuilderSlugValue, self.person.recordID, token];
@@ -742,28 +769,42 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     [statusValueActionSheet showInView:self.containerView];
 }
 
+- (void)supportLevelButtonHit:(id)sender
+{
+
+    NSLog(@"supportLevelButtonHit call");
+    UIActionSheet *supportLevelActionSheet = [[UIActionSheet alloc] initWithTitle:@"Choose support level"
+                                                                        delegate:self
+                                                               cancelButtonTitle:@"Cancel"
+                                                          destructiveButtonTitle:nil
+                                                               otherButtonTitles:@"Strong support", @"Weak support",@"Undecided",@"Weak oppose",@"Strong oppose", nil];
+    [supportLevelActionSheet showInView:self.containerView];
+
+}
+
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     TGLOCustomEditContactView *newContact = (TGLOCustomEditContactView *)[self.containerView viewWithTag:300];
-    UIButton *contactType = ((UIButton *)[newContact viewWithTag:305]);
-    UIButton *methodType =  ((UIButton *)[newContact viewWithTag:306]);
-    UIButton *statusType =  ((UIButton *)[newContact viewWithTag:307]);
+    UIButton *contactTypeButton = ((UIButton *)[newContact viewWithTag:305]);
+    UIButton *methodTypeButton =  ((UIButton *)[newContact viewWithTag:306]);
+    UIButton *statusTypeButton =  ((UIButton *)[newContact viewWithTag:307]);
+    UIButton *supportLevelButton =  ((UIButton *)[self.containerView viewWithTag:40]);
     NSString *typeValue_;
     NSString *methodValue_;
     NSString *statusValue_;
+    NSString *supportLevel_;
     
     if ([actionSheet.title isEqualToString:@"Choose type"]) {
         NSLog(@"actionSheet.title: %@", actionSheet.title);
         if (buttonIndex == [actionSheet cancelButtonIndex]) {
             // User pressed cancel -- abort
             typeValue_ = @"";
-            [contactType setTitle:typeValue_ forState:UIControlStateNormal];
+            [contactTypeButton setTitle:typeValue_ forState:UIControlStateNormal];
             return;
         }
         typeValue_ = [self translateContactType:buttonIndex];
         NSLog(@"translated typeValue_: %@", typeValue_);
-        [contactType setTitle:typeValue_ forState:UIControlStateNormal];
-        
+        [contactTypeButton setTitle:typeValue_ forState:UIControlStateNormal];
     }
     
     if ([actionSheet.title isEqualToString:@"Choose method"]) {
@@ -771,26 +812,48 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         if (buttonIndex == [actionSheet cancelButtonIndex]) {
             // User pressed cancel -- abort
             methodValue_ = @"";
+            [methodTypeButton setTitle:methodValue_ forState:UIControlStateNormal];
             return;
         }
         methodValue_ = [self translateContactMethod:buttonIndex];
         NSLog(@"translated methodValue_: %@", methodValue_);
-        [methodType setTitle:methodValue_ forState:UIControlStateNormal];
-        
-        
-    } if ([actionSheet.title isEqualToString:@"Choose status"]) {
+        [methodTypeButton setTitle:methodValue_ forState:UIControlStateNormal];
+    }
+    
+    if ([actionSheet.title isEqualToString:@"Choose status"]) {
         NSLog(@"actionSheet.title: %@", actionSheet.title);
         if (buttonIndex == [actionSheet cancelButtonIndex]) {
             // User pressed cancel -- abort
             statusValue_ = @"";
+            [statusTypeButton setTitle:statusValue_ forState:UIControlStateNormal];
             return;
         }
         statusValue_ = [self translateContactStatus:buttonIndex];
         NSLog(@"translated statusValue_: %@", statusValue_);
-        [statusType setTitle:statusValue_ forState:UIControlStateNormal];
+        [statusTypeButton setTitle:statusValue_ forState:UIControlStateNormal];
+    }
+    if ([actionSheet.title isEqualToString:@"Choose support level"]) {
+        NSLog(@"actionSheet.title: %@", actionSheet.title);
+        if (buttonIndex == [actionSheet cancelButtonIndex]) {
+            // User pressed cancel -- abort
+            supportLevel_ = @"";
+            [supportLevelButton  setTitle:supportLevel_ forState:UIControlStateNormal];
+            return;
+        }
+        supportLevel_= [self translateSupportLevel:buttonIndex];
+        NSLog(@"translated supportLevel_: %@", supportLevel_);
+        [supportLevelButton  setTitle:supportLevel_ forState:UIControlStateNormal];
+        NSLog(@"supportLevelButton title: %@", supportLevelButton.titleLabel.text);
     }
 }
 
+
+- (NSString *)translateSupportLevel:(NSInteger)index
+{
+    NSDictionary *supportLevel = @{ @"1":@"Strong support", @"2":@"Weak support", @"3":@"Undecided", @"4":@"Weak oppose", @"5":@"Strong oppose"};
+
+    return [supportLevel valueForKey:[[NSString alloc] initWithFormat:@"%d", index + 1]];
+}
 
 - (NSString *)translateContactType:(NSInteger)index
 {
@@ -818,4 +881,5 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
 
 
 }
+
 @end
