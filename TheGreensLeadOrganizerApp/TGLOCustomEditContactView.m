@@ -30,6 +30,10 @@ static NSDictionary *contactStatuses;
         
         contactStatuses = @{@"answered":@"Answered",@"bad_info":@"Bad info",@"inaccessible":@"Inaccessible",@"left_message":@"Left message",@"meaningful_interaction":@"Meaningful interaction",@"not_interested":@"Not interested",@"no_answer":@"No answer",@"refused":@"Refused",@"send_information":@"Send information",@"other":@"Other"};
         
+        // Initialization code
+        UIColor * blackColor = [UIColor colorWithRed:0/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f];
+        UIColor * greenColor = [UIColor colorWithRed:129/255.0f green:193/255.0f blue:87/255.0f alpha:1.0f];
+        
         
         UILabel *typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 30)];
         UILabel *methodLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 35, 80, 30)];
@@ -50,10 +54,25 @@ static NSDictionary *contactStatuses;
         
         
         
-        UITextField *typeValue = [[UITextField alloc] initWithFrame:CGRectMake(85, 0, 200, 30)];
-        UITextField *methodValue = [[UITextField alloc] initWithFrame:CGRectMake(85, 35, 200, 30)];
-        UITextField *statusValue = [[UITextField alloc] initWithFrame:CGRectMake(85, 70, 200, 30)];
-        UITextView *noteValue = [[UITextView alloc] initWithFrame:CGRectMake(0, 140, 320, 100)];
+        //setup the button
+        UIButton *typeValue =[UIButton buttonWithType:UIButtonTypeSystem];
+        typeValue.frame = CGRectMake(85, 0, 200, 30);
+        [typeValue setTitleColor:blackColor forState:UIControlStateNormal];
+        [typeValue setTitle:@"random TYPE text" forState:UIControlStateNormal];
+        
+        
+        UIButton *methodValue =[UIButton buttonWithType:UIButtonTypeSystem];
+        methodValue.frame = CGRectMake(85, 35, 200, 30);
+        [methodValue setTitleColor:blackColor forState:UIControlStateNormal];
+        [methodValue setTitle:@"random METHOD text" forState:UIControlStateNormal];
+        
+        UIButton *statusValue =[UIButton buttonWithType:UIButtonTypeSystem];
+        statusValue.frame = CGRectMake(85, 70, 200, 30);
+        [statusValue setTitleColor:blackColor forState:UIControlStateNormal];
+        [statusValue setTitle:@"random STATUS text" forState:UIControlStateNormal];
+        
+        
+        UITextView *noteValue = [[UITextView alloc] initWithFrame:CGRectMake(0, 140, 280, 100)];
         
         //add tags to these. used in other classes to get a ref
         //to them
@@ -141,6 +160,8 @@ static NSDictionary *contactStatuses;
         return @"Status not found";
     }
 }
+
+
 
 
 /*

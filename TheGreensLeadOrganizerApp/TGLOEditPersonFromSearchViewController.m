@@ -176,10 +176,19 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     UILabel *methodLabel = ((UILabel *)[theContact viewWithTag:302]);
     UILabel *statusLabel = ((UILabel *)[theContact viewWithTag:303]);
     UILabel *noteLabel = ((UILabel *)[theContact viewWithTag:304]);
-    UITextField *typeValue = ((UITextField *)[theContact viewWithTag:305]);
-    UITextField *methodValue = ((UITextField *)[theContact viewWithTag:306]);
-    UITextField *statusValue = ((UITextField *)[theContact viewWithTag:307]);
-    UITextView *noteValue = ((UITextView*)[theContact viewWithTag:308]);
+    
+    UIButton *typeValue = ((UIButton *)[theContact viewWithTag:305]);
+    UIButton *methodValue = ((UIButton *)[theContact viewWithTag:306]);
+    UIButton *statusValue = ((UIButton *)[theContact viewWithTag:307]);
+    
+    //setup listeners
+    [typeValue addTarget:self action:@selector(typeValueHit:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [methodValue addTarget:self action:@selector(methodValueHit:) forControlEvents:UIControlEventTouchUpInside];
+    [statusValue addTarget:self action:@selector(statusValueHit:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    UITextView *noteValue = ((UITextView *)[theContact viewWithTag:308]);
     
     
     if (theSwitch.on ) {
@@ -195,6 +204,7 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         noteLabel.backgroundColor = backgroundLabel;
         
         typeValue.backgroundColor = backgroundValue;
+        
         methodValue.backgroundColor = backgroundValue;
         statusValue.backgroundColor = backgroundValue;
         noteValue.backgroundColor = backgroundValue;
@@ -574,9 +584,9 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     TGLOCustomEditContactView *newContact = (TGLOCustomEditContactView *)[self.containerView viewWithTag:300];
 
     
-    NSString *contactType = ((UITextField *)[newContact viewWithTag:305]).text;
-    NSString *methodType =  ((UITextField *)[newContact viewWithTag:306]).text;
-    NSString *statusType =  ((UITextField *)[newContact viewWithTag:307]).text;
+    NSString *contactType = ((UIButton *)[newContact viewWithTag:305]).titleLabel.text;
+    NSString *methodType =  ((UIButton *)[newContact viewWithTag:306]).titleLabel.text;
+    NSString *statusType =  ((UIButton *)[newContact viewWithTag:307]).titleLabel.text;
     NSString *noteType =    ((UITextField *)[newContact viewWithTag:308]).text;
     
     NSLog(@"contactType: %@", contactType);
@@ -693,9 +703,119 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         NSLog(@"calling didUpdatePerson....");
         [self.delegate didUpdatePerson:self.person];
     }
-
-
 }
 
 
+
+- (void)typeValueHit:(id)sender
+{
+    NSLog(@"typeValueHit, in TGLOEditPersonFromSearchViewController");
+    UIActionSheet *typeValueActionSheet = [[UIActionSheet alloc] initWithTitle:@"Choose type"
+                                                             delegate:self
+                                                    cancelButtonTitle:@"Cancel"
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:@"Event debrief", @"Event confirmation", @"Inbox response", @"Donation thank-you", @"Donation request",@"Volunteer recruitment",@"Meeting 1:1",@"Volunteer intake",@"Voter outreach election",@"Voter outreach issue",@"Voter persuasion",@"diggity", nil];
+    [typeValueActionSheet showInView:self.containerView];
+}
+
+
+- (void)methodValueHit:(id)sender
+{
+    NSLog(@"methodValueHit, in TGLOEditPersonFromSearchViewController");
+    UIActionSheet *methodValueActionSheet = [[UIActionSheet alloc] initWithTitle:@"Choose method"
+                                                             delegate:self
+                                                    cancelButtonTitle:@"Cancel"
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:@"Delivery", @"Door knock",@"Email",@"Email blast",@"Face to face",@"Facebook",@"Meeting",@"Phone call",@"Robocall",@"Snail mail",@"Text",@"Text blast",@"Tweet",@"Video call",@"Webinar",@"Other", nil];
+    [methodValueActionSheet showInView:self.containerView];
+}
+
+
+- (void)statusValueHit:(id)sender
+{
+    NSLog(@"statusValueHit, in TGLOEditPersonFromSearchViewController");
+    UIActionSheet *statusValueActionSheet = [[UIActionSheet alloc] initWithTitle:@"Choose status"
+                                                             delegate:self
+                                                    cancelButtonTitle:@"Cancel"
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:@"Answered", @"Bad info",@"Inaccessible",@"Left message",@"Meaningful interaction",@"Not interested",@"No answer",@"Refused",@"Send information",@"Other", nil];
+    [statusValueActionSheet showInView:self.containerView];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    TGLOCustomEditContactView *newContact = (TGLOCustomEditContactView *)[self.containerView viewWithTag:300];
+    UIButton *contactType = ((UIButton *)[newContact viewWithTag:305]);
+    UIButton *methodType =  ((UIButton *)[newContact viewWithTag:306]);
+    UIButton *statusType =  ((UIButton *)[newContact viewWithTag:307]);
+    NSString *typeValue_;
+    NSString *methodValue_;
+    NSString *statusValue_;
+    
+    if ([actionSheet.title isEqualToString:@"Choose type"]) {
+        NSLog(@"actionSheet.title: %@", actionSheet.title);
+        if (buttonIndex == [actionSheet cancelButtonIndex]) {
+            // User pressed cancel -- abort
+            typeValue_ = @"";
+            [contactType setTitle:typeValue_ forState:UIControlStateNormal];
+            return;
+        }
+        typeValue_ = [self translateContactType:buttonIndex];
+        NSLog(@"translated typeValue_: %@", typeValue_);
+        [contactType setTitle:typeValue_ forState:UIControlStateNormal];
+        
+    }
+    
+    if ([actionSheet.title isEqualToString:@"Choose method"]) {
+        NSLog(@"actionSheet.title: %@", actionSheet.title);
+        if (buttonIndex == [actionSheet cancelButtonIndex]) {
+            // User pressed cancel -- abort
+            methodValue_ = @"";
+            return;
+        }
+        methodValue_ = [self translateContactMethod:buttonIndex];
+        NSLog(@"translated methodValue_: %@", methodValue_);
+        [methodType setTitle:methodValue_ forState:UIControlStateNormal];
+        
+        
+    } if ([actionSheet.title isEqualToString:@"Choose status"]) {
+        NSLog(@"actionSheet.title: %@", actionSheet.title);
+        if (buttonIndex == [actionSheet cancelButtonIndex]) {
+            // User pressed cancel -- abort
+            statusValue_ = @"";
+            return;
+        }
+        statusValue_ = [self translateContactStatus:buttonIndex];
+        NSLog(@"translated statusValue_: %@", statusValue_);
+        [statusType setTitle:statusValue_ forState:UIControlStateNormal];
+    }
+}
+
+
+- (NSString *)translateContactType:(NSInteger)index
+{
+    NSDictionary *contactTypes = @{ @"1": @"Event debrief", @"2": @"Event confirmation", @"3":@"Inbox response", @"4":@"Donation thank-you", @"5":@"Donation request", @"6":@"Volunteer recruitment", @"7": @"Meeting 1:1", @"8": @"Volunteer intake",@"9": @"Voter outreach election",@"10": @"Voter outreach issue",@"11": @"Voter persuasion",@"12": @"diggity"};
+
+
+    return [contactTypes valueForKey:[[NSString alloc] initWithFormat:@"%d", index + 1]];
+}
+
+- (NSString *)translateContactMethod:(NSInteger)index
+{
+    
+    NSDictionary *contactMethods = @{@"0":@"Delivery",@"1":@"Door knock",@"2":@"Email",@"3":@"Email blast",@"4":@"Face to face",@"5":@"Facebook",@"6":@"Meeting",@"7":@"Phone call",@"8":@"Robocall",@"9":@"Snail mail",@"10":@"Text",@"11":@"Text blast",@"12":@"Tweet",@"13":@"Video call",@"14":@"Webinar",@"15":@"Other"};
+
+    
+    return [contactMethods objectForKey:[[NSString alloc] initWithFormat:@"%d", index]];
+    
+}
+
+- (NSString *)translateContactStatus:(NSInteger)index
+{
+    NSDictionary *contactStatuses = @{@"0":@"Answered",@"1":@"Bad info",@"2":@"Inaccessible",@"3":@"Left message",@"4":@"Meaningful interaction",@"5":@"Not interested",@"6":@"No answer",@"7":@"Refused",@"8":@"Send information",@"9":@"Other"};
+    
+    return [contactStatuses objectForKey:[[NSString alloc] initWithFormat:@"%d", index]];
+
+
+}
 @end

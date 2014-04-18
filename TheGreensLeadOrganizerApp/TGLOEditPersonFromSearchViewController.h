@@ -11,7 +11,7 @@
 
 @protocol UpdatePersonDelegate;
 
-@interface TGLOEditPersonFromSearchViewController : UIViewController
+@interface TGLOEditPersonFromSearchViewController : UIViewController <UIActionSheetDelegate>
 
 
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -42,10 +42,18 @@
 - (void)reRenderUI;
 - (void)reRenderPreviousControllerUI;
 
+- (void)typeValueHit:(id)sender;
+- (void)methodValueHit:(id)sender;
+- (void)statusValueHit:(id)sender;
+
+
 - (IBAction)saveChanges:(id)sender;
 - (void)toggleTag:(id)sender;
 - (void)toggleContact:(id)sender;
 
+- (NSString *)translateContactType:(NSInteger)index;
+- (NSString *)translateContactMethod:(NSInteger)index;
+- (NSString *)translateContactStatus:(NSInteger)index;
 @end
 
 @protocol UpdatePersonDelegate <NSObject>

@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TGLOEditPersonFromSearchViewController.h"
 
-@interface TGLOCustomEditContactView : UIView
+@interface TGLOCustomEditContactView : UIView 
 
 
 @property (strong, nonatomic) IBOutlet UILabel *typeLabel;
@@ -16,10 +17,11 @@
 @property (strong, nonatomic) IBOutlet UILabel *statusLabel;
 @property (strong, nonatomic) IBOutlet UILabel *noteLabel;
 
+//@property (strong, nonatomic) UITextView *typeValue;
+
 - (NSString *)getFormattedTypeValue:(NSString *)typeValue;
 - (NSString *)getFormattedMethodValue:(NSString *)methodValue;
 - (NSString *)getFormattedStatusesValue:(NSString *)statusValue;
-
 
 
 
