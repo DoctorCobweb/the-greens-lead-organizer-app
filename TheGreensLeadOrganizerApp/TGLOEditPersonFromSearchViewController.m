@@ -836,8 +836,7 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         NSLog(@"actionSheet.title: %@", actionSheet.title);
         if (buttonIndex == [actionSheet cancelButtonIndex]) {
             // User pressed cancel -- abort
-            supportLevel_ = @"";
-            [supportLevelButton  setTitle:supportLevel_ forState:UIControlStateNormal];
+            //dont reset the title!
             return;
         }
         supportLevel_= [self translateSupportLevel:buttonIndex];
