@@ -32,13 +32,21 @@ static NSString *myNationBuilderId = @"my_nation_builder_id";
 static NSString *accessToken= @"access_token";
 static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=10&access_token=%@";
 static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people/%@?access_token=%@";
+static NSString *buttonBackground = @"%@/appIcon120x120.png";
+static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 
 
 @interface TGLOEditPersonFromSearchViewController ()
 {
     NSString *token;
+    
+    //store the tags the user has chosen to delete in this dic
     NSMutableDictionary *tagsToDelete;
+    
+    //important to store old person details for an undo possibilty
     TGLOPerson *oldPersonDetails;
+    
+    //used to see if we should save a contact
     BOOL sendInANewContact;
 }
 
@@ -94,7 +102,7 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
 {
     self.title = @"Edit Person";
     
-    UIColor * whiteColor = [UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:1.0f];
+    //UIColor * whiteColor = [UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:1.0f];
     UIColor * blackColor = [UIColor colorWithRed:0/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f];
     
     
@@ -113,19 +121,14 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         //get the person object passed through from segue
         self.firstName.text = self.person.firstName;
         self.lastName.text = self.person.lastName;
-        
-        //self.supportLevel.text = [TGLOPerson formattedSupportLevel:self.person.supportLevel];
-        //self.supportLevel.titleLabel.text = [TGLOPerson formattedSupportLevel:self.person.supportLevel];
-        
         [self.supportLevel setTitle:[TGLOPerson formattedSupportLevel:self.person.supportLevel] forState:UIControlStateNormal];
         [self.supportLevel setTitleColor:blackColor forState:UIControlStateNormal];
-
         self.email.text = self.person.email;
         self.phone.text = self.person.phone;
         self.mobile.text = self.person.mobile;
         
         
-        //also store the details in oldPersonDetails as an undo
+        //store the person details in oldPersonDetails as an undo
         oldPersonDetails = [[TGLOPerson alloc] init];
         oldPersonDetails.firstName = self.person.firstName;
         oldPersonDetails.lastName = self.person.lastName;
@@ -151,6 +154,33 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     //NSLog(@"self subviews: %@", [self.containerView subviews]);
 }
 
+- (void)addASingleTag:(NSString *)tag
+{
+    CGFloat labelSpacing = 10; //spacing between the views
+    CGFloat makeMoreRoom = 45; //additional room on end of scrollview
+    CGFloat labelWidth = 280;  //new label width
+    CGFloat labelHeight= 35;   //new label height
+    
+    TGLOCustomEditTagView *aCustomEditTag = (TGLOCustomEditTagView *)[self fabricateANewView:@"TGLOCustomEditTagView" width:labelWidth height:labelHeight spacing:labelSpacing];
+    aCustomEditTag.clipsToBounds = YES;
+    
+    NSArray *customEditTagSubViews = [aCustomEditTag subviews];
+    
+    UIButton *theButton = (UIButton *)customEditTagSubViews[0];
+    UISwitch *theSwitch = (UISwitch *)customEditTagSubViews[1];
+    [theButton setTitle:tag forState:UIControlStateNormal];
+    //register an action for the button to trigger when pressed
+    [theSwitch addTarget:self action:@selector(toggleTag:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    //update the scroll and container view to fit/display new content
+    [self updateScrollAndContainerViewSize:makeMoreRoom];
+    
+    //finally add the new view to as last subview
+    [self.containerView addSubview:aCustomEditTag];
+}
+
+
 - (void)addContactsLabel
 {
     CGFloat labelSpacing = 10; //spacing between the views
@@ -167,15 +197,35 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     
     [self updateScrollAndContainerViewSize:makeMoreRoom];
     
-    //finally add the new view to as last subview
+    //finally add the new view as last subview
     [self.containerView addSubview:newContactHeader];
 }
 
 
+
+- (void)makeABlankContactView
+{
+    CGFloat labelSpacing = 20; //spacing between the views
+    CGFloat makeMoreRoom = 250; //additional room on end of scrollview
+    CGFloat labelWidth = 280;  //new label width
+    CGFloat labelHeight= 230;   //new label height
+    
+    
+    TGLOCustomEditContactView *customView = (TGLOCustomEditContactView*)[self fabricateANewView:@"TGLOCustomEditContactView" width:labelWidth height:labelHeight spacing:labelSpacing];
+    
+    customView.clipsToBounds = YES;
+    customView.opaque = NO;
+    
+    [self updateScrollAndContainerViewSize:makeMoreRoom];
+    
+    //finally add the new custom contact view
+    [self.containerView addSubview:customView];
+}
+
+
+//triggered when user toggles the switch for a new contact
 - (void)toggleContact:(id)sender
 {
-    NSLog(@"in toggleContactTag");
-    
     UIColor *disabledEditing = [UIColor colorWithRed:230/255.0f green:230/255.0f blue:230/255.0f alpha:1.0f];;
     UIColor *disabledEditingDark = [UIColor colorWithRed:220/255.0f green:220/255.0f blue:220/255.0f alpha:1.0f];
     UIColor *backgroundValue = [UIColor colorWithRed:242/255.0f green:178/255.0f blue:210/255.0f alpha:1.0f];
@@ -190,19 +240,17 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     UILabel *methodLabel = ((UILabel *)[theContact viewWithTag:302]);
     UILabel *statusLabel = ((UILabel *)[theContact viewWithTag:303]);
     UILabel *noteLabel = ((UILabel *)[theContact viewWithTag:304]);
-    
     UIButton *typeValue = ((UIButton *)[theContact viewWithTag:305]);
     UIButton *methodValue = ((UIButton *)[theContact viewWithTag:306]);
     UIButton *statusValue = ((UIButton *)[theContact viewWithTag:307]);
+    UITextView *noteValue = ((UITextView *)[theContact viewWithTag:308]);
+    
     
     //setup listeners
     [typeValue addTarget:self action:@selector(typeValueHit:) forControlEvents:UIControlEventTouchUpInside];
     
     [methodValue addTarget:self action:@selector(methodValueHit:) forControlEvents:UIControlEventTouchUpInside];
     [statusValue addTarget:self action:@selector(statusValueHit:) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    UITextView *noteValue = ((UITextView *)[theContact viewWithTag:308]);
     
     
     if (theSwitch.on ) {
@@ -218,7 +266,6 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         noteLabel.backgroundColor = backgroundLabel;
         
         typeValue.backgroundColor = backgroundValue;
-        
         methodValue.backgroundColor = backgroundValue;
         statusValue.backgroundColor = backgroundValue;
         noteValue.backgroundColor = backgroundValue;
@@ -240,6 +287,7 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         methodLabel.backgroundColor = disabledEditing;
         statusLabel.backgroundColor = disabledEditing;
         noteLabel.backgroundColor = disabledEditing;
+        
         typeValue.backgroundColor = disabledEditing;
         methodValue.backgroundColor = disabledEditing;
         statusValue.backgroundColor = disabledEditing;
@@ -253,69 +301,11 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         noteValue.editable = NO;
         noteValue.scrollEnabled = NO;
     }
-
 }
 
 
-- (void)makeABlankContactView
-{
-    CGFloat labelSpacing = 20; //spacing between the views
-    CGFloat makeMoreRoom = 250; //additional room on end of scroll/container view
-    CGFloat labelWidth = 280;  //new label width
-    CGFloat labelHeight= 230;   //new label height
-    
-    
-    TGLOCustomEditContactView *customView = (TGLOCustomEditContactView*)[self fabricateANewView:@"TGLOCustomEditContactView" width:labelWidth height:labelHeight spacing:labelSpacing];
-    
-    customView.clipsToBounds = YES;
-    customView.opaque = NO;
-    
-    //NSLog(@"customView.frame: %@",NSStringFromCGRect(customView.frame));
-    
-    [self updateScrollAndContainerViewSize:makeMoreRoom];
-    
-    //finally add the new custom contact view
-    [self.containerView addSubview:customView];
-
-    
- 
-}
 
 
-- (void)addASingleTag:(NSString *)tag
-{
-    CGFloat labelSpacing = 10; //spacing between the views
-    CGFloat makeMoreRoom = 45; //additional room on end of scroll/container view
-    CGFloat labelWidth = 280;  //new label width
-    CGFloat labelHeight= 35;   //new label height
-    
-    
-    //UIButton *newButton= (UIButton*)[self fabricateANewView:@"UIButton" width:labelWidth height:labelHeight spacing:labelSpacing];
-    //[newButton setTitle:tag forState:UIControlStateNormal];
-    //NSLog(@"newButton currentTitle: %@", [newButton currentTitle]);
-    //newButton.clipsToBounds = YES;
-    //NSLog(@"buttons current backgroundImage: %@", [newButton currentBackgroundImage]);
-    
-    TGLOCustomEditTagView *aCustomEditTag = (TGLOCustomEditTagView *)[self fabricateANewView:@"TGLOCustomEditTagView" width:labelWidth height:labelHeight spacing:labelSpacing];
-    aCustomEditTag.clipsToBounds = YES;
-    
-    NSArray *customEditTagSubViews = [aCustomEditTag subviews];
-    
-    UIButton *theButton = (UIButton *)customEditTagSubViews[0];
-    UISwitch *theSwitch = (UISwitch *)customEditTagSubViews[1];
-    [theButton setTitle:tag forState:UIControlStateNormal];
-    //register an action for the button to trigger when pressed
-    [theSwitch addTarget:self action:@selector(toggleTag:) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    
-    //update the scroll and container view to fit/display new content
-    [self updateScrollAndContainerViewSize:makeMoreRoom];
-    
-    //finally add the new view to as last subview
-    [self.containerView addSubview:aCustomEditTag];
-    
-}
 
 // utility method for construct different types of views
 - (id) fabricateANewView:(NSString *)viewType width:(CGFloat)viewWidth height:(CGFloat)viewHeight spacing: (CGFloat)viewSpacing
@@ -347,6 +337,7 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     CGRect viewRect = CGRectMake(lastViewXLocation, lastViewYLocation + viewSpacing, viewWidth, viewHeight);
     
     
+    //the meat of the method
     if ([viewType  isEqualToString:@"UILabel"]){
         return [[UILabel alloc] initWithFrame:viewRect];
     } else if ([viewType isEqualToString:@"UITextField"]) {
@@ -367,11 +358,8 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         [tempButton setTitleColor:blackColor forState:UIControlStateNormal];
         
         NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
-        //NSLog(@"bundlePath: %@", bundlePath);
-        NSString *imageLocation = [[NSString alloc] initWithFormat:@"%@/appIcon120x120.png", bundlePath ];
+        NSString *imageLocation = [[NSString alloc] initWithFormat:buttonBackground, bundlePath ];
         UIImage *backgroundImage = [[UIImage alloc] initWithContentsOfFile:imageLocation];
-        //NSLog(@"backgroundImage: %@", backgroundImage);
-        
         [tempButton setBackgroundImage:backgroundImage forState:UIControlStateNormal];
         
         //register an action for the button to trigger when pressed
@@ -407,15 +395,13 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         //user wants to delete the corresponding tag
         NSLog(@"DELETE corresponding tag");
         
-        NSString *imageLocation = [[NSString alloc] initWithFormat:@"%@/grey120x120.png", bundlePath ];
+        NSString *imageLocation = [[NSString alloc] initWithFormat:greyButtonBackground, bundlePath ];
         UIImage *backgroundImage = [[UIImage alloc] initWithContentsOfFile:imageLocation];
-        //NSLog(@"backgroundImage: %@", backgroundImage);
        
         //tag the parent view to say delete it. 1 == 'delete'
         //have to tag it here as it signifies the tag should
         //be deleted
         superView.tag = 123;
-        
         
         [correspondingButton setBackgroundImage:backgroundImage forState:UIControlStateNormal];
         
@@ -424,7 +410,7 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     } else {
         //user wants to keep the corresponding tag
         //NSLog(@"KEEP corresponding tag");
-        NSString *imageLocation = [[NSString alloc] initWithFormat:@"%@/appIcon120x120.png", bundlePath ];
+        NSString *imageLocation = [[NSString alloc] initWithFormat:buttonBackground, bundlePath ];
         UIImage *backgroundImage = [[UIImage alloc] initWithContentsOfFile:imageLocation];
         //NSLog(@"backgroundImage: %@", backgroundImage);
         
@@ -435,50 +421,15 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         
         [tagsToDelete setObject:@"1" forKey:correspondingButton.titleLabel.text];
     }
-    
     NSLog(@"tagsToDelete is now: %@", tagsToDelete);
-
 }
 
-//adding in more room to the scroll and container view to fit in newly added content
-- (void)updateScrollAndContainerViewSize:(CGFloat)makeMoreRoom
-{
-    //NSLog(@"in updateScrollAndContainerViewSize");
-    //update the scroll height to accomodate for
-    //new added view
-    CGSize contentSize = self.scrollView.contentSize;
-    CGFloat scrollHeight = contentSize.height;
-    
-    self.scrollView.contentSize =CGSizeMake(320, scrollHeight + makeMoreRoom);
-    //NSLog(@"self.scrollView.contentSize: %@", NSStringFromCGSize(self.scrollView.contentSize));
-    
-    
-    //must also update the containerView height
-    CGRect containerViewFrame = self.containerView.frame;
-    
-    //NSLog(@"self.containerView.frame Max X: %f", CGRectGetMaxX(containerViewFrame));
-    //NSLog(@"self.containerView.frame Max Y: %f", CGRectGetMaxY(containerViewFrame));
-    
-    self.containerView.frame = CGRectMake(0, 0, (CGRectGetMaxX(containerViewFrame)), (CGRectGetMaxY(containerViewFrame)) + makeMoreRoom);
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 - (IBAction)saveChanges:(id)sender {
     NSLog(@"saveChanges button hit");
     
-    //NSString *contactType = [newContact apiVersionOfContactType:contactType_];
-    
     //1.
     //create an updated person
-    //NSString *supportLevel = [[NSString alloc] initWithFormat:@"%@", self.supportLevel.titleLabel.text];
-    //NSLog(@"supportLevel: %@", supportLevel);
-    
-    
     TGLOPerson *updatedPerson = [[TGLOPerson alloc] init];
     updatedPerson.firstName = self.firstName.text;
     updatedPerson.lastName = self.lastName.text;
@@ -493,7 +444,6 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
     [f setNumberStyle:NSNumberFormatterDecimalStyle];
     updatedPerson.supportLevel = [f numberFromString:theSupportLevel];
-    
     
     
     //2. tags update
@@ -511,7 +461,6 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
             [tagsToKeep setObject:value_ forKey:key_];
         }
     }
-    
     
     //also include the new tag from addNewTag property
     //note: if user adds tags like "v_book, flow, gurkin"
@@ -546,11 +495,9 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     NSLog(@"manager.requestSerializer: %@", manager.requestSerializer);
     
-    
     [manager PUT:updatePeopleUrl_ parameters:updateBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@" PUT => updating tags and person details with response %@",responseObject);
         NSLog(@"SUCCESSfully deleted tags, added a new tag and updated person details.");
-        
         
         //UPDATE PERSON DETAILS property
         //because changes were successul we can now swap over the
@@ -574,30 +521,9 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
             [self reRenderUI];
         }
         
-        //also set the person.tags mutable array to updated tags
-        //[self.person.tags removeAllObjects];
-        //NSMutableArray *tempArray = [[NSMutableArray alloc] initWithArray:[tagsToKeep allKeys]];
-        //self.person.tags = tempArray;
-        
-        
-        //[self addTagViews];
-        
-        
-        //NSSet * contacts_set = [responseObject objectForKey:@"results"];
-        //NSArray *contacts_ = [contacts_set allObjects];
-        
-        //contacts = [[NSMutableArray alloc] initWithArray:contacts_];
-        
-        //NSLog(@"contacts: %@", contacts);
-        //NSLog(@"%d contact records returned", [contacts count]);
-        
-        //[self addContactViews];
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
-    
-    
 }
 
 
@@ -642,37 +568,15 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     NSLog(@"manager.requestSerializer: %@", manager.requestSerializer);
     
-    
     [manager POST:myContactsUrl_ parameters:contactBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@" POST => updating contact with response %@",responseObject);
         NSLog(@"SUCCESSfully added new contact.");
         
         [self reRenderUI];
         
-        //also set the person.tags mutable array to updated tags
-        //[self.person.tags removeAllObjects];
-        //NSMutableArray *tempArray = [[NSMutableArray alloc] initWithArray:[tagsToKeep allKeys]];
-        //self.person.tags = tempArray;
-        
-        
-        //[self addTagViews];
-        
-        
-        //NSSet * contacts_set = [responseObject objectForKey:@"results"];
-        //NSArray *contacts_ = [contacts_set allObjects];
-        
-        //contacts = [[NSMutableArray alloc] initWithArray:contacts_];
-        
-        //NSLog(@"contacts: %@", contacts);
-        //NSLog(@"%d contact records returned", [contacts count]);
-        
-        //[self addContactViews];
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
-    
-
 }
 
 - (void)displaySuccessAlert
@@ -723,6 +627,8 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     [self reRenderPreviousControllerUI];
 }
 
+//call the didUpdatePereson method of the previous view controller
+//pass over the updated person details and tell it to rerender its ui
 - (void)reRenderPreviousControllerUI
 {
     if([self.delegate respondsToSelector:@selector(didUpdatePerson:)])
@@ -802,7 +708,7 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
             [contactTypeButton setTitle:typeValue_ forState:UIControlStateNormal];
             return;
         }
-        typeValue_ = [self translateContactType:buttonIndex];
+        typeValue_ = [TGLOCustomEditContactView translateContactType:buttonIndex];
         NSLog(@"translated typeValue_: %@", typeValue_);
         [contactTypeButton setTitle:typeValue_ forState:UIControlStateNormal];
     }
@@ -815,7 +721,7 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
             [methodTypeButton setTitle:methodValue_ forState:UIControlStateNormal];
             return;
         }
-        methodValue_ = [self translateContactMethod:buttonIndex];
+        methodValue_ = [TGLOCustomEditContactView translateContactMethod:buttonIndex];
         NSLog(@"translated methodValue_: %@", methodValue_);
         [methodTypeButton setTitle:methodValue_ forState:UIControlStateNormal];
     }
@@ -828,7 +734,7 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
             [statusTypeButton setTitle:statusValue_ forState:UIControlStateNormal];
             return;
         }
-        statusValue_ = [self translateContactStatus:buttonIndex];
+        statusValue_ = [TGLOCustomEditContactView translateContactStatus:buttonIndex];
         NSLog(@"translated statusValue_: %@", statusValue_);
         [statusTypeButton setTitle:statusValue_ forState:UIControlStateNormal];
     }
@@ -836,7 +742,8 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
         NSLog(@"actionSheet.title: %@", actionSheet.title);
         if (buttonIndex == [actionSheet cancelButtonIndex]) {
             // User pressed cancel -- abort
-            //dont reset the title!
+            //dont reset the title! because it will throw error
+            //as support level must be non nil
             return;
         }
         supportLevel_= [self translateSupportLevel:buttonIndex];
@@ -854,31 +761,34 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
     return [supportLevel valueForKey:[[NSString alloc] initWithFormat:@"%d", index + 1]];
 }
 
-- (NSString *)translateContactType:(NSInteger)index
+
+
+//adding in more room to the scroll and container view to fit in newly added content
+- (void)updateScrollAndContainerViewSize:(CGFloat)makeMoreRoom
 {
-    NSDictionary *contactTypes = @{ @"1": @"Event debrief", @"2": @"Event confirmation", @"3":@"Inbox response", @"4":@"Donation thank-you", @"5":@"Donation request", @"6":@"Volunteer recruitment", @"7": @"Meeting 1:1", @"8": @"Volunteer intake",@"9": @"Voter outreach election",@"10": @"Voter outreach issue",@"11": @"Voter persuasion",@"12": @"diggity"};
-
-
-    return [contactTypes valueForKey:[[NSString alloc] initWithFormat:@"%d", index + 1]];
+    //NSLog(@"in updateScrollAndContainerViewSize");
+    //update the scroll height to accomodate for
+    //new added view
+    CGSize contentSize = self.scrollView.contentSize;
+    CGFloat scrollHeight = contentSize.height;
+    
+    self.scrollView.contentSize =CGSizeMake(320, scrollHeight + makeMoreRoom);
+    //NSLog(@"self.scrollView.contentSize: %@", NSStringFromCGSize(self.scrollView.contentSize));
+    
+    
+    //must also update the containerView height
+    CGRect containerViewFrame = self.containerView.frame;
+    
+    //NSLog(@"self.containerView.frame Max X: %f", CGRectGetMaxX(containerViewFrame));
+    //NSLog(@"self.containerView.frame Max Y: %f", CGRectGetMaxY(containerViewFrame));
+    
+    self.containerView.frame = CGRectMake(0, 0, (CGRectGetMaxX(containerViewFrame)), (CGRectGetMaxY(containerViewFrame)) + makeMoreRoom);
 }
 
-- (NSString *)translateContactMethod:(NSInteger)index
+- (void)didReceiveMemoryWarning
 {
-    
-    NSDictionary *contactMethods = @{@"0":@"Delivery",@"1":@"Door knock",@"2":@"Email",@"3":@"Email blast",@"4":@"Face to face",@"5":@"Facebook",@"6":@"Meeting",@"7":@"Phone call",@"8":@"Robocall",@"9":@"Snail mail",@"10":@"Text",@"11":@"Text blast",@"12":@"Tweet",@"13":@"Video call",@"14":@"Webinar",@"15":@"Other"};
-
-    
-    return [contactMethods objectForKey:[[NSString alloc] initWithFormat:@"%d", index]];
-    
-}
-
-- (NSString *)translateContactStatus:(NSInteger)index
-{
-    NSDictionary *contactStatuses = @{@"0":@"Answered",@"1":@"Bad info",@"2":@"Inaccessible",@"3":@"Left message",@"4":@"Meaningful interaction",@"5":@"Not interested",@"6":@"No answer",@"7":@"Refused",@"8":@"Send information",@"9":@"Other"};
-    
-    return [contactStatuses objectForKey:[[NSString alloc] initWithFormat:@"%d", index]];
-
-
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 @end

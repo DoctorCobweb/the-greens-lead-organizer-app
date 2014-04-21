@@ -197,6 +197,36 @@ static NSDictionary *contactStatuses;
 
 }
 
++ (NSString *)translateContactType:(NSInteger)index
+{
+    NSDictionary *contactTypes = @{ @"1": @"Event debrief", @"2": @"Event confirmation", @"3":@"Inbox response", @"4":@"Donation thank-you", @"5":@"Donation request", @"6":@"Volunteer recruitment", @"7": @"Meeting 1:1", @"8": @"Volunteer intake",@"9": @"Voter outreach election",@"10": @"Voter outreach issue",@"11": @"Voter persuasion",@"12": @"diggity"};
+    
+    
+    return [contactTypes valueForKey:[[NSString alloc] initWithFormat:@"%d", index + 1]];
+}
+
++ (NSString *)translateContactMethod:(NSInteger)index
+{
+    
+    NSDictionary *contactMethods = @{@"0":@"Delivery",@"1":@"Door knock",@"2":@"Email",@"3":@"Email blast",@"4":@"Face to face",@"5":@"Facebook",@"6":@"Meeting",@"7":@"Phone call",@"8":@"Robocall",@"9":@"Snail mail",@"10":@"Text",@"11":@"Text blast",@"12":@"Tweet",@"13":@"Video call",@"14":@"Webinar",@"15":@"Other"};
+    
+    
+    return [contactMethods objectForKey:[[NSString alloc] initWithFormat:@"%d", index]];
+    
+}
+
++ (NSString *)translateContactStatus:(NSInteger)index
+{
+    NSDictionary *contactStatuses = @{@"0":@"Answered",@"1":@"Bad info",@"2":@"Inaccessible",@"3":@"Left message",@"4":@"Meaningful interaction",@"5":@"Not interested",@"6":@"No answer",@"7":@"Refused",@"8":@"Send information",@"9":@"Other"};
+    
+    return [contactStatuses objectForKey:[[NSString alloc] initWithFormat:@"%d", index]];
+    
+    
+}
+
+
+
+
 
 /*
  // Only override drawRect: if you perform custom drawing.

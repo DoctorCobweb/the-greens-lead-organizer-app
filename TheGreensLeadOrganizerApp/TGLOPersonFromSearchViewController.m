@@ -447,6 +447,18 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
 {
     NSLog(@"...didUpdatePerson called!!!");
     NSLog(@"updated person is: %@", updatedPerson);
+    NSLog(@"updated person.lastName is: %@", updatedPerson.lastName);
+    NSLog(@"updated person.supportLevel: %@", updatedPerson.supportLevel);
+    
+    //set person to be the newly saved/updated person
+    self.person = updatedPerson;
+    
+    //rerender all the ui now
+    //1. get rid of all subviews
+    self.view = nil;
+    
+    //2. populate the ui
+    [self viewDidLoad];
 
 }
 

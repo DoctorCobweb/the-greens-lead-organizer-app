@@ -51,7 +51,7 @@ static NSString *searchUrl = @"https://%@.nationbuilder.com/api/v1/people/search
     //self.sidebarButton.tintColor = [UIColor colorWithWhite:0.04f alpha:0.9f];
     self.sidebarButton.tintColor = [UIColor colorWithWhite:0.05f alpha:1.0f];
     
-    self.scrollView.contentSize =CGSizeMake(320, 568);
+    self.scrollView.contentSize =CGSizeMake(320, 700);
     
     // Set the side bar button action. When it's tapped, it'll show up the sidebar.
     self.sidebarButton.target = self.revealViewController;

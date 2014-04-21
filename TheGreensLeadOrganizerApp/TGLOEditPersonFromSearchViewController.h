@@ -21,7 +21,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *email;
 @property (weak, nonatomic) IBOutlet UITextField *phone;
 @property (weak, nonatomic) IBOutlet UITextField *mobile;
-//@property (weak, nonatomic) IBOutlet UITextField *supportLevel;
 @property (weak, nonatomic) IBOutlet UIButton *supportLevel;
 @property (weak, nonatomic) IBOutlet UITextField *addANewTag;
 
@@ -38,6 +37,7 @@
 - (void)setupTagsToDeleteArray;
 - (void)addContactsLabel;
 - (void)makeABlankContactView;
+
 - (void)saveTheNewContact;
 - (void)displaySuccessAlert;
 - (void)reRenderUI;
@@ -53,9 +53,6 @@
 - (void)toggleTag:(id)sender;
 - (void)toggleContact:(id)sender;
 
-- (NSString *)translateContactType:(NSInteger)index;
-- (NSString *)translateContactMethod:(NSInteger)index;
-- (NSString *)translateContactStatus:(NSInteger)index;
 - (NSString *)translateSupportLevel:(NSInteger)index;
 
 

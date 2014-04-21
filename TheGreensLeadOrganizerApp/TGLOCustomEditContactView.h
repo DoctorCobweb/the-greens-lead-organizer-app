@@ -17,7 +17,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *statusLabel;
 @property (strong, nonatomic) IBOutlet UILabel *noteLabel;
 
-//@property (strong, nonatomic) UITextView *typeValue;
 
 - (NSString *)getFormattedTypeValue:(NSString *)typeValue;
 - (NSString *)getFormattedMethodValue:(NSString *)methodValue;
@@ -28,4 +27,8 @@
 - (NSString *)apiVersionOfContactMethod:(NSString *)contactMethod_;
 - (NSString *)apiVersionOfContactStatus:(NSString *)contactStatus_;
 
+
++ (NSString *)translateContactType:(NSInteger)index;
++ (NSString *)translateContactMethod:(NSInteger)index;
++ (NSString *)translateContactStatus:(NSInteger)index;
 @end

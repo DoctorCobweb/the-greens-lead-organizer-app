@@ -11,7 +11,8 @@
 #import "TGLOEditPersonFromSearchViewController.h"
 
 
-
+//UpdatePersonDelegate protocol is defined in
+//the TGLOEditPersonFromSearchViewControlelr.h file
 @interface TGLOPersonFromSearchViewController : UIViewController <UpdatePersonDelegate>
 
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
