@@ -11,16 +11,18 @@
 #import "TGLOCustomContactView.h"
 #import "AFNetworking.h"
 #import "TGLOPerson.h"
+#import "TGLOListViewController.h"
+#import "TGLOEditPersonFromListViewController.h"
 
 static NSString *accessToken= @"access_token";
-static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=10&access_token=%@";
+static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=100&access_token=%@";
 
 
 
 @interface TGLOPersonFromListViewController ()
 {
     NSString *token;
-    NSMutableArray *contacts;
+    //NSMutableArray *contacts;
     
     
 }
@@ -30,6 +32,7 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
 @end
 
 @implementation TGLOPersonFromListViewController
+@synthesize contacts;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -68,8 +71,8 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     
     NSLog(@"TGLOPersonFromListView person: %@", self.person);
     
-    //self.person = [self personFieldsForObject:self.rawPerson];
-    self.person = [TGLOPerson personFieldsForObject:self.rawPerson];
+    //self.person = [TGLOPerson personFieldsForObject:self.rawPerson];
+    
     
     if(self.person){
         //get the person object passed through from segue
@@ -104,13 +107,7 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     }
     
     [self getAllMyContacts];
-    
-    
 }
-
-
-
-
 
 
 - (void)addASingleTag:(NSString *)tag
@@ -425,6 +422,80 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+
+#pragma mark - Navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"showEditPersonFromList"]) {
+        
+        TGLOEditPersonFromListViewController *destViewController = (TGLOEditPersonFromListViewController *) segue.destinationViewController;
+        destViewController.person = self.person;
+        destViewController.contacts= self.contacts;
+        
+        //set self as delegate for <TGLOUpdatePersonDelegate> protocol
+        destViewController.delegate = self;
+    }
+    
+}
+
+-(void) didUpdatePerson:(TGLOPerson *)updatedPerson
+{
+    NSLog(@"...didUpdatePerson called!!!");
+    NSLog(@"updated person is: %@", updatedPerson);
+    NSLog(@"updated person.lastName is: %@", updatedPerson.lastName);
+    NSLog(@"updated person.supportLevel: %@", updatedPerson.supportLevel);
+    
+    //**update person**
+    //set person to be the newly saved/updated person
+    self.person = updatedPerson;
+    
+    //rerender all the ui now
+    //1. get rid of all subviews
+    self.view = nil;
+    
+    //2. populate the ui
+    //[self viewDidLoad];
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    NSLog(@"viewWillDisappear");
+    //get reference to previous view controller from the nav stack
+    //NAVIGATION STUFF
+    //view controller stuff. get the navigation stack. get the
+    //previous view controller etc
+    
+    NSLog(@"self.parentViewController: %@",self.parentViewController);
+    UINavigationController *navController = (UINavigationController *)self.parentViewController;
+    NSArray *viewControllers = [navController viewControllers];
+    NSLog(@"viewControllers: %@", viewControllers);
+    
+    // output array
+    //["<TGLOSearchViewController: 0x8e0a770>",
+    //"<TGLOSearchResultsViewController: 0x8c62580>"]
+    TGLOListViewController *lastViewController = [viewControllers lastObject];
+    NSLog(@"lastViewController class: %@", [lastViewController class]);
+    
+    //check to see if we are going back instead of drilling down
+    //further into the app.
+    //if we are drilling down further i.e. selecting to edit the
+    //person then the last view controller will be
+    //TGLOEditPersonFromSearchViewController instead of
+    //TGLOSearchResultsViewController
+    if ([lastViewController class] == [TGLOListViewController class]) {
+        NSLog(@"we have a match for TGLOTagViewController");
+        
+        [lastViewController.searchResults replaceObjectAtIndex:lastViewController.lastPersonSelected withObject:self.person];
+        
+        //tell the table to reload its data
+        [lastViewController.tableView reloadData];
+        
+    }
+}
+
 
 
 @end

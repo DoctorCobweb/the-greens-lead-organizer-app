@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "TGLOPerson.h"
+#import "TGLOUpdatePersonDelegate.h"
 
-@interface TGLOPersonFromTagViewController : UIViewController
+@interface TGLOPersonFromTagViewController : UIViewController<TGLOUpdatePersonDelegate>
 
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UIView *containerView;
@@ -21,7 +22,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *supportLevel;
 
 @property (strong, nonatomic) TGLOPerson *person;
-
+@property (strong, nonatomic) NSMutableArray *contacts;
 
 
 - (void)setUpAppearance;

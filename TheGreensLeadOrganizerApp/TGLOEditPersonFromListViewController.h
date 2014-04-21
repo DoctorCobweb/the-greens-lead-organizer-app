@@ -1,8 +1,8 @@
 //
-//  TGLOEditPersonFromSearchViewController.h
+//  TGLOEditPersonFromListViewController.h
 //  TheGreensLeadOrganizerApp
 //
-//  Created by andre on 16/04/2014.
+//  Created by andre on 21/04/2014.
 //  Copyright (c) 2014 andre trosky. All rights reserved.
 //
 
@@ -10,10 +10,7 @@
 #import "TGLOPerson.h"
 #import "TGLOUpdatePersonDelegate.h"
 
-//@protocol UpdatePersonDelegate;
-
-@interface TGLOEditPersonFromSearchViewController : UIViewController <UIActionSheetDelegate>
-
+@interface TGLOEditPersonFromListViewController : UIViewController
 
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UIView *containerView;
@@ -58,11 +55,5 @@
 
 
 
-@end
 
-/*
-@protocol UpdatePersonDelegate <NSObject>
-@optional
--(void) didUpdatePerson:(TGLOPerson *)updatedPerson;
 @end
- */

@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "TGLOPerson.h"
-#import "TGLOEditPersonFromSearchViewController.h"
+//#import "TGLOEditPersonFromSearchViewController.h"
+#import "TGLOUpdatePersonDelegate.h"
 
 
 //UpdatePersonDelegate protocol is defined in
 //the TGLOEditPersonFromSearchViewControlelr.h file
-@interface TGLOPersonFromSearchViewController : UIViewController <UpdatePersonDelegate>
+@interface TGLOPersonFromSearchViewController : UIViewController <TGLOUpdatePersonDelegate>
 
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UIView *containerView;
@@ -27,8 +28,6 @@
 @property (strong, nonatomic) TGLOPerson *person;
 @property (strong, nonatomic) NSMutableArray *contacts;
 
-//set by previous view controller TGLOSearchResultsViewController
-//@property (nonatomic, weak) id<UpdatePersonDelegate>delegate;
 
 - (void)setUpAppearance;
 - (void)getAllMyContacts;

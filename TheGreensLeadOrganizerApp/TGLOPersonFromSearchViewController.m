@@ -14,7 +14,7 @@
 #import "TGLOSearchResultsViewController.h"
 
 static NSString *accessToken= @"access_token";
-static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=10&access_token=%@";
+static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=100&access_token=%@";
 
 
 
@@ -439,7 +439,7 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
         destViewController.person = self.person;
         destViewController.contacts= self.contacts;
         
-        //set self as delegate for <UpdatePersonDelegate> protocol
+        //set self as delegate for <TGLOUpdatePersonDelegate> protocol
         destViewController.delegate = self;
     }
     
@@ -461,7 +461,7 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     self.view = nil;
     
     //2. populate the ui
-    [self viewDidLoad];
+    //[self viewDidLoad];
 
 }
 

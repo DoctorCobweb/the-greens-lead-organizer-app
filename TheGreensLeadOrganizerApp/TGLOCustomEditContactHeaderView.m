@@ -34,6 +34,7 @@
         
         
         contactSwitch.tag = 1;
+        contactLabel.tag = 2;
         
         [self addSubview:contactLabel];
         [self addSubview:contactSwitch];

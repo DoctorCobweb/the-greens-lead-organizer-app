@@ -13,6 +13,8 @@
 @interface TGLOTagViewController : UITableViewController
 
 @property (strong, nonatomic) NSString *tag;
+@property (strong, nonatomic) NSMutableArray *searchResults;
+@property NSInteger lastPersonSelected;
 
 -(void)getPeopleInTag;
 

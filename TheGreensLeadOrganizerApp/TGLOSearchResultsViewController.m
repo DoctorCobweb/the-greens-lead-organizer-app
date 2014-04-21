@@ -66,14 +66,9 @@
     [manager GET:self.searchUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //NSLog(@"in SEARCH VIEW CONTROLLER and response: %@", responseObject);
         
-        //responseObject is an NSDictionary with a "results" key with value of type
-        //NSSet.
-        //in this set then there are NSDictionary objects for each person
-        //the following will thus get all people returned from the api call
         NSSet * results_set = [responseObject objectForKey:@"results"];
         //NSLog(@"results_set: %@", results_set);
         
-        //searchResults_ = [results_set allObjects];
         searchResults = [[NSMutableArray alloc] initWithCapacity:[results_set count]];
         NSArray *results_array = [results_set allObjects];
         for (NSDictionary *person in results_array) {
@@ -174,8 +169,7 @@
     if ([segue.identifier isEqualToString:@"showPersonFromSearch"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         
-        lastPersonSelected =  self.tableView.indexPathForSelectedRow.row;
-        
+        lastPersonSelected = indexPath.row;
         TGLOPerson *personSelected = searchResults[indexPath.row];
         
         TGLOPersonFromSearchViewController *destViewController = (TGLOPersonFromSearchViewController *) segue.destinationViewController;

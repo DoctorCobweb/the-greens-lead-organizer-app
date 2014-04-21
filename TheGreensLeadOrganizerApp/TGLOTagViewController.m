@@ -26,6 +26,8 @@ static NSString *peopleForTagUrl= @"https://%@.nationbuilder.com/api/v1/tags/%@/
 @end
 
 @implementation TGLOTagViewController
+@synthesize searchResults;
+@synthesize lastPersonSelected;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -84,33 +86,15 @@ static NSString *peopleForTagUrl= @"https://%@.nationbuilder.com/api/v1/tags/%@/
     [manager GET:peopleForTagUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //NSLog(@"PEOPLE IN TAG VIEW CONTROLLER and response: %@", responseObject);
         
-        //responseObject is an NSDictionary with a "results" key with value of type
-        //NSSet.
-        //in this set then there are NSDictionary objects for each person
-        //the following will thus get all people returned from the api call
-        NSSet *people_set = [responseObject objectForKey:@"results"];
-        //NSLog(@"people_set SET: %@", people_set);
+        NSSet * results_set = [responseObject objectForKey:@"results"];
+        //NSLog(@"results_set: %@", results_set);
         
-        //an array of dicts e.g.
-        //{"person_id":9; tag=xyz}
-        NSArray *people_array = [people_set allObjects];
-        NSLog(@"%d people records returned", [people_array count]);
-        
-        //alloc and init the people array
-        people = [[NSMutableArray alloc] initWithCapacity:[people_array count]];
-        
-        
-        for (NSDictionary *person in people_array) {
-            
-            //get a properly parsed TGLOPerson
-            //then add it to people array
-            //TGLOPerson *_person = [self personFieldsForObject:person];
-            TGLOPerson *_person = [TGLOPerson personFieldsForObject:person];
-            NSLog(@"person recordID : %@", _person.recordID);
-            [people addObject:_person];
+        searchResults = [[NSMutableArray alloc] initWithCapacity:[results_set count]];
+        NSArray *results_array = [results_set allObjects];
+        for (NSDictionary *person in results_array) {
+            TGLOPerson *parsedPerson = [TGLOPerson personFieldsForObject:person];
+            [searchResults addObject:parsedPerson];
         }
-        
-        //NSLog(@"people: %@", people);
         
         //reload tableview to display new data returned from server
         [self.tableView reloadData];
@@ -138,7 +122,7 @@ static NSString *peopleForTagUrl= @"https://%@.nationbuilder.com/api/v1/tags/%@/
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [people count];
+    return [searchResults count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -146,10 +130,12 @@ static NSString *peopleForTagUrl= @"https://%@.nationbuilder.com/api/v1/tags/%@/
     static NSString *CellIdentifier = @"tagPersonCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    NSString *_firstName = ((TGLOPerson *)[people objectAtIndex:indexPath.row]).firstName;
-    NSString *_lastName = ((TGLOPerson *)[people objectAtIndex:indexPath.row]).lastName;
     // Configure the cell...
-    cell.textLabel.text = [[NSString alloc] initWithFormat:@"%@ %@", _firstName, _lastName ];
+    NSString *firstName_ = ((TGLOPerson *)searchResults[indexPath.row]).firstName;
+    NSString *lastName_= ((TGLOPerson *)searchResults[indexPath.row]).lastName;
+    NSString *fullName_ = [[NSString alloc] initWithFormat:@"%@ %@", firstName_, lastName_ ];
+    
+    cell.textLabel.text = fullName_;
     
     return cell;
 }
@@ -209,9 +195,11 @@ static NSString *peopleForTagUrl= @"https://%@.nationbuilder.com/api/v1/tags/%@/
 {
     if ([segue.identifier isEqualToString:@"showPersonInTag"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        lastPersonSelected = indexPath.row;
+        TGLOPerson *personSelected = searchResults[indexPath.row];
         
         TGLOPersonFromTagViewController *destViewController = (TGLOPersonFromTagViewController *) segue.destinationViewController;
-        destViewController.person = [people objectAtIndex:indexPath.row];
+        destViewController.person = personSelected;
     }
 }
 

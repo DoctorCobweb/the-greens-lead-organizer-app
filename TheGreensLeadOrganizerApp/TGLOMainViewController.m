@@ -11,6 +11,7 @@
 #import "AFNetworking.h"
 #import "TGLOAppDelegate.h"
 #import "TGLOCustomContactView.h"
+#import "TGLOEditMyProfileViewController.h"
 
 
 static NSString *myNationBuilderId = @"my_nation_builder_id";
@@ -18,13 +19,13 @@ static NSString *accessToken= @"access_token";
 
 
 NSString * const meUrl= @"https://%@.nationbuilder.com/api/v1/people/me?access_token=%@";
-NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=10&access_token=%@";
+NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=100&access_token=%@";
 
 @interface TGLOMainViewController ()
 {
     NSString *token;
-    NSMutableArray *taggings;
-    NSMutableArray *contacts;
+    //NSMutableArray *taggings;
+    //NSMutableArray *contacts;
 }
 
 @property (nonatomic, strong) UIAlertView *tokenAlert;
@@ -32,6 +33,7 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
 @end
 
 @implementation TGLOMainViewController
+@synthesize contacts;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -72,10 +74,15 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     //to scroll view size
     self.containerView.frame = CGRectMake(0, 0, 320, 550);
     
+    UINavigationBar *navbar = [[self navigationController] navigationBar];
     
+    NSLog(@"navigation bar: %@", navbar);
+    UIColor * black_color = [UIColor colorWithRed:0/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f];
+    
+    //this will set the 'back button' to be black
+    navbar.tintColor = black_color;
     
     // Change button color
-    //self.sidebarButton.tintColor = [UIColor colorWithWhite:0.04f alpha:0.9f];
     self.sidebarButton.tintColor = [UIColor colorWithWhite:0.05f alpha:1.0f];
     
     // Set the side bar button action. When it's tapped, it'll show up the sidebar.
@@ -96,12 +103,7 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     [manager GET:meUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //NSLog(@"in MAIN VIEW CONTROLLER and response: %@", responseObject);
          
-        //responseObject is an NSDictionary with a "results" key with value of type
-        //NSSet.
-        //in this set then there are NSDictionary objects for each person
-        //the following will thus get all people returned from the api call
         NSDictionary * me_dic = [responseObject objectForKey:@"person"];
-        //NSLog(@"me_set: %@", me_dic);
         
         NSLog(@"me_dic[id] SET: %@", [me_dic valueForKey:@"id"]);
         
@@ -149,22 +151,22 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     
     
     //TGLOPerson *me = [self personFieldsForObject:me_dic];
-    TGLOPerson *me = [TGLOPerson personFieldsForObject:me_dic];
+    self.person = [TGLOPerson personFieldsForObject:me_dic];
     
     //UIColor * white_color = [UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:1.0f];
     
 
-    self.firstName.text = me.firstName;
-    self.lastName.text = me.lastName;
-    self.supportLevel.text = [TGLOPerson formattedSupportLevel:me.supportLevel];
+    self.firstName.text = self.person.firstName;
+    self.lastName.text = self.person.lastName;
+    self.supportLevel.text = [TGLOPerson formattedSupportLevel:self.person.supportLevel];
     
-    [self.email setTitle:me.email forState:UIControlStateNormal];
+    [self.email setTitle:self.person.email forState:UIControlStateNormal];
     //[self.email setTitleColor:white_color forState:UIControlStateNormal];
     
-    [self.phone setTitle:me.phone forState:UIControlStateNormal];
+    [self.phone setTitle:self.person.phone forState:UIControlStateNormal];
     //[self.phone setTitleColor:white_color forState:UIControlStateNormal];
     
-    [self.mobile setTitle:me.mobile forState:UIControlStateNormal];
+    [self.mobile setTitle:self.person.mobile forState:UIControlStateNormal];
     //[self.mobile setTitleColor:white_color forState:UIControlStateNormal];
     
     //now we can be sure that we have myNBId in
@@ -173,8 +175,8 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     //myNBId non-nil.
     //[self getAllMyTags];
     
-    taggings = [[NSMutableArray alloc] initWithCapacity:[[me valueForKey:@"tags"] count]];
-    [taggings addObjectsFromArray:[me valueForKey:@"tags"]];
+    //taggings = [[NSMutableArray alloc] initWithCapacity:[[me valueForKey:@"tags"] count]];
+    //[taggings addObjectsFromArray:[me valueForKey:@"tags"]];
     
     [self addTagViews];
     
@@ -186,9 +188,9 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
 - (void)addTagViews
 {
     NSLog(@"SETTING UP ALL MY TAGS");
-    NSLog(@"taggings array: %@", taggings);
     
-    for (NSString *tag in taggings) {
+    //for (NSString *tag in taggings) {
+    for (NSString *tag in self.person.tags) {
         [self addASingleTag:tag];
     }
     
@@ -423,5 +425,79 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+#pragma mark - Navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"showEditMyProfile"]) {
+        
+        TGLOEditMyProfileViewController *destViewController = (TGLOEditMyProfileViewController *) segue.destinationViewController;
+        destViewController.person = self.person;
+        destViewController.contacts= self.contacts;
+        
+        //set self as delegate for <TGLOUpdatePersonDelegate> protocol
+        destViewController.delegate = self;
+    }
+    
+}
+
+-(void) didUpdatePerson:(TGLOPerson *)updatedPerson
+{
+    NSLog(@"...didUpdatePerson called!!!");
+    NSLog(@"updated person is: %@", updatedPerson);
+    NSLog(@"updated person.lastName is: %@", updatedPerson.lastName);
+    NSLog(@"updated person.supportLevel: %@", updatedPerson.supportLevel);
+    
+    //**update person**
+    //set person to be the newly saved/updated person
+    self.person = updatedPerson;
+    
+    //rerender all the ui now
+    //1. get rid of all subviews
+    self.view = nil;
+    
+    //2. populate the ui
+    //[self viewDidLoad];
+    
+}
+
+/*
+- (void)viewWillDisappear:(BOOL)animated
+{
+    NSLog(@"viewWillDisappear");
+    //get reference to previous view controller from the nav stack
+    //NAVIGATION STUFF
+    //view controller stuff. get the navigation stack. get the
+    //previous view controller etc
+    
+    NSLog(@"self.parentViewController: %@",self.parentViewController);
+    UINavigationController *navController = (UINavigationController *)self.parentViewController;
+    NSArray *viewControllers = [navController viewControllers];
+    NSLog(@"viewControllers: %@", viewControllers);
+    
+    // output array
+    //["<TGLOSearchViewController: 0x8e0a770>",
+    //"<TGLOSearchResultsViewController: 0x8c62580>"]
+    TGLOSearchResultsViewController *lastViewController = [viewControllers lastObject];
+    NSLog(@"lastViewController class: %@", [lastViewController class]);
+    
+    //check to see if we are going back instead of drilling down
+    //further into the app.
+    //if we are drilling down further i.e. selecting to edit the
+    //person then the last view controller will be
+    //TGLOEditPersonFromSearchViewController instead of
+    //TGLOSearchResultsViewController
+    if ([lastViewController class] == [TGLOSearchResultsViewController class]) {
+        NSLog(@"we have a match for TGLOSearchResultsViewController");
+        
+        [lastViewController.searchResults replaceObjectAtIndex:lastViewController.lastPersonSelected withObject:self.person];
+        
+        //tell the table to reload its data
+        [lastViewController.tableView reloadData];
+        
+    }
+}
+ */
 
 @end

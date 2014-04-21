@@ -26,6 +26,8 @@ static NSString * aListUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/peop
 @end
 
 @implementation TGLOListViewController
+@synthesize searchResults;
+@synthesize lastPersonSelected;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -81,6 +83,7 @@ static NSString * aListUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/peop
     [manager GET:aListUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //NSLog(@"A LIST TABLE VIEW CONTROLLER and response for lists: %@", responseObject);
         
+        /*
         //responseObject is an NSDictionary with a "results" key with value of type
         //NSSet.
         //in this set then there are NSDictionary objects for each person
@@ -98,6 +101,19 @@ static NSString * aListUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/peop
         peopleInList = [[NSMutableArray alloc] initWithArray:results_array];
         
         NSLog(@"peopleInList array: %@", peopleInList);
+        */
+        
+        
+        
+        NSSet * results_set = [responseObject objectForKey:@"results"];
+        //NSLog(@"results_set: %@", results_set);
+        
+        searchResults = [[NSMutableArray alloc] initWithCapacity:[results_set count]];
+        NSArray *results_array = [results_set allObjects];
+        for (NSDictionary *person in results_array) {
+            TGLOPerson *parsedPerson = [TGLOPerson personFieldsForObject:person];
+            [searchResults addObject:parsedPerson];
+        }
         
         //reload tableview to display new data returned from server
         [self.tableView reloadData];
@@ -124,7 +140,7 @@ static NSString * aListUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/peop
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [peopleInList count];
+    return [searchResults count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -133,9 +149,10 @@ static NSString * aListUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/peop
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
-    NSString *firstName = [peopleInList[indexPath.row] objectForKey:@"first_name"];
-    NSString *lastName = [peopleInList[indexPath.row] objectForKey:@"last_name"];
-    cell.textLabel.text = [[NSString alloc]initWithFormat:@"%@ %@", firstName, lastName];
+    NSString *firstName_ = ((TGLOPerson *)searchResults[indexPath.row]).firstName;
+    NSString *lastName_= ((TGLOPerson *)searchResults[indexPath.row]).lastName;
+    NSString *fullName_ = [[NSString alloc] initWithFormat:@"%@ %@", firstName_, lastName_ ];
+    cell.textLabel.text = fullName_;
     
     return cell;
 }
@@ -185,9 +202,12 @@ static NSString * aListUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/peop
 {
     if ([segue.identifier isEqualToString:@"showListPerson"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        lastPersonSelected = indexPath.row;
+        TGLOPerson *personSelected = searchResults[indexPath.row];
         
         TGLOPersonFromListViewController *destViewController = (TGLOPersonFromListViewController *) segue.destinationViewController;
-        destViewController.rawPerson = [peopleInList objectAtIndex:indexPath.row];
+        //destViewController.rawPerson = [peopleInList objectAtIndex:indexPath.row];
+        destViewController.person = personSelected;
     }
 }
 

@@ -11,6 +11,8 @@
 @interface TGLOListViewController : UITableViewController
 
 @property (strong, nonatomic) NSDictionary *list;
+@property (strong, nonatomic) NSMutableArray *searchResults;
+@property NSInteger lastPersonSelected;
 
 - (void) getPeopleInList;
 

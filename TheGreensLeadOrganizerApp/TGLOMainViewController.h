@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "TGLOPerson.h"
+#import "TGLOUpdatePersonDelegate.h"
 
-@interface TGLOMainViewController : UIViewController
+@interface TGLOMainViewController : UIViewController<TGLOUpdatePersonDelegate>
+
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UIView *containerView;
@@ -21,19 +23,21 @@
 @property (weak, nonatomic) IBOutlet UITextField *supportLevel;
 
 @property (strong, nonatomic) TGLOPerson *person;
+@property (strong, nonatomic) NSMutableArray *contacts;
 
 
 - (void)getMyNationBuilderDetails;
-- (void)setUpAppearance;
 - (void)setMyNBId:(NSString *)myNBId;
 - (void)setupPerson:(NSDictionary *)me_dic;
 
+- (void)setUpAppearance;
+- (void)getAllMyContacts;
 - (void)addTagViews;
 - (void)addASingleTag:(NSString *)tag;
+- (void)addContactsLabel;
 - (id) fabricateANewView:(NSString *)viewType width:(CGFloat)width height:(CGFloat)viewHeight spacing: (CGFloat)viewSpacing;
 - (void)updateScrollAndContainerViewSize:(CGFloat)makeMoreRoom;
-- (void)getAllMyContacts;
-- (void)addContactsLabel;
+
 - (void)addContactViews;
 - (void)addASingleContact:(int)index;
 
