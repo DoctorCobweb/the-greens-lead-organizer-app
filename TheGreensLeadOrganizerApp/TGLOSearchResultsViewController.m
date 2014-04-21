@@ -74,8 +74,12 @@
         //NSLog(@"results_set: %@", results_set);
         
         //searchResults_ = [results_set allObjects];
-        searchResults = [results_set allObjects];
-        //NSLog(@"searchResults: %@", searchResults_);
+        searchResults = [[NSMutableArray alloc] initWithCapacity:[results_set count]];
+        NSArray *results_array = [results_set allObjects];
+        for (NSDictionary *person in results_array) {
+            TGLOPerson *parsedPerson = [TGLOPerson personFieldsForObject:person];
+            [searchResults addObject:parsedPerson];
+        }
         
         //after we have received search results
         //tell table view to re render using fresh
@@ -115,8 +119,8 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
-    NSString *firstName_ = [(searchResults [indexPath.row]) objectForKey:@"first_name"];
-    NSString *lastName_ = [(searchResults [indexPath.row]) objectForKey:@"last_name"];
+    NSString *firstName_ = ((TGLOPerson *)searchResults[indexPath.row]).firstName;
+    NSString *lastName_= ((TGLOPerson *)searchResults[indexPath.row]).lastName;
     NSString *fullName_ = [[NSString alloc] initWithFormat:@"%@ %@", firstName_, lastName_ ];
     
     cell.textLabel.text = fullName_;
@@ -172,17 +176,12 @@
         
         lastPersonSelected =  self.tableView.indexPathForSelectedRow.row;
         
-        TGLOPerson *personSelected = [TGLOPerson personFieldsForObject:[searchResults objectAtIndex:indexPath.row]];
+        TGLOPerson *personSelected = searchResults[indexPath.row];
         
         TGLOPersonFromSearchViewController *destViewController = (TGLOPersonFromSearchViewController *) segue.destinationViewController;
         destViewController.person = personSelected;
     }
 }
 
-- (void)updateTableForUpdatedPerson:(TGLOPerson *) updatedPerson
-{
-    
-
-}
 
 @end

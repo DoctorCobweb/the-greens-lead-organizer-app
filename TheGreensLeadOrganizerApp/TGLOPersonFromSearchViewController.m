@@ -452,6 +452,7 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     NSLog(@"updated person.lastName is: %@", updatedPerson.lastName);
     NSLog(@"updated person.supportLevel: %@", updatedPerson.supportLevel);
     
+    //**update person**
     //set person to be the newly saved/updated person
     self.person = updatedPerson;
     
@@ -490,12 +491,13 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     //TGLOEditPersonFromSearchViewController instead of
     //TGLOSearchResultsViewController
     if ([lastViewController class] == [TGLOSearchResultsViewController class]) {
+        NSLog(@"we have a match for TGLOSearchResultsViewController");
         
-        [lastViewController.searchResults setObject:self.person atIndexedSubscript:lastViewController.lastPersonSelected];
+        [lastViewController.searchResults replaceObjectAtIndex:lastViewController.lastPersonSelected withObject:self.person];
+        
         //tell the table to reload its data
         [lastViewController.tableView reloadData];
     
-        NSLog(@"we have a match");
     }
 }
 @end

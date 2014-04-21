@@ -623,8 +623,6 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
                                        cancelButtonTitle:@"Okay"
                                        otherButtonTitles:nil];
         [_updateAlert show];
-
-
 }
 
 - (void)reRenderUI

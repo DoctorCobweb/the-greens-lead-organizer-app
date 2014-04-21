@@ -17,6 +17,5 @@
 @property NSInteger lastPersonSelected;
 
 - (void) makeSearch;
-- (void)updateTableForUpdatedPerson:(TGLOPerson *) updatedPerson;
 
 @end

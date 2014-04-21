@@ -27,7 +27,8 @@
 @property (strong, nonatomic) TGLOPerson *person;
 @property (strong, nonatomic) NSMutableArray *contacts;
 
-
+//set by previous view controller TGLOSearchResultsViewController
+//@property (nonatomic, weak) id<UpdatePersonDelegate>delegate;
 
 - (void)setUpAppearance;
 - (void)getAllMyContacts;
