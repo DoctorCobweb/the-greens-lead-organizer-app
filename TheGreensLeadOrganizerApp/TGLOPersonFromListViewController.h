@@ -33,7 +33,6 @@
 - (void)addContactsLabel;
 - (id) fabricateANewView:(NSString *)viewType width:(CGFloat)viewWidth height:(CGFloat)viewHeight spacing: (CGFloat)viewSpacing;
 - (void)updateScrollAndContainerViewSize:(CGFloat)makeMoreRoom;
--(TGLOPerson *) personFieldsForObject:(NSDictionary*)person;
 
 - (IBAction)makeCall:(id)sender;
 - (IBAction)writeEmail:(id)sender;

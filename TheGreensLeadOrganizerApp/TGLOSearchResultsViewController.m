@@ -13,12 +13,13 @@
 
 @interface TGLOSearchResultsViewController ()
 {
-    NSArray *searchResults_;
 }
 
 @end
 
 @implementation TGLOSearchResultsViewController
+@synthesize searchResults;
+@synthesize lastPersonSelected;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -72,7 +73,8 @@
         NSSet * results_set = [responseObject objectForKey:@"results"];
         //NSLog(@"results_set: %@", results_set);
         
-        searchResults_ = [results_set allObjects];
+        //searchResults_ = [results_set allObjects];
+        searchResults = [results_set allObjects];
         //NSLog(@"searchResults: %@", searchResults_);
         
         //after we have received search results
@@ -84,93 +86,6 @@
         NSLog(@"Error: %@", error);
     }];
 }
-
-
-
-
-//get arbitrary fields from each person.
--(TGLOPerson *) personFieldsForObject:(NSDictionary*)person
-{
-    //NSLog(@"personFieldsForObject, person: %@", person);
-    
-    //create a temp person to which we will
-    //return the reference to to caller
-    TGLOPerson * _person = [[TGLOPerson alloc] init];
-    
-    
-    //check to see if any of the entries are equal to the
-    //null singleton returned by [NSNull null]
-    //from inspection some fields in the console print out to
-    //"<null>" which is how [NSNull null] is printed out
-    if ([person objectForKey:@"id"] == [NSNull null]) {
-        _person.recordID = nil;
-    } else {
-        _person.recordID = [person objectForKey:@"id"];
-    }
-    
-    
-    if ([person objectForKey:@"first_name"] == [NSNull null]) {
-        _person.firstName = nil;
-    } else {
-        _person.firstName = [person objectForKey:@"first_name"];
-    }
-    
-    
-    if ([person objectForKey:@"last_name"] == [NSNull null]) {
-        _person.lastName = nil;
-    } else {
-        _person.lastName = [person objectForKey:@"last_name"];
-    }
-    
-    
-    if ([person objectForKey:@"email"] == [NSNull null]) {
-        _person.email = nil;
-    } else {
-        _person.email = [person objectForKey:@"email"];
-    }
-    
-    
-    if ([person objectForKey:@"phone"] == [NSNull null]) {
-        _person.phone = nil;
-    } else {
-        _person.phone = [person objectForKey:@"phone"];
-    }
-    
-    
-    if ([person objectForKey:@"mobile"] == [NSNull null]) {
-        _person.mobile= nil;
-    } else {
-        _person.mobile= [person objectForKey:@"mobile"];
-    }
-    
-    
-    if ([person objectForKey:@"note"] == [NSNull null]) {
-        _person.note= nil;
-    } else {
-        _person.note = [person objectForKey:@"note"];
-    }
-    
-    
-    if ([person objectForKey:@"support_level"] == [NSNull null]) {
-        _person.supportLevel= nil;
-    } else {
-        _person.supportLevel= [person objectForKey:@"support_level"];
-    }
-    
-    
-    if ([person objectForKey:@"tags"] == [NSNull null]) {
-        _person.tags= nil;
-    } else {
-        _person.tags = [person objectForKey:@"tags"];
-    }
-    
-    return _person;
-}
-
-
-
-
-
 
 
 
@@ -191,7 +106,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [searchResults_ count];
+    return [searchResults count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -200,8 +115,8 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
-    NSString *firstName_ = [(searchResults_ [indexPath.row]) objectForKey:@"first_name"];
-    NSString *lastName_ = [(searchResults_ [indexPath.row]) objectForKey:@"last_name"];
+    NSString *firstName_ = [(searchResults [indexPath.row]) objectForKey:@"first_name"];
+    NSString *lastName_ = [(searchResults [indexPath.row]) objectForKey:@"last_name"];
     NSString *fullName_ = [[NSString alloc] initWithFormat:@"%@ %@", firstName_, lastName_ ];
     
     cell.textLabel.text = fullName_;
@@ -255,12 +170,19 @@
     if ([segue.identifier isEqualToString:@"showPersonFromSearch"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         
+        lastPersonSelected =  self.tableView.indexPathForSelectedRow.row;
         
-        TGLOPerson *personSelected = [self personFieldsForObject:[searchResults_ objectAtIndex:indexPath.row]];
+        TGLOPerson *personSelected = [TGLOPerson personFieldsForObject:[searchResults objectAtIndex:indexPath.row]];
         
         TGLOPersonFromSearchViewController *destViewController = (TGLOPersonFromSearchViewController *) segue.destinationViewController;
         destViewController.person = personSelected;
     }
+}
+
+- (void)updateTableForUpdatedPerson:(TGLOPerson *) updatedPerson
+{
+    
+
 }
 
 @end

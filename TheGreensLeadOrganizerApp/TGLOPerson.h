@@ -29,4 +29,7 @@
 + (NSDictionary *)getSupportLevelDic;
 + (NSDictionary *)swapKeysAndValuesForDic:(NSDictionary *)dic;
 
+
++ (TGLOPerson *) personFieldsForObject:(NSDictionary*)person;
+
 @end

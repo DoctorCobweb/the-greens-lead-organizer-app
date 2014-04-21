@@ -15,6 +15,5 @@
 @property (strong, nonatomic) NSString *tag;
 
 -(void)getPeopleInTag;
--(TGLOPerson *)personFieldsForObject:(NSDictionary *)person;
 
 @end

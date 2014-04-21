@@ -277,6 +277,15 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         noteValue.editable = YES;
         noteValue.scrollEnabled = YES;
         
+        
+        //set some defaults to ensure we dont send in null values
+        typeValue.titleLabel.text = @"Meeting 1:1";
+        methodValue.titleLabel.text = @"Door knock";
+        statusValue.titleLabel.text = @"Answered";
+        [typeValue setTitle:typeValue.titleLabel.text forState:UIControlStateNormal];
+        [methodValue setTitle:methodValue.titleLabel.text forState:UIControlStateNormal];
+        [statusValue setTitle:statusValue.titleLabel.text forState:UIControlStateNormal];
+        
     } else {
         //set flag
         sendInANewContact = NO;
@@ -471,19 +480,41 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         [tagsToKeep setObject:@"1" forKey:self.addANewTag.text];
     }
     
-    NSLog(@"tagToKeep dic: %@", tagsToKeep);
-    updatedPerson.tags = [[NSMutableArray alloc] initWithArray:[tagsToKeep allKeys]];
+    //make a person mutable dic. add to it non null contents
+    //with the aim to use it in the PUT body later
+    NSMutableDictionary *personToPut = [[NSMutableDictionary alloc] init];
     
     
-    //tagsToDelete dic should only hold tags we want to keep
-    //=> can use this tagsToDelete as body obj for PUT request below
-    NSDictionary *updateBody =@{@"person":@{@"tags":[tagsToKeep allKeys], @"first_name":updatedPerson.firstName, @"last_name":updatedPerson.lastName, @"email1":updatedPerson.email, @"phone":updatedPerson.phone, @"mobile":updatedPerson.mobile, @"support_level":theSupportLevel}};
+    //make sure we dont have any nils for fields
+    if (!!updatedPerson.firstName) {
+        [personToPut setObject:updatedPerson.firstName forKey:@"first_name"];
+    }
+    if (!!updatedPerson.lastName) {
+        [personToPut setObject:updatedPerson.lastName forKey:@"last_name"];
+    }
+    if (!!updatedPerson.email) {
+        [personToPut setObject:updatedPerson.email forKey:@"email1"];
+    }
+    if (!!updatedPerson.phone) {
+        [personToPut setObject:updatedPerson.phone forKey:@"phone"];
+    }
+    if (!!updatedPerson.mobile) {
+        [personToPut setObject:updatedPerson.mobile forKey:@"mobile"];
+    }
+    if (!!updatedPerson.supportLevel) {
+        [personToPut setObject:updatedPerson.supportLevel forKey:@"support_level"];
+    }
+    if ([tagsToKeep count] != 0) {
+        updatedPerson.tags = [[NSMutableArray alloc] initWithArray:[tagsToKeep allKeys]];
+        [personToPut setObject:[tagsToKeep allKeys] forKey:@"tags"];
+    }
     
-    NSLog(@"KEEPing tags: %@", [tagsToKeep allKeys]);
-    NSLog(@"%@", updateBody);
+    //now create the final body to use for PUT req
+    NSDictionary *updateBody = @{@"person":personToPut};
     
+    NSLog(@"the updatBody is: %@", updateBody);
     
-    //update taggings
+    //update taggings url
     NSString * updatePeopleUrl_ = [NSString stringWithFormat:updatePeopleUrl, nationBuilderSlugValue, self.person.recordID, token];
     
     //need to get notes on the person from a different api, namely
@@ -547,13 +578,16 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     NSLog(@"contactStatus: %@", contactStatus);
     NSLog(@"noteType: %@", noteType);
     
+    
     NSString *myNBId = [[NSUserDefaults standardUserDefaults] objectForKey:myNationBuilderId];
 
+#warning TODO: dont hardcode broadcaster_id etc for conactBody
     //semantics:
     //*sender_id" as *broadcaster_id* contacted *recipient_id* for *contact_type* via *method*.
     //*note*
     //
     //if there's no id associated for *broadcaster_id* then broadcaster is left out of semantic string
+    
     NSDictionary *contactBody = @{ @"contact": @{@"note": noteType, @"type_id":contactType, @"method":contactMethod, @"sender_id":myNBId, @"status":contactStatus, @"broadcaster_id": @"1", @"recipient_id": self.person.recordID}  };
 
     //post endpoint for making new contact

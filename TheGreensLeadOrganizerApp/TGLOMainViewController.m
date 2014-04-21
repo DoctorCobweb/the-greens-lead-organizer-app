@@ -148,7 +148,8 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     NSLog(@"Setting up the person obj, fields...");
     
     
-    TGLOPerson *me = [self personFieldsForObject:me_dic];
+    //TGLOPerson *me = [self personFieldsForObject:me_dic];
+    TGLOPerson *me = [TGLOPerson personFieldsForObject:me_dic];
     
     //UIColor * white_color = [UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:1.0f];
     
@@ -414,84 +415,6 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     //NSLog(@"self.containerView.frame Max Y: %f", CGRectGetMaxY(containerViewFrame));
     
     self.containerView.frame = CGRectMake(0, 0, (CGRectGetMaxX(containerViewFrame)), (CGRectGetMaxY(containerViewFrame)) + makeMoreRoom);
-}
-
-
-//get arbitrary fields from each person.
--(TGLOPerson *) personFieldsForObject:(NSDictionary*)person
-{
-    //create a temp person to which we will
-    //return the reference to to caller
-    TGLOPerson * person_ = [[TGLOPerson alloc] init];
-    
-    
-    //check to see if any of entries are equal to
-    //null singleton returned by [NSNull null]
-    //from inspection some fields in the console print out to
-    //"<null>" which is how [NSNull null] is printed out
-    if ([person objectForKey:@"id"] == [NSNull null]) {
-        person_.recordID = nil;
-    } else {
-        person_.recordID = [person objectForKey:@"id"];
-    }
-    
-    
-    if ([person objectForKey:@"first_name"] == [NSNull null]) {
-        person_.firstName = nil;
-    } else {
-        person_.firstName = [person objectForKey:@"first_name"];
-    }
-    
-    
-    if ([person objectForKey:@"last_name"] == [NSNull null]) {
-        person_.lastName = nil;
-    } else {
-        person_.lastName = [person objectForKey:@"last_name"];
-    }
-    
-    
-    if ([person objectForKey:@"email1"] == [NSNull null]) {
-        person_.email = nil;
-    } else {
-        person_.email = [person objectForKey:@"email1"];
-    }
-    
-    
-    if ([person objectForKey:@"phone"] == [NSNull null]) {
-        person_.phone = nil;
-    } else {
-        person_.phone = [person objectForKey:@"phone"];
-    }
-    
-    
-    if ([person objectForKey:@"mobile"] == [NSNull null]) {
-        person_.mobile= nil;
-    } else {
-        person_.mobile= [person objectForKey:@"mobile"];
-    }
-    
-    
-    if ([person objectForKey:@"note"] == [NSNull null]) {
-        person_.note= nil;
-    } else {
-        person_.note = [person objectForKey:@"note"];
-    }
-    
-    
-    if ([person objectForKey:@"support_level"] == [NSNull null]) {
-        person_.supportLevel= nil;
-    } else {
-        person_.supportLevel= [person objectForKey:@"support_level"];
-    }
-    
-    
-    if ([person objectForKey:@"tags"] == [NSNull null]) {
-        person_.tags= nil;
-    } else {
-        person_.tags = [person objectForKey:@"tags"];
-    }
-    
-    return person_;
 }
 
 

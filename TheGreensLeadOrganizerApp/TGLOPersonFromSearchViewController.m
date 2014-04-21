@@ -11,6 +11,7 @@
 #import "AFNetworking.h"
 #import "TGLOCustomContactView.h"
 #import "TGLOEditPersonFromSearchViewController.h"
+#import "TGLOSearchResultsViewController.h"
 
 static NSString *accessToken= @"access_token";
 static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=10&access_token=%@";
@@ -441,6 +442,7 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
         //set self as delegate for <UpdatePersonDelegate> protocol
         destViewController.delegate = self;
     }
+    
 }
 
 -(void) didUpdatePerson:(TGLOPerson *)updatedPerson
@@ -462,4 +464,38 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
 
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    NSLog(@"viewWillDisappear");
+    //get reference to previous view controller from the nav stack
+    //NAVIGATION STUFF
+    //view controller stuff. get the navigation stack. get the
+    //previous view controller etc
+    
+    NSLog(@"self.parentViewController: %@",self.parentViewController);
+    UINavigationController *navController = (UINavigationController *)self.parentViewController;
+    NSArray *viewControllers = [navController viewControllers];
+    NSLog(@"viewControllers: %@", viewControllers);
+    
+    // output array
+    //["<TGLOSearchViewController: 0x8e0a770>",
+    //"<TGLOSearchResultsViewController: 0x8c62580>"]
+    TGLOSearchResultsViewController *lastViewController = [viewControllers lastObject];
+    NSLog(@"lastViewController class: %@", [lastViewController class]);
+    
+    //check to see if we are going back instead of drilling down
+    //further into the app.
+    //if we are drilling down further i.e. selecting to edit the
+    //person then the last view controller will be
+    //TGLOEditPersonFromSearchViewController instead of
+    //TGLOSearchResultsViewController
+    if ([lastViewController class] == [TGLOSearchResultsViewController class]) {
+        
+        [lastViewController.searchResults setObject:self.person atIndexedSubscript:lastViewController.lastPersonSelected];
+        //tell the table to reload its data
+        [lastViewController.tableView reloadData];
+    
+        NSLog(@"we have a match");
+    }
+}
 @end

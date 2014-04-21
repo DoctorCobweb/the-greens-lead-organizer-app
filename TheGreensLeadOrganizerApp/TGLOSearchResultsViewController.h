@@ -13,8 +13,10 @@
 @interface TGLOSearchResultsViewController : UITableViewController
 
 @property (strong, nonatomic) NSString *searchUrl;
+@property (strong, nonatomic) NSMutableArray *searchResults;
+@property NSInteger lastPersonSelected;
 
 - (void) makeSearch;
--(TGLOPerson *) personFieldsForObject:(NSDictionary *)person;
+- (void)updateTableForUpdatedPerson:(TGLOPerson *) updatedPerson;
 
 @end
