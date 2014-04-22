@@ -35,5 +35,6 @@
 
 - (IBAction)makeCall:(id)sender;
 - (IBAction)writeEmail:(id)sender;
+- (NSArray *)reverseArray:(NSArray *)array;
 
 @end

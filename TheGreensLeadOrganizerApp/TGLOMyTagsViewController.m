@@ -102,7 +102,6 @@ static NSString * myTaggingsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
             NSLog(@"person_set[id] SET: %@", [person_set valueForKey:@"id"]);
             
             if ([person_set valueForKey:@"id"]) {
-                #warning set more user defaults if you want!
                 //set the id into user defaults
                 [[NSUserDefaults standardUserDefaults] setObject:[person_set valueForKey:@"id"] forKey:myNationBuilderId];
                 

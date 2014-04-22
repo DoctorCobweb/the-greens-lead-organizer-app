@@ -21,7 +21,6 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
 @interface TGLOPersonFromSearchViewController ()
 {
     NSString *token;
-    //NSMutableArray *contacts;
     
 }
 @property (nonatomic, strong) UIAlertView *tokenAlert;
@@ -175,9 +174,13 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
             //NSLog(@" got contacts in MAIN DETAIL VIEW CONTROLLER and CONTACTS response: %@", responseObject);
             
             NSSet * contacts_set = [responseObject objectForKey:@"results"];
-            NSArray *contacts_ = [contacts_set allObjects];
+            NSLog(@"contacts_set: %@", contacts_set);
+            
+            //make latest contact appear first in contacts array
+            NSArray *contacts_ = [self reverseArray:[contacts_set allObjects]];
             
             contacts = [[NSMutableArray alloc] initWithArray:contacts_];
+            NSLog(@"contacts array: %@", contacts);
             
             [self addContactViews];
             
@@ -187,6 +190,19 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     } else {
         NSLog(@"ERROR in TGLOPersonViewController.m. access_token is nil OR person.recordID is nil");
     }
+}
+
+
+- (NSArray *)reverseArray:(NSArray *)array
+{
+    int no_of_contacts = [array count];
+    NSMutableArray *reversed_contacts_ = [[NSMutableArray alloc] initWithCapacity:no_of_contacts];
+    
+    for (int i = no_of_contacts - 1; i >= 0; i--) {
+        [reversed_contacts_ addObject:array[i]];
+    }
+    
+    return [[NSArray alloc] initWithArray:reversed_contacts_];;
 }
 
 

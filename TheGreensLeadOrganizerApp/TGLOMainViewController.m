@@ -24,8 +24,6 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
 @interface TGLOMainViewController ()
 {
     NSString *token;
-    //NSMutableArray *taggings;
-    //NSMutableArray *contacts;
 }
 
 @property (nonatomic, strong) UIAlertView *tokenAlert;
@@ -173,16 +171,8 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     //user defaults. onwards to getting tags and
     //contacts API calls, which rely on having
     //myNBId non-nil.
-    //[self getAllMyTags];
-    
-    //taggings = [[NSMutableArray alloc] initWithCapacity:[[me valueForKey:@"tags"] count]];
-    //[taggings addObjectsFromArray:[me valueForKey:@"tags"]];
-    
     [self addTagViews];
-    
 }
-
-
 
 
 - (void)addTagViews
@@ -224,9 +214,6 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
 }
 
 
-
-
-
 - (void)getAllMyContacts
 {
     //this method is always called after all
@@ -252,13 +239,10 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
         //NSLog(@" got contacts in MAIN DETAIL VIEW CONTROLLER and CONTACTS response: %@", responseObject);
         
         NSSet * contacts_set = [responseObject objectForKey:@"results"];
-        NSArray *contacts_ = [contacts_set allObjects];
+        //make latest contact appear first in contacts array
+        NSArray *contacts_ = [self reverseArray:[contacts_set allObjects]];
         
         contacts = [[NSMutableArray alloc] initWithArray:contacts_];
-        
-        //NSLog(@"contacts: %@", contacts);
-        //NSLog(@"%d contact records returned", [contacts count]);
-        
         [self addContactViews];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -267,6 +251,16 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
 }
 
 
+- (NSArray *)reverseArray:(NSArray *)array
+{
+    int no_of_contacts = [array count];
+    NSMutableArray *reversed_contacts_ = [[NSMutableArray alloc] initWithCapacity:no_of_contacts];
+    for (int i = no_of_contacts - 1; i >= 0; i--) {
+        [reversed_contacts_ addObject:array[i]];
+    }
+        
+    return [[NSArray alloc] initWithArray:reversed_contacts_];
+}
 
 - (void)addContactsLabel
 {

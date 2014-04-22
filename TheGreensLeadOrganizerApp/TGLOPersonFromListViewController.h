@@ -22,7 +22,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *mobile;
 @property (weak, nonatomic) IBOutlet UITextField *supportLevel;
 
-//@property (strong, nonatomic) NSDictionary *rawPerson;
 @property (strong, nonatomic) TGLOPerson *person;
 @property (strong, nonatomic) NSMutableArray *contacts;
 
@@ -38,5 +37,6 @@
 
 - (IBAction)makeCall:(id)sender;
 - (IBAction)writeEmail:(id)sender;
+- (NSArray *)reverseArray:(NSArray *)array;
 
 @end

@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "TGLOPerson.h"
-//#import "TGLOEditPersonFromSearchViewController.h"
 #import "TGLOUpdatePersonDelegate.h"
 
 
@@ -39,6 +38,7 @@
 
 - (IBAction)makeCall:(id)sender;
 - (IBAction)writeEmail:(id)sender;
+- (NSArray *)reverseArray:(NSArray *)array;
 
 @end
 

@@ -10,9 +10,7 @@
 #import "TGLOPerson.h"
 #import "TGLOUpdatePersonDelegate.h"
 
-//@protocol UpdatePersonDelegate;
 
-//@interface TGLOEditPersonFromTagViewController : UIViewController<TGLOUpdatePersonDelegate>
 @interface TGLOEditPersonFromTagViewController : UIViewController
 
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -59,10 +57,3 @@
 
 
 @end
-
-/*
- @protocol UpdatePersonDelegate <NSObject>
- @optional
- -(void) didUpdatePerson:(TGLOPerson *)updatedPerson;
- @end
- */

@@ -206,7 +206,6 @@ static NSString * aListUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/peop
         TGLOPerson *personSelected = searchResults[indexPath.row];
         
         TGLOPersonFromListViewController *destViewController = (TGLOPersonFromListViewController *) segue.destinationViewController;
-        //destViewController.rawPerson = [peopleInList objectAtIndex:indexPath.row];
         destViewController.person = personSelected;
     }
 }
