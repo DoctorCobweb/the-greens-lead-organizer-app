@@ -22,5 +22,4 @@
 
 - (void)setUpAppearance;
 - (NSString *)makeSearchUrl;
-- (NSString *)percentEncodeString:(NSString *)unencodedString;
 @end

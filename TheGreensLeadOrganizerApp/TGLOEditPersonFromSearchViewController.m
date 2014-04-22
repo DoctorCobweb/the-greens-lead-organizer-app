@@ -477,7 +477,10 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     //separated by commas. cool!
     if (![self.addANewTag.text isEqualToString:@""]) {
         NSLog(@"adding in a new tag also: %@", self.addANewTag.text);
-        [tagsToKeep setObject:@"1" forKey:self.addANewTag.text];
+        //need to parse if string has multiple tags
+        //separated by commas
+        
+        [self parseTagString:tagsToKeep];
     }
     
     //make a person mutable dic. add to it non null contents
@@ -556,6 +559,33 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         NSLog(@"Error: %@", error);
     }];
 }
+
+- (void)parseTagString:(NSMutableDictionary *)tagsToKeep
+{
+    NSString *addNewTagString = self.addANewTag.text;
+    NSString *trimmedNewTagString = [addNewTagString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet ]];
+
+
+    NSArray *parsedTags = [trimmedNewTagString componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@","]];
+
+    int no_of_parsed_tags = [parsedTags count];
+    for (int j = 0; j < no_of_parsed_tags; j++) {
+        if ([parsedTags[j] isEqualToString:@""]) {
+            //if there is an empty tag, skip over it
+            continue;
+        }
+        //trim further whitespace for each element
+        NSString *temp = [parsedTags[j] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    
+        //now add this trimmed string tag to the tagsToKeep dic
+        [tagsToKeep setObject:@"1" forKey:temp];
+    }
+    //NSLog(@"addNewTagString: %@", addNewTagString);
+    //NSLog(@"trimmedNetTagString: %@", trimmedNewTagString);
+    //NSLog(@"parsedTags: %@", parsedTags);
+    //NSLog(@"tagsToKeep: %@", tagsToKeep);
+}
+
 
 
 - (void) saveTheNewContact

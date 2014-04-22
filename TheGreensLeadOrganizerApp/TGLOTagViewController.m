@@ -12,6 +12,7 @@
 #import "TGLOPersonFromTagViewController.h"
 #import "TGLOPerson.h"
 #import "TGLOAppDelegate.h"
+#import "TGLOUtils.h"
 
 
 static NSString *accessToken= @"access_token";
@@ -78,7 +79,10 @@ static NSString *peopleForTagUrl= @"https://%@.nationbuilder.com/api/v1/tags/%@/
 {
     #warning TODO: default to getting 100 people for now
     //do pagination later
-    NSString * peopleForTagUrl_ = [NSString stringWithFormat:peopleForTagUrl, nationBuilderSlugValue, self.tag, token];
+    //you must percent encode self.tag because sometimes
+    //can have spaces in the.
+    NSString *encodedTag = [TGLOUtils percentEncodeString:self.tag];
+    NSString * peopleForTagUrl_ = [NSString stringWithFormat:peopleForTagUrl, nationBuilderSlugValue, encodedTag, token];
     
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];

@@ -33,6 +33,7 @@
 		655572A218FAAF3B00FA4297 /* TGLOMyListsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 655572A118FAAF3B00FA4297 /* TGLOMyListsViewController.m */; };
 		655572A518FAB34C00FA4297 /* TGLOListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 655572A418FAB34C00FA4297 /* TGLOListViewController.m */; };
 		655572B418FBD5AD00FA4297 /* TGLOCustomContactView.m in Sources */ = {isa = PBXBuildFile; fileRef = 655572B318FBD5AD00FA4297 /* TGLOCustomContactView.m */; };
+		656174761906380600EE712F /* TGLOUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 656174751906380600EE712F /* TGLOUtils.m */; };
 		65B022F018FD27A50057E741 /* TGLOPersonFromListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B022EF18FD27A50057E741 /* TGLOPersonFromListViewController.m */; };
 		65BC96DF18F3BBE3006063CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BC96DE18F3BBE3006063CA /* Foundation.framework */; };
 		65BC96E118F3BBE3006063CA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BC96E018F3BBE3006063CA /* CoreGraphics.framework */; };
@@ -130,6 +131,8 @@
 		655572A418FAB34C00FA4297 /* TGLOListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOListViewController.m; sourceTree = "<group>"; };
 		655572B218FBD5AD00FA4297 /* TGLOCustomContactView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOCustomContactView.h; sourceTree = "<group>"; };
 		655572B318FBD5AD00FA4297 /* TGLOCustomContactView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOCustomContactView.m; sourceTree = "<group>"; };
+		656174741906380600EE712F /* TGLOUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOUtils.h; sourceTree = "<group>"; };
+		656174751906380600EE712F /* TGLOUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOUtils.m; sourceTree = "<group>"; };
 		65B022EE18FD27A50057E741 /* TGLOPersonFromListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOPersonFromListViewController.h; sourceTree = "<group>"; };
 		65B022EF18FD27A50057E741 /* TGLOPersonFromListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOPersonFromListViewController.m; sourceTree = "<group>"; };
 		65BC96DB18F3BBE3006063CA /* TheGreensLeadOrganizerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheGreensLeadOrganizerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -306,6 +309,8 @@
 				651318D919050B9F00995995 /* TGLOEditPersonFromListViewController.m */,
 				651318DB1905136000995995 /* TGLOEditMyProfileViewController.h */,
 				651318DC1905136000995995 /* TGLOEditMyProfileViewController.m */,
+				656174741906380600EE712F /* TGLOUtils.h */,
+				656174751906380600EE712F /* TGLOUtils.m */,
 			);
 			path = TheGreensLeadOrganizerApp;
 			sourceTree = "<group>";
@@ -533,6 +538,7 @@
 				65BC971F18F3CDA8006063CA /* TGLOSideBarViewController.m in Sources */,
 				651626FC18F90D5300DCC064 /* TGLOPersonFromSearchViewController.m in Sources */,
 				651626E618F55ABF00DCC064 /* TGLOSearchViewController.m in Sources */,
+				656174761906380600EE712F /* TGLOUtils.m in Sources */,
 				651318BA18FE1A3F00995995 /* TGLOPersonFromTagViewController.m in Sources */,
 				651318C718FF71B000995995 /* TGLOCustomEditContactView.m in Sources */,
 				65BC972218F3CE52006063CA /* TGLOMainViewController.m in Sources */,

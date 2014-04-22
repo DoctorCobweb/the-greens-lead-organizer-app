@@ -52,6 +52,7 @@
 - (void)toggleContact:(id)sender;
 
 - (NSString *)translateSupportLevel:(NSInteger)index;
+- (void)parseTagString:(NSMutableDictionary *)tagsToKeep;
 
 
 
