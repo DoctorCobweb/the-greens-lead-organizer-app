@@ -57,7 +57,8 @@ NSString * const nationBuilderSlugValue = @"agtest";
     NSString *token = [userDefaults valueForKey:@"access_token"];
     NSLog(@"IN APP DELEGATE, TOKEN FROM UserDefaults: %@", token);
     
-    NSString *controllerId = token ? @"signedIn" : @"login";
+    //NSString *controllerId = token ? @"signedIn" : @"login";
+    NSString *controllerId = token ? @"signedIn" : @"accountLogin";
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     NSLog(@"storyboard: %@", storyboard);
     UIViewController *initViewController = [storyboard instantiateViewControllerWithIdentifier:controllerId];

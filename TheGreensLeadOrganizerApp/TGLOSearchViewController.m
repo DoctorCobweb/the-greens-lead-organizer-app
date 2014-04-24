@@ -8,7 +8,6 @@
 
 #import "TGLOSearchViewController.h"
 #import "SWRevealViewController.h"
-//#import "AFNetworking.h"
 #import "TGLOSearchResultsViewController.h"
 #import "TGLOAppDelegate.h"
 #import "TGLOUtils.h"
