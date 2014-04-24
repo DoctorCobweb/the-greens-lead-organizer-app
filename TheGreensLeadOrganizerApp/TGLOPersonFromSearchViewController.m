@@ -177,10 +177,15 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
             NSLog(@"contacts_set: %@", contacts_set);
             
             //make latest contact appear first in contacts array
-            NSArray *contacts_ = [self reverseArray:[contacts_set allObjects]];
+           // NSArray *contacts_ = [self reverseArray:[contacts_set allObjects]];
             
+            //contacts = [[NSMutableArray alloc] initWithArray:contacts_];
+            //NSLog(@"contacts array: %@", contacts);
+            
+            //apparently we get contacts in proper order by default
+            //from search ... hmmm, look into this further.
+            NSArray *contacts_ = [contacts_set allObjects];
             contacts = [[NSMutableArray alloc] initWithArray:contacts_];
-            NSLog(@"contacts array: %@", contacts);
             
             [self addContactViews];
             

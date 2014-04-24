@@ -65,29 +65,43 @@ static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logt
         NSString *access_token = [responseObject objectForKey:@"access_token"];
         NSLog(@"access_token: %@", access_token);
         
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        if(!!access_token) {
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
        
-        //put code key/val into UserDefaults obj
-        [userDefaults setObject:access_token forKey:@"access_token"];
-        [userDefaults synchronize];
+            //put code key/val into UserDefaults obj
+            [userDefaults setObject:access_token forKey:@"access_token"];
+            [userDefaults synchronize];
         
-        NSString *token = [userDefaults valueForKey:@"access_token"];
-        NSLog(@"TOKEN FROM UserDefaults: %@", token);
+            NSString *token = [userDefaults valueForKey:@"access_token"];
+            NSLog(@"TOKEN FROM UserDefaults: %@", token);
         
-        // now load main part of application
-        dispatch_async(dispatch_get_main_queue(), ^{
+            // now load main part of application
+            dispatch_async(dispatch_get_main_queue(), ^{
             
             
-            NSString *segueId = @"signedIn";
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            UITabBarController *initViewController = [storyboard instantiateViewControllerWithIdentifier:segueId];
+                NSString *segueId = @"signedIn";
+                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                UITabBarController *initViewController = [storyboard instantiateViewControllerWithIdentifier:segueId];
             
-            TGLOAppDelegate *delegate = (TGLOAppDelegate *)[[UIApplication sharedApplication] delegate];;
+                TGLOAppDelegate *delegate = (TGLOAppDelegate *)[[UIApplication sharedApplication] delegate];;
             
-            UINavigationController *nav = (UINavigationController *) delegate.window.rootViewController;
-            nav.navigationBar.hidden = YES;
-            [nav pushViewController:initViewController animated:NO];
-        });
+                UINavigationController *nav = (UINavigationController *) delegate.window.rootViewController;
+                nav.navigationBar.hidden = YES;
+                [nav pushViewController:initViewController animated:YES];
+            });
+            
+        } else {
+            self.email.text = @"";
+            self.password.text = @"";
+            // show alert view saying we are getting token
+            UIAlertView *tokenAlert = [[UIAlertView alloc] initWithTitle:@"Authentication failed"
+                                                     message:@"Please try again."
+                                                    delegate:nil
+                                           cancelButtonTitle:@"Cancel"
+                                           otherButtonTitles:nil];
+            [tokenAlert show];
+        }
+        
         
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
