@@ -128,9 +128,9 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     //app user's profile info & subsequently stored
     //it in UserDefaults.
     NSString *_myNBId = [[NSUserDefaults standardUserDefaults] objectForKey:myNationBuilderId];
-    NSLog(@"myNBId: %@", myNBId);
+    NSLog(@"_myNBId: %@", _myNBId);
     
-    if (_myNBId == nil) {
+    if (_myNBId == nil || [_myNBId isEqualToString:@""]) {
         NSLog(@"NO NB USER ID set for this app => setting it up now...");
         
         //set myNBId into user defaults
@@ -226,7 +226,7 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     //now go onto getting all the contacts
     //and eventually rendering them too.
     NSString *myNBId = [[NSUserDefaults standardUserDefaults] objectForKey:myNationBuilderId];
-    
+    NSLog(@"myNBId: %@", myNBId);
     NSString * myContactsUrl_ = [NSString stringWithFormat:myContactsUrl, nationBuilderSlugValue, myNBId , token];
 
     

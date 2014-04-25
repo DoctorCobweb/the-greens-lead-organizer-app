@@ -13,6 +13,7 @@
 
 
 static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logthedawgin";
+static NSString *myNationBuilderId = @"my_nation_builder_id";
 
 @interface TGLOAccountLoginViewController ()
 
@@ -64,12 +65,19 @@ static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logt
         
         NSString *access_token = [responseObject objectForKey:@"access_token"];
         NSLog(@"access_token: %@", access_token);
+        NSString *error = [responseObject objectForKey:@"error"];
+        NSLog(@"error: %@", error);
+        NSString *myNBId = [responseObject objectForKey:@"myNBId"];
+        NSLog(@"myNBId: %@", myNBId);
         
-        if(!!access_token) {
+        if(!!access_token && !!myNBId && !error) {
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
        
-            //put code key/val into UserDefaults obj
+            //put access_token key/val into UserDefaults obj
             [userDefaults setObject:access_token forKey:@"access_token"];
+            
+            //put myNBId into UserDefaults obj
+            [userDefaults setObject:myNBId forKey:myNationBuilderId];
             [userDefaults synchronize];
         
             NSString *token = [userDefaults valueForKey:@"access_token"];
