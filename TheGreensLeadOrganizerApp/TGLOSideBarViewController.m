@@ -31,7 +31,7 @@
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
-    UIColor * theGreens = [UIColor colorWithRed:129/255.0f green:183/255.0f blue:87/255.0f alpha:1.0f];
+    UIColor * theGreens = [UIColor colorWithRed:129/255.0f green:193/255.0f blue:87/255.0f alpha:1.0f];
     // Set appearance info
     [[UITabBar appearance] setBarTintColor:theGreens];
     [[UINavigationBar appearance] setBarStyle:UIBarStyleBlackOpaque];
@@ -48,7 +48,7 @@
     self.tableView.backgroundColor = theGreens;
     self.tableView.separatorColor = [UIColor colorWithWhite:0.15f alpha:0.2f];
     
-    _menuItems = @[@"theGreens", @"myProfile", @"myTags", @"myLists", @"donations", @"enrolToVote",@"search"];
+    _menuItems = @[@"theGreens", @"myProfile", @"myTags", @"myLists", @"donations", @"enrolToVote",@"search", @"logout"];
 }
 
 - (void)didReceiveMemoryWarning

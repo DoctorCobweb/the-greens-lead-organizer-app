@@ -35,6 +35,8 @@ static NSString *myNationBuilderId = @"my_nation_builder_id";
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     NSLog(@"in ACCOUT LOGIN view controller");
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -89,7 +91,7 @@ static NSString *myNationBuilderId = @"my_nation_builder_id";
             
                 NSString *segueId = @"signedIn";
                 UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                UITabBarController *initViewController = [storyboard instantiateViewControllerWithIdentifier:segueId];
+                UIViewController *initViewController = [storyboard instantiateViewControllerWithIdentifier:segueId];
             
                 TGLOAppDelegate *delegate = (TGLOAppDelegate *)[[UIApplication sharedApplication] delegate];;
             

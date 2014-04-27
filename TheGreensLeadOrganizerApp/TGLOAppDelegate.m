@@ -9,6 +9,7 @@
 #import "TGLOAppDelegate.h"
 #import "NationBuilder.h"
 #import "AFNetworkActivityIndicatorManager.h"
+#import "TGLOAccountLoginViewController.h"
 
 
 //app wide identifier used to construct urls for api calls
@@ -28,7 +29,6 @@ NSString * const nationBuilderSlugValue = @"agtest";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-#warning TODO: refator all URIs to use userdefaults NB slug!!!!
     //enable afnetworking to show spinner in top bar
     [self initAppearance];
     
@@ -41,18 +41,6 @@ NSString * const nationBuilderSlugValue = @"agtest";
     
     userDefaults = [NSUserDefaults standardUserDefaults];
     
-    /*
-    //set the NB slug if not already set
-    if (![userDefaults valueForKey:nationBuilderSlugKey]) {
-        NSLog(@"NB slug has NOT been set in user defaults. setting it in now...");
-        
-        [userDefaults setObject:nationBuilderSlugValue forKey:nationBuilderSlugKey];
-        [userDefaults synchronize];
-    } else {
-        NSLog(@"user defaults has ALREADY set the nation builder slug: %@", nationBuilderSlugValue);
-    }
-     */
-    
 
     NSString *token = [userDefaults valueForKey:@"access_token"];
     NSLog(@"IN APP DELEGATE, TOKEN FROM UserDefaults: %@", token);
@@ -60,9 +48,9 @@ NSString * const nationBuilderSlugValue = @"agtest";
     //NSString *controllerId = token ? @"signedIn" : @"login";
     NSString *controllerId = token ? @"signedIn" : @"accountLogin";
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    NSLog(@"storyboard: %@", storyboard);
+    //NSLog(@"storyboard: %@", storyboard);
     UIViewController *initViewController = [storyboard instantiateViewControllerWithIdentifier:controllerId];
-    NSLog(@"initViewController: %@", initViewController); //UINavigationController
+    //NSLog(@"initViewController: %@", initViewController); //UINavigationController
     
     // always assumes token is valid - should probably check in a real app
     if (token) {
@@ -70,6 +58,7 @@ NSString * const nationBuilderSlugValue = @"agtest";
     } else {
         [(UINavigationController *)self.window.rootViewController pushViewController:initViewController animated:NO];
         NSLog(@"self.window.rootViewController: %@", self.window.rootViewController);
+        NSLog(@"nav stack: %@", [(UINavigationController *)self.window.rootViewController viewControllers]);
     }
     
     return YES;
@@ -88,31 +77,63 @@ NSString * const nationBuilderSlugValue = @"agtest";
     
 }
 
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    NSLog(@"applicationWillResignActive:");
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    NSLog(@"applicationDidEnterBackground:");
+    NSLog(@"self.window.rootViewController: %@", self.window.rootViewController);
+    
+    //if access_token is null it means user has idicated they want
+    //to log out.
+    if (![userDefaults valueForKey:@"access_token"]) {
+        NSLog(@"self.window.rootViewController: %@", self.window.rootViewController);
+        [(UINavigationController *)self.window.rootViewController popToRootViewControllerAnimated:NO];
+        //UINavigationBar *navBar = ((UINavigationController *)self.window.rootViewController).navigationBar;
+        NSArray *controllerStack = [(UINavigationController *)self.window.rootViewController viewControllers];
+        
+        #warning TODO: check that it is indeed the accountlogin controller
+        //the first controllers in the stack should be
+        //TGLOAccountLoginViewController
+        UITextField *email = ((TGLOAccountLoginViewController *)controllerStack[0]).email;
+        UITextField *password = ((TGLOAccountLoginViewController *)controllerStack[0]).password;
+        
+        //get rid of previously entered text
+        if (email) {
+            email.text = @"";
+        }
+        if (password) {
+            password.text = @"";
+        }
+    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    //Called as part of the transition from the background to the
+    //inactive state; here you can undo many of the changes made on
+    //entering the background.
+    NSLog(@"applicationWillEnterForeground:");
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    NSLog(@"applicationDidBecomeActive:");
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Saves changes in the application's managed object context before the application terminates.
+    NSLog(@"in applicationWillTerminate");
     [self saveContext];
 }
 
@@ -292,10 +313,10 @@ NSString * const nationBuilderSlugValue = @"agtest";
                     
                     NSString *segueId = @"signedIn";
                     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                    UITabBarController *initViewController = [storyboard instantiateViewControllerWithIdentifier:segueId];
+                    UIViewController *initViewController = [storyboard instantiateViewControllerWithIdentifier:segueId];
                     
                     UINavigationController *nav = (UINavigationController *) self.window.rootViewController;
-                    nav.navigationBar.hidden = YES;
+                    nav.navigationBar.hidden = NO;
                     [nav pushViewController:initViewController animated:NO];
                 });
                 
