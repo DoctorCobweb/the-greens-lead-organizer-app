@@ -27,7 +27,6 @@
 
 
 - (void)getMyNationBuilderDetails;
-- (void)setMyNBId:(NSString *)myNBId;
 - (void)setupPerson:(NSDictionary *)me_dic;
 
 - (void)setUpAppearance;

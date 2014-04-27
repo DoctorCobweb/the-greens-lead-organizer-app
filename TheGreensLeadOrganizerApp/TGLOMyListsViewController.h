@@ -13,7 +13,6 @@
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *sidebarButton;
 
 - (void)setUpAppearance;
-- (void)getMyNationBuilderDetails;
 - (void)getAllLists;
 
 @end

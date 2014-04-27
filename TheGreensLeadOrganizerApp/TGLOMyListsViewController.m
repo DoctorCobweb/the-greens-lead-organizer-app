@@ -15,9 +15,6 @@
 
 static NSString *myNationBuilderId = @"my_nation_builder_id";
 static NSString *accessToken= @"access_token";
-
-static NSString * meUrl = @"https://%@.nationbuilder.com/api/v1/people/me?access_token=%@";
-
 static NSString * myListsUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/people?page=1&per_page=100&access_token=%@";
 static NSString * allListsUrl = @"https://%@.nationbuilder.com/api/v1/lists?page=1&per_page=100&access_token=%@";
 
@@ -59,7 +56,7 @@ static NSString * allListsUrl = @"https://%@.nationbuilder.com/api/v1/lists?page
     NSLog(@"access_token: %@", token);
     
     if (token) {
-        [self getMyNationBuilderDetails];
+        [self getAllLists];
         
     } else {
         NSLog(@"ERROR in TGLOMyListsViewController.m. access_token is nil");
@@ -86,66 +83,6 @@ static NSString * allListsUrl = @"https://%@.nationbuilder.com/api/v1/lists?page
 }
 
 
-
-- (void)getMyNationBuilderDetails
-{
-    NSString * meUrl_ = [NSString stringWithFormat:meUrl, nationBuilderSlugValue, token];
-    
-    //check to see if UserDefaults has a non nil
-    //value for key @"my_nb_id"
-    //if it is non-nil then we have previously
-    //called the GET people/me endpoint for this
-    //app user's profile info & subsequently stored
-    //it in UserDefaults.
-    NSString *myNBId = [[NSUserDefaults standardUserDefaults] objectForKey:myNationBuilderId];
-    NSLog(@"myNBId: %@", myNBId);
-    
-    if (myNBId == nil) {
-        //need to get user's details
-        //call GET people/me and store results
-        //in UserDefaults
-        
-        
-        NSLog(@"NO NB USER ID set for this app. getting them...");
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        
-        [manager GET:meUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            //NSLog(@"in TAGS TABLE VIEW CONTROLLER and response: %@", responseObject);
-            
-            //responseObject is an NSDictionary with a "results" key with value of type
-            //NSSet.
-            //in this set then there are NSDictionary objects for each person
-            //the following will thus get all people returned from the api call
-            NSSet * person_set = [responseObject objectForKey:@"person"];
-            NSLog(@"person_set[id] SET: %@", [person_set valueForKey:@"id"]);
-            
-            if ([person_set valueForKey:@"id"]) {
-                #warning set more user defaults if you want!
-                //set the id into user defaults
-                [[NSUserDefaults standardUserDefaults] setObject:[person_set valueForKey:@"id"] forKey:myNationBuilderId];
-                
-                //remember to sync the additions
-                //made to user defaults
-                [[NSUserDefaults standardUserDefaults] synchronize];
-                
-                //now go onto getting the taggings
-                [self getAllLists];
-                
-            } else {
-                NSLog(@"ERROR: NB ID is nil. after GET people/me in lists view controller");
-            }
-            
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Error: %@", error);
-        }];
-    } else {
-        NSLog(@"in TGLOMyListsViewController.m ALREADY HAVE MY PROFILE ID in  UserDefaults");
-        
-        //go onto calling the tags for user's
-        //profile
-        [self getAllLists];
-    }
-}
 
 
 - (void) getAllLists

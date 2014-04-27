@@ -18,7 +18,7 @@ static NSString *myNationBuilderId = @"my_nation_builder_id";
 static NSString *accessToken= @"access_token";
 
 
-NSString * const meUrl= @"https://%@.nationbuilder.com/api/v1/people/me?access_token=%@";
+NSString * const meUrl= @"https://%@.nationbuilder.com/api/v1/people/%@?access_token=%@";
 NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=100&access_token=%@";
 
 @interface TGLOMainViewController ()
@@ -95,7 +95,9 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
 
 - (void)getMyNationBuilderDetails
 {
-    NSString * meUrl_ = [NSString stringWithFormat:meUrl, nationBuilderSlugValue, token];
+     NSString *_myNBId = [[NSUserDefaults standardUserDefaults] objectForKey:myNationBuilderId];
+    
+    NSString * meUrl_ = [NSString stringWithFormat:meUrl, nationBuilderSlugValue, _myNBId, token];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:meUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -104,10 +106,6 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
         NSDictionary * me_dic = [responseObject objectForKey:@"person"];
         
         NSLog(@"me_dic[id] SET: %@", [me_dic valueForKey:@"id"]);
-        
-        //EXTRACTIONS
-        //go and setup userdefaults somemore
-        [self setMyNBId:[me_dic valueForKey:@"id"]];
         
         
         //start setting up the ui stuff
@@ -118,29 +116,6 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
      }];
 }
 
-
-- (void)setMyNBId:(NSString *)myNBId
-{
-    //check to see if UserDefaults has a non nil
-    //value for key @"my_nb_id"
-    //if it is non-nil then we have previously
-    //called the GET people/me endpoint for this
-    //app user's profile info & subsequently stored
-    //it in UserDefaults.
-    NSString *_myNBId = [[NSUserDefaults standardUserDefaults] objectForKey:myNationBuilderId];
-    NSLog(@"_myNBId: %@", _myNBId);
-    
-    if (_myNBId == nil || [_myNBId isEqualToString:@""]) {
-        NSLog(@"NO NB USER ID set for this app => setting it up now...");
-        
-        //set myNBId into user defaults
-        //then sync user defaults
-        [[NSUserDefaults standardUserDefaults] setObject:myNBId forKey:myNationBuilderId];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    } else {
-        NSLog(@"in TGLOMainViewController.m ALREADY HAVE MY PROFILE ID in  UserDefaults");
-    }
-}
 
 
 - (void)setupPerson:(NSDictionary *)me_dic
