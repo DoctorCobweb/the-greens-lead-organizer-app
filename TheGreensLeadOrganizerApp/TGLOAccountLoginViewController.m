@@ -35,10 +35,6 @@ static NSString *myNationBuilderId = @"my_nation_builder_id";
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     NSLog(@"in ACCOUT LOGIN view controller");
-    self.email.delegate =self;
-    self.password.delegate =self;
-    
-    
 }
 
 
