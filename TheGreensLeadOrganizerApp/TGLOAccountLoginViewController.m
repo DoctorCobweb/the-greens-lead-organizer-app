@@ -35,9 +35,12 @@ static NSString *myNationBuilderId = @"my_nation_builder_id";
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     NSLog(@"in ACCOUT LOGIN view controller");
+    self.email.delegate =self;
+    self.password.delegate =self;
     
     
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -49,6 +52,9 @@ static NSString *myNationBuilderId = @"my_nation_builder_id";
     NSLog(@"in login action handler");
     NSLog(@"self.email.text: %@", self.email.text);
     NSLog(@"self.password.text: %@", self.password.text);
+    
+    [self.email resignFirstResponder];
+    [self.password resignFirstResponder];
     
     NSDictionary *loginDetails = @{ @"email": self.email.text, @"password":self.password.text };
     
@@ -104,10 +110,10 @@ static NSString *myNationBuilderId = @"my_nation_builder_id";
             self.email.text = @"";
             self.password.text = @"";
             // show alert view saying we are getting token
-            UIAlertView *tokenAlert = [[UIAlertView alloc] initWithTitle:@"Authentication failed"
+            UIAlertView *tokenAlert = [[UIAlertView alloc] initWithTitle:@"Login failed"
                                                      message:@"Please try again."
                                                     delegate:nil
-                                           cancelButtonTitle:@"Cancel"
+                                           cancelButtonTitle:@"Okay"
                                            otherButtonTitles:nil];
             [tokenAlert show];
         }
