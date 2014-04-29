@@ -8,10 +8,13 @@
 
 #import "TGLOLogoutViewController.h"
 #import "TGLOAppDelegate.h"
+#import "FXBlurView.h"
 
 static NSString *accessToken= @"access_token";
 
 @interface TGLOLogoutViewController ()
+
+@property (nonatomic, weak) IBOutlet FXBlurView *blurView;
 
 @end
 
@@ -31,6 +34,11 @@ static NSString *accessToken= @"access_token";
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.blurView.dynamic = NO;
+    self.blurView.blurRadius = 10;
+    
+    [((UINavigationController *)[self navigationController]).navigationBar setHidden:YES];
+    
     
     //delete the access_token
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
