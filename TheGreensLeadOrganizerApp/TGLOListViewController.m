@@ -16,7 +16,9 @@
 
 static NSString *myNationBuilderId = @"my_nation_builder_id";
 static NSString *accessToken= @"access_token";
-static NSString * aListUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/people?page=1&per_page=100&access_token=%@";
+
+//default to get 1000 results for a single page call to endpoint
+static NSString * aListUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/people?page=1&per_page=1000&access_token=%@";
 
 @interface TGLOListViewController ()
 {

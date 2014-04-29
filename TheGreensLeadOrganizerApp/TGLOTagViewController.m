@@ -16,7 +16,10 @@
 
 
 static NSString *accessToken= @"access_token";
-static NSString *peopleForTagUrl= @"https://%@.nationbuilder.com/api/v1/tags/%@/people?page=1&per_page=100&access_token=%@";
+
+//default to get 1000 (max) people for a list. not making multiple
+//page calls to get all people as yet.
+static NSString *peopleForTagUrl= @"https://%@.nationbuilder.com/api/v1/tags/%@/people?page=1&per_page=1000&access_token=%@";
 
 @interface TGLOTagViewController ()
 {
@@ -77,7 +80,7 @@ static NSString *peopleForTagUrl= @"https://%@.nationbuilder.com/api/v1/tags/%@/
 
 - (void) getPeopleInTag
 {
-    #warning TODO: default to getting 100 people for now
+    #warning TODO: default to getting 1000 people for now
     //do pagination later
     //you must percent encode self.tag because sometimes
     //can have spaces in the.

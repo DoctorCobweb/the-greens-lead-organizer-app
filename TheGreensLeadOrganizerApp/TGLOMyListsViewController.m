@@ -15,8 +15,8 @@
 
 static NSString *myNationBuilderId = @"my_nation_builder_id";
 static NSString *accessToken= @"access_token";
-static NSString * myListsUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/people?page=1&per_page=100&access_token=%@";
-static NSString * allListsUrl = @"https://%@.nationbuilder.com/api/v1/lists?page=1&per_page=100&access_token=%@";
+static NSString * myListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/myLists/%@/%@";
+
 
 @interface TGLOMyListsViewController ()
 {
@@ -87,33 +87,25 @@ static NSString * allListsUrl = @"https://%@.nationbuilder.com/api/v1/lists?page
 
 - (void) getAllLists
 {
-#warning ALL LISTS for a NATION atm!!! what about lists for a user??
-    //NSString * myListsUrl_ = [NSString stringWithFormat:myListsUrl, nationBuilderSlugValue, @"23", token];
-    NSString *allListsUrl_ = [NSString stringWithFormat:allListsUrl, nationBuilderSlugValue, token];
+    NSString *myNBId = [[NSUserDefaults standardUserDefaults] valueForKey:myNationBuilderId];
+    NSString * myListsUrl_ = [NSString stringWithFormat:myListsUrl, myNBId, token];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
-    [manager GET:allListsUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager GET:myListsUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //NSLog(@"LISTS TABLE VIEW CONTROLLER and response for lists: %@", responseObject);
         
-        //responseObject is an NSDictionary with a "results" key with value of type
-        //NSSet.
-        //in this set then there are NSDictionary objects for each person
-        //the following will thus get all people returned from the api call
-        NSSet * results_set = [responseObject objectForKey:@"results"];
-        //NSLog(@"results_set SET: %@", results_set);
+        //responseObject is has a single array with all the lists
+        //=> results_array[0] is the array of lists
+        NSArray *results_array = [responseObject allObjects];
+        //NSLog(@"results_array: %@", results_array);
+        //NSLog(@"%d results records returned", [results_array[0] count]);
         
-        //an array of dicts e.g.
-        //{"person_id":9; tag=xyz}
-        NSArray * results_array = [results_set allObjects];
-        NSLog(@"%d results records returned", [results_array count]);
-        
-        //alloc and init the people array
-        
-        allLists = [[NSMutableArray alloc] initWithArray:results_array];
+        allLists = [[NSMutableArray alloc] initWithArray:results_array[0]];
         
         //taggings now has all the tags for person
         NSLog(@"allLists array: %@", allLists);
+        NSLog(@"allLists array count: %d", [allLists count]);
         
         //reload tableview to display new data returned from server
         [self.tableView reloadData];
