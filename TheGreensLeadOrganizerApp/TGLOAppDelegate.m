@@ -15,7 +15,7 @@
 //app wide identifier used to construct urls for api calls
 //stored in UserDefaults object
 NSString * const nationBuilderSlugKey = @"nationBuilderSlug";
-NSString * const nationBuilderSlugValue = @"agv";
+NSString * const nationBuilderSlugValue = @"agtest";
 
 
 @implementation TGLOAppDelegate
@@ -57,6 +57,9 @@ NSString * const nationBuilderSlugValue = @"agv";
         [self.window setRootViewController:initViewController];
     } else {
         [(UINavigationController *)self.window.rootViewController pushViewController:initViewController animated:NO];
+        
+        [((UINavigationController *)[initViewController navigationController]).navigationBar setHidden:YES];
+        
         NSLog(@"self.window.rootViewController: %@", self.window.rootViewController);
         NSLog(@"nav stack: %@", [(UINavigationController *)self.window.rootViewController viewControllers]);
     }

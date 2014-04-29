@@ -10,12 +10,16 @@
 #import "AFNetworking.h"
 #import "AFNetworkActivityIndicatorManager.h"
 #import "TGLOAppDelegate.h"
+#import "FXBlurView.h"
+
 
 
 static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logthedawgin";
 static NSString *myNationBuilderId = @"my_nation_builder_id";
 
 @interface TGLOAccountLoginViewController ()
+
+@property (nonatomic, weak) IBOutlet FXBlurView *blurView;
 
 @end
 
@@ -35,6 +39,8 @@ static NSString *myNationBuilderId = @"my_nation_builder_id";
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     NSLog(@"in ACCOUT LOGIN view controller");
+    self.blurView.dynamic = NO;
+    self.blurView.blurRadius = 10;
 }
 
 
@@ -120,4 +126,7 @@ static NSString *myNationBuilderId = @"my_nation_builder_id";
         NSLog(@"Error: %@", error);
     }];
 }
+
+
+
 @end

@@ -30,6 +30,8 @@
 		651626F718F6DB4F00DCC064 /* TGLOSearchResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 651626F618F6DB4F00DCC064 /* TGLOSearchResultsViewController.m */; };
 		651626F918F7A13100DCC064 /* theGreens.png in Resources */ = {isa = PBXBuildFile; fileRef = 651626F818F7A13100DCC064 /* theGreens.png */; };
 		651626FC18F90D5300DCC064 /* TGLOPersonFromSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 651626FB18F90D5300DCC064 /* TGLOPersonFromSearchViewController.m */; };
+		651853FE190FEF1A00D865C4 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 651853FD190FEF1A00D865C4 /* Accelerate.framework */; };
+		65185408190FFD6900D865C4 /* rain_forest-flowering.png in Resources */ = {isa = PBXBuildFile; fileRef = 65185407190FFD6900D865C4 /* rain_forest-flowering.png */; };
 		654CF49E190CAA08005ABF5A /* TGLOLogoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 654CF49D190CAA08005ABF5A /* TGLOLogoutViewController.m */; };
 		655572A218FAAF3B00FA4297 /* TGLOMyListsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 655572A118FAAF3B00FA4297 /* TGLOMyListsViewController.m */; };
 		655572A518FAB34C00FA4297 /* TGLOListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 655572A418FAB34C00FA4297 /* TGLOListViewController.m */; };
@@ -127,6 +129,8 @@
 		651626F818F7A13100DCC064 /* theGreens.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = theGreens.png; sourceTree = "<group>"; };
 		651626FA18F90D5300DCC064 /* TGLOPersonFromSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOPersonFromSearchViewController.h; sourceTree = "<group>"; };
 		651626FB18F90D5300DCC064 /* TGLOPersonFromSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOPersonFromSearchViewController.m; sourceTree = "<group>"; };
+		651853FD190FEF1A00D865C4 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		65185407190FFD6900D865C4 /* rain_forest-flowering.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rain_forest-flowering.png"; path = "../../../../Desktop/rain_forest-flowering.png"; sourceTree = "<group>"; };
 		654CF49C190CAA08005ABF5A /* TGLOLogoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOLogoutViewController.h; sourceTree = "<group>"; };
 		654CF49D190CAA08005ABF5A /* TGLOLogoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOLogoutViewController.m; sourceTree = "<group>"; };
 		655572A018FAAF3B00FA4297 /* TGLOMyListsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOMyListsViewController.h; sourceTree = "<group>"; };
@@ -193,6 +197,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				651853FE190FEF1A00D865C4 /* Accelerate.framework in Frameworks */,
 				65BC96E118F3BBE3006063CA /* CoreGraphics.framework in Frameworks */,
 				65BC96E518F3BBE3006063CA /* CoreData.framework in Frameworks */,
 				65BC96E318F3BBE3006063CA /* UIKit.framework in Frameworks */,
@@ -253,6 +258,7 @@
 		65BC96DD18F3BBE3006063CA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				651853FD190FEF1A00D865C4 /* Accelerate.framework */,
 				65BC96DE18F3BBE3006063CA /* Foundation.framework */,
 				65BC96E018F3BBE3006063CA /* CoreGraphics.framework */,
 				65BC96E218F3BBE3006063CA /* UIKit.framework */,
@@ -359,6 +365,7 @@
 			isa = PBXGroup;
 			children = (
 				651318CB18FFF22200995995 /* appIcon58x58.png */,
+				65185407190FFD6900D865C4 /* rain_forest-flowering.png */,
 				651318CC18FFF22200995995 /* appIcon80x80.png */,
 				651318CD18FFF22200995995 /* appIcon120x120.png */,
 				651318BE18FE679800995995 /* grey120x120.png */,
@@ -480,6 +487,7 @@
 				65BC975018F3D144006063CA /* calendar.png in Resources */,
 				651626F918F7A13100DCC064 /* theGreens.png in Resources */,
 				65BC975918F3D144006063CA /* news.png in Resources */,
+				65185408190FFD6900D865C4 /* rain_forest-flowering.png in Resources */,
 				65BC975418F3D144006063CA /* Default@2x.png in Resources */,
 				65BC975C18F3D144006063CA /* tag.png in Resources */,
 				65BC975518F3D144006063CA /* map.png in Resources */,
