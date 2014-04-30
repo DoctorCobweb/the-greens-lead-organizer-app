@@ -39,6 +39,17 @@ static NSString *myNationBuilderId = @"my_nation_builder_id";
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     NSLog(@"in ACCOUT LOGIN view controller");
+    /*
+    if ([self.email respondsToSelector:@selector(setAttributedPlaceholder:)] && [self.password respondsToSelector:@selector(setAttributedPlaceholder:)]) {
+        UIColor *color = [UIColor whiteColor];
+        self.email.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Email" attributes:@{NSForegroundColorAttributeName: color}];
+        self.password.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Password" attributes:@{NSForegroundColorAttributeName: color}];
+    } else {
+        NSLog(@"Cannot set placeholder text's color, because deployment target is earlier than iOS 6.0");
+        // TODO: Add fall-back code to set placeholder color.
+    }
+     */
+    
     self.blurView.dynamic = NO;
     self.blurView.blurRadius = 10;
 }
