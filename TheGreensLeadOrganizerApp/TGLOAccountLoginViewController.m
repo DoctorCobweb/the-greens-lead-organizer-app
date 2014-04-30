@@ -136,7 +136,7 @@ static NSString *myNationBuilderId = @"my_nation_builder_id";
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
 
-    if ([string isEqualToString:@"\n"]) {
+    if ([string isEqualToString:@"\n"] && [textField isEqual:self.password]) {
         [textField resignFirstResponder];
     }
 
