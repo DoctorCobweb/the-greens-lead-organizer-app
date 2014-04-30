@@ -35,7 +35,8 @@ static NSString *accessToken= @"access_token";
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     self.blurView.dynamic = NO;
-    self.blurView.blurRadius = 10;
+    self.blurView.blurRadius = 100;
+    self.blurView.tintColor = [UIColor colorWithRed:0/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f];
     
     [((UINavigationController *)[self navigationController]).navigationBar setHidden:YES];
     

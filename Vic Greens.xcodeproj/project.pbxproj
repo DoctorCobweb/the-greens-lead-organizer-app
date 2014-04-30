@@ -41,6 +41,15 @@
 		65A812961910F34700C46959 /* theGreens58x58.png in Resources */ = {isa = PBXBuildFile; fileRef = 65A812931910F34700C46959 /* theGreens58x58.png */; };
 		65A812971910F34700C46959 /* theGreens80x80.png in Resources */ = {isa = PBXBuildFile; fileRef = 65A812941910F34700C46959 /* theGreens80x80.png */; };
 		65A812981910F34700C46959 /* theGreens120x120.png in Resources */ = {isa = PBXBuildFile; fileRef = 65A812951910F34700C46959 /* theGreens120x120.png */; };
+		65A812A019111C3200C46959 /* forest-fog.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65A8129F19111C3200C46959 /* forest-fog.jpg */; };
+		65A812A219111D5C00C46959 /* forest-fog-1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65A812A119111D5C00C46959 /* forest-fog-1.jpg */; };
+		65A812A419111E2000C46959 /* forest-fog-2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65A812A319111E2000C46959 /* forest-fog-2.jpg */; };
+		65A812A6191127B600C46959 /* northern-lights.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65A812A5191127B600C46959 /* northern-lights.jpg */; };
+		65A812A81911299100C46959 /* people-walking.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65A812A71911299100C46959 /* people-walking.jpg */; };
+		65A812AA19112A9B00C46959 /* walking.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65A812A919112A9B00C46959 /* walking.jpg */; };
+		65A812AC19112BB300C46959 /* mosaic.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65A812AB19112BB300C46959 /* mosaic.jpg */; };
+		65A812AE19112CEE00C46959 /* mosaic-1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65A812AD19112CEE00C46959 /* mosaic-1.jpg */; };
+		65A812B01911302100C46959 /* ocean-shade.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 65A812AF1911302100C46959 /* ocean-shade.jpeg */; };
 		65B022F018FD27A50057E741 /* TGLOPersonFromListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B022EF18FD27A50057E741 /* TGLOPersonFromListViewController.m */; };
 		65BC96DF18F3BBE3006063CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BC96DE18F3BBE3006063CA /* Foundation.framework */; };
 		65BC96E118F3BBE3006063CA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BC96E018F3BBE3006063CA /* CoreGraphics.framework */; };
@@ -149,6 +158,15 @@
 		65A812931910F34700C46959 /* theGreens58x58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = theGreens58x58.png; sourceTree = "<group>"; };
 		65A812941910F34700C46959 /* theGreens80x80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = theGreens80x80.png; sourceTree = "<group>"; };
 		65A812951910F34700C46959 /* theGreens120x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = theGreens120x120.png; sourceTree = "<group>"; };
+		65A8129F19111C3200C46959 /* forest-fog.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "forest-fog.jpg"; sourceTree = "<group>"; };
+		65A812A119111D5C00C46959 /* forest-fog-1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "forest-fog-1.jpg"; sourceTree = "<group>"; };
+		65A812A319111E2000C46959 /* forest-fog-2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "forest-fog-2.jpg"; sourceTree = "<group>"; };
+		65A812A5191127B600C46959 /* northern-lights.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "northern-lights.jpg"; sourceTree = "<group>"; };
+		65A812A71911299100C46959 /* people-walking.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "people-walking.jpg"; sourceTree = "<group>"; };
+		65A812A919112A9B00C46959 /* walking.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = walking.jpg; sourceTree = "<group>"; };
+		65A812AB19112BB300C46959 /* mosaic.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mosaic.jpg; sourceTree = "<group>"; };
+		65A812AD19112CEE00C46959 /* mosaic-1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "mosaic-1.jpg"; sourceTree = "<group>"; };
+		65A812AF1911302100C46959 /* ocean-shade.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "ocean-shade.jpeg"; sourceTree = "<group>"; };
 		65B022EE18FD27A50057E741 /* TGLOPersonFromListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOPersonFromListViewController.h; sourceTree = "<group>"; };
 		65B022EF18FD27A50057E741 /* TGLOPersonFromListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOPersonFromListViewController.m; sourceTree = "<group>"; };
 		65BC96DB18F3BBE3006063CA /* Vic Greens.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Vic Greens.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -372,11 +390,20 @@
 		65BC972318F3CFE7006063CA /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				65A812A71911299100C46959 /* people-walking.jpg */,
+				65A812AF1911302100C46959 /* ocean-shade.jpeg */,
+				65A812AD19112CEE00C46959 /* mosaic-1.jpg */,
+				65A812AB19112BB300C46959 /* mosaic.jpg */,
+				65A8129F19111C3200C46959 /* forest-fog.jpg */,
+				65A812A5191127B600C46959 /* northern-lights.jpg */,
+				65A812A919112A9B00C46959 /* walking.jpg */,
+				65A812A119111D5C00C46959 /* forest-fog-1.jpg */,
+				65A812A319111E2000C46959 /* forest-fog-2.jpg */,
+				65185407190FFD6900D865C4 /* rain_forest-flowering.png */,
 				65A812931910F34700C46959 /* theGreens58x58.png */,
 				65A812941910F34700C46959 /* theGreens80x80.png */,
 				65A812951910F34700C46959 /* theGreens120x120.png */,
 				651318CB18FFF22200995995 /* appIcon58x58.png */,
-				65185407190FFD6900D865C4 /* rain_forest-flowering.png */,
 				651318CC18FFF22200995995 /* appIcon80x80.png */,
 				651318CD18FFF22200995995 /* appIcon120x120.png */,
 				651318BE18FE679800995995 /* grey120x120.png */,
@@ -492,6 +519,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65A812A81911299100C46959 /* people-walking.jpg in Resources */,
 				65BC971918F3C54B006063CA /* Main.storyboard in Resources */,
 				65BC975B18F3D144006063CA /* tag_photo.jpg in Resources */,
 				65BC975718F3D144006063CA /* menu@2x.png in Resources */,
@@ -501,10 +529,13 @@
 				65A812971910F34700C46959 /* theGreens80x80.png in Resources */,
 				65BC975018F3D144006063CA /* calendar.png in Resources */,
 				651626F918F7A13100DCC064 /* theGreens.png in Resources */,
+				65A812A419111E2000C46959 /* forest-fog-2.jpg in Resources */,
 				65BC975918F3D144006063CA /* news.png in Resources */,
+				65A812AE19112CEE00C46959 /* mosaic-1.jpg in Resources */,
 				65A812961910F34700C46959 /* theGreens58x58.png in Resources */,
 				65185408190FFD6900D865C4 /* rain_forest-flowering.png in Resources */,
 				65BC975418F3D144006063CA /* Default@2x.png in Resources */,
+				65A812B01911302100C46959 /* ocean-shade.jpeg in Resources */,
 				65BC975C18F3D144006063CA /* tag.png in Resources */,
 				65BC975518F3D144006063CA /* map.png in Resources */,
 				65BC975318F3D144006063CA /* Default.png in Resources */,
@@ -512,13 +543,18 @@
 				651318D018FFF22200995995 /* appIcon120x120.png in Resources */,
 				65BC975118F3D144006063CA /* comments.png in Resources */,
 				65A812981910F34700C46959 /* theGreens120x120.png in Resources */,
+				65A812AA19112A9B00C46959 /* walking.jpg in Resources */,
+				65A812A219111D5C00C46959 /* forest-fog-1.jpg in Resources */,
+				65A812A6191127B600C46959 /* northern-lights.jpg in Resources */,
 				651318CF18FFF22200995995 /* appIcon80x80.png in Resources */,
 				65BC96EB18F3BBE3006063CA /* InfoPlist.strings in Resources */,
 				65BC975618F3D144006063CA /* menu.png in Resources */,
 				65BC975D18F3D144006063CA /* wishlist.png in Resources */,
 				65BC975218F3D144006063CA /* Default-568h@2x.png in Resources */,
 				65BC975818F3D144006063CA /* nav_bg.png in Resources */,
+				65A812AC19112BB300C46959 /* mosaic.jpg in Resources */,
 				65BC96F618F3BBE3006063CA /* Images.xcassets in Resources */,
+				65A812A019111C3200C46959 /* forest-fog.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

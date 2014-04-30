@@ -42,7 +42,17 @@ static NSString *myNationBuilderId = @"my_nation_builder_id";
     
     //setup the burring of the background image
     self.blurView.dynamic = NO;
-    self.blurView.blurRadius = 15;
+    self.blurView.blurRadius =100;
+    self.blurView.tintColor = [UIColor colorWithRed:0/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f];
+    
+    if ([self.email respondsToSelector:@selector(setAttributedPlaceholder:)] && [self.password respondsToSelector:@selector(setAttributedPlaceholder:)]) {
+        UIColor *color = [UIColor whiteColor];
+        self.email.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Email" attributes:@{NSForegroundColorAttributeName: color}];
+        self.password.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Password" attributes:@{NSForegroundColorAttributeName: color}];
+    } else {
+        NSLog(@"Cannot set placeholder text's color, because deployment target is earlier than iOS 6.0");
+        // TODO: Add fall-back code to set placeholder color.
+    }
 }
 
 
@@ -63,6 +73,9 @@ static NSString *myNationBuilderId = @"my_nation_builder_id";
     
     NSDictionary *loginDetails = @{ @"email": self.email.text, @"password":self.password.text };
     
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Logging you in." message:@"Please wait for your details to be authenticated. " delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+    
+    [alert show];
     
     //need to get notes on the person from a different api, namely
     // the contacts api
@@ -74,6 +87,9 @@ static NSString *myNationBuilderId = @"my_nation_builder_id";
     NSLog(@"manager.requestSerializer: %@", manager.requestSerializer);
     
     [manager POST:loginEndpoint parameters:loginDetails success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        [alert dismissWithClickedButtonIndex:0 animated:NO];
+        
         NSLog(@" POST loggin the  user in => %@",responseObject);
         
         NSString *access_token = [responseObject objectForKey:@"access_token"];

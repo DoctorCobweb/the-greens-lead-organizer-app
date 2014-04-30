@@ -98,10 +98,10 @@ NSString * const nationBuilderSlugValue = @"agtest";
     //if access_token is null it means user has idicated they want
     //to log out.
     if (![userDefaults valueForKey:@"access_token"]) {
-        NSLog(@"self.window.rootViewController: %@", self.window.rootViewController);
         [(UINavigationController *)self.window.rootViewController popToRootViewControllerAnimated:NO];
         //UINavigationBar *navBar = ((UINavigationController *)self.window.rootViewController).navigationBar;
         NSArray *controllerStack = [(UINavigationController *)self.window.rootViewController viewControllers];
+        NSLog(@"controllerStack: %@", controllerStack);
         
         #warning TODO: check that it is indeed the accountlogin controller
         //the first controllers in the stack should be
@@ -334,7 +334,6 @@ NSString * const nationBuilderSlugValue = @"agtest";
         }
     }];
 }
-
 
 
 @end
