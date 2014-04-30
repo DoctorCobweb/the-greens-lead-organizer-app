@@ -145,22 +145,22 @@
 		6561747819090B1900EE712F /* TGLOAccountLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOAccountLoginViewController.m; sourceTree = "<group>"; };
 		65B022EE18FD27A50057E741 /* TGLOPersonFromListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOPersonFromListViewController.h; sourceTree = "<group>"; };
 		65B022EF18FD27A50057E741 /* TGLOPersonFromListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOPersonFromListViewController.m; sourceTree = "<group>"; };
-		65BC96DB18F3BBE3006063CA /* TheGreensLeadOrganizerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheGreensLeadOrganizerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		65BC96DB18F3BBE3006063CA /* Vic Greens.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Vic Greens.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		65BC96DE18F3BBE3006063CA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65BC96E018F3BBE3006063CA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		65BC96E218F3BBE3006063CA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		65BC96E418F3BBE3006063CA /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		65BC96E818F3BBE3006063CA /* TheGreensLeadOrganizerApp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TheGreensLeadOrganizerApp-Info.plist"; sourceTree = "<group>"; };
+		65BC96E818F3BBE3006063CA /* Vic Greens-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Vic Greens-Info.plist"; sourceTree = "<group>"; };
 		65BC96EA18F3BBE3006063CA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		65BC96EC18F3BBE3006063CA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		65BC96EE18F3BBE3006063CA /* TheGreensLeadOrganizerApp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TheGreensLeadOrganizerApp-Prefix.pch"; sourceTree = "<group>"; };
+		65BC96EE18F3BBE3006063CA /* Vic Greens-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Vic Greens-Prefix.pch"; sourceTree = "<group>"; };
 		65BC96EF18F3BBE3006063CA /* TGLOAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TGLOAppDelegate.h; sourceTree = "<group>"; };
 		65BC96F018F3BBE3006063CA /* TGLOAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TGLOAppDelegate.m; sourceTree = "<group>"; };
 		65BC96F318F3BBE3006063CA /* TheGreensLeadOrganizerApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TheGreensLeadOrganizerApp.xcdatamodel; sourceTree = "<group>"; };
 		65BC96F518F3BBE3006063CA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		65BC96FB18F3BBE3006063CA /* TheGreensLeadOrganizerAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TheGreensLeadOrganizerAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		65BC96FB18F3BBE3006063CA /* Vic GreensTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Vic GreensTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		65BC96FC18F3BBE3006063CA /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		65BC970518F3BBE3006063CA /* TheGreensLeadOrganizerAppTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TheGreensLeadOrganizerAppTests-Info.plist"; sourceTree = "<group>"; };
+		65BC970518F3BBE3006063CA /* Vic GreensTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Vic GreensTests-Info.plist"; sourceTree = "<group>"; };
 		65BC970718F3BBE3006063CA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		65BC970918F3BBE3006063CA /* TheGreensLeadOrganizerAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TheGreensLeadOrganizerAppTests.m; sourceTree = "<group>"; };
 		65BC971818F3C54B006063CA /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -238,8 +238,8 @@
 		65BC96D218F3BBE3006063CA = {
 			isa = PBXGroup;
 			children = (
-				65BC96E618F3BBE3006063CA /* TheGreensLeadOrganizerApp */,
-				65BC970318F3BBE3006063CA /* TheGreensLeadOrganizerAppTests */,
+				65BC96E618F3BBE3006063CA /* Vic Greens */,
+				65BC970318F3BBE3006063CA /* Vic Greens Tests */,
 				65BC96DD18F3BBE3006063CA /* Frameworks */,
 				65BC96DC18F3BBE3006063CA /* Products */,
 				950AE0EADB7042F4B10AC436 /* Pods.xcconfig */,
@@ -249,8 +249,8 @@
 		65BC96DC18F3BBE3006063CA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				65BC96DB18F3BBE3006063CA /* TheGreensLeadOrganizerApp.app */,
-				65BC96FB18F3BBE3006063CA /* TheGreensLeadOrganizerAppTests.xctest */,
+				65BC96DB18F3BBE3006063CA /* Vic Greens.app */,
+				65BC96FB18F3BBE3006063CA /* Vic GreensTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -269,7 +269,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		65BC96E618F3BBE3006063CA /* TheGreensLeadOrganizerApp */ = {
+		65BC96E618F3BBE3006063CA /* Vic Greens */ = {
 			isa = PBXGroup;
 			children = (
 				655572A618FBC7C800FA4297 /* CustomViews */,
@@ -328,34 +328,36 @@
 				654CF49C190CAA08005ABF5A /* TGLOLogoutViewController.h */,
 				654CF49D190CAA08005ABF5A /* TGLOLogoutViewController.m */,
 			);
+			name = "Vic Greens";
 			path = TheGreensLeadOrganizerApp;
 			sourceTree = "<group>";
 		};
 		65BC96E718F3BBE3006063CA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				65BC96EE18F3BBE3006063CA /* TheGreensLeadOrganizerApp-Prefix.pch */,
+				65BC96EE18F3BBE3006063CA /* Vic Greens-Prefix.pch */,
 				65BC972318F3CFE7006063CA /* Images */,
-				65BC96E818F3BBE3006063CA /* TheGreensLeadOrganizerApp-Info.plist */,
+				65BC96E818F3BBE3006063CA /* Vic Greens-Info.plist */,
 				65BC96E918F3BBE3006063CA /* InfoPlist.strings */,
 				65BC96EC18F3BBE3006063CA /* main.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		65BC970318F3BBE3006063CA /* TheGreensLeadOrganizerAppTests */ = {
+		65BC970318F3BBE3006063CA /* Vic Greens Tests */ = {
 			isa = PBXGroup;
 			children = (
 				65BC970918F3BBE3006063CA /* TheGreensLeadOrganizerAppTests.m */,
 				65BC970418F3BBE3006063CA /* Supporting Files */,
 			);
+			name = "Vic Greens Tests";
 			path = TheGreensLeadOrganizerAppTests;
 			sourceTree = "<group>";
 		};
 		65BC970418F3BBE3006063CA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				65BC970518F3BBE3006063CA /* TheGreensLeadOrganizerAppTests-Info.plist */,
+				65BC970518F3BBE3006063CA /* Vic GreensTests-Info.plist */,
 				65BC970618F3BBE3006063CA /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
@@ -403,9 +405,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		65BC96DA18F3BBE3006063CA /* TheGreensLeadOrganizerApp */ = {
+		65BC96DA18F3BBE3006063CA /* Vic Greens */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 65BC970D18F3BBE3006063CA /* Build configuration list for PBXNativeTarget "TheGreensLeadOrganizerApp" */;
+			buildConfigurationList = 65BC970D18F3BBE3006063CA /* Build configuration list for PBXNativeTarget "Vic Greens" */;
 			buildPhases = (
 				AE248403B5DC4500A1C28481 /* Check Pods Manifest.lock */,
 				65BC96D718F3BBE3006063CA /* Sources */,
@@ -417,14 +419,14 @@
 			);
 			dependencies = (
 			);
-			name = TheGreensLeadOrganizerApp;
+			name = "Vic Greens";
 			productName = TheGreensLeadOrganizerApp;
-			productReference = 65BC96DB18F3BBE3006063CA /* TheGreensLeadOrganizerApp.app */;
+			productReference = 65BC96DB18F3BBE3006063CA /* Vic Greens.app */;
 			productType = "com.apple.product-type.application";
 		};
-		65BC96FA18F3BBE3006063CA /* TheGreensLeadOrganizerAppTests */ = {
+		65BC96FA18F3BBE3006063CA /* Vic GreensTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 65BC971018F3BBE3006063CA /* Build configuration list for PBXNativeTarget "TheGreensLeadOrganizerAppTests" */;
+			buildConfigurationList = 65BC971018F3BBE3006063CA /* Build configuration list for PBXNativeTarget "Vic GreensTests" */;
 			buildPhases = (
 				65BC96F718F3BBE3006063CA /* Sources */,
 				65BC96F818F3BBE3006063CA /* Frameworks */,
@@ -435,9 +437,9 @@
 			dependencies = (
 				65BC970218F3BBE3006063CA /* PBXTargetDependency */,
 			);
-			name = TheGreensLeadOrganizerAppTests;
+			name = "Vic GreensTests";
 			productName = TheGreensLeadOrganizerAppTests;
-			productReference = 65BC96FB18F3BBE3006063CA /* TheGreensLeadOrganizerAppTests.xctest */;
+			productReference = 65BC96FB18F3BBE3006063CA /* Vic GreensTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -458,7 +460,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 65BC96D618F3BBE3006063CA /* Build configuration list for PBXProject "TheGreensLeadOrganizerApp" */;
+			buildConfigurationList = 65BC96D618F3BBE3006063CA /* Build configuration list for PBXProject "Vic Greens" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -470,8 +472,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				65BC96DA18F3BBE3006063CA /* TheGreensLeadOrganizerApp */,
-				65BC96FA18F3BBE3006063CA /* TheGreensLeadOrganizerAppTests */,
+				65BC96DA18F3BBE3006063CA /* Vic Greens */,
+				65BC96FA18F3BBE3006063CA /* Vic GreensTests */,
 			);
 		};
 /* End PBXProject section */
@@ -604,7 +606,7 @@
 /* Begin PBXTargetDependency section */
 		65BC970218F3BBE3006063CA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 65BC96DA18F3BBE3006063CA /* TheGreensLeadOrganizerApp */;
+			target = 65BC96DA18F3BBE3006063CA /* Vic Greens */;
 			targetProxy = 65BC970118F3BBE3006063CA /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -712,9 +714,9 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos7.0]" = "iPhone Developer: andre trosky (4XBN97BWL3)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TheGreensLeadOrganizerApp/TheGreensLeadOrganizerApp-Prefix.pch";
-				INFOPLIST_FILE = "TheGreensLeadOrganizerApp/TheGreensLeadOrganizerApp-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "TheGreensLeadOrganizerApp/Vic Greens-Prefix.pch";
+				INFOPLIST_FILE = "TheGreensLeadOrganizerApp/Vic Greens-Info.plist";
+				PRODUCT_NAME = "Vic Greens";
 				PROVISIONING_PROFILE = "4A0FDC0E-C45E-496F-911A-12D1FC41583A";
 				"PROVISIONING_PROFILE[sdk=iphoneos7.0]" = "4A0FDC0E-C45E-496F-911A-12D1FC41583A";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -731,9 +733,9 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos7.0]" = "iPhone Developer: andre trosky (4XBN97BWL3)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TheGreensLeadOrganizerApp/TheGreensLeadOrganizerApp-Prefix.pch";
-				INFOPLIST_FILE = "TheGreensLeadOrganizerApp/TheGreensLeadOrganizerApp-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "TheGreensLeadOrganizerApp/Vic Greens-Prefix.pch";
+				INFOPLIST_FILE = "TheGreensLeadOrganizerApp/Vic Greens-Info.plist";
+				PRODUCT_NAME = "Vic Greens";
 				PROVISIONING_PROFILE = "4A0FDC0E-C45E-496F-911A-12D1FC41583A";
 				"PROVISIONING_PROFILE[sdk=iphoneos7.0]" = "4A0FDC0E-C45E-496F-911A-12D1FC41583A";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -757,8 +759,8 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "TheGreensLeadOrganizerAppTests/TheGreensLeadOrganizerAppTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "TheGreensLeadOrganizerAppTests/Vic GreensTests-Info.plist";
+				PRODUCT_NAME = "Vic GreensTests";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -776,8 +778,8 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TheGreensLeadOrganizerApp/TheGreensLeadOrganizerApp-Prefix.pch";
-				INFOPLIST_FILE = "TheGreensLeadOrganizerAppTests/TheGreensLeadOrganizerAppTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "TheGreensLeadOrganizerAppTests/Vic GreensTests-Info.plist";
+				PRODUCT_NAME = "Vic GreensTests";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -786,7 +788,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		65BC96D618F3BBE3006063CA /* Build configuration list for PBXProject "TheGreensLeadOrganizerApp" */ = {
+		65BC96D618F3BBE3006063CA /* Build configuration list for PBXProject "Vic Greens" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				65BC970B18F3BBE3006063CA /* Debug */,
@@ -795,7 +797,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		65BC970D18F3BBE3006063CA /* Build configuration list for PBXNativeTarget "TheGreensLeadOrganizerApp" */ = {
+		65BC970D18F3BBE3006063CA /* Build configuration list for PBXNativeTarget "Vic Greens" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				65BC970E18F3BBE3006063CA /* Debug */,
@@ -804,7 +806,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		65BC971018F3BBE3006063CA /* Build configuration list for PBXNativeTarget "TheGreensLeadOrganizerAppTests" */ = {
+		65BC971018F3BBE3006063CA /* Build configuration list for PBXNativeTarget "Vic GreensTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				65BC971118F3BBE3006063CA /* Debug */,

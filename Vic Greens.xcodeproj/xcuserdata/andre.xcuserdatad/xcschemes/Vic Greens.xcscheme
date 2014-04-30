@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "65BC96DA18F3BBE3006063CA"
-               BuildableName = "TheGreensLeadOrganizerApp.app"
-               BlueprintName = "TheGreensLeadOrganizerApp"
-               ReferencedContainer = "container:TheGreensLeadOrganizerApp.xcodeproj">
+               BuildableName = "Vic Greens.app"
+               BlueprintName = "Vic Greens"
+               ReferencedContainer = "container:Vic Greens.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,24 +28,14 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "65BC96FA18F3BBE3006063CA"
-               BuildableName = "TheGreensLeadOrganizerAppTests.xctest"
-               BlueprintName = "TheGreensLeadOrganizerAppTests"
-               ReferencedContainer = "container:TheGreensLeadOrganizerApp.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "65BC96DA18F3BBE3006063CA"
-            BuildableName = "TheGreensLeadOrganizerApp.app"
-            BlueprintName = "TheGreensLeadOrganizerApp"
-            ReferencedContainer = "container:TheGreensLeadOrganizerApp.xcodeproj">
+            BuildableName = "Vic Greens.app"
+            BlueprintName = "Vic Greens"
+            ReferencedContainer = "container:Vic Greens.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -62,9 +52,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "65BC96DA18F3BBE3006063CA"
-            BuildableName = "TheGreensLeadOrganizerApp.app"
-            BlueprintName = "TheGreensLeadOrganizerApp"
-            ReferencedContainer = "container:TheGreensLeadOrganizerApp.xcodeproj">
+            BuildableName = "Vic Greens.app"
+            BlueprintName = "Vic Greens"
+            ReferencedContainer = "container:Vic Greens.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -80,9 +70,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "65BC96DA18F3BBE3006063CA"
-            BuildableName = "TheGreensLeadOrganizerApp.app"
-            BlueprintName = "TheGreensLeadOrganizerApp"
-            ReferencedContainer = "container:TheGreensLeadOrganizerApp.xcodeproj">
+            BuildableName = "Vic Greens.app"
+            BlueprintName = "Vic Greens"
+            ReferencedContainer = "container:Vic Greens.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
