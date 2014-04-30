@@ -46,7 +46,7 @@ static NSString *accessToken= @"access_token";
     [defaults synchronize];
     
     if (![defaults valueForKey:accessToken]) {
-        self.logoutTextView.text = @"Thankyou, you're now logged out.";
+        self.logoutTextView.text = @"Thankyou.";
         NSLog(@"access_token should be null: %@", [defaults valueForKey:accessToken]);
     } else {
         self.logoutTextView.text = @"Ooops, please try again.";

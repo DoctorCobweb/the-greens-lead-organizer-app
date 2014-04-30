@@ -10,7 +10,7 @@
 #import "TGLOPerson.h"
 #import "TGLOUpdatePersonDelegate.h"
 
-@interface TGLOEditPersonFromSearchViewController : UIViewController
+@interface TGLOEditPersonFromSearchViewController : UIViewController<UITextFieldDelegate>
 
 
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -54,6 +54,7 @@
 
 - (NSString *)translateSupportLevel:(NSInteger)index;
 - (void)parseTagString:(NSMutableDictionary *)tagsToKeep;
+- (void)resignAllFirstResponders;
 
 
 

@@ -450,6 +450,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "andre trosky";
 				TargetAttributes = {
+					65BC96DA18F3BBE3006063CA = {
+						DevelopmentTeam = 2S55BPX8GX;
+					};
 					65BC96FA18F3BBE3006063CA = {
 						TestTargetID = 65BC96DA18F3BBE3006063CA;
 					};
@@ -643,7 +646,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: andre trosky (4XBN97BWL3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: andre trosky (4XBN97BWL3)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -682,7 +686,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: andre trosky (4XBN97BWL3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: andre trosky (4XBN97BWL3)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -704,10 +709,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos7.0]" = "iPhone Developer: andre trosky (4XBN97BWL3)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TheGreensLeadOrganizerApp/TheGreensLeadOrganizerApp-Prefix.pch";
 				INFOPLIST_FILE = "TheGreensLeadOrganizerApp/TheGreensLeadOrganizerApp-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "4A0FDC0E-C45E-496F-911A-12D1FC41583A";
+				"PROVISIONING_PROFILE[sdk=iphoneos7.0]" = "4A0FDC0E-C45E-496F-911A-12D1FC41583A";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -718,10 +728,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos7.0]" = "iPhone Developer: andre trosky (4XBN97BWL3)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TheGreensLeadOrganizerApp/TheGreensLeadOrganizerApp-Prefix.pch";
 				INFOPLIST_FILE = "TheGreensLeadOrganizerApp/TheGreensLeadOrganizerApp-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "4A0FDC0E-C45E-496F-911A-12D1FC41583A";
+				"PROVISIONING_PROFILE[sdk=iphoneos7.0]" = "4A0FDC0E-C45E-496F-911A-12D1FC41583A";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

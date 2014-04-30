@@ -39,19 +39,10 @@ static NSString *myNationBuilderId = @"my_nation_builder_id";
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     NSLog(@"in ACCOUT LOGIN view controller");
-    /*
-    if ([self.email respondsToSelector:@selector(setAttributedPlaceholder:)] && [self.password respondsToSelector:@selector(setAttributedPlaceholder:)]) {
-        UIColor *color = [UIColor whiteColor];
-        self.email.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Email" attributes:@{NSForegroundColorAttributeName: color}];
-        self.password.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Password" attributes:@{NSForegroundColorAttributeName: color}];
-    } else {
-        NSLog(@"Cannot set placeholder text's color, because deployment target is earlier than iOS 6.0");
-        // TODO: Add fall-back code to set placeholder color.
-    }
-     */
     
+    //setup the burring of the background image
     self.blurView.dynamic = NO;
-    self.blurView.blurRadius = 10;
+    self.blurView.blurRadius = 15;
 }
 
 
@@ -66,6 +57,7 @@ static NSString *myNationBuilderId = @"my_nation_builder_id";
     NSLog(@"self.email.text: %@", self.email.text);
     NSLog(@"self.password.text: %@", self.password.text);
     
+    //hide any keyboards if showing
     [self.email resignFirstResponder];
     [self.password resignFirstResponder];
     
@@ -138,6 +130,18 @@ static NSString *myNationBuilderId = @"my_nation_builder_id";
     }];
 }
 
+#pragma UITextFieldDelegate methods
+
+//hide keyboard if enter key is pressed
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+
+    if ([string isEqualToString:@"\n"]) {
+        [textField resignFirstResponder];
+    }
+
+    return YES;
+}
 
 
 @end

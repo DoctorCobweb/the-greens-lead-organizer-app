@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TGLOAccountLoginViewController : UIViewController
+@interface TGLOAccountLoginViewController :UIViewController<UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *email;
 @property (strong, nonatomic) IBOutlet UITextField *password;

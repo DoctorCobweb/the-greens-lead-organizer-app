@@ -121,6 +121,22 @@ static NSString *searchUrl = @"https://%@.nationbuilder.com/api/v1/people/search
     return searchUrl_;
 }
 
+
+
+
+#pragma UITextFieldDelegate methods
+
+//hide keyboard if enter key is pressed
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    
+    if ([string isEqualToString:@"\n"]) {
+        [textField resignFirstResponder];
+    }
+    
+    return YES;
+}
+
 #pragma mark - Navigation
 
 // In a story board-based application, you will often want to do a little preparation before navigation

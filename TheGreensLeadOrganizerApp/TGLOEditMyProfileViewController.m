@@ -230,6 +230,10 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 //triggered when user toggles the switch for a new contact
 - (void)toggleContact:(id)sender
 {
+    
+    [self resignAllFirstResponders];
+    
+    
     UIColor *disabledEditing = [UIColor colorWithRed:230/255.0f green:230/255.0f blue:230/255.0f alpha:1.0f];;
     UIColor *disabledEditingDark = [UIColor colorWithRed:220/255.0f green:220/255.0f blue:220/255.0f alpha:1.0f];
     UIColor *backgroundValue = [UIColor colorWithRed:242/255.0f green:178/255.0f blue:210/255.0f alpha:1.0f];
@@ -440,6 +444,8 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 
 - (IBAction)saveChanges:(id)sender {
     NSLog(@"saveChanges button hit");
+    
+    [self resignAllFirstResponders];
     
     //1.
     //create an updated person
@@ -857,4 +863,33 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     // Dispose of any resources that can be recreated.
 }
 
+
+#pragma UITextFieldDelegate methods
+
+//hide keyboard if enter key is pressed
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    
+    if ([string isEqualToString:@"\n"]) {
+        [textField resignFirstResponder];
+    }
+    
+    return YES;
+}
+
+//end UITextFieldDelegate
+
+- (void)resignAllFirstResponders
+{
+    
+     //resign all textfield first responders
+    [self.firstName resignFirstResponder];
+    [self.lastName resignFirstResponder];
+    [self.email resignFirstResponder];
+    [self.phone resignFirstResponder];
+    [self.mobile resignFirstResponder];
+    [self.addANewTag resignFirstResponder];
+}
+    
+    
 @end

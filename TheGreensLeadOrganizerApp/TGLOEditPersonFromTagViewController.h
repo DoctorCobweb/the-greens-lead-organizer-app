@@ -11,7 +11,7 @@
 #import "TGLOUpdatePersonDelegate.h"
 
 
-@interface TGLOEditPersonFromTagViewController : UIViewController
+@interface TGLOEditPersonFromTagViewController : UIViewController<UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UIView *containerView;
@@ -54,6 +54,7 @@
 
 - (NSString *)translateSupportLevel:(NSInteger)index;
 - (void)parseTagString:(NSMutableDictionary *)tagsToKeep;
+- (void)resignAllFirstResponders;
 
 
 @end

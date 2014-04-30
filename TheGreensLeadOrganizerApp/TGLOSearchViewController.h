@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TGLOSearchViewController : UIViewController
+@interface TGLOSearchViewController : UIViewController<UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 
