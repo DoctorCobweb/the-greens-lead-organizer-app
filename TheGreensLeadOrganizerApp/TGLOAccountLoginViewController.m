@@ -43,7 +43,7 @@ static NSString *myNationBuilderId = @"my_nation_builder_id";
     //setup the burring of the background image
     self.blurView.dynamic = NO;
     self.blurView.blurRadius =100;
-    self.blurView.tintColor = [UIColor colorWithRed:0/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f];
+    self.blurView.tintColor = [UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:1.0f];
     
     if ([self.email respondsToSelector:@selector(setAttributedPlaceholder:)] && [self.password respondsToSelector:@selector(setAttributedPlaceholder:)]) {
         UIColor *color = [UIColor whiteColor];

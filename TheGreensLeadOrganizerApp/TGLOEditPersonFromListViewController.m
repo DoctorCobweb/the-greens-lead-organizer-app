@@ -288,6 +288,8 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         typeValue.titleLabel.text = @"Meeting 1:1";
         methodValue.titleLabel.text = @"Door knock";
         statusValue.titleLabel.text = @"Answered";
+        noteValue.text = @"Add note content";
+        
         [typeValue setTitle:typeValue.titleLabel.text forState:UIControlStateNormal];
         [methodValue setTitle:methodValue.titleLabel.text forState:UIControlStateNormal];
         [statusValue setTitle:statusValue.titleLabel.text forState:UIControlStateNormal];
@@ -315,6 +317,12 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         statusValue.userInteractionEnabled = NO;
         noteValue.editable = NO;
         noteValue.scrollEnabled = NO;
+        
+        //get rid of text contents
+        [typeValue setTitle:@"" forState:UIControlStateNormal];
+        [methodValue setTitle:@"" forState:UIControlStateNormal];
+        [statusValue setTitle:@"" forState:UIControlStateNormal];
+        noteValue.text =@"";
     }
 }
 
