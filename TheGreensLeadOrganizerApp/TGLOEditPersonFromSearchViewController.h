@@ -10,7 +10,7 @@
 #import "TGLOPerson.h"
 #import "TGLOUpdatePersonDelegate.h"
 
-@interface TGLOEditPersonFromSearchViewController : UIViewController<UITextFieldDelegate>
+@interface TGLOEditPersonFromSearchViewController : UIViewController<UITextFieldDelegate, UIActionSheetDelegate>
 
 
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;

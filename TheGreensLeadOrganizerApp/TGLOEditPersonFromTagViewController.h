@@ -11,7 +11,7 @@
 #import "TGLOUpdatePersonDelegate.h"
 
 
-@interface TGLOEditPersonFromTagViewController : UIViewController<UITextFieldDelegate>
+@interface TGLOEditPersonFromTagViewController : UIViewController<UITextFieldDelegate, UIActionSheetDelegate>
 
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UIView *containerView;

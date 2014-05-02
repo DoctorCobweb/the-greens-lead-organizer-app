@@ -7,6 +7,7 @@
 //
 
 #import "TGLOCustomContactView.h"
+#import "TGLOAppDelegate.h"
 
 static NSDictionary *contactTypes;
 static NSDictionary *contactMethods;
@@ -25,8 +26,14 @@ static NSDictionary *contactStatuses;
         // Initialization code
         
         
-        contactTypes = @{ @"1": @"Event debrief", @"2": @"Event confirmation", @"3":@"Inbox response", @"4":@"Donation thank-you", @"5":@"Donation request", @"6":@"Volunteer recruitment", @"7": @"Meeting 1:1", @"8": @"Volunteer intake",@"9": @"Voter outreach election",@"10": @"Voter outreach issue",@"11": @"Voter persuasion",@"12": @"diggity"};
+        //agtest and agv have different contact TYPES
+        if([nationBuilderSlugValue isEqualToString:@"agtest"]) {
+            contactTypes = @{ @"1": @"Event debrief", @"2": @"Event confirmation", @"3":@"Inbox response", @"4":@"Donation thank-you", @"5":@"Donation request", @"6":@"Volunteer recruitment", @"7": @"Meeting 1:1", @"8": @"Volunteer intake",@"9": @"Voter outreach election",@"10": @"Voter outreach issue",@"11": @"Voter persuasion",@"12": @"diggity"};
+        }
         
+        if ([nationBuilderSlugValue isEqualToString:@"agv"]) {
+            contactTypes = @{ @"6": @"Volunteer recruitment", @"21": @"Supporter Event Invitation", @"14":@"Voter persuasion", @"2":@"Volunteer intake", @"15": @"Donation thank-you", @"16": @"Donation request",@"17": @"Event confirmation",@"18": @"Event debrief",@"19": @"Meeting 1:1",@"1": @"Inbox response",@"13": @"Voter outreach election",@"4": @"Voter outreach issue"};
+        }
         
         contactMethods = @{@"delivery":@"Delivery",@"door_knock":@"Door knock",@"email":@"Email",@"email_blast":@"Email blast",@"face_to_face":@"Face to face",@"facebook":@"Facebook",@"meeting":@"Meeting",@"phone_call":@"Phone call",@"robocall":@"Robocall",@"snail_mail":@"Snail mail",@"text":@"Text",@"text_blast":@"Text blast",@"tweet":@"Tweet",@"video_call":@"Video call",@"webinar":@"Webinar",@"other":@"Other"};
         

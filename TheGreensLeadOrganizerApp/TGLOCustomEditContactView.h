@@ -31,4 +31,8 @@
 + (NSString *)translateContactType:(NSInteger)index;
 + (NSString *)translateContactMethod:(NSInteger)index;
 + (NSString *)translateContactStatus:(NSInteger)index;
+
++ (NSString *)defaultContactType;
++ (NSString *)defaultContactMethod;
++ (NSString *)defaultContactStatus;
 @end

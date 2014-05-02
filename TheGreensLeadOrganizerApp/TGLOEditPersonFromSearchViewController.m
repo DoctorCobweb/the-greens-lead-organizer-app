@@ -281,9 +281,12 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         
         
         //set some defaults to ensure we dont send in null values
-        typeValue.titleLabel.text = @"Meeting 1:1";
-        methodValue.titleLabel.text = @"Door knock";
-        statusValue.titleLabel.text = @"Answered";
+        typeValue.titleLabel.text = [TGLOCustomEditContactView defaultContactType];
+        methodValue.titleLabel.text = [TGLOCustomEditContactView defaultContactMethod];
+        statusValue.titleLabel.text = [TGLOCustomEditContactView defaultContactStatus];
+        
+        
+        
         noteValue.text = @"Add note content";
         
         [typeValue setTitle:typeValue.titleLabel.text forState:UIControlStateNormal];
@@ -623,14 +626,13 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     
     NSString *myNBId = [[NSUserDefaults standardUserDefaults] objectForKey:myNationBuilderId];
 
-#warning TODO: dont hardcode broadcaster_id etc for conactBody
     //semantics:
     //*sender_id" as *broadcaster_id* contacted *recipient_id* for *contact_type* via *method*.
     //*note*
     //
     //if there's no id associated for *broadcaster_id* then broadcaster is left out of semantic string
     
-    NSDictionary *contactBody = @{ @"contact": @{@"note": noteType, @"type_id":contactType, @"method":contactMethod, @"sender_id":myNBId, @"status":contactStatus, @"broadcaster_id": @"1", @"recipient_id": self.person.recordID}  };
+    NSDictionary *contactBody = @{ @"contact": @{@"note": noteType, @"type_id":contactType, @"method":contactMethod, @"sender_id":myNBId, @"status":contactStatus, @"broadcaster_id": myNBId, @"recipient_id": self.person.recordID}  };
 
     //post endpoint for making new contact
     NSString * myContactsUrl_ = [NSString stringWithFormat:myContactsUrl, nationBuilderSlugValue, self.person.recordID, token];
@@ -647,6 +649,9 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     [manager POST:myContactsUrl_ parameters:contactBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@" POST => updating contact with response %@",responseObject);
         NSLog(@"SUCCESSfully added new contact.");
+        
+        //remember to reset the sendInANewContact back to false
+        sendInANewContact = false;
         
         [self reRenderUI];
         
@@ -717,11 +722,30 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 - (void)typeValueHit:(id)sender
 {
     NSLog(@"typeValueHit, in TGLOEditPersonFromSearchViewController");
-    UIActionSheet *typeValueActionSheet = [[UIActionSheet alloc] initWithTitle:@"Choose type"
-                                                             delegate:self
-                                                    cancelButtonTitle:@"Cancel"
-                                               destructiveButtonTitle:nil
-                                                    otherButtonTitles:@"Event debrief", @"Event confirmation", @"Inbox response", @"Donation thank-you", @"Donation request",@"Volunteer recruitment",@"Meeting 1:1",@"Volunteer intake",@"Voter outreach election",@"Voter outreach issue",@"Voter persuasion",@"diggity", nil];
+ 
+    
+    UIActionSheet *typeValueActionSheet;
+    
+    
+    //different NB slugs can have different contact TYPES
+    if ([nationBuilderSlugValue isEqualToString:@"agtest"] ) {
+        typeValueActionSheet =
+        [[UIActionSheet alloc] initWithTitle:@"Choose type"
+                                    delegate:self
+                           cancelButtonTitle:@"Cancel"
+                      destructiveButtonTitle:nil
+                           otherButtonTitles:@"Event debrief", @"Event confirmation", @"Inbox response", @"Donation thank-you", @"Donation request",@"Volunteer recruitment",@"Meeting 1:1",@"Volunteer intake",@"Voter outreach election",@"Voter outreach issue",@"Voter persuasion",@"diggity", nil];
+    }
+    
+    if ([nationBuilderSlugValue isEqualToString:@"agv"] ) {
+        typeValueActionSheet =
+        [[UIActionSheet alloc] initWithTitle:@"Choose type"
+                                    delegate:self
+                           cancelButtonTitle:@"Cancel"
+                      destructiveButtonTitle:nil
+                           otherButtonTitles:@"Volunteer recruitment", @"Supporter Event Invitation", @"Voter persuasion", @"Volunteer intake", @"Donation thank-you", @"Donation request", @"Event confirmation", @"Event debrief", @"Meeting 1:1", @"Inbox response", @"Voter outreach election", @"Voter outreach issue" , nil];
+    }
+    
     [typeValueActionSheet showInView:self.containerView];
 }
 
