@@ -30,7 +30,12 @@ NSString * const donationsAddress = @"https://greens.org.au/civicrm/contribute/t
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.title = @"Donations";
+    
+    
+    self.webView.delegate = self;
+    
+    [self setUpAppearance];
+    
     
     NSURL *donationsUrl = [[NSURL alloc] initWithString:donationsAddress];
     
@@ -38,6 +43,14 @@ NSString * const donationsAddress = @"https://greens.org.au/civicrm/contribute/t
     
     [self.webView loadRequest:donationsRequest];
     
+}
+
+
+
+- (void) setUpAppearance
+{
+    
+    self.title = @"Donations";
     
     // Change button color
     //self.sidebarButton.tintColor = [UIColor colorWithWhite:0.04f alpha:0.9f];
@@ -57,4 +70,25 @@ NSString * const donationsAddress = @"https://greens.org.au/civicrm/contribute/t
     // Dispose of any resources that can be recreated.
 }
 
+
+
+
+#pragma UIWebViewDelegate methods
+
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    NSLog(@"webViewDidStartLoad");
+    self.activityIndicator.hidden = NO;
+    [self.activityIndicator startAnimating];
+    
+}
+
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    NSLog(@"webViewDidFinishLoad");
+    self.activityIndicator.hidden = YES;
+    [self.activityIndicator stopAnimating];
+    
+}
 @end

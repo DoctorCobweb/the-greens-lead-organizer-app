@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TGLOTheGreensViewController : UIViewController
+@interface TGLOTheGreensViewController : UIViewController <UIWebViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 - (void)setUpAppearance;
 @end

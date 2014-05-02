@@ -35,6 +35,9 @@ NSString * const theGreensAddress = @"https://greens.org.au";
     
     [self setUpAppearance];
     
+    self.webView.delegate = self;
+    
+    
     NSURL *theGreensUrl = [[NSURL alloc] initWithString:theGreensAddress];
     
     NSURLRequest *theGreensRequest = [[NSURLRequest alloc] initWithURL:theGreensUrl];
@@ -64,4 +67,22 @@ NSString * const theGreensAddress = @"https://greens.org.au";
     // Dispose of any resources that can be recreated.
 }
 
+
+#pragma UIWebViewDelegate methods
+
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    NSLog(@"webViewDidStartLoad");
+    self.activityIndicator.hidden = NO;
+    [self.activityIndicator startAnimating];
+}
+
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    NSLog(@"webViewDidFinishLoad");
+    self.activityIndicator.hidden = YES;
+    [self.activityIndicator stopAnimating];
+
+}
 @end

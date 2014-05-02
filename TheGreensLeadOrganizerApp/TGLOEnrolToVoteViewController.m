@@ -30,6 +30,7 @@ NSString * const enrolToVoteAddress= @"http://www.aec.gov.au/enrol/";
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.webView.delegate = self;
     
     [self setUpAppearance];
     
@@ -64,6 +65,26 @@ NSString * const enrolToVoteAddress= @"http://www.aec.gov.au/enrol/";
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+
+#pragma UIWebViewDelegate methods
+
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    NSLog(@"webViewDidStartLoad");
+    self.activityIndicator.hidden = NO;
+    [self.activityIndicator startAnimating];
+}
+
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    NSLog(@"webViewDidFinishLoad");
+    self.activityIndicator.hidden = YES;
+    [self.activityIndicator stopAnimating];
+    
 }
 
 @end
