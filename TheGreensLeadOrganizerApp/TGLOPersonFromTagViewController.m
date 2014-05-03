@@ -62,6 +62,8 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     //NSLog(@"[self navigationItem] rightBarButton]: %@", [[self navigationItem] rightBarButtonItem]);
     //NSLog(@"permissionlevel: %@", [TGLOUtils getUserPermissionLevel]);
     
+    NSLog(@"admin: %d", [TGLOUtils isAdminPermissionLevel]);
+    NSLog(@"volunteer: %d", [TGLOUtils isVolunteerPermissionLevel]);
     if ([TGLOUtils isAdminPermissionLevel]) {
         NSLog(@"admin");
         [([[self navigationItem] rightBarButtonItem]) setEnabled:YES];

@@ -118,6 +118,7 @@ static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logt
         
         if(!!accessToken && !!myNBId && !!returnedPermissionLevel) {
             //log in SUCCESS
+            NSLog(@"login SUCCESS");
             [TGLOUtils setAccessTokenInUserDefaults:accessToken];
             [TGLOUtils setMyNationBuilderIdInUserDefaults:myNBId];
             [TGLOUtils setUserPermissionLevel:returnedPermissionLevel];

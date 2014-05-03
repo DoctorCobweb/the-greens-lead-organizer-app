@@ -9,6 +9,7 @@
 #import "TGLOLogoutViewController.h"
 #import "TGLOAppDelegate.h"
 #import "FXBlurView.h"
+#import "TGLOUtils.h"
 
 static NSString *accessToken= @"access_token";
 
@@ -40,15 +41,12 @@ static NSString *accessToken= @"access_token";
     
     [((UINavigationController *)[self navigationController]).navigationBar setHidden:YES];
     
+    //log out user using a utility method
+    //clear out access token, myNBId and permissionLevel data
+    BOOL successfulLogout = [TGLOUtils clearOutUserSession];
     
-    //delete the access_token
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:nil forKey:accessToken];
-    [defaults synchronize];
-    
-    if (![defaults valueForKey:accessToken]) {
+    if (successfulLogout) {
         self.logoutTextView.text = @"Thankyou.";
-        NSLog(@"access_token should be null: %@", [defaults valueForKey:accessToken]);
     } else {
         self.logoutTextView.text = @"Ooops, please try again.";
     

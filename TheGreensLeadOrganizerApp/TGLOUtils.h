@@ -21,6 +21,7 @@
 + (NSString *)getUserPermissionLevel;
 + (void)setAccessTokenInUserDefaults:(NSString *)token;
 + (void)setMyNationBuilderIdInUserDefaults:(NSString *)myNBId;
++ (BOOL)clearOutUserSession;
 
 
 @end

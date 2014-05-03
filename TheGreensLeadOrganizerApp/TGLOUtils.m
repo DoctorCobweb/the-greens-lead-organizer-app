@@ -88,7 +88,8 @@ static NSString *permissionLevelVolunteer = @"volunteer";
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
     //quick validation
-    if (![level isEqualToString:permissionLevelAdmin] || ![level isEqualToString:permissionLevelVolunteer]) {
+    if (![level isEqualToString:permissionLevelAdmin] && ![level isEqualToString:permissionLevelVolunteer]) {
+        NSLog(@"FAIL permission level validation");
         return;
     }
     [userDefaults setObject:level forKey:permissionLevelKey];
@@ -119,6 +120,18 @@ static NSString *permissionLevelVolunteer = @"volunteer";
     NSUserDefaults *uDef = [NSUserDefaults standardUserDefaults];
     [uDef setObject:myNBId forKey:myNationBuilderIdKey];
     [uDef synchronize];
+}
+
++ (BOOL)clearOutUserSession
+{
+    NSLog(@"clearing out all session data...");
+
+    NSUserDefaults *uDef = [NSUserDefaults standardUserDefaults];
+    //delete the access_token
+    [uDef setObject:nil forKey:nationBuilderAccessTokenKey];
+    [uDef setObject:nil forKey:myNationBuilderIdKey];
+    [uDef setObject:nil forKey:permissionLevelKey];
+    return [uDef synchronize];
 }
 
 @end
