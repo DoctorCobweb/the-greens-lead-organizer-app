@@ -95,8 +95,27 @@ static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logt
         NSString *myNBId = [responseObject objectForKey:@"myNBId"];
         NSString *returnedPermissionLevel = [responseObject objectForKey:@"permissionLevel"];
         
+        if (error) {
+            //log in FAILURE
+            self.email.text = @"";
+            self.password.text = @"";
+            NSLog(@"ERROR from login procedure: %@", error)
+            ;
+            
+            // show alert view saying we are getting token
+            UIAlertView *tokenAlert =
+                [[UIAlertView alloc] initWithTitle:@"Login failed"
+                                                message:@"Please try again."
+                                                                delegate:nil
+                                                       cancelButtonTitle:@"Okay"
+                                                       otherButtonTitles:nil];
+            [tokenAlert show];
         
-        if(!!accessToken && !!myNBId && !error) {
+            //we MUST jump out of login: method!
+            return;
+        }
+        
+        if(!!accessToken && !!myNBId && !!returnedPermissionLevel) {
             //log in SUCCESS
             [TGLOUtils setAccessTokenInUserDefaults:accessToken];
             [TGLOUtils setMyNationBuilderIdInUserDefaults:myNBId];
@@ -113,10 +132,12 @@ static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logt
                 [nav pushViewController:initViewController animated:YES];
             });
         } else {
-            //log in FAILURE
+            //weird log in FAILURE: no error but accessToken, myNBId
+            //or permissionLevel was nil. just display an alert and
+            //get them to try again.
             self.email.text = @"";
             self.password.text = @"";
-            NSLog(@"ERROR from login procedure: %@", error)
+            NSLog(@"ERROR from login procedure. accessToken, myNDId or permissionLevel was nil. Weird error. ");
             ;
             
             // show alert view saying we are getting token
@@ -127,6 +148,7 @@ static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logt
                                            otherButtonTitles:nil];
             [tokenAlert show];
         }
+       
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         //http ERROR
         NSLog(@"Error: %@", error);
