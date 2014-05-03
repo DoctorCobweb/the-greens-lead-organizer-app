@@ -10,6 +10,7 @@
 #import "NationBuilder.h"
 #import "AFNetworkActivityIndicatorManager.h"
 #import "TGLOAccountLoginViewController.h"
+#import "SWRevealViewController.h"
 
 
 //app wide identifier used to construct urls for api calls
@@ -100,7 +101,33 @@ NSString * const nationBuilderSlugValue = @"agv";
     if (![userDefaults valueForKey:@"access_token"]) {
         //this gets rid off all view controllers except to the first
         //one which should be of class TGLOAccountLoginViewController
-        [(UINavigationController *)self.window.rootViewController popToRootViewControllerAnimated:NO];
+        
+        //sometimes we have different roow view controllers
+        if ([self.window.rootViewController class] == [SWRevealViewController class]) {
+            NSLog(@"SWRevealViewController is rootViewController");
+
+            //got to get back to accountLoginViewController
+            //1. make root be uinavigationcontroller
+            //2.display it
+            self.window.rootViewController = [[UINavigationController alloc] init];
+            // now load login view controller, thus resetting nav
+            //stack
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSString *segueId = @"accountLogin";
+                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                UIViewController *initViewController = [storyboard instantiateViewControllerWithIdentifier:segueId];
+                TGLOAppDelegate *delegate = (TGLOAppDelegate *)[[UIApplication sharedApplication] delegate];;
+                UINavigationController *nav = (UINavigationController *) delegate.window.rootViewController;
+                nav.navigationBar.hidden = YES;
+                [nav pushViewController:initViewController animated:YES];
+            });
+                
+            return;
+        }
+        if ([self.window.rootViewController class] == [UINavigationController class]) {
+            NSLog(@"UINavigationController is rootViewController");
+            [(UINavigationController *)self.window.rootViewController popToRootViewControllerAnimated:NO];
+        }
         
         NSArray *controllerStack = [(UINavigationController *)self.window.rootViewController viewControllers];
         NSLog(@"controllerStack: %@", controllerStack);
@@ -108,7 +135,7 @@ NSString * const nationBuilderSlugValue = @"agv";
         //make sure the first controllers in the stack should be
         //TGLOAccountLoginViewController
         if ([controllerStack[0] class] == [TGLOAccountLoginViewController class]) {
-            NSLog(@"controllerStack[0] is of class TGLOAccountLoiginViewController, GOOD.");
+            NSLog(@"controllerStack[0] is of class TGLOAccountLoginViewController, GOOD.");
             
             UITextField *email = ((TGLOAccountLoginViewController *)controllerStack[0]).email;
             UITextField *password = ((TGLOAccountLoginViewController *)controllerStack[0]).password;
