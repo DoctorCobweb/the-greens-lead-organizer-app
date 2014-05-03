@@ -12,10 +12,7 @@
 #import "TGLOAppDelegate.h"
 #import "TGLOCustomContactView.h"
 #import "TGLOEditMyProfileViewController.h"
-
-
-static NSString *myNationBuilderId = @"my_nation_builder_id";
-static NSString *accessToken= @"access_token";
+#import "TGLOUtils.h"
 
 
 NSString * const meUrl= @"https://%@.nationbuilder.com/api/v1/people/%@?access_token=%@";
@@ -47,8 +44,7 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    token = [[NSUserDefaults standardUserDefaults] valueForKey:accessToken];
-    
+    token = [TGLOUtils getUserAccessToken];
     [self setUpAppearance];
     
     if (token) {
@@ -94,7 +90,7 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
 
 - (void)getMyNationBuilderDetails
 {
-     NSString *_myNBId = [[NSUserDefaults standardUserDefaults] objectForKey:myNationBuilderId];
+    NSString *_myNBId = [TGLOUtils getUserNationBuilderId];
     
     NSString * meUrl_ = [NSString stringWithFormat:meUrl, nationBuilderSlugValue, _myNBId, token];
     
@@ -199,8 +195,7 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     
     //now go onto getting all the contacts
     //and eventually rendering them too.
-    NSString *myNBId = [[NSUserDefaults standardUserDefaults] objectForKey:myNationBuilderId];
-    NSLog(@"myNBId: %@", myNBId);
+    NSString *myNBId = [TGLOUtils getUserNationBuilderId];
     NSString * myContactsUrl_ = [NSString stringWithFormat:myContactsUrl, nationBuilderSlugValue, myNBId , token];
 
     

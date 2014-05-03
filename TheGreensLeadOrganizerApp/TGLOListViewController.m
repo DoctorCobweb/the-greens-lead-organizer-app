@@ -14,9 +14,6 @@
 #import "TGLOUtils.h"
 
 
-static NSString *myNationBuilderId = @"my_nation_builder_id";
-static NSString *accessToken= @"access_token";
-
 //default to get 1000 results for a single page call to endpoint
 static NSString * aListUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/people?page=1&per_page=1000&access_token=%@";
 
@@ -52,9 +49,7 @@ static NSString * aListUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/peop
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    token = [[NSUserDefaults standardUserDefaults] valueForKey:accessToken];
-    NSLog(@"access_token: %@", token);
-    
+    token = [TGLOUtils getUserAccessToken];
     
     UINavigationBar *navbar = [[self navigationController] navigationBar];
     NSLog(@"navigation bar: %@", navbar);
@@ -85,27 +80,6 @@ static NSString * aListUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/peop
     
     [manager GET:aListUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //NSLog(@"A LIST TABLE VIEW CONTROLLER and response for lists: %@", responseObject);
-        
-        /*
-        //responseObject is an NSDictionary with a "results" key with value of type
-        //NSSet.
-        //in this set then there are NSDictionary objects for each person
-        //the following will thus get all people returned from the api call
-        NSSet * results_set = [responseObject objectForKey:@"results"];
-        //NSLog(@"results_set SET: %@", results_set);
-        
-        //an array of dicts e.g.
-        //{"person_id":9; tag=xyz}
-        NSArray * results_array = [results_set allObjects];
-        NSLog(@"%d results records returned", [results_array count]);
-        
-        //alloc and init the people array
-        
-        peopleInList = [[NSMutableArray alloc] initWithArray:results_array];
-        
-        NSLog(@"peopleInList array: %@", peopleInList);
-        */
-        
         
         
         NSSet * results_set = [responseObject objectForKey:@"results"];

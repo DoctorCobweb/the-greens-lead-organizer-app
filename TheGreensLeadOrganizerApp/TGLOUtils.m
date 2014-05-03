@@ -105,6 +105,24 @@ static NSString *permissionLevelVolunteer = @"volunteer";
     return  pLevel;
 }
 
++ (NSString *)getUserAccessToken
+{
+    NSUserDefaults *uDef = [NSUserDefaults standardUserDefaults];
+    NSString *accessToken = [uDef objectForKey:nationBuilderAccessTokenKey];
+    NSLog(@"getUserAccessToken, accessToken: %@", accessToken);
+    return  accessToken;
+}
+
+
++ (NSString *)getUserNationBuilderId
+{
+    NSUserDefaults *uDef = [NSUserDefaults standardUserDefaults];
+    NSString *myNBId = [uDef objectForKey:myNationBuilderIdKey];
+    NSLog(@"getUserNationBuilderId, myNBId: %@", myNBId);
+    return  myNBId;
+}
+
+
 
 + (void)setAccessTokenInUserDefaults:(NSString *)token
 {

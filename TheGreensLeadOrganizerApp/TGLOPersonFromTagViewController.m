@@ -14,7 +14,6 @@
 #import "TGLOUtils.h"
 
 #warning TODO: handle proper pagination!!!! set to 100 results. eeek.
-static NSString *accessToken= @"access_token";
 static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=100&access_token=%@";
 
 
@@ -22,12 +21,12 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
 @interface TGLOPersonFromTagViewController ()
 {
     NSString *token;
-    
 }
+
 @property (nonatomic, strong) UIAlertView *tokenAlert;
 
-
 @end
+
 
 @implementation TGLOPersonFromTagViewController
 @synthesize contacts;
@@ -45,10 +44,7 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
 {
     [super viewDidLoad];
     
-    token = [[NSUserDefaults standardUserDefaults] valueForKey:accessToken];
-    NSLog(@"access_token: %@", token);
-    
-    
+    token = [TGLOUtils getUserAccessToken];
     [self setUpAppearance];
 }
 

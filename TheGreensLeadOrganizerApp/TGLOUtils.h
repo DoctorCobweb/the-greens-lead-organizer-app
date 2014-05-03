@@ -19,6 +19,8 @@
 + (BOOL)isVolunteerPermissionLevel;
 + (void)setUserPermissionLevel:(NSString *)level;
 + (NSString *)getUserPermissionLevel;
++ (NSString *)getUserAccessToken;
++ (NSString *)getUserNationBuilderId;
 + (void)setAccessTokenInUserDefaults:(NSString *)token;
 + (void)setMyNationBuilderIdInUserDefaults:(NSString *)myNBId;
 + (BOOL)clearOutUserSession;

@@ -12,9 +12,8 @@
 #import "SWRevealViewController.h"
 #import "TGLOAppDelegate.h"
 #import "TGLOListViewController.h"
+#import "TGLOUtils.h"
 
-static NSString *myNationBuilderId = @"my_nation_builder_id";
-static NSString *accessToken= @"access_token";
 static NSString * myListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/myLists/%@/%@";
 
 
@@ -52,9 +51,7 @@ static NSString * myListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/myLis
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    token = [[NSUserDefaults standardUserDefaults] valueForKey:accessToken];
-    NSLog(@"access_token: %@", token);
-    
+    token = [TGLOUtils getUserAccessToken];
     if (token) {
         [self getAllLists];
         
@@ -87,7 +84,7 @@ static NSString * myListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/myLis
 
 - (void) getAllLists
 {
-    NSString *myNBId = [[NSUserDefaults standardUserDefaults] valueForKey:myNationBuilderId];
+    NSString *myNBId = [TGLOUtils getUserNationBuilderId];
     NSString * myListsUrl_ = [NSString stringWithFormat:myListsUrl, myNBId, token];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];

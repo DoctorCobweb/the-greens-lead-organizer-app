@@ -12,9 +12,8 @@
 #import "AFNetworkActivityIndicatorManager.h"
 #import "TGLOTagViewController.h"
 #import "TGLOAppDelegate.h"
+#import "TGLOUtils.h"
 
-static NSString *myNationBuilderId = @"my_nation_builder_id";
-static NSString *accessToken= @"access_token";
 static NSString * myTaggingsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/taggings?access_token=%@";
 
 @interface TGLOMyTagsViewController ()
@@ -53,8 +52,7 @@ static NSString * myTaggingsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     
-    token = [[NSUserDefaults standardUserDefaults] valueForKey:accessToken];
-    NSLog(@"access_token: %@", token);
+    token = [TGLOUtils getUserAccessToken];
     
     if (token) {
         [self getAllMyTags];
@@ -69,8 +67,7 @@ static NSString * myTaggingsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
 
 - (void) getAllMyTags
 {
-    NSString *myNBId = [[NSUserDefaults standardUserDefaults] objectForKey:myNationBuilderId];
-    
+    NSString *myNBId = [TGLOUtils getUserNationBuilderId];
     NSString * myTaggingsUrl_ = [NSString stringWithFormat:myTaggingsUrl, nationBuilderSlugValue, myNBId, token];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];

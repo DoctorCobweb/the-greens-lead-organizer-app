@@ -19,7 +19,6 @@
 
 
 #import "TGLOEditPersonFromTagViewController.h"
-//#import "TGLOEditPersonFromSearchViewController.h"
 #import "TGLOCustomContactView.h"
 #import "TGLOCustomEditContactView.h"
 #import "TGLOCustomEditContactHeaderView.h"
@@ -27,9 +26,8 @@
 #import "AFNetworking.h"
 #import "AFNetworkActivityIndicatorManager.h"
 #import "TGLOAppDelegate.h"
+#import "TGLOUtils.h"
 
-static NSString *myNationBuilderId = @"my_nation_builder_id";
-static NSString *accessToken= @"access_token";
 static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=10&access_token=%@";
 static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people/%@?access_token=%@";
 static NSString *buttonBackground = @"%@/appIcon120x120.png";
@@ -76,9 +74,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     
 	// Do any additional setup after loading the view.
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
-    token = [[NSUserDefaults standardUserDefaults] valueForKey:accessToken];
-    NSLog(@"access_token: %@", token);
-    
+    token = [TGLOUtils getUserAccessToken];
     [self setupTagsToDeleteArray];
     [self setUpAppearance];
     [self addTagViews];
@@ -606,10 +602,14 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     TGLOCustomEditContactView *newContact = (TGLOCustomEditContactView *)[self.containerView viewWithTag:300];
     
     
-    NSString *contactType_ = ((UIButton *)[newContact viewWithTag:305]).titleLabel.text;
-    NSString *contactMethod_ =  ((UIButton *)[newContact viewWithTag:306]).titleLabel.text;
-    NSString *contactStatus_ =  ((UIButton *)[newContact viewWithTag:307]).titleLabel.text;
-    NSString *noteType =    ((UITextField *)[newContact viewWithTag:308]).text;
+    NSString *contactType_ =
+        ((UIButton *)[newContact viewWithTag:305]).titleLabel.text;
+    NSString *contactMethod_ =
+        ((UIButton *)[newContact viewWithTag:306]).titleLabel.text;
+    NSString *contactStatus_ =
+        ((UIButton *)[newContact viewWithTag:307]).titleLabel.text;
+    NSString *noteType =
+        ((UITextField *)[newContact viewWithTag:308]).text;
     
     //need to translate the 3 button values to api values for contact api call
     NSString *contactType = [newContact apiVersionOfContactType:contactType_];
@@ -621,8 +621,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     NSLog(@"contactStatus: %@", contactStatus);
     NSLog(@"noteType: %@", noteType);
     
-    
-    NSString *myNBId = [[NSUserDefaults standardUserDefaults] objectForKey:myNationBuilderId];
+    NSString *myNBId = [TGLOUtils getUserNationBuilderId];
     
     //semantics:
     //*sender_id" as *broadcaster_id* contacted *recipient_id* for *contact_type* via *method*.
@@ -630,7 +629,14 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     //
     //if there's no id associated for *broadcaster_id* then broadcaster is left out of semantic string
     
-    NSDictionary *contactBody = @{ @"contact": @{@"note": noteType, @"type_id":contactType, @"method":contactMethod, @"sender_id":myNBId, @"status":contactStatus, @"broadcaster_id": myNBId, @"recipient_id": self.person.recordID}  };
+    NSDictionary *contactBody =
+        @{ @"contact": @{@"note": noteType,
+                         @"type_id":contactType,
+                         @"method":contactMethod,
+                         @"sender_id":myNBId,
+                         @"status":contactStatus,
+                         @"broadcaster_id": myNBId,
+                         @"recipient_id": self.person.recordID}};
     
     //post endpoint for making new contact
     NSString * myContactsUrl_ = [NSString stringWithFormat:myContactsUrl, nationBuilderSlugValue, self.person.recordID, token];
@@ -662,11 +668,14 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 {
     NSString *message = @"You successfully updated the record for the person.";
     // show alert view saying we are getting token
-    _updateAlert = [[UIAlertView alloc] initWithTitle:@"Update success"
-                                              message:message
-                                             delegate:nil
-                                    cancelButtonTitle:@"Okay"
-                                    otherButtonTitles:nil];
+    _updateAlert =
+        [[UIAlertView alloc]
+            initWithTitle:@"Update success"
+                  message:message
+                 delegate:nil
+        cancelButtonTitle:@"Okay"
+        otherButtonTitles:nil];
+    
     [_updateAlert show];
 }
 
@@ -721,27 +730,27 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 {
     NSLog(@"typeValueHit, in TGLOEditPersonFromSearchViewController");
     
-    
     UIActionSheet *typeValueActionSheet;
-    
     
     //different NB slugs can have different contact TYPES
     if ([nationBuilderSlugValue isEqualToString:@"agtest"] ) {
         typeValueActionSheet =
-        [[UIActionSheet alloc] initWithTitle:@"Choose type"
-                                    delegate:self
-                           cancelButtonTitle:@"Cancel"
-                      destructiveButtonTitle:nil
-                           otherButtonTitles:@"Event debrief", @"Event confirmation", @"Inbox response", @"Donation thank-you", @"Donation request",@"Volunteer recruitment",@"Meeting 1:1",@"Volunteer intake",@"Voter outreach election",@"Voter outreach issue",@"Voter persuasion",@"diggity", nil];
+            [[UIActionSheet alloc]
+                initWithTitle:@"Choose type"
+                     delegate:self
+            cancelButtonTitle:@"Cancel"
+       destructiveButtonTitle:nil
+            otherButtonTitles:@"Event debrief", @"Event confirmation", @"Inbox response", @"Donation thank-you", @"Donation request",@"Volunteer recruitment",@"Meeting 1:1",@"Volunteer intake",@"Voter outreach election",@"Voter outreach issue",@"Voter persuasion",@"diggity", nil];
     }
     
     if ([nationBuilderSlugValue isEqualToString:@"agv"] ) {
         typeValueActionSheet =
-        [[UIActionSheet alloc] initWithTitle:@"Choose type"
-                                    delegate:self
-                           cancelButtonTitle:@"Cancel"
-                      destructiveButtonTitle:nil
-                           otherButtonTitles:@"Volunteer recruitment", @"Supporter Event Invitation", @"Voter persuasion", @"Volunteer intake", @"Donation thank-you", @"Donation request", @"Event confirmation", @"Event debrief", @"Meeting 1:1", @"Inbox response", @"Voter outreach election", @"Voter outreach issue" , nil];
+            [[UIActionSheet alloc]
+                initWithTitle:@"Choose type"
+                     delegate:self
+            cancelButtonTitle:@"Cancel"
+       destructiveButtonTitle:nil
+            otherButtonTitles:@"Volunteer recruitment", @"Supporter Event Invitation", @"Voter persuasion", @"Volunteer intake", @"Donation thank-you", @"Donation request", @"Event confirmation", @"Event debrief", @"Meeting 1:1", @"Inbox response", @"Voter outreach election", @"Voter outreach issue" , nil];
     }
  
     [typeValueActionSheet showInView:self.containerView];
@@ -751,11 +760,14 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 - (void)methodValueHit:(id)sender
 {
     NSLog(@"methodValueHit, in TGLOEditPersonFromSearchViewController");
-    UIActionSheet *methodValueActionSheet = [[UIActionSheet alloc] initWithTitle:@"Choose method"
-                                                                        delegate:self
-                                                               cancelButtonTitle:@"Cancel"
-                                                          destructiveButtonTitle:nil
-                                                               otherButtonTitles:@"Delivery", @"Door knock",@"Email",@"Email blast",@"Face to face",@"Facebook",@"Meeting",@"Phone call",@"Robocall",@"Snail mail",@"Text",@"Text blast",@"Tweet",@"Video call",@"Webinar",@"Other", nil];
+    UIActionSheet *methodValueActionSheet =
+        [[UIActionSheet alloc]
+            initWithTitle:@"Choose method"
+                 delegate:self
+        cancelButtonTitle:@"Cancel"
+   destructiveButtonTitle:nil
+        otherButtonTitles:@"Delivery", @"Door knock",@"Email",@"Email blast",@"Face to face",@"Facebook",@"Meeting",@"Phone call",@"Robocall",@"Snail mail",@"Text",@"Text blast",@"Tweet",@"Video call",@"Webinar",@"Other", nil];
+    
     [methodValueActionSheet showInView:self.containerView];
 }
 
@@ -763,25 +775,29 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 - (void)statusValueHit:(id)sender
 {
     NSLog(@"statusValueHit, in TGLOEditPersonFromSearchViewController");
-    UIActionSheet *statusValueActionSheet = [[UIActionSheet alloc] initWithTitle:@"Choose status"
-                                                                        delegate:self
-                                                               cancelButtonTitle:@"Cancel"
-                                                          destructiveButtonTitle:nil
-                                                               otherButtonTitles:@"Answered", @"Bad info",@"Inaccessible",@"Left message",@"Meaningful interaction",@"Not interested",@"No answer",@"Refused",@"Send information",@"Other", nil];
+    UIActionSheet *statusValueActionSheet =
+        [[UIActionSheet alloc]
+            initWithTitle:@"Choose status"
+                 delegate:self
+        cancelButtonTitle:@"Cancel"
+   destructiveButtonTitle:nil
+        otherButtonTitles:@"Answered", @"Bad info",@"Inaccessible",@"Left message",@"Meaningful interaction",@"Not interested",@"No answer",@"Refused",@"Send information",@"Other", nil];
+    
     [statusValueActionSheet showInView:self.containerView];
 }
 
 - (void)supportLevelButtonHit:(id)sender
 {
-    
     NSLog(@"supportLevelButtonHit call");
-    UIActionSheet *supportLevelActionSheet = [[UIActionSheet alloc] initWithTitle:@"Choose support level"
-                                                                         delegate:self
-                                                                cancelButtonTitle:@"Cancel"
-                                                           destructiveButtonTitle:nil
-                                                                otherButtonTitles:@"Strong support", @"Weak support",@"Undecided",@"Weak oppose",@"Strong oppose", nil];
-    [supportLevelActionSheet showInView:self.containerView];
+    UIActionSheet *supportLevelActionSheet =
+        [[UIActionSheet alloc]
+            initWithTitle:@"Choose support level"
+                 delegate:self
+        cancelButtonTitle:@"Cancel"
+   destructiveButtonTitle:nil
+        otherButtonTitles:@"Strong support", @"Weak support",@"Undecided",@"Weak oppose",@"Strong oppose", nil];
     
+    [supportLevelActionSheet showInView:self.containerView];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -852,11 +868,15 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 
 - (NSString *)translateSupportLevel:(NSInteger)index
 {
-    NSDictionary *supportLevel = @{ @"1":@"Strong support", @"2":@"Weak support", @"3":@"Undecided", @"4":@"Weak oppose", @"5":@"Strong oppose"};
+    NSDictionary *supportLevel =
+        @{ @"1":@"Strong support",
+           @"2":@"Weak support",
+           @"3":@"Undecided",
+           @"4":@"Weak oppose",
+           @"5":@"Strong oppose"};
     
     return [supportLevel valueForKey:[[NSString alloc] initWithFormat:@"%d", index + 1]];
 }
-
 
 
 //adding in more room to the scroll and container view to fit in newly added content
@@ -893,20 +913,16 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 //hide keyboard if enter key is pressed
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    
     if ([string isEqualToString:@"\n"]) {
         [textField resignFirstResponder];
     }
-    
     return YES;
 }
-
 
 //end UITextFieldDelegate
 
 - (void)resignAllFirstResponders
 {
-    
     //resign all textfield first responders
     [self.firstName resignFirstResponder];
     [self.lastName resignFirstResponder];
@@ -915,7 +931,6 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     [self.mobile resignFirstResponder];
     [self.addANewTag resignFirstResponder];
 }
-
 
 
 @end

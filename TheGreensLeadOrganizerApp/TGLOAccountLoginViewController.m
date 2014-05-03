@@ -72,9 +72,15 @@ static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logt
     
     NSDictionary *loginDetails = @{ @"email": self.email.text, @"password":self.password.text };
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Logging you in." message:@"Please wait for your details to be authenticated." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+    UIAlertView *loggingInAlert =
+        [[UIAlertView alloc]
+             initWithTitle:@"Logging you in."
+                   message:@"Please wait for your details to be authenticated."
+                  delegate:nil
+         cancelButtonTitle:@"Okay"
+         otherButtonTitles:nil];
     
-    [alert show];
+    [loggingInAlert show];
     
     //need to get notes on the person from a different api, namely
     // the contacts api
@@ -88,7 +94,7 @@ static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logt
     [manager POST:loginEndpoint parameters:loginDetails success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@" POST loggin the  user in, responseObeject => %@",responseObject);
         
-        [alert dismissWithClickedButtonIndex:0 animated:NO];
+        [loggingInAlert dismissWithClickedButtonIndex:0 animated:NO];
         
         NSString *accessToken = [responseObject objectForKey:@"access_token"];
         NSString *error = [responseObject objectForKey:@"error"];
@@ -105,11 +111,13 @@ static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logt
             
             // show alert view saying we are getting token
             UIAlertView *tokenAlert =
-                [[UIAlertView alloc] initWithTitle:@"Login failed"
-                                                message:@"Please try again."
-                                                                delegate:nil
-                                                       cancelButtonTitle:@"Okay"
-                                                       otherButtonTitles:nil];
+                [[UIAlertView alloc]
+                     initWithTitle:@"Login failed"
+                           message:@"Please try again."
+                          delegate:nil
+                 cancelButtonTitle:@"Okay"
+                 otherButtonTitles:nil];
+            
             [tokenAlert show];
         
             //we MUST jump out of login: method!
@@ -119,6 +127,8 @@ static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logt
         if(!!accessToken && !!myNBId && !!returnedPermissionLevel) {
             //log in SUCCESS
             NSLog(@"login SUCCESS");
+            
+            //SET THE SESSION VARIABLES
             [TGLOUtils setAccessTokenInUserDefaults:accessToken];
             [TGLOUtils setMyNationBuilderIdInUserDefaults:myNBId];
             [TGLOUtils setUserPermissionLevel:returnedPermissionLevel];
@@ -143,17 +153,31 @@ static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logt
             ;
             
             // show alert view saying we are getting token
-            UIAlertView *tokenAlert = [[UIAlertView alloc] initWithTitle:@"Login failed"
-                                                     message:@"Please try again."
-                                                    delegate:nil
-                                           cancelButtonTitle:@"Okay"
-                                           otherButtonTitles:nil];
+            UIAlertView *tokenAlert =
+                [[UIAlertView alloc]
+                     initWithTitle:@"Login fail."
+                           message:@"Please try again."
+                          delegate:nil
+                 cancelButtonTitle:@"Okay"
+                 otherButtonTitles:nil];
+            
             [tokenAlert show];
         }
        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         //http ERROR
         NSLog(@"Error: %@", error);
+        [loggingInAlert dismissWithClickedButtonIndex:0 animated:NO];
+        
+         // show alert view saying we are getting token
+         UIAlertView *tokenAlert =
+            [[UIAlertView alloc]
+             initWithTitle:@"Login fail."
+                   message:@"Server problem, please try again."
+                  delegate:nil
+         cancelButtonTitle:@"Okay"
+         otherButtonTitles:nil];
+            [tokenAlert show];
     }];
 }
 

@@ -50,6 +50,7 @@
 		65B25ADA19138A69000A8349 /* logoutIcon60x60.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B25AD919138A69000A8349 /* logoutIcon60x60.png */; };
 		65B25ADC19138B16000A8349 /* listsIcon60x60.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B25ADB19138B16000A8349 /* listsIcon60x60.png */; };
 		65B25ADE19138B83000A8349 /* donatIcon60x60.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B25ADD19138B83000A8349 /* donatIcon60x60.png */; };
+		65B25AE01914F61C000A8349 /* grey120x120.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B25ADF1914F61C000A8349 /* grey120x120.png */; };
 		65BC96DF18F3BBE3006063CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BC96DE18F3BBE3006063CA /* Foundation.framework */; };
 		65BC96E118F3BBE3006063CA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BC96E018F3BBE3006063CA /* CoreGraphics.framework */; };
 		65BC96E318F3BBE3006063CA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BC96E218F3BBE3006063CA /* UIKit.framework */; };
@@ -158,6 +159,7 @@
 		65B25AD919138A69000A8349 /* logoutIcon60x60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logoutIcon60x60.png; sourceTree = "<group>"; };
 		65B25ADB19138B16000A8349 /* listsIcon60x60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = listsIcon60x60.png; sourceTree = "<group>"; };
 		65B25ADD19138B83000A8349 /* donatIcon60x60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = donatIcon60x60.png; sourceTree = "<group>"; };
+		65B25ADF1914F61C000A8349 /* grey120x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grey120x120.png; sourceTree = "<group>"; };
 		65BC96DB18F3BBE3006063CA /* Vic Greens.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Vic Greens.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		65BC96DE18F3BBE3006063CA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65BC96E018F3BBE3006063CA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -371,6 +373,7 @@
 			isa = PBXGroup;
 			children = (
 				65B25AD919138A69000A8349 /* logoutIcon60x60.png */,
+				65B25ADF1914F61C000A8349 /* grey120x120.png */,
 				65B25ADD19138B83000A8349 /* donatIcon60x60.png */,
 				65B25ADB19138B16000A8349 /* listsIcon60x60.png */,
 				65B25AD519138928000A8349 /* enrolToVoteIcon60x60.png */,
@@ -513,6 +516,7 @@
 				65BC975218F3D144006063CA /* Default-568h@2x.png in Resources */,
 				65BC975818F3D144006063CA /* nav_bg.png in Resources */,
 				65B25AD21913874A000A8349 /* userIcon60x60.png in Resources */,
+				65B25AE01914F61C000A8349 /* grey120x120.png in Resources */,
 				65BC96F618F3BBE3006063CA /* Images.xcassets in Resources */,
 				65A812A019111C3200C46959 /* forest-fog.jpg in Resources */,
 			);

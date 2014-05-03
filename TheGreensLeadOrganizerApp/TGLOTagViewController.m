@@ -15,8 +15,6 @@
 #import "TGLOUtils.h"
 
 
-static NSString *accessToken= @"access_token";
-
 //default to get 1000 (max) people for a list. not making multiple
 //page calls to get all people as yet.
 static NSString *peopleForTagUrl= @"https://%@.nationbuilder.com/api/v1/tags/%@/people?page=1&per_page=1000&access_token=%@";
@@ -65,10 +63,7 @@ static NSString *peopleForTagUrl= @"https://%@.nationbuilder.com/api/v1/tags/%@/
     
     self.title = [[NSString alloc] initWithFormat:@"%@", self.tag];
     
-    
-    token = [[NSUserDefaults standardUserDefaults] valueForKey:accessToken];
-    NSLog(@"access_token: %@", token);
-    
+    token = [TGLOUtils getUserAccessToken];
     if (token) {
         [self getPeopleInTag];
         

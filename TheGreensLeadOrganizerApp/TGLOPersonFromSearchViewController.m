@@ -14,9 +14,7 @@
 #import "TGLOSearchResultsViewController.h"
 #import "TGLOUtils.h"
 
-static NSString *accessToken= @"access_token";
 static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=100&access_token=%@";
-
 
 
 @interface TGLOPersonFromSearchViewController ()
@@ -46,10 +44,7 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
 {
     [super viewDidLoad];
     
-    token = [[NSUserDefaults standardUserDefaults] valueForKey:accessToken];
-    NSLog(@"access_token: %@", token);
-    
-
+    token = [TGLOUtils getUserAccessToken];
     [self setUpAppearance];
 }
 

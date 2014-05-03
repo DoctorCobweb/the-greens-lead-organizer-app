@@ -12,9 +12,8 @@
 #import "TGLOAppDelegate.h"
 #import "TGLOUtils.h"
 
-static NSString *NBSlug = @"agtest";
-static NSString *accessToken = @"access_token";
 static NSString *searchUrl = @"https://%@.nationbuilder.com/api/v1/people/search?%@page=1&per_page=100&access_token=%@";
+
 
 @interface TGLOSearchViewController ()
 {
@@ -41,7 +40,7 @@ static NSString *searchUrl = @"https://%@.nationbuilder.com/api/v1/people/search
     
     [self setUpAppearance];
     
-    token = [[NSUserDefaults standardUserDefaults] objectForKey:accessToken];
+    token = [TGLOUtils getUserAccessToken];
 
 }
 

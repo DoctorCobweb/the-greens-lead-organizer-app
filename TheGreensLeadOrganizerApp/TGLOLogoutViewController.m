@@ -11,8 +11,6 @@
 #import "FXBlurView.h"
 #import "TGLOUtils.h"
 
-static NSString *accessToken= @"access_token";
-
 @interface TGLOLogoutViewController ()
 
 @property (nonatomic, weak) IBOutlet FXBlurView *blurView;
@@ -51,26 +49,6 @@ static NSString *accessToken= @"access_token";
         self.logoutTextView.text = @"Ooops, please try again.";
     
     }
-    
-    
-    /*
-    // now load main part of application
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        
-        NSString *segueId = @"accountLogin";
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        UIViewController *initViewController = [storyboard instantiateViewControllerWithIdentifier:segueId];
-        
-        TGLOAppDelegate *delegate = (TGLOAppDelegate *)[[UIApplication sharedApplication] delegate];
-        
-        UINavigationController *nav = (UINavigationController *) delegate.window.rootViewController;
-        nav.navigationBar.hidden = NO;
-        [nav pushViewController:initViewController animated:YES];
-        
-    });
-     */
-    
 }
 
 - (void)didReceiveMemoryWarning
