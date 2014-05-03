@@ -13,10 +13,10 @@
 #import "TGLOPerson.h"
 #import "TGLOListViewController.h"
 #import "TGLOEditPersonFromListViewController.h"
+#import "TGLOUtils.h"
 
 static NSString *accessToken= @"access_token";
-static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=100&access_token=%@";
-
+static NSString *myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=100&access_token=%@";
 
 
 @interface TGLOPersonFromListViewController ()
@@ -47,7 +47,11 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
 {
     [super viewDidLoad];
     
-    token = [[NSUserDefaults standardUserDefaults] valueForKey:accessToken];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    token = [userDefaults valueForKey:accessToken];
+    
+    
     NSLog(@"access_token: %@", token);
     
     
@@ -61,6 +65,21 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     
     //UIColor * white_color = [UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:1.0f];
     
+    //NSLog(@"[self navigationItem]: %@", [self navigationItem]);
+    //NSLog(@"[self navigationItem] rightBarButton]: %@", [[self navigationItem] rightBarButtonItem]);
+    //NSLog(@"permissionlevel: %@", [TGLOUtils getUserPermissionLevel]);
+    
+    if ([TGLOUtils isAdminPermissionLevel]) {
+        NSLog(@"admin");
+        [([[self navigationItem] rightBarButtonItem]) setEnabled:YES];
+        ([[self navigationItem] rightBarButtonItem]).title = @"Edit";
+    }
+    
+    if ([TGLOUtils isVolunteerPermissionLevel]) {
+        NSLog(@"volunteer");
+        [([[self navigationItem] rightBarButtonItem]) setEnabled:NO];
+        ([[self navigationItem] rightBarButtonItem]).title = @"";
+    }
     
     //set an initial scroll view size
     self.scrollView.contentSize =CGSizeMake(320, 550);

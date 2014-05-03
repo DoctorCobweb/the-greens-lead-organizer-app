@@ -11,6 +11,7 @@
 #import "AFNetworking.h"
 #import "TGLOTagViewController.h"
 #import "TGLOEditPersonFromTagViewController.h"
+#import "TGLOUtils.h"
 
 #warning TODO: handle proper pagination!!!! set to 100 results. eeek.
 static NSString *accessToken= @"access_token";
@@ -55,6 +56,23 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
 - (void)setUpAppearance
 {
     self.title = @"Person";
+    
+    
+    //NSLog(@"[self navigationItem]: %@", [self navigationItem]);
+    //NSLog(@"[self navigationItem] rightBarButton]: %@", [[self navigationItem] rightBarButtonItem]);
+    //NSLog(@"permissionlevel: %@", [TGLOUtils getUserPermissionLevel]);
+    
+    if ([TGLOUtils isAdminPermissionLevel]) {
+        NSLog(@"admin");
+        [([[self navigationItem] rightBarButtonItem]) setEnabled:YES];
+        ([[self navigationItem] rightBarButtonItem]).title = @"Edit";
+    }
+    
+    if ([TGLOUtils isVolunteerPermissionLevel]) {
+        NSLog(@"volunteer");
+        [([[self navigationItem] rightBarButtonItem]) setEnabled:NO];
+        ([[self navigationItem] rightBarButtonItem]).title = @"";
+    }
     
     //UIColor * white_color = [UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:1.0f];
     

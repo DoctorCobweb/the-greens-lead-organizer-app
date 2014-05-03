@@ -33,8 +33,8 @@ NSString * const nationBuilderSlugValue = @"agv";
     [self initAppearance];
     
     //testing extern variable stuff
-    NSLog(@"EXTERN: nationBuilderAuthorizeUrl: %@", nationBuilderRequestToken);
-    NSLog(@"EXTERN: nationBuilderAuthorizeUrl: %@", nationBuilderAccessToken);
+    NSLog(@"EXTERN: nationBuilderRequestToken: %@", nationBuilderRequestToken);
+    NSLog(@"EXTERN: nationBuilderAccessToken: %@", nationBuilderAccessToken);
     
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
     // Override point for customization after application launch.
@@ -43,7 +43,7 @@ NSString * const nationBuilderSlugValue = @"agv";
     
 
     NSString *token = [userDefaults valueForKey:@"access_token"];
-    NSLog(@"IN APP DELEGATE, TOKEN FROM UserDefaults: %@", token);
+    NSLog(@"IN APP DELEGATE");
     
     //NSString *controllerId = token ? @"signedIn" : @"login";
     NSString *controllerId = token ? @"signedIn" : @"accountLogin";
@@ -60,8 +60,8 @@ NSString * const nationBuilderSlugValue = @"agv";
         
         [((UINavigationController *)[initViewController navigationController]).navigationBar setHidden:YES];
         
-        NSLog(@"self.window.rootViewController: %@", self.window.rootViewController);
-        NSLog(@"nav stack: %@", [(UINavigationController *)self.window.rootViewController viewControllers]);
+        //NSLog(@"self.window.rootViewController: %@", self.window.rootViewController); //<UINavigationController>
+        NSLog(@"APP DELEGATE: nav stack: %@", [(UINavigationController *)self.window.rootViewController viewControllers]);
     }
     
     return YES;
@@ -85,36 +85,43 @@ NSString * const nationBuilderSlugValue = @"agv";
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-    NSLog(@"applicationWillResignActive:");
+    NSLog(@"APP DELEGATE, applicationWillResignActive:");
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    NSLog(@"applicationDidEnterBackground:");
+    NSLog(@"APP DELEGATE, applicationDidEnterBackground:");
     NSLog(@"self.window.rootViewController: %@", self.window.rootViewController);
     
     //if access_token is null it means user has idicated they want
     //to log out.
     if (![userDefaults valueForKey:@"access_token"]) {
+        //this gets rid off all view controllers except to the first
+        //one which should be of class TGLOAccountLoginViewController
         [(UINavigationController *)self.window.rootViewController popToRootViewControllerAnimated:NO];
-        //UINavigationBar *navBar = ((UINavigationController *)self.window.rootViewController).navigationBar;
+        
         NSArray *controllerStack = [(UINavigationController *)self.window.rootViewController viewControllers];
         NSLog(@"controllerStack: %@", controllerStack);
         
-        #warning TODO: check that it is indeed the accountlogin controller
-        //the first controllers in the stack should be
+        //make sure the first controllers in the stack should be
         //TGLOAccountLoginViewController
-        UITextField *email = ((TGLOAccountLoginViewController *)controllerStack[0]).email;
-        UITextField *password = ((TGLOAccountLoginViewController *)controllerStack[0]).password;
+        if ([controllerStack[0] class] == [TGLOAccountLoginViewController class]) {
+            NSLog(@"controllerStack[0] is of class TGLOAccountLoiginViewController, GOOD.");
+            
+            UITextField *email = ((TGLOAccountLoginViewController *)controllerStack[0]).email;
+            UITextField *password = ((TGLOAccountLoginViewController *)controllerStack[0]).password;
         
-        //get rid of previously entered text
-        if (email) {
-            email.text = @"";
-        }
-        if (password) {
-            password.text = @"";
+            //get rid of previously entered text
+            if (email) {
+                email.text = @"";
+            }
+            if (password) {
+                password.text = @"";
+            }
+        
+        
         }
     }
 }

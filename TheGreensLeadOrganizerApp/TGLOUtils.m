@@ -8,6 +8,12 @@
 
 #import "TGLOUtils.h"
 
+static NSString *nationBuilderAccessTokenKey = @"access_token";
+static NSString *myNationBuilderIdKey = @"my_nation_builder_id";
+static NSString *permissionLevelKey = @"permission_level";
+static NSString *permissionLevelAdmin = @"admin";
+static NSString *permissionLevelVolunteer = @"volunteer";
+
 @implementation TGLOUtils
 
 
@@ -16,7 +22,6 @@
 {
     NSUInteger stringLength = [unencodedString length];
     NSMutableString *encodedString = [[NSMutableString alloc] init];
-    
     
     //characters used in percent escaping:
     //space!#$&'()*+,/:;=?@[]"%-.<>\^_`{|}~
@@ -27,7 +32,7 @@
         unichar c = [unencodedString characterAtIndex:i];
         
         NSString *characterAtIString = [[NSString alloc] initWithFormat:@"%c", c];
-        NSLog(@"%@",characterAtIString);
+        //NSLog(@"%@",characterAtIString);
         
         //handle @ character separately
         //there has to be a less hacky way to do this.
@@ -53,8 +58,8 @@
         //NSLog(@"unreserved char: %@", characterAtIString);
         [encodedString appendString:characterAtIString];
     }
-    NSLog(@"unecoded string: %@", unencodedString);
-    NSLog(@"Percent encodedString: %@", encodedString);
+    //NSLog(@"unecoded string: %@", unencodedString);
+    //NSLog(@"Percent encodedString: %@", encodedString);
     
     NSString * finalEncodedString = [NSString stringWithString:encodedString];
     
@@ -67,5 +72,53 @@
     return [someString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet ]];
 }
 
++ (BOOL)isAdminPermissionLevel
+{
+    return [[[NSUserDefaults standardUserDefaults] objectForKey:permissionLevelKey] isEqualToString:permissionLevelAdmin];
+}
+
++ (BOOL)isVolunteerPermissionLevel
+{
+    return [[[NSUserDefaults standardUserDefaults] objectForKey:permissionLevelKey] isEqualToString:permissionLevelVolunteer];
+}
+
++ (void)setUserPermissionLevel:(NSString *)level
+{
+    NSLog(@"setUserPermissionLevel, level: %@", level);
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    //quick validation
+    if (![level isEqualToString:permissionLevelAdmin] || ![level isEqualToString:permissionLevelVolunteer]) {
+        return;
+    }
+    [userDefaults setObject:level forKey:permissionLevelKey];
+    [userDefaults synchronize];
+}
+
+
++ (NSString *)getUserPermissionLevel
+{
+    NSUserDefaults *uDef = [NSUserDefaults standardUserDefaults];
+    NSString *pLevel = [uDef objectForKey:permissionLevelKey];
+    NSLog(@"getUserPermissionLevel: level is: %@", pLevel);
+    return  pLevel;
+}
+
+
++ (void)setAccessTokenInUserDefaults:(NSString *)token
+{
+    NSLog(@"setAccessTokenInUserDefaults, token: %@", token);
+    NSUserDefaults *uDef = [NSUserDefaults standardUserDefaults];
+    [uDef setObject:token forKey:nationBuilderAccessTokenKey];
+    [uDef synchronize];
+}
+
++ (void)setMyNationBuilderIdInUserDefaults:(NSString *)myNBId
+{
+    NSLog(@"setMyNationBuilderIdInUserDefaults, myNBId: %@", myNBId);
+    NSUserDefaults *uDef = [NSUserDefaults standardUserDefaults];
+    [uDef setObject:myNBId forKey:myNationBuilderIdKey];
+    [uDef synchronize];
+}
 
 @end

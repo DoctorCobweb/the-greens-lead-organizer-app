@@ -290,7 +290,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="94M-SU-nEs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1134" y="-698"/>
+            <point key="canvasLocation" x="2422" y="694"/>
         </scene>
         <!--My Lists View Controller-->
         <scene sceneID="Jq8-nx-0M3">
@@ -328,7 +328,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XlL-Kq-xsy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1128" y="-27"/>
+            <point key="canvasLocation" x="2416" y="1365"/>
         </scene>
         <!--List View Controller-->
         <scene sceneID="GeR-y4-C7O">
@@ -361,7 +361,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HQc-4z-lMC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1564" y="-27"/>
+            <point key="canvasLocation" x="2852" y="1365"/>
         </scene>
         <!--Person From List View Controller-->
         <scene sceneID="2B2-SX-6VT">
@@ -480,7 +480,7 @@
                         </subviews>
                     </scrollView>
                     <navigationItem key="navigationItem" id="NAh-Uz-Whl">
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="8OP-Oa-IoF">
+                        <barButtonItem key="rightBarButtonItem" id="8OP-Oa-IoF">
                             <connections>
                                 <segue destination="Wqu-mP-aoL" kind="push" identifier="showEditPersonFromList" id="1Tw-xY-XL1"/>
                             </connections>
@@ -500,7 +500,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cAg-1a-dFl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1992" y="-27"/>
+            <point key="canvasLocation" x="3280" y="1365"/>
         </scene>
         <!--Edit Person From List View Controller-->
         <scene sceneID="pGS-2C-qFt">
@@ -651,7 +651,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xjM-T3-BLb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2418" y="-30"/>
+            <point key="canvasLocation" x="3706" y="1362"/>
         </scene>
         <!--Enrol To Vote View Controller - Title-->
         <scene sceneID="hCq-lb-GWN">
@@ -685,7 +685,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1kR-td-VHa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1134" y="-2772"/>
+            <point key="canvasLocation" x="2422" y="-1380"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="qwE-vo-AqN">
@@ -733,7 +733,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wLX-Sq-Nb8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1571" y="-698"/>
+            <point key="canvasLocation" x="2859" y="694"/>
         </scene>
         <!--Person From Tag View Controller-->
         <scene sceneID="WBf-sj-ktX">
@@ -849,7 +849,7 @@
                         </subviews>
                     </scrollView>
                     <navigationItem key="navigationItem" id="Ivm-gz-a5h">
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="E58-fV-p8P">
+                        <barButtonItem key="rightBarButtonItem" id="E58-fV-p8P">
                             <connections>
                                 <segue destination="7jh-5n-E2r" kind="push" identifier="showEditPersonFromTag" id="gnp-PT-cDg"/>
                             </connections>
@@ -869,7 +869,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="so7-84-Emf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1992" y="-698"/>
+            <point key="canvasLocation" x="3280" y="694"/>
         </scene>
         <!--Edit Person From Tag View Controller-->
         <scene sceneID="WPP-1W-Zcj">
@@ -1021,7 +1021,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2lb-2S-GyM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2416" y="-696"/>
+            <point key="canvasLocation" x="3704" y="696"/>
         </scene>
         <!--The Greens View Controller - Title-->
         <scene sceneID="aLJ-eQ-PFu">
@@ -1055,7 +1055,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="15i-pP-bDo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1134" y="-4163"/>
+            <point key="canvasLocation" x="2422" y="-2771"/>
         </scene>
         <!--Donations View Controller - Title-->
         <scene sceneID="xju-OW-OuN">
@@ -1089,7 +1089,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0J8-pS-qXv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1134" y="-3441"/>
+            <point key="canvasLocation" x="2422" y="-2049"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="MbL-Uo-CJt">
@@ -1227,7 +1227,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IxT-bd-N9T" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1134" y="680"/>
+            <point key="canvasLocation" x="2422" y="2072"/>
         </scene>
         <!--Edit My Profile View Controller-->
         <scene sceneID="gSb-pe-lAH">
@@ -1378,7 +1378,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sfz-e0-Vy6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1552" y="680"/>
+            <point key="canvasLocation" x="2840" y="2072"/>
         </scene>
         <!--Account Login View Controller-->
         <scene sceneID="kQb-w4-Fty">
@@ -1525,7 +1525,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="msh-gR-tP2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1122" y="-2112"/>
+            <point key="canvasLocation" x="2410" y="-720"/>
         </scene>
         <!--Search View Controller-->
         <scene sceneID="Lj9-AT-w6l">
@@ -1647,7 +1647,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NMn-Df-hXc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1122" y="-1416"/>
+            <point key="canvasLocation" x="2410" y="-24"/>
         </scene>
         <!--Search Results View Controller-->
         <scene sceneID="H1m-A4-jYN">
@@ -1680,7 +1680,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PJ9-QN-ZLt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1564" y="-1416"/>
+            <point key="canvasLocation" x="2852" y="-24"/>
         </scene>
         <!--Person From Search View Controller-->
         <scene sceneID="uMK-OC-DlS">
@@ -1799,7 +1799,7 @@
                         </subviews>
                     </scrollView>
                     <navigationItem key="navigationItem" id="S22-cl-BmQ">
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="XfQ-tH-0Bs">
+                        <barButtonItem key="rightBarButtonItem" id="XfQ-tH-0Bs">
                             <connections>
                                 <segue destination="nGe-kn-fUo" kind="push" identifier="showEditPersonFromSearch" id="lyT-sY-sDG"/>
                             </connections>
@@ -1819,7 +1819,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I63-DP-BLm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1992" y="-1422"/>
+            <point key="canvasLocation" x="3280" y="-30"/>
         </scene>
         <!--Edit Person From Search View Controller-->
         <scene sceneID="tgf-AN-j2I">
@@ -1970,7 +1970,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tPV-uP-BlA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2416" y="-1422"/>
+            <point key="canvasLocation" x="3704" y="-30"/>
         </scene>
     </scenes>
     <resources>

@@ -11,11 +11,10 @@
 #import "AFNetworkActivityIndicatorManager.h"
 #import "TGLOAppDelegate.h"
 #import "FXBlurView.h"
-
-
+#import "TGLOUtils.h"
 
 static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logthedawgin";
-static NSString *myNationBuilderId = @"my_nation_builder_id";
+
 
 @interface TGLOAccountLoginViewController ()
 
@@ -73,7 +72,7 @@ static NSString *myNationBuilderId = @"my_nation_builder_id";
     
     NSDictionary *loginDetails = @{ @"email": self.email.text, @"password":self.password.text };
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Logging you in." message:@"Please wait for your details to be authenticated. " delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Logging you in." message:@"Please wait for your details to be authenticated." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
     
     [alert show];
     
@@ -84,52 +83,42 @@ static NSString *myNationBuilderId = @"my_nation_builder_id";
     //must set request serializer to application/json. otherwise 406
     //is responded
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    NSLog(@"manager.requestSerializer: %@", manager.requestSerializer);
+    //NSLog(@"manager.requestSerializer: %@", manager.requestSerializer); //<AFJSONRequestSerializer>
     
     [manager POST:loginEndpoint parameters:loginDetails success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@" POST loggin the  user in, responseObeject => %@",responseObject);
         
         [alert dismissWithClickedButtonIndex:0 animated:NO];
         
-        NSLog(@" POST loggin the  user in => %@",responseObject);
-        
-        NSString *access_token = [responseObject objectForKey:@"access_token"];
-        NSLog(@"access_token: %@", access_token);
+        NSString *accessToken = [responseObject objectForKey:@"access_token"];
         NSString *error = [responseObject objectForKey:@"error"];
-        NSLog(@"error: %@", error);
         NSString *myNBId = [responseObject objectForKey:@"myNBId"];
-        NSLog(@"myNBId: %@", myNBId);
+        NSString *returnedPermissionLevel = [responseObject objectForKey:@"permissionLevel"];
         
-        if(!!access_token && !!myNBId && !error) {
-            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-       
-            //put access_token key/val into UserDefaults obj
-            [userDefaults setObject:access_token forKey:@"access_token"];
+        
+        if(!!accessToken && !!myNBId && !error) {
+            //log in SUCCESS
+            [TGLOUtils setAccessTokenInUserDefaults:accessToken];
+            [TGLOUtils setMyNationBuilderIdInUserDefaults:myNBId];
+            [TGLOUtils setUserPermissionLevel:returnedPermissionLevel];
             
-            //put myNBId into UserDefaults obj
-            [userDefaults setObject:myNBId forKey:myNationBuilderId];
-            [userDefaults synchronize];
-        
-            NSString *token = [userDefaults valueForKey:@"access_token"];
-            NSLog(@"TOKEN FROM UserDefaults: %@", token);
-        
             // now load main part of application
             dispatch_async(dispatch_get_main_queue(), ^{
-            
-            
                 NSString *segueId = @"signedIn";
                 UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                 UIViewController *initViewController = [storyboard instantiateViewControllerWithIdentifier:segueId];
-            
                 TGLOAppDelegate *delegate = (TGLOAppDelegate *)[[UIApplication sharedApplication] delegate];;
-            
                 UINavigationController *nav = (UINavigationController *) delegate.window.rootViewController;
                 nav.navigationBar.hidden = YES;
                 [nav pushViewController:initViewController animated:YES];
             });
-            
         } else {
+            //log in FAILURE
             self.email.text = @"";
             self.password.text = @"";
+            NSLog(@"ERROR from login procedure: %@", error)
+            ;
+            
             // show alert view saying we are getting token
             UIAlertView *tokenAlert = [[UIAlertView alloc] initWithTitle:@"Login failed"
                                                      message:@"Please try again."
@@ -138,24 +127,21 @@ static NSString *myNationBuilderId = @"my_nation_builder_id";
                                            otherButtonTitles:nil];
             [tokenAlert show];
         }
-        
-        
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        //http ERROR
         NSLog(@"Error: %@", error);
     }];
 }
+
 
 #pragma UITextFieldDelegate methods
 
 //hide keyboard if enter key is pressed
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-
     if ([string isEqualToString:@"\n"] && [textField isEqual:self.password]) {
         [textField resignFirstResponder];
     }
-
     return YES;
 }
 

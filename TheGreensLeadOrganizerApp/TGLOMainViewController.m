@@ -48,7 +48,6 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
 	// Do any additional setup after loading the view.
     
     token = [[NSUserDefaults standardUserDefaults] valueForKey:accessToken];
-    NSLog(@"access_token: %@", token);
     
     [self setUpAppearance];
     
@@ -74,7 +73,7 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     
     UINavigationBar *navbar = [[self navigationController] navigationBar];
     
-    NSLog(@"navigation bar: %@", navbar);
+    //NSLog(@"navigation bar: %@", navbar);
     UIColor * black_color = [UIColor colorWithRed:0/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f];
     
     //this will set the 'back button' to be black
