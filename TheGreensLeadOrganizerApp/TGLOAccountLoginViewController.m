@@ -41,8 +41,8 @@ static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logt
     
     //setup the burring of the background image
     self.blurView.dynamic = NO;
-    self.blurView.blurRadius =100;
-    self.blurView.tintColor = [UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:1.0f];
+    self.blurView.blurRadius =15;
+    self.blurView.tintColor = [UIColor colorWithRed:20/255.0f green:0/255.0f blue:80/255.0f alpha:1.0f];
     
     if ([self.email respondsToSelector:@selector(setAttributedPlaceholder:)] && [self.password respondsToSelector:@selector(setAttributedPlaceholder:)]) {
         UIColor *color = [UIColor whiteColor];
@@ -172,12 +172,13 @@ static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logt
          // show alert view saying we are getting token
          UIAlertView *tokenAlert =
             [[UIAlertView alloc]
-             initWithTitle:@"Login fail."
-                   message:@"Server problem, please try again."
-                  delegate:nil
-         cancelButtonTitle:@"Okay"
-         otherButtonTitles:nil];
-            [tokenAlert show];
+                initWithTitle:@"Login fail."
+                      message:@"Server problem, please try again."
+                     delegate:nil
+            cancelButtonTitle:@"Okay"
+            otherButtonTitles:nil];
+        
+        [tokenAlert show];
     }];
 }
 

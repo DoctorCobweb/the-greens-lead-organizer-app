@@ -25,8 +25,41 @@ static NSString *permissionLevelVolunteer = @"volunteer";
     
     //characters used in percent escaping:
     //space!#$&'()*+,/:;=?@[]"%-.<>\^_`{|}~
-    NSDictionary *reservedCharacters = @{ @" ": @"%20", @"!":@"%21",@"#":@"%23",@"$":@"%24",@"&":@"%26",@"'":@"%27",@"(":@"%28",@")":@"%29",@"*":@"%2A",@"+":@"%2B",@",":@"%2C",@"/":@"%2F",@":":@"%3A",@";":@"%3B",@"=":@"%3D",@"?":@"%3F",@"hack@":@"%40",@"[":@"%5B",@"]":@"%5D",@"%":@"%25", @"\"":@"%22",@"%":@"%25",@"-":@"%2D",@".":@"%2E",@"<":@"%3C",@">":@"%3E",@"\\":@"%5C",@"^":@"%5E",@"_":@"%5F",@"`":@"%60",@"{":@"%7B",@"|":@"%7C",@"}":@"%7D",@"~":@"%7E"};
-    
+    NSDictionary *reservedCharacters =
+        @{ @" ": @"%20",
+           @"!":@"%21",
+           @"#":@"%23",
+           @"$":@"%24",
+           @"&":@"%26",
+           @"'":@"%27",
+           @"(":@"%28",
+           @")":@"%29",
+           @"*":@"%2A",
+           @"+":@"%2B",
+           @",":@"%2C",
+           @"/":@"%2F",
+           @":":@"%3A",
+           @";":@"%3B",
+           @"=":@"%3D",
+           @"?":@"%3F",
+           @"hack@":@"%40",
+           @"[":@"%5B",
+           @"]":@"%5D",
+           @"%":@"%25",
+           @"\"":@"%22",
+           @"%":@"%25",
+           @"-":@"%2D",
+           @".":@"%2E",
+           @"<":@"%3C",
+           @">":@"%3E",
+           @"\\":@"%5C",
+           @"^":@"%5E",
+           @"_":@"%5F",
+           @"`":@"%60",
+           @"{":@"%7B",
+           @"|":@"%7C",
+           @"}":@"%7D",
+           @"~":@"%7E"};
     
     for (int i = 0; i < stringLength; i++) {
         unichar c = [unencodedString characterAtIndex:i];
@@ -45,7 +78,6 @@ static NSString *permissionLevelVolunteer = @"volunteer";
             [encodedString appendString:encodingValue];
             continue;
         }
-        
         
         //all other characters are handled here
         if (!![reservedCharacters valueForKey:characterAtIString]) {
@@ -72,15 +104,18 @@ static NSString *permissionLevelVolunteer = @"volunteer";
     return [someString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet ]];
 }
 
+
 + (BOOL)isAdminPermissionLevel
 {
     return [[[NSUserDefaults standardUserDefaults] objectForKey:permissionLevelKey] isEqualToString:permissionLevelAdmin];
 }
 
+
 + (BOOL)isVolunteerPermissionLevel
 {
     return [[[NSUserDefaults standardUserDefaults] objectForKey:permissionLevelKey] isEqualToString:permissionLevelVolunteer];
 }
+
 
 + (void)setUserPermissionLevel:(NSString *)level
 {
@@ -105,6 +140,7 @@ static NSString *permissionLevelVolunteer = @"volunteer";
     return  pLevel;
 }
 
+
 + (NSString *)getUserAccessToken
 {
     NSUserDefaults *uDef = [NSUserDefaults standardUserDefaults];
@@ -123,7 +159,6 @@ static NSString *permissionLevelVolunteer = @"volunteer";
 }
 
 
-
 + (void)setAccessTokenInUserDefaults:(NSString *)token
 {
     NSLog(@"setAccessTokenInUserDefaults, token: %@", token);
@@ -131,6 +166,7 @@ static NSString *permissionLevelVolunteer = @"volunteer";
     [uDef setObject:token forKey:nationBuilderAccessTokenKey];
     [uDef synchronize];
 }
+
 
 + (void)setMyNationBuilderIdInUserDefaults:(NSString *)myNBId
 {
@@ -140,10 +176,10 @@ static NSString *permissionLevelVolunteer = @"volunteer";
     [uDef synchronize];
 }
 
+
 + (BOOL)clearOutUserSession
 {
     NSLog(@"clearing out all session data...");
-
     NSUserDefaults *uDef = [NSUserDefaults standardUserDefaults];
     //delete the access_token
     [uDef setObject:nil forKey:nationBuilderAccessTokenKey];
@@ -151,5 +187,6 @@ static NSString *permissionLevelVolunteer = @"volunteer";
     [uDef setObject:nil forKey:permissionLevelKey];
     return [uDef synchronize];
 }
+
 
 @end

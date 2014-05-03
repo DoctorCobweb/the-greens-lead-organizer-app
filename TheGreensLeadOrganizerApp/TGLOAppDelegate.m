@@ -105,6 +105,7 @@ NSString * const nationBuilderSlugValue = @"agv";
         //sometimes we have different roow view controllers
         if ([self.window.rootViewController class] == [SWRevealViewController class]) {
             NSLog(@"SWRevealViewController is rootViewController");
+            NSLog(@"=> we need to replace it with a NavCont...");
 
             //got to get back to accountLoginViewController
             //1. make root be uinavigationcontroller

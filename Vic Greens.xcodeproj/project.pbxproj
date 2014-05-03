@@ -28,6 +28,7 @@
 		651626FC18F90D5300DCC064 /* TGLOPersonFromSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 651626FB18F90D5300DCC064 /* TGLOPersonFromSearchViewController.m */; };
 		651853FE190FEF1A00D865C4 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 651853FD190FEF1A00D865C4 /* Accelerate.framework */; };
 		65185408190FFD6900D865C4 /* rain_forest-flowering.png in Resources */ = {isa = PBXBuildFile; fileRef = 65185407190FFD6900D865C4 /* rain_forest-flowering.png */; };
+		654CC32119152F5D00600473 /* the-greens-rally.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 654CC32019152F5D00600473 /* the-greens-rally.jpg */; };
 		654CF49E190CAA08005ABF5A /* TGLOLogoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 654CF49D190CAA08005ABF5A /* TGLOLogoutViewController.m */; };
 		655572A218FAAF3B00FA4297 /* TGLOMyListsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 655572A118FAAF3B00FA4297 /* TGLOMyListsViewController.m */; };
 		655572A518FAB34C00FA4297 /* TGLOListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 655572A418FAB34C00FA4297 /* TGLOListViewController.m */; };
@@ -40,7 +41,6 @@
 		65A812A019111C3200C46959 /* forest-fog.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65A8129F19111C3200C46959 /* forest-fog.jpg */; };
 		65A812A219111D5C00C46959 /* forest-fog-1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65A812A119111D5C00C46959 /* forest-fog-1.jpg */; };
 		65A812A419111E2000C46959 /* forest-fog-2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65A812A319111E2000C46959 /* forest-fog-2.jpg */; };
-		65A812A81911299100C46959 /* people-walking.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65A812A71911299100C46959 /* people-walking.jpg */; };
 		65A812AA19112A9B00C46959 /* walking.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65A812A919112A9B00C46959 /* walking.jpg */; };
 		65B022F018FD27A50057E741 /* TGLOPersonFromListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B022EF18FD27A50057E741 /* TGLOPersonFromListViewController.m */; };
 		65B25AD21913874A000A8349 /* userIcon60x60.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B25AD11913874A000A8349 /* userIcon60x60.png */; };
@@ -130,6 +130,7 @@
 		651626FB18F90D5300DCC064 /* TGLOPersonFromSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOPersonFromSearchViewController.m; sourceTree = "<group>"; };
 		651853FD190FEF1A00D865C4 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		65185407190FFD6900D865C4 /* rain_forest-flowering.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rain_forest-flowering.png"; path = "../../../../Desktop/rain_forest-flowering.png"; sourceTree = "<group>"; };
+		654CC32019152F5D00600473 /* the-greens-rally.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "the-greens-rally.jpg"; sourceTree = "<group>"; };
 		654CF49C190CAA08005ABF5A /* TGLOLogoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOLogoutViewController.h; sourceTree = "<group>"; };
 		654CF49D190CAA08005ABF5A /* TGLOLogoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOLogoutViewController.m; sourceTree = "<group>"; };
 		655572A018FAAF3B00FA4297 /* TGLOMyListsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOMyListsViewController.h; sourceTree = "<group>"; };
@@ -148,7 +149,6 @@
 		65A8129F19111C3200C46959 /* forest-fog.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "forest-fog.jpg"; sourceTree = "<group>"; };
 		65A812A119111D5C00C46959 /* forest-fog-1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "forest-fog-1.jpg"; sourceTree = "<group>"; };
 		65A812A319111E2000C46959 /* forest-fog-2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "forest-fog-2.jpg"; sourceTree = "<group>"; };
-		65A812A71911299100C46959 /* people-walking.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "people-walking.jpg"; sourceTree = "<group>"; };
 		65A812A919112A9B00C46959 /* walking.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = walking.jpg; sourceTree = "<group>"; };
 		65B022EE18FD27A50057E741 /* TGLOPersonFromListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOPersonFromListViewController.h; sourceTree = "<group>"; };
 		65B022EF18FD27A50057E741 /* TGLOPersonFromListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOPersonFromListViewController.m; sourceTree = "<group>"; };
@@ -372,6 +372,7 @@
 		65BC972318F3CFE7006063CA /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				654CC32019152F5D00600473 /* the-greens-rally.jpg */,
 				65B25AD919138A69000A8349 /* logoutIcon60x60.png */,
 				65B25ADF1914F61C000A8349 /* grey120x120.png */,
 				65B25ADD19138B83000A8349 /* donatIcon60x60.png */,
@@ -380,7 +381,6 @@
 				65B25AD719138989000A8349 /* tagsIcon60x60.png */,
 				65B25AD11913874A000A8349 /* userIcon60x60.png */,
 				65B25AD3191387AC000A8349 /* searchIcon60x60.png */,
-				65A812A71911299100C46959 /* people-walking.jpg */,
 				65A8129F19111C3200C46959 /* forest-fog.jpg */,
 				65A812A919112A9B00C46959 /* walking.jpg */,
 				65A812A119111D5C00C46959 /* forest-fog-1.jpg */,
@@ -493,7 +493,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				65B25AD619138928000A8349 /* enrolToVoteIcon60x60.png in Resources */,
-				65A812A81911299100C46959 /* people-walking.jpg in Resources */,
 				65BC971918F3C54B006063CA /* Main.storyboard in Resources */,
 				65B25ADE19138B83000A8349 /* donatIcon60x60.png in Resources */,
 				65BC975718F3D144006063CA /* menu@2x.png in Resources */,
@@ -516,6 +515,7 @@
 				65BC975218F3D144006063CA /* Default-568h@2x.png in Resources */,
 				65BC975818F3D144006063CA /* nav_bg.png in Resources */,
 				65B25AD21913874A000A8349 /* userIcon60x60.png in Resources */,
+				654CC32119152F5D00600473 /* the-greens-rally.jpg in Resources */,
 				65B25AE01914F61C000A8349 /* grey120x120.png in Resources */,
 				65BC96F618F3BBE3006063CA /* Images.xcassets in Resources */,
 				65A812A019111C3200C46959 /* forest-fog.jpg in Resources */,
