@@ -62,9 +62,9 @@ static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logt
 }
 
 - (IBAction)login:(id)sender {
-    NSLog(@"in login action handler");
-    NSLog(@"self.email.text: %@", self.email.text);
-    NSLog(@"self.password.text: %@", self.password.text);
+    //NSLog(@"in login action handler");
+    //NSLog(@"self.email.text: %@", self.email.text);
+    //NSLog(@"self.password.text: %@", self.password.text);
     
     //hide any keyboards if showing
     [self.email resignFirstResponder];
@@ -74,8 +74,8 @@ static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logt
     
     UIAlertView *loggingInAlert =
         [[UIAlertView alloc]
-             initWithTitle:@"Logging you in."
-                   message:@"Please wait for your details to be authenticated."
+             initWithTitle:@"Logging you in"
+                   message:@"Please wait for your details to be authenticated. Can take a while."
                   delegate:nil
          cancelButtonTitle:@"Okay"
          otherButtonTitles:nil];
@@ -89,10 +89,8 @@ static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logt
     //must set request serializer to application/json. otherwise 406
     //is responded
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    //NSLog(@"manager.requestSerializer: %@", manager.requestSerializer); //<AFJSONRequestSerializer>
-    
     [manager POST:loginEndpoint parameters:loginDetails success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@" POST loggin the  user in, responseObeject => %@",responseObject);
+        //NSLog(@" POST loggin the  user in, responseObeject => %@",responseObject);
         
         [loggingInAlert dismissWithClickedButtonIndex:0 animated:NO];
         

@@ -44,7 +44,7 @@
     BOOL successfulLogout = [TGLOUtils clearOutUserSession];
     
     if (successfulLogout) {
-        self.logoutTextView.text = @"Thankyou.";
+        self.logoutTextView.text = @"Thank you";
     } else {
         self.logoutTextView.text = @"Ooops, please try again.";
     

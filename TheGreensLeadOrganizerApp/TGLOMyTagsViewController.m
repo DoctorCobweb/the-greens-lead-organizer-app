@@ -73,14 +73,10 @@ static NSString * myTaggingsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     [manager GET:myTaggingsUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"TAGGINGS TABLE VIEW CONTROLLER and response for taggings: %@", responseObject);
+        //NSLog(@"TAGGINGS TABLE VIEW CONTROLLER and response for taggings: %@", responseObject);
         
-        //responseObject is an NSDictionary with a "results" key with value of type
-        //NSSet.
-        //in this set then there are NSDictionary objects for each person
-        //the following will thus get all people returned from the api call
         NSSet * taggings_set = [responseObject objectForKey:@"taggings"];
-        NSLog(@"taggins_set SET: %@", taggings_set);
+        //NSLog(@"taggins_set SET: %@", taggings_set);
         
         //an array of dicts e.g.
         //{"person_id":9; tag=xyz}
@@ -97,7 +93,7 @@ static NSString * myTaggingsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
         }
         
         //taggings now has all the tags for person
-        NSLog(@"taggings: %@", taggings);
+        //NSLog(@"taggings: %@", taggings);
         
         //reload tableview to display new data returned from server
         [self.tableView reloadData];

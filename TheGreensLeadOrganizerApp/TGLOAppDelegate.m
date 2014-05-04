@@ -148,8 +148,6 @@ NSString * const nationBuilderSlugValue = @"agv";
             if (password) {
                 password.text = @"";
             }
-        
-        
         }
     }
 }
@@ -290,11 +288,11 @@ NSString * const nationBuilderSlugValue = @"agv";
     if ([[url scheme] isEqualToString:@"leadorganizerapp"]) {
         NSLog(@"sourceApplication: %@", sourceApplication);
         NSLog(@"annotation: %@", annotation);
-        NSLog(@"url: %@", url);
+        //NSLog(@"url: %@", url);
         
         //need to put code=.... value into UserDefaults for later OAuth2 process
         NSString * queryString = [url query];
-        NSLog(@"query string of url: %@", queryString);
+        //NSLog(@"query string of url: %@", queryString);
         
         NSArray *tokens = [queryString componentsSeparatedByString:@"&"];
         NSLog(@"%@", tokens);
@@ -308,7 +306,7 @@ NSString * const nationBuilderSlugValue = @"agv";
         }
         
         NSDictionary * params = [NSDictionary dictionaryWithDictionary:oAuth2Dict];
-        NSLog(@"params dic: %@", params);
+        //NSLog(@"params dic: %@", params);
         
         //put code key/val into UserDefaults obj
         [userDefaults setObject:oAuth2Dict[@"code"] forKey:@"code"];
@@ -326,16 +324,16 @@ NSString * const nationBuilderSlugValue = @"agv";
         if (!error) {
             NSHTTPURLResponse *httpResp = (NSHTTPURLResponse*) response;
             
-            NSLog(@"token response: %@", httpResp);
+            //NSLog(@"token response: %@", httpResp);
             if (httpResp.statusCode == 200) {
                 NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
                 
                 NSError *error;
                 NSDictionary *dict_resp = (NSDictionary *)[NSJSONSerialization JSONObjectWithData:data options:NSUTF8StringEncoding error:&error];
-                NSLog(@"dict_resp[access_token]: %@",[dict_resp objectForKey:@"access_token"]);
+                //NSLog(@"dict_resp[access_token]: %@",[dict_resp objectForKey:@"access_token"]);
                 
                 //response is JSON format
-                NSLog(@"response: %@",response);
+                //NSLog(@"response: %@",response);
                 
                 
                 //put code key/val into UserDefaults obj
@@ -343,7 +341,7 @@ NSString * const nationBuilderSlugValue = @"agv";
                 [userDefaults synchronize];
                 
                 NSString *token = [userDefaults valueForKey:@"access_token"];
-                NSLog(@"TOKEN FROM UserDefaults: %@", token);
+                //NSLog(@"TOKEN FROM UserDefaults: %@", token);
                 
                 // now load main part of application
                 dispatch_async(dispatch_get_main_queue(), ^{

@@ -101,8 +101,8 @@ static NSString * myListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/myLis
         allLists = [[NSMutableArray alloc] initWithArray:results_array[0]];
         
         //taggings now has all the tags for person
-        NSLog(@"allLists array: %@", allLists);
-        NSLog(@"allLists array count: %d", [allLists count]);
+        //NSLog(@"allLists array: %@", allLists);
+        //NSLog(@"allLists array count: %d", [allLists count]);
         
         //reload tableview to display new data returned from server
         [self.tableView reloadData];

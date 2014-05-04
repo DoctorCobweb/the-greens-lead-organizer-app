@@ -59,7 +59,7 @@
 - (void) makeSearch
 {
     
-    NSLog(@"self.searchUrl: %@", self.searchUrl);
+    //NSLog(@"self.searchUrl: %@", self.searchUrl);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     

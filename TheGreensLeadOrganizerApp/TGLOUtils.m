@@ -119,7 +119,7 @@ static NSString *permissionLevelVolunteer = @"volunteer";
 
 + (void)setUserPermissionLevel:(NSString *)level
 {
-    NSLog(@"setUserPermissionLevel, level: %@", level);
+    //NSLog(@"setUserPermissionLevel, level: %@", level);
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
     //quick validation
@@ -136,7 +136,7 @@ static NSString *permissionLevelVolunteer = @"volunteer";
 {
     NSUserDefaults *uDef = [NSUserDefaults standardUserDefaults];
     NSString *pLevel = [uDef objectForKey:permissionLevelKey];
-    NSLog(@"getUserPermissionLevel: level is: %@", pLevel);
+    //NSLog(@"getUserPermissionLevel: level is: %@", pLevel);
     return  pLevel;
 }
 
@@ -145,7 +145,7 @@ static NSString *permissionLevelVolunteer = @"volunteer";
 {
     NSUserDefaults *uDef = [NSUserDefaults standardUserDefaults];
     NSString *accessToken = [uDef objectForKey:nationBuilderAccessTokenKey];
-    NSLog(@"getUserAccessToken, accessToken: %@", accessToken);
+    //NSLog(@"getUserAccessToken, accessToken: %@", accessToken);
     return  accessToken;
 }
 
@@ -154,14 +154,14 @@ static NSString *permissionLevelVolunteer = @"volunteer";
 {
     NSUserDefaults *uDef = [NSUserDefaults standardUserDefaults];
     NSString *myNBId = [uDef objectForKey:myNationBuilderIdKey];
-    NSLog(@"getUserNationBuilderId, myNBId: %@", myNBId);
+    //NSLog(@"getUserNationBuilderId, myNBId: %@", myNBId);
     return  myNBId;
 }
 
 
 + (void)setAccessTokenInUserDefaults:(NSString *)token
 {
-    NSLog(@"setAccessTokenInUserDefaults, token: %@", token);
+    //NSLog(@"setAccessTokenInUserDefaults, token: %@", token);
     NSUserDefaults *uDef = [NSUserDefaults standardUserDefaults];
     [uDef setObject:token forKey:nationBuilderAccessTokenKey];
     [uDef synchronize];
@@ -170,7 +170,7 @@ static NSString *permissionLevelVolunteer = @"volunteer";
 
 + (void)setMyNationBuilderIdInUserDefaults:(NSString *)myNBId
 {
-    NSLog(@"setMyNationBuilderIdInUserDefaults, myNBId: %@", myNBId);
+    //NSLog(@"setMyNationBuilderIdInUserDefaults, myNBId: %@", myNBId);
     NSUserDefaults *uDef = [NSUserDefaults standardUserDefaults];
     [uDef setObject:myNBId forKey:myNationBuilderIdKey];
     [uDef synchronize];

@@ -111,7 +111,7 @@ static NSString *searchUrl = @"https://%@.nationbuilder.com/api/v1/people/search
         [queryString_ appendFormat:@"with_mobile=%@&", mobile_];
     }
     
-    NSLog(@"querystring: %@", queryString_);
+    //NSLog(@"querystring: %@", queryString_);
     
     searchUrl_ = [[NSString alloc] initWithFormat:searchUrl, nationBuilderSlugValue, queryString_, token];
     

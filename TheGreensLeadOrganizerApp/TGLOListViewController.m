@@ -52,13 +52,13 @@ static NSString * aListUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/peop
     token = [TGLOUtils getUserAccessToken];
     
     UINavigationBar *navbar = [[self navigationController] navigationBar];
-    NSLog(@"navigation bar: %@", navbar);
+    //NSLog(@"navigation bar: %@", navbar);
     UIColor * black_color = [UIColor colorWithRed:0/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f];
     //this will set the 'back button' to be black
     navbar.tintColor = black_color;
     
     
-    NSLog(@"list is: %@", self.list);
+    //NSLog(@"list is: %@", self.list);
     self.title = [self.list objectForKey:@"name"];
     
     if (token) {

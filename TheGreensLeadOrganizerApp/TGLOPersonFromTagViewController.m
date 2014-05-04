@@ -58,16 +58,14 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     //NSLog(@"[self navigationItem] rightBarButton]: %@", [[self navigationItem] rightBarButtonItem]);
     //NSLog(@"permissionlevel: %@", [TGLOUtils getUserPermissionLevel]);
     
-    NSLog(@"admin: %d", [TGLOUtils isAdminPermissionLevel]);
-    NSLog(@"volunteer: %d", [TGLOUtils isVolunteerPermissionLevel]);
+    //NSLog(@"admin: %d", [TGLOUtils isAdminPermissionLevel]);
+    //NSLog(@"volunteer: %d", [TGLOUtils isVolunteerPermissionLevel]);
     if ([TGLOUtils isAdminPermissionLevel]) {
-        NSLog(@"admin");
         [([[self navigationItem] rightBarButtonItem]) setEnabled:YES];
         ([[self navigationItem] rightBarButtonItem]).title = @"Edit";
     }
     
     if ([TGLOUtils isVolunteerPermissionLevel]) {
-        NSLog(@"volunteer");
         [([[self navigationItem] rightBarButtonItem]) setEnabled:NO];
         ([[self navigationItem] rightBarButtonItem]).title = @"";
     }
@@ -154,8 +152,8 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     [self addContactsLabel];
     
     NSLog(@"in getAllMyContacts");
-    NSLog(@"self.person.recordID: %@", self.person.recordID);
-    NSLog(@"token: %@", token);
+    //NSLog(@"self.person.recordID: %@", self.person.recordID);
+    //NSLog(@"token: %@", token);
     
     
     //this evals to true if token is not set
@@ -368,16 +366,16 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     
     NSLog(@"makeCall method called, sender is: %@", sender);
     NSString *title = [((UIButton *) sender) currentTitle];
-    NSLog(@"currentTitle: %@", title);
+    //NSLog(@"currentTitle: %@", title);
     
     NSArray *title_split =  [title componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" -+()"]];
     
     NSString *title_cleaned= [title_split componentsJoinedByString:@""];
-    NSLog(@"title_split: %@", title_split);
-    NSLog(@"title_joined: %@", title_cleaned);
+    //NSLog(@"title_split: %@", title_split);
+    //NSLog(@"title_joined: %@", title_cleaned);
     
     NSString *theCall = [NSString stringWithFormat:@"telprompt://%@", title_cleaned];
-    NSLog(@"theCall: %@", theCall);
+    //NSLog(@"theCall: %@", theCall);
     UIApplication *myApp = [UIApplication sharedApplication];
     
     NSURL *theCallUrl = [NSURL URLWithString:theCall];
@@ -405,10 +403,10 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
 {
     NSLog(@"writeEmail method called, sender is: %@", sender);
     NSString *title = [((UIButton *) sender) currentTitle];
-    NSLog(@"currentTitle: %@", title);
+    //NSLog(@"currentTitle: %@", title);
     
     NSString *theEmail = [NSString stringWithFormat:@"mailTo://%@", title];
-    NSLog(@"theEmail: %@", theEmail);
+    //NSLog(@"theEmail: %@", theEmail);
     UIApplication *myApp = [UIApplication sharedApplication];
     
     NSURL *theEmailUrl = [NSURL URLWithString:theEmail];
@@ -456,9 +454,9 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
 -(void) didUpdatePerson:(TGLOPerson *)updatedPerson
 {
     NSLog(@"...didUpdatePerson called!!!");
-    NSLog(@"updated person is: %@", updatedPerson);
-    NSLog(@"updated person.lastName is: %@", updatedPerson.lastName);
-    NSLog(@"updated person.supportLevel: %@", updatedPerson.supportLevel);
+    //NSLog(@"updated person is: %@", updatedPerson);
+    //NSLog(@"updated person.lastName is: %@", updatedPerson.lastName);
+    //NSLog(@"updated person.supportLevel: %@", updatedPerson.supportLevel);
     
     //**update person**
     //set person to be the newly saved/updated person

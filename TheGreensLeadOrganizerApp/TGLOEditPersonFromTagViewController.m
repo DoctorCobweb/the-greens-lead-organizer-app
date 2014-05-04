@@ -524,7 +524,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     //now create the final body to use for PUT req
     NSDictionary *updateBody = @{@"person":personToPut};
     
-    NSLog(@"the updatBody is: %@", updateBody);
+    //NSLog(@"the updatBody is: %@", updateBody);
     
     //update taggings url
     NSString * updatePeopleUrl_ = [NSString stringWithFormat:updatePeopleUrl, nationBuilderSlugValue, self.person.recordID, token];
@@ -536,11 +536,9 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     //must set request serializer to application/json. otherwise 406
     //is responded
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    NSLog(@"manager.requestSerializer: %@", manager.requestSerializer);
-    
     [manager PUT:updatePeopleUrl_ parameters:updateBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@" PUT => updating tags and person details with response %@",responseObject);
-        NSLog(@"SUCCESSfully deleted tags, added a new tag and updated person details.");
+        //NSLog(@" PUT => updating tags and person details with response %@",responseObject);
+        //NSLog(@"SUCCESSfully deleted tags, added a new tag and updated person details.");
         
         //UPDATE PERSON DETAILS property
         //because changes were successul we can now swap over the
@@ -548,12 +546,12 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         //change over to use new person details. careful.
         self.person = updatedPerson;
         //sanity check:
-        NSLog(@"self.person.firstName: %@", self.person.firstName);
-        NSLog(@"oldPersonDetails.firstName: %@", oldPersonDetails.firstName);
-        NSLog(@"self.person.supportLevel: %@", self.person.supportLevel);
-        NSLog(@"oldPersonDetails.supportLevel: %@", oldPersonDetails.supportLevel);
-        NSLog(@"self.person.tags: %@", self.person.tags);
-        NSLog(@"oldPersonDetails.tags: %@", oldPersonDetails.tags);
+        //NSLog(@"self.person.firstName: %@", self.person.firstName);
+        //NSLog(@"oldPersonDetails.firstName: %@", oldPersonDetails.firstName);
+        //NSLog(@"self.person.supportLevel: %@", self.person.supportLevel);
+        //NSLog(@"oldPersonDetails.supportLevel: %@", oldPersonDetails.supportLevel);
+        //NSLog(@"self.person.tags: %@", self.person.tags);
+        //NSLog(@"oldPersonDetails.tags: %@", oldPersonDetails.tags);
         
         
         //we should go onto saving a new contact as soon as possible
@@ -648,10 +646,8 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     //must set request serializer to application/json. otherwise 406
     //is responded
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    NSLog(@"manager.requestSerializer: %@", manager.requestSerializer);
-    
     [manager POST:myContactsUrl_ parameters:contactBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@" POST => updating contact with response %@",responseObject);
+        //NSLog(@" POST => updating contact with response %@",responseObject);
         NSLog(@"SUCCESSfully added new contact.");
         
         //remember to reset the sendInANewContact back to false
@@ -728,8 +724,6 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 
 - (void)typeValueHit:(id)sender
 {
-    NSLog(@"typeValueHit, in TGLOEditPersonFromSearchViewController");
-    
     UIActionSheet *typeValueActionSheet;
     
     //different NB slugs can have different contact TYPES
@@ -759,7 +753,6 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 
 - (void)methodValueHit:(id)sender
 {
-    NSLog(@"methodValueHit, in TGLOEditPersonFromSearchViewController");
     UIActionSheet *methodValueActionSheet =
         [[UIActionSheet alloc]
             initWithTitle:@"Choose method"
@@ -774,7 +767,6 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 
 - (void)statusValueHit:(id)sender
 {
-    NSLog(@"statusValueHit, in TGLOEditPersonFromSearchViewController");
     UIActionSheet *statusValueActionSheet =
         [[UIActionSheet alloc]
             initWithTitle:@"Choose status"
@@ -788,7 +780,6 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 
 - (void)supportLevelButtonHit:(id)sender
 {
-    NSLog(@"supportLevelButtonHit call");
     UIActionSheet *supportLevelActionSheet =
         [[UIActionSheet alloc]
             initWithTitle:@"Choose support level"

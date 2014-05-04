@@ -151,8 +151,8 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     //the contact label and add it to ui
     [self addContactsLabel];
     
-    NSLog(@"self.person.recordID: %@", self.person.recordID);
-    NSLog(@"token: %@", token);
+    //NSLog(@"self.person.recordID: %@", self.person.recordID);
+    //NSLog(@"token: %@", token);
     
     //playing with 'nothing'
     if ([token isEqual:nil]){
@@ -186,7 +186,7 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
             //NSLog(@" got contacts in MAIN DETAIL VIEW CONTROLLER and CONTACTS response: %@", responseObject);
             
             NSSet * contacts_set = [responseObject objectForKey:@"results"];
-            NSLog(@"contacts_set: %@", contacts_set);
+            //NSLog(@"contacts_set: %@", contacts_set);
             
             //make latest contact appear first in contacts array
             NSArray *contacts_ = [self reverseArray:[contacts_set allObjects]];
@@ -384,28 +384,23 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
 }
 
 
-
-
-
-
-
 -(void)makeCall:(id)sender
 {
     
-    NSLog(@"makeCall method called, sender is: %@", sender);
+    //NSLog(@"makeCall method called, sender is: %@", sender);
     NSString *title = [((UIButton *) sender) currentTitle];
-    NSLog(@"currentTitle: %@", title);
+    //NSLog(@"currentTitle: %@", title);
     
     NSArray *title_split =  [title componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" -+()"]];
     
     NSString *title_cleaned= [title_split componentsJoinedByString:@""];
     
     
-    NSLog(@"title_split: %@", title_split);
-    NSLog(@"title_joined: %@", title_cleaned);
+    //NSLog(@"title_split: %@", title_split);
+    //NSLog(@"title_joined: %@", title_cleaned);
     
     NSString *theCall = [NSString stringWithFormat:@"telprompt://%@", title_cleaned];
-    NSLog(@"theCall: %@", theCall);
+    //NSLog(@"theCall: %@", theCall);
     UIApplication *myApp = [UIApplication sharedApplication];
     
     NSURL *theCallUrl = [NSURL URLWithString:theCall];
@@ -431,14 +426,14 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
 
 - (IBAction)writeEmail:(id)sender
 {
-    NSLog(@"writeEmail method called, sender is: %@", sender);
     NSString *title = [((UIButton *) sender) currentTitle];
-    NSLog(@"currentTitle: %@", title);
-    
     NSString *theEmail = [NSString stringWithFormat:@"mailTo://%@", title];
-    NSLog(@"theEmail: %@", theEmail);
-    UIApplication *myApp = [UIApplication sharedApplication];
     
+    //NSLog(@"writeEmail method called, sender is: %@", sender);
+    //NSLog(@"currentTitle: %@", title);
+    //NSLog(@"theEmail: %@", theEmail);
+    
+    UIApplication *myApp = [UIApplication sharedApplication];
     NSURL *theEmailUrl = [NSURL URLWithString:theEmail];
     
     //check to see if the app can make calls before making the call
@@ -484,9 +479,9 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
 -(void) didUpdatePerson:(TGLOPerson *)updatedPerson
 {
     NSLog(@"...didUpdatePerson called!!!");
-    NSLog(@"updated person is: %@", updatedPerson);
-    NSLog(@"updated person.lastName is: %@", updatedPerson.lastName);
-    NSLog(@"updated person.supportLevel: %@", updatedPerson.supportLevel);
+    //NSLog(@"updated person is: %@", updatedPerson);
+    //NSLog(@"updated person.lastName is: %@", updatedPerson.lastName);
+    //NSLog(@"updated person.supportLevel: %@", updatedPerson.supportLevel);
     
     //**update person**
     //set person to be the newly saved/updated person
