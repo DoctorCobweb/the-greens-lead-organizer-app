@@ -48,7 +48,7 @@
     self.tableView.backgroundColor = theGreens;
     self.tableView.separatorColor = [UIColor colorWithWhite:0.15f alpha:0.2f];
     
-    _menuItems = @[@"theGreens", @"myProfile", @"myTags", @"myLists", @"donations", @"enrolToVote",@"search", @"logout"];
+    _menuItems = @[@"theGreens", @"myProfile", @"myTags", @"myLists", @"events", @"donations", @"enrolToVote",@"search", @"logout"];
 }
 
 - (void)didReceiveMemoryWarning

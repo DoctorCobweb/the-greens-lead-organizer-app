@@ -32,6 +32,8 @@
 		654CC32919163BE700600473 /* appIcon58x58.png in Resources */ = {isa = PBXBuildFile; fileRef = 654CC32619163BE600600473 /* appIcon58x58.png */; };
 		654CC32A19163BE700600473 /* appIcon80x80.png in Resources */ = {isa = PBXBuildFile; fileRef = 654CC32719163BE600600473 /* appIcon80x80.png */; };
 		654CC32B19163BE700600473 /* appIcon120x120.png in Resources */ = {isa = PBXBuildFile; fileRef = 654CC32819163BE600600473 /* appIcon120x120.png */; };
+		654CC32E1917C9F500600473 /* TGLOEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 654CC32D1917C9F500600473 /* TGLOEventsViewController.m */; };
+		654CC3301917D23200600473 /* eventsIcon60x60.png in Resources */ = {isa = PBXBuildFile; fileRef = 654CC32F1917D23200600473 /* eventsIcon60x60.png */; };
 		654CF49E190CAA08005ABF5A /* TGLOLogoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 654CF49D190CAA08005ABF5A /* TGLOLogoutViewController.m */; };
 		655572A218FAAF3B00FA4297 /* TGLOMyListsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 655572A118FAAF3B00FA4297 /* TGLOMyListsViewController.m */; };
 		655572A518FAB34C00FA4297 /* TGLOListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 655572A418FAB34C00FA4297 /* TGLOListViewController.m */; };
@@ -137,6 +139,9 @@
 		654CC32619163BE600600473 /* appIcon58x58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon58x58.png; sourceTree = "<group>"; };
 		654CC32719163BE600600473 /* appIcon80x80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon80x80.png; sourceTree = "<group>"; };
 		654CC32819163BE600600473 /* appIcon120x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon120x120.png; sourceTree = "<group>"; };
+		654CC32C1917C9F500600473 /* TGLOEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOEventsViewController.h; sourceTree = "<group>"; };
+		654CC32D1917C9F500600473 /* TGLOEventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOEventsViewController.m; sourceTree = "<group>"; };
+		654CC32F1917D23200600473 /* eventsIcon60x60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eventsIcon60x60.png; sourceTree = "<group>"; };
 		654CF49C190CAA08005ABF5A /* TGLOLogoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOLogoutViewController.h; sourceTree = "<group>"; };
 		654CF49D190CAA08005ABF5A /* TGLOLogoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOLogoutViewController.m; sourceTree = "<group>"; };
 		655572A018FAAF3B00FA4297 /* TGLOMyListsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOMyListsViewController.h; sourceTree = "<group>"; };
@@ -339,6 +344,8 @@
 				656174751906380600EE712F /* TGLOUtils.m */,
 				654CF49C190CAA08005ABF5A /* TGLOLogoutViewController.h */,
 				654CF49D190CAA08005ABF5A /* TGLOLogoutViewController.m */,
+				654CC32C1917C9F500600473 /* TGLOEventsViewController.h */,
+				654CC32D1917C9F500600473 /* TGLOEventsViewController.m */,
 			);
 			name = "Vic Greens";
 			path = TheGreensLeadOrganizerApp;
@@ -378,6 +385,7 @@
 		65BC972318F3CFE7006063CA /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				654CC32F1917D23200600473 /* eventsIcon60x60.png */,
 				654CC32619163BE600600473 /* appIcon58x58.png */,
 				654CC32719163BE600600473 /* appIcon80x80.png */,
 				654CC32819163BE600600473 /* appIcon120x120.png */,
@@ -501,6 +509,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				654CC3301917D23200600473 /* eventsIcon60x60.png in Resources */,
 				65B25AD619138928000A8349 /* enrolToVoteIcon60x60.png in Resources */,
 				65BC971918F3C54B006063CA /* Main.storyboard in Resources */,
 				65B25ADE19138B83000A8349 /* donatIcon60x60.png in Resources */,
@@ -582,6 +591,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				654CC32E1917C9F500600473 /* TGLOEventsViewController.m in Sources */,
 				65BC971F18F3CDA8006063CA /* TGLOSideBarViewController.m in Sources */,
 				651626FC18F90D5300DCC064 /* TGLOPersonFromSearchViewController.m in Sources */,
 				6561747919090B1900EE712F /* TGLOAccountLoginViewController.m in Sources */,

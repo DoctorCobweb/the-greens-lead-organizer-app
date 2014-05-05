@@ -84,8 +84,9 @@ static NSString * myListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/myLis
 
 - (void) getAllLists
 {
+    #warning CHANGE BACK NBId
     NSString *myNBId = [TGLOUtils getUserNationBuilderId];
-    NSString * myListsUrl_ = [NSString stringWithFormat:myListsUrl, myNBId, token];
+    NSString * myListsUrl_ = [NSString stringWithFormat:myListsUrl, @"9", token];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     

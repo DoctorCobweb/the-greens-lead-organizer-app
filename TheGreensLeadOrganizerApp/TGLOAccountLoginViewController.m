@@ -90,7 +90,7 @@ static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logt
     //is responded
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     [manager POST:loginEndpoint parameters:loginDetails success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        //NSLog(@" POST loggin the  user in, responseObeject => %@",responseObject);
+        NSLog(@" POST loggin the  user in, responseObeject => %@",responseObject);
         
         [loggingInAlert dismissWithClickedButtonIndex:0 animated:NO];
         
@@ -102,7 +102,7 @@ static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logt
         
         if (!([responseObject objectForKey:@"error"] == [NSNull null])) {
             //log in FAILURE
-            self.email.text = @"";
+            //self.email.text = @"";
             self.password.text = @"";
             NSLog(@"ERROR from login procedure: %@", error)
             ;
@@ -138,15 +138,17 @@ static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logt
                 UIViewController *initViewController = [storyboard instantiateViewControllerWithIdentifier:segueId];
                 TGLOAppDelegate *delegate = (TGLOAppDelegate *)[[UIApplication sharedApplication] delegate];
                 
-                //set SWRevealViewController to be root view contller
+                //set SWRevealViewController to _root_ view contller
                 [delegate.window setRootViewController:initViewController];
                 
             });
+            
+            return;
         } else {
             //weird log in FAILURE: no error but accessToken, myNBId
             //or permissionLevel was nil. just display an alert and
             //get them to try again.
-            self.email.text = @"";
+            //self.email.text = @"";
             self.password.text = @"";
             NSLog(@"ERROR from login procedure. accessToken, myNDId or permissionLevel was nil. Weird error. ");
             ;
