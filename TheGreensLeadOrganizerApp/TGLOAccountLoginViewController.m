@@ -138,17 +138,7 @@ static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logt
                 UIViewController *initViewController = [storyboard instantiateViewControllerWithIdentifier:segueId];
                 TGLOAppDelegate *delegate = (TGLOAppDelegate *)[[UIApplication sharedApplication] delegate];
                 
-                
-                /*
-                //old method to set SWRevealViewController
-                //pushing it onto the nav controller stack...
-                UINavigationController *nav = (UINavigationController *) delegate.window.rootViewController;
-                nav.navigationBar.hidden = YES;
-                [nav pushViewController:initViewController animated:YES];
-                 */
-                
-                //new way to set SWRevealViewController
-                //set it to be root view controller...
+                //set SWRevealViewController to be root view contller
                 [delegate.window setRootViewController:initViewController];
                 
             });

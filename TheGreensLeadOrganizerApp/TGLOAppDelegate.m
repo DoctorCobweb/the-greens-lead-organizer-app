@@ -120,8 +120,8 @@ NSString * const nationBuilderSlugValue = @"agv";
                 NSString *segueId = @"accountLogin";
                 UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                 UIViewController *initViewController = [storyboard instantiateViewControllerWithIdentifier:segueId];
-                TGLOAppDelegate *delegate = (TGLOAppDelegate *)[[UIApplication sharedApplication] delegate];;
-                UINavigationController *nav = (UINavigationController *) delegate.window.rootViewController;
+                UINavigationController *nav = (UINavigationController *) self.window.rootViewController;
+                
                 nav.navigationBar.hidden = YES;
                 [nav pushViewController:initViewController animated:YES];
             });
@@ -135,33 +135,8 @@ NSString * const nationBuilderSlugValue = @"agv";
         if ([self.window.rootViewController class] == [UINavigationController class]) {
             NSLog(@"UINavigationController is rootViewController");
             
-            //[(UINavigationController *)self.window.rootViewController popToRootViewControllerAnimated:NO];
-            
             return;
-            
         }
-        
-        /*
-        NSArray *controllerStack = [(UINavigationController *)self.window.rootViewController viewControllers];
-        NSLog(@"controllerStack: %@", controllerStack);
-        
-        //make sure the first controllers in the stack should be
-        //TGLOAccountLoginViewController
-        if ([controllerStack[0] class] == [TGLOAccountLoginViewController class]) {
-            NSLog(@"controllerStack[0] is of class TGLOAccountLoginViewController, GOOD.");
-            
-            UITextField *email = ((TGLOAccountLoginViewController *)controllerStack[0]).email;
-            UITextField *password = ((TGLOAccountLoginViewController *)controllerStack[0]).password;
-        
-            //get rid of previously entered text
-            if (email) {
-                email.text = @"";
-            }
-            if (password) {
-                password.text = @"";
-            }
-        }
-         */
     }
 }
 
