@@ -36,6 +36,7 @@ NSString * const nationBuilderSlugValue = @"agv";
     //testing extern variable stuff
     NSLog(@"EXTERN: nationBuilderRequestToken: %@", nationBuilderRequestToken);
     NSLog(@"EXTERN: nationBuilderAccessToken: %@", nationBuilderAccessToken);
+   
     
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
     // Override point for customization after application launch.
@@ -44,25 +45,23 @@ NSString * const nationBuilderSlugValue = @"agv";
     
 
     NSString *token = [userDefaults valueForKey:@"access_token"];
-    NSLog(@"IN APP DELEGATE");
+    NSLog(@"APP DELEGATE didFinishLaunchingWithOptions");
     
     //NSString *controllerId = token ? @"signedIn" : @"login";
     NSString *controllerId = token ? @"signedIn" : @"accountLogin";
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    //NSLog(@"storyboard: %@", storyboard);
     UIViewController *initViewController = [storyboard instantiateViewControllerWithIdentifier:controllerId];
-    //NSLog(@"initViewController: %@", initViewController); //UINavigationController
+    
     
     // always assumes token is valid - should probably check in a real app
     if (token) {
+        //SWRevealViewController will be rootViewController
         [self.window setRootViewController:initViewController];
     } else {
+        //UINavigationController will be rootViewController
         [(UINavigationController *)self.window.rootViewController pushViewController:initViewController animated:NO];
         
         [((UINavigationController *)[initViewController navigationController]).navigationBar setHidden:YES];
-        
-        //NSLog(@"self.window.rootViewController: %@", self.window.rootViewController); //<UINavigationController>
-        NSLog(@"APP DELEGATE: nav stack: %@", [(UINavigationController *)self.window.rootViewController viewControllers]);
     }
     
     return YES;
@@ -97,19 +96,23 @@ NSString * const nationBuilderSlugValue = @"agv";
     NSLog(@"self.window.rootViewController: %@", self.window.rootViewController);
     
     //if access_token is null it means user has idicated they want
-    //to log out.
+    //to log out OR have not yet logged in.
+    //need to handle both scenarios
     if (![userDefaults valueForKey:@"access_token"]) {
         //this gets rid off all view controllers except to the first
         //one which should be of class TGLOAccountLoginViewController
         
-        //sometimes we have different roow view controllers
+        //1. user has already been logged in and has logged out then
+        // clicked home button to get out of app
+        //replace root view controller with a uinav controller to
+        //reset the app to open with login screen
         if ([self.window.rootViewController class] == [SWRevealViewController class]) {
             NSLog(@"SWRevealViewController is rootViewController");
             NSLog(@"=> we need to replace it with a NavCont...");
 
             //got to get back to accountLoginViewController
             //1. make root be uinavigationcontroller
-            //2.display it
+            //2. create accountLoginViewController the push to stack
             self.window.rootViewController = [[UINavigationController alloc] init];
             // now load login view controller, thus resetting nav
             //stack
@@ -125,11 +128,20 @@ NSString * const nationBuilderSlugValue = @"agv";
                 
             return;
         }
+        
+        //if user has NOT yet logged in (=> token is nil)
+        //and closed app then UINavigationController is root
+        //=> DONT need to reset any contollers/roots
         if ([self.window.rootViewController class] == [UINavigationController class]) {
             NSLog(@"UINavigationController is rootViewController");
-            [(UINavigationController *)self.window.rootViewController popToRootViewControllerAnimated:NO];
+            
+            //[(UINavigationController *)self.window.rootViewController popToRootViewControllerAnimated:NO];
+            
+            return;
+            
         }
         
+        /*
         NSArray *controllerStack = [(UINavigationController *)self.window.rootViewController viewControllers];
         NSLog(@"controllerStack: %@", controllerStack);
         
@@ -149,6 +161,7 @@ NSString * const nationBuilderSlugValue = @"agv";
                 password.text = @"";
             }
         }
+         */
     }
 }
 
@@ -158,12 +171,16 @@ NSString * const nationBuilderSlugValue = @"agv";
     //inactive state; here you can undo many of the changes made on
     //entering the background.
     NSLog(@"applicationWillEnterForeground:");
+    //UINavigationController *naver = (UINavigationController *)self.window.rootViewController;
+    NSLog(@"APP DELEGATEIE willEnterForeground=> rootViewC: %@", self.window.rootViewController);
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     NSLog(@"applicationDidBecomeActive:");
+    //UINavigationController *naver = (UINavigationController *)self.window.rootViewController;
+    NSLog(@"APP DELEGATEIE didBecomeActive=> rootViewC: %@", self.window.rootViewController);
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

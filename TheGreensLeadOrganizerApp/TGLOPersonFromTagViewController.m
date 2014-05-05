@@ -465,11 +465,6 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     //rerender all the ui now
     //1. get rid of all subviews
     self.view = nil;
-    
-#warning WARNING: should be really be calling vidDidLoad manually??
-    //2. populate the ui
-    //[self viewDidLoad];
-    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
