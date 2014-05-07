@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TGLOEditMyProfileViewController.h"
 
 @interface TGLOEventsViewController : UIViewController
 
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *sidebarButton;
+@property (nonatomic, strong) TGLOEditMyProfileViewController *delegate;
 
 - (void)setUpAppearance;
 

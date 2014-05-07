@@ -27,6 +27,7 @@
 #import "AFNetworkActivityIndicatorManager.h"
 #import "TGLOAppDelegate.h"
 #import "TGLOUtils.h"
+#import "TGLOEventsModalViewController.h"
 
 static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=10&access_token=%@";
 static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people/%@?access_token=%@";
@@ -922,6 +923,33 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     [self.phone resignFirstResponder];
     [self.mobile resignFirstResponder];
     [self.addANewTag resignFirstResponder];
+}
+
+- (IBAction)chooseEventToRsvp:(id)sender {
+    
+    NSLog(@"chooseEventToRsvp button clicked");
+    //TGLOEventsModalViewController *eventsViewController = [[TGLOEventsModalViewController alloc] init];
+    
+    
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    TGLOEventsModalViewController *eventsViewController = [storyboard instantiateViewControllerWithIdentifier:@"eventsModalVC"];
+    
+    
+    eventsViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+    eventsViewController.delegate = self;
+    
+    NSLog(@"%@", eventsViewController);
+    
+    UINavigationController *navigationController =
+        [[UINavigationController alloc]
+            initWithRootViewController:eventsViewController];
+    [navigationController navigationBar].topItem.title = @"Events";
+    
+    [self presentViewController:navigationController animated:YES completion: nil];
+    
+    //[self presentViewController:eventsViewController animated:YES completion:nil];
+    
 }
     
     

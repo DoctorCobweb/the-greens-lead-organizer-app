@@ -55,6 +55,7 @@
 - (void)parseTagString:(NSMutableDictionary *)tagsToKeep;
 - (void)resignAllFirstResponders;
 
+- (IBAction)chooseEventToRsvp:(id)sender;
 
 
 @end

@@ -28,6 +28,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    NSLog(@"TGLOEventsViewController");
     [self setUpAppearance];
 }
 
@@ -35,17 +36,17 @@
 
 - (void)setUpAppearance
 {
-    self.title = @"Find event by:";
+    self.title = @"Events";
     
     // Change button color
     self.sidebarButton.tintColor = [UIColor colorWithWhite:0.05f alpha:1.0f];
     
     // Set the side bar button action. When it's tapped, it'll show up the sidebar.
-    self.sidebarButton.target = self.revealViewController;
-    self.sidebarButton.action = @selector(revealToggle:);
+    //self.sidebarButton.target = self.revealViewController;
+    //self.sidebarButton.action = @selector(revealToggle:);
     
     // Set the gesture
-    [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    //[self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     
 }
 
