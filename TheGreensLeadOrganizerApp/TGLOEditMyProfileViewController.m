@@ -637,15 +637,14 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     NSDictionary *rsvpBody =
         @{ @"rsvp": @{
                       @"person_id":    myNBId,
-                      @"guests_count": @1,
-                      //@"volunteer":    @"false",
-                      //@"private":      @"true",
-                      //@"canceled":     @"false",
-                      //@"attended":     @"true",
-                      //@"shift_ids":    @"[]"
+                      @"guests_count": @0,
+                      @"private":      @"false",
+                      @"volunteer":    @"false",
+                      @"canceled":     @"false",
+                      @"attended":     @"false",
+                      @"shift_ids":    @[]
                       }};
     
-    //id 328
     NSLog(@"rsvpBody: %@", rsvpBody);
     
     //post endpoint for making new contact

@@ -26,6 +26,7 @@
 @property (weak, nonatomic) TGLOEvent *theEvent;
 
 - (void)getEvent;
+- (void)getAllRsvps;
 - (void)fillOutEventFields:(TGLOEvent *)event;
 
 @end

@@ -16,12 +16,13 @@
 //page calls to get all people as yet.
 static NSString *eventUrl= @"https://%@.nationbuilder.com/api/v1/sites/%@/pages/events/%@?access_token=%@";
 
-//agv.nationbuilder.com/api/v1/sites/agv/pages/events/328?access_token=102fe210786667df8a04708a471e549738cc4e72506c66bf44ddccf7c280794a
+static NSString *rsvpsUrl = @"https://%@.nationbuilder.com/api/v1/sites/%@/pages/events/%@/rsvps?page=1&per_page=1000&access_token=%@";
 
 
 
 @interface TGLOEventDetailsViewController () {
     NSString *token;
+    TGLOEvent *parsedEvent;
 }
 
 @end
@@ -76,21 +77,20 @@ static NSString *eventUrl= @"https://%@.nationbuilder.com/api/v1/sites/%@/pages/
 
 - (void) getEvent
 {
-    static NSString *eventUrl= @"https://%@.nationbuilder.com/api/v1/sites/%@/pages/events/%@?access_token=%@";
     
     NSString * eventUrl_ = [NSString stringWithFormat:eventUrl, nationBuilderSlugValue, nationBuilderSlugValue, self.selectedEventId, token];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:eventUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"EVENT DETAILS VIEW CONTROLLER and response: %@", responseObject);
+        //NSLog(@"EVENT DETAILS VIEW CONTROLLER and response: %@", responseObject);
         
         NSSet *event_set = [responseObject objectForKey:@"event"];
         NSLog(@"event_set: %@", event_set);
         
-        TGLOEvent *parsedEvent = [TGLOEvent eventFieldsForObject:event_set];
         
-        
+        parsedEvent = [TGLOEvent eventFieldsForObject:event_set];
         [self fillOutEventFields:parsedEvent];
+        [self getAllRsvps];
         
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -114,6 +114,24 @@ static NSString *eventUrl= @"https://%@.nationbuilder.com/api/v1/sites/%@/pages/
     }
 }
 
+- (void)getAllRsvps
+{
+
+    //static NSString *rsvpsUrl = @"https://%@.nationbuilder.com/api/v1/sites/%@/pages/events/%@/rsvps?page=1&per_page=1000&access_token=%@";
+
+    NSString * rsvpsUrl_ = [NSString stringWithFormat:rsvpsUrl, nationBuilderSlugValue, nationBuilderSlugValue, parsedEvent.eventId, token];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:rsvpsUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"RSVPS TO EVENT DETAILS VIEW CONTROLLER and response: %@", responseObject);
+        
+        NSSet *rsvps_set = [responseObject objectForKey:@"results"];
+        NSLog(@"rsvps_set: %@", rsvps_set);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
 
 
 /*
