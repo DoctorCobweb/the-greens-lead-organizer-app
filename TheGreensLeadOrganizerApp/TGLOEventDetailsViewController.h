@@ -28,5 +28,7 @@
 - (void)getEvent;
 - (void)getAllRsvps;
 - (void)fillOutEventFields:(TGLOEvent *)event;
+- (void)addRsvpsToUI:(NSSet *)rsvps;
+- (void)updateScrollAndContainerViewSize:(CGFloat)makeMoreRoom;
 
 @end

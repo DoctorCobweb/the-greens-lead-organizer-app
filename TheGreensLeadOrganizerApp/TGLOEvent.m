@@ -107,6 +107,11 @@
     if ([event valueForKey:@"start_time"] == [NSNull null]) {
         _event.dateString= nil;
     } else {
+        NSDateFormatter *dFormatter = [[NSDateFormatter alloc] init];
+        
+        NSDate *date = [dFormatter dateFromString:[event valueForKey:@"start_time"]];
+        NSLog(@"date: %@", date);
+        
         _event.dateString = [event valueForKey:@"start_time"];
     }
     

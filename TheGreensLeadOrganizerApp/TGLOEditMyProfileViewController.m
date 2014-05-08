@@ -599,40 +599,12 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 
 - (void)saveTheRsvp
 {
-    
-   NSString *testGet = @"https://agv.nationbuilder.com/api/v1/sites/agv/pages/events/328/rsvps?page=1&per_page=10&access_token=102fe210786667df8a04708a471e549738cc4e72506c66bf44ddccf7c280794a";
-   
-    AFHTTPRequestOperationManager *managerTest = [AFHTTPRequestOperationManager manager];
-    
-    [managerTest GET:testGet parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"TEST GET and response for events: %@", responseObject);
-        
-        
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-    }];
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     NSLog(@"saveTheRsvp");
     //construct uri
     //make network call
     //reset sendInNewRSVP to NO
     //re render ui
+    
     NSString *myNBId = [TGLOUtils getUserNationBuilderId];
     NSDictionary *rsvpBody =
         @{ @"rsvp": @{
@@ -649,12 +621,6 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     
     //post endpoint for making new contact
     NSString *myRsvpUrl_ = [NSString stringWithFormat:myRsvpUrl, nationBuilderSlugValue, nationBuilderSlugValue, [self.rsvpDetails objectForKey:@"eventId"], token];
-   //NSString * myRsvpUrl_ = @"https://agv.nationbuilder.com/api/v1/sites/agv/pages/events/328/rsvps?access_token=102fe210786667df8a04708a471e549738cc4e72506c66bf44ddccf7c280794a";
-    
-    //PUT url
-    //NSString *myRsvpUrl_ = @"https://agv.nationbuilder.com/api/v1/sites/agv/pages/events/328/rsvps/1169?access_token=102fe210786667df8a04708a471e549738cc4e72506c66bf44ddccf7c280794a";
-    
-    NSLog(@"myRsvpUrl_: %@", myRsvpUrl_);
     
     //need to get notes on the person from a different api, namely
     // the contacts api

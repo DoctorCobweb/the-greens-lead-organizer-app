@@ -43,7 +43,6 @@ static NSString *rsvpsUrl = @"https://%@.nationbuilder.com/api/v1/sites/%@/pages
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    
     //set an initial scroll view size
     self.scrollView.contentSize =CGSizeMake(320, 550);
     
@@ -77,7 +76,6 @@ static NSString *rsvpsUrl = @"https://%@.nationbuilder.com/api/v1/sites/%@/pages
 
 - (void) getEvent
 {
-    
     NSString * eventUrl_ = [NSString stringWithFormat:eventUrl, nationBuilderSlugValue, nationBuilderSlugValue, self.selectedEventId, token];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -116,22 +114,114 @@ static NSString *rsvpsUrl = @"https://%@.nationbuilder.com/api/v1/sites/%@/pages
 
 - (void)getAllRsvps
 {
-
-    //static NSString *rsvpsUrl = @"https://%@.nationbuilder.com/api/v1/sites/%@/pages/events/%@/rsvps?page=1&per_page=1000&access_token=%@";
-
     NSString * rsvpsUrl_ = [NSString stringWithFormat:rsvpsUrl, nationBuilderSlugValue, nationBuilderSlugValue, parsedEvent.eventId, token];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:rsvpsUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"RSVPS TO EVENT DETAILS VIEW CONTROLLER and response: %@", responseObject);
         
-        NSSet *rsvps_set = [responseObject objectForKey:@"results"];
-        NSLog(@"rsvps_set: %@", rsvps_set);
+        NSSet *rsvpsSet = [responseObject objectForKey:@"results"];
+        NSLog(@"rsvpsSet: %@", rsvpsSet);
+        
+        [self addRsvpsToUI:rsvpsSet];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
 }
+
+
+- (void)addRsvpsToUI:(NSSet *)rsvps
+{
+    NSLog(@"adding in RSVPS to UI...");
+    NSArray *rsvpsArray = [rsvps allObjects];
+    int rsvpsCount = [rsvpsArray count];
+    
+    
+    CGFloat labelSpacing = 10; //spacing between the views
+    CGFloat makeMoreRoom = 40; //additional room on end of scroll/container view
+    CGFloat labelWidth = 280;  //new label width
+    CGFloat labelHeight= 30;   //new label height
+    
+    UIColor * purpleColor = [UIColor colorWithRed:115/255.0f green:89/255.0f blue:162/255.0f alpha:1.0f];
+    
+    
+    //add each rsvp individually
+    for (int i = 0; i < rsvpsCount; i++) {
+        
+        UITextField *newTextField = (UITextField *)[self fabricateANewView:@"UITextField" width:labelWidth height:labelHeight spacing:labelSpacing];
+        NSString *personId= [[NSString alloc] initWithFormat:@"%@",[rsvpsArray[i] valueForKey:@"person_id"]];
+    
+        newTextField.borderStyle = UITextBorderStyleRoundedRect;
+        newTextField.text = personId;
+        newTextField.textColor = [UIColor whiteColor];
+        newTextField.userInteractionEnabled = NO;
+        newTextField.backgroundColor = purpleColor;
+        
+        
+        //update the scroll and container view to fit/display new content
+        [self updateScrollAndContainerViewSize:makeMoreRoom];
+        
+        //finally add the new view to as last subview
+        [self.containerView addSubview:newTextField];
+    }
+    
+    //NSLog(@"containerViews subviews: %@", [self.containerView subviews]);
+}
+
+
+
+// utility method for construct different types of views
+- (id) fabricateANewView:(NSString *)viewType width:(CGFloat)viewWidth height:(CGFloat)viewHeight spacing: (CGFloat)viewSpacing
+{
+    CGRect containerFrame = [self.containerView frame];
+    CGFloat containerHeight = CGRectGetHeight(containerFrame);
+    CGFloat containerWidth = CGRectGetWidth(containerFrame);
+    
+    NSArray *containerSubviews = [self.containerView subviews];
+    CGRect lastViewFrame = ((UILabel *)[containerSubviews lastObject]).frame;
+    
+    //get dimensions of the lower left corner of
+    //last subview of containerView
+    CGFloat lastViewYLocation = CGRectGetMaxY(lastViewFrame);
+    CGFloat lastViewXLocation = CGRectGetMinX(lastViewFrame);
+    
+    //now create a new rect, taking into account
+    //location of last subview
+    CGRect viewRect = CGRectMake(lastViewXLocation, lastViewYLocation + viewSpacing, viewWidth, viewHeight);
+    
+    
+    if ([viewType  isEqualToString:@"UILabel"]){
+        return [[UILabel alloc] initWithFrame:viewRect];
+    } else if ([viewType isEqualToString:@"UITextField"]) {
+        return [[UITextField alloc] initWithFrame:viewRect];
+    }  else {
+        return @"ERROR";
+    }
+}
+
+
+- (void)updateScrollAndContainerViewSize:(CGFloat)makeMoreRoom
+{
+    //NSLog(@"in updateScrollAndContainerViewSize");
+    //update the scroll height to accomodate for
+    //new added view
+    CGSize contentSize = self.scrollView.contentSize;
+    CGFloat scrollHeight = contentSize.height;
+    
+    self.scrollView.contentSize =CGSizeMake(320, scrollHeight + makeMoreRoom);
+    //NSLog(@"self.scrollView.contentSize: %@", NSStringFromCGSize(self.scrollView.contentSize));
+    
+    
+    //must also update the containerView height
+    CGRect containerViewFrame = self.containerView.frame;
+    
+    //NSLog(@"self.containerView.frame Max X: %f", CGRectGetMaxX(containerViewFrame));
+    //NSLog(@"self.containerView.frame Max Y: %f", CGRectGetMaxY(containerViewFrame));
+    
+    self.containerView.frame = CGRectMake(0, 0, (CGRectGetMaxX(containerViewFrame)), (CGRectGetMaxY(containerViewFrame)) + makeMoreRoom);
+}
+
 
 
 /*
