@@ -41,6 +41,8 @@
 		656174761906380600EE712F /* TGLOUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 656174751906380600EE712F /* TGLOUtils.m */; };
 		6561747919090B1900EE712F /* TGLOAccountLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6561747819090B1900EE712F /* TGLOAccountLoginViewController.m */; };
 		658278F9191A17B3001BF4BB /* TGLOEventsModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 658278F8191A17B3001BF4BB /* TGLOEventsModalViewController.m */; };
+		658278FF191B2BFB001BF4BB /* TGLOEventsAllViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 658278FE191B2BFB001BF4BB /* TGLOEventsAllViewController.m */; };
+		65827905191B3012001BF4BB /* TGLOEventsNewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65827904191B3012001BF4BB /* TGLOEventsNewViewController.m */; };
 		65A812961910F34700C46959 /* theGreens58x58.png in Resources */ = {isa = PBXBuildFile; fileRef = 65A812931910F34700C46959 /* theGreens58x58.png */; };
 		65A812971910F34700C46959 /* theGreens80x80.png in Resources */ = {isa = PBXBuildFile; fileRef = 65A812941910F34700C46959 /* theGreens80x80.png */; };
 		65A812981910F34700C46959 /* theGreens120x120.png in Resources */ = {isa = PBXBuildFile; fileRef = 65A812951910F34700C46959 /* theGreens120x120.png */; };
@@ -157,6 +159,10 @@
 		6561747819090B1900EE712F /* TGLOAccountLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOAccountLoginViewController.m; sourceTree = "<group>"; };
 		658278F7191A17B3001BF4BB /* TGLOEventsModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TGLOEventsModalViewController.h; path = ../TGLOEventsModalViewController.h; sourceTree = "<group>"; };
 		658278F8191A17B3001BF4BB /* TGLOEventsModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TGLOEventsModalViewController.m; path = ../TGLOEventsModalViewController.m; sourceTree = "<group>"; };
+		658278FD191B2BFB001BF4BB /* TGLOEventsAllViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOEventsAllViewController.h; sourceTree = "<group>"; };
+		658278FE191B2BFB001BF4BB /* TGLOEventsAllViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOEventsAllViewController.m; sourceTree = "<group>"; };
+		65827903191B3012001BF4BB /* TGLOEventsNewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOEventsNewViewController.h; sourceTree = "<group>"; };
+		65827904191B3012001BF4BB /* TGLOEventsNewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOEventsNewViewController.m; sourceTree = "<group>"; };
 		65A812931910F34700C46959 /* theGreens58x58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = theGreens58x58.png; sourceTree = "<group>"; };
 		65A812941910F34700C46959 /* theGreens80x80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = theGreens80x80.png; sourceTree = "<group>"; };
 		65A812951910F34700C46959 /* theGreens120x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = theGreens120x120.png; sourceTree = "<group>"; };
@@ -351,6 +357,10 @@
 				654CC32D1917C9F500600473 /* TGLOEventsViewController.m */,
 				658278F7191A17B3001BF4BB /* TGLOEventsModalViewController.h */,
 				658278F8191A17B3001BF4BB /* TGLOEventsModalViewController.m */,
+				658278FD191B2BFB001BF4BB /* TGLOEventsAllViewController.h */,
+				658278FE191B2BFB001BF4BB /* TGLOEventsAllViewController.m */,
+				65827903191B3012001BF4BB /* TGLOEventsNewViewController.h */,
+				65827904191B3012001BF4BB /* TGLOEventsNewViewController.m */,
 			);
 			name = "Vic Greens";
 			path = TheGreensLeadOrganizerApp;
@@ -619,10 +629,12 @@
 				651626D718F525F700DCC064 /* TGLOTheGreensViewController.m in Sources */,
 				65BC976118F3DCE6006063CA /* NationBuilder.m in Sources */,
 				651318CA18FFA40C00995995 /* TGLOCustomEditContactHeaderView.m in Sources */,
+				658278FF191B2BFB001BF4BB /* TGLOEventsAllViewController.m in Sources */,
 				651626F718F6DB4F00DCC064 /* TGLOSearchResultsViewController.m in Sources */,
 				651318BD18FE48F100995995 /* TGLOEditPersonFromSearchViewController.m in Sources */,
 				651318D7190508E600995995 /* TGLOEditPersonFromTagViewController.m in Sources */,
 				65BC971C18F3C611006063CA /* TGLOLoginViewController.m in Sources */,
+				65827905191B3012001BF4BB /* TGLOEventsNewViewController.m in Sources */,
 				655572A518FAB34C00FA4297 /* TGLOListViewController.m in Sources */,
 				65BC976418F3DCF2006063CA /* OAuthLoginViewController.m in Sources */,
 				651626ED18F6253900DCC064 /* TGLOPerson.m in Sources */,

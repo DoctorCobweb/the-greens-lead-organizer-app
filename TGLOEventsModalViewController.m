@@ -16,7 +16,14 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
 
 @interface TGLOEventsModalViewController () {
 
+    //this is what the tableView will use to make rows.
+    //when user makes a search this array will be filtered to hold
+    //best matched events to search term
     NSMutableArray *searchResults;
+    
+    //this will always hold all of the searchResults. can use this
+    //to cache or reset tableView to show all events
+    NSArray *searchResultsCache;
 }
 
 @end
@@ -71,6 +78,8 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
         NSArray *results_array = [[responseObject objectForKey:@"events"] allObjects];
         searchResults = [[NSMutableArray alloc] initWithArray:results_array];
         
+        searchResultsCache = [[NSArray alloc] initWithArray:results_array];
+        
         //reload tableview to display new data returned from server
         [self.tableView reloadData];
         
@@ -82,14 +91,44 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    // Dispose of any resources that can be recreated.a
 }
 
 
+#pragma UISearchBarDelegate methods
+
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
+    NSLog(@"in textDidChange");
     NSLog(@"%@", searchText);
-    //[searchResults removeLastObject];
+    
+    if ([searchText isEqualToString:@""]) {
+        NSLog(@"searchText is empty String");
+        //reload table with original all events array
+        searchResults = [[NSMutableArray alloc] initWithArray:searchResultsCache];
+        [[self tableView] reloadData];
+        return;
+    }
+    
+    NSMutableIndexSet *indexes = [[NSMutableIndexSet alloc] init];
+    
+    
+    
+    int searchCount = [searchResults count];
+    for (int i = 0; i < searchCount; i++) {
+        NSString *tempName = [[searchResults[i] objectForKey:@"name"] lowercaseString];
+        
+        if ([tempName rangeOfString:[searchText lowercaseString]].location == NSNotFound) {
+            //NSLog(@"%@ does NOT contain %@", tempName, searchText);
+            [indexes addIndex:i];
+            
+        } else {
+            //NSLog(@"%@ DOES contain %@", tempName, searchText);
+        }
+    }
+    
+    
+    [searchResults removeObjectsAtIndexes:indexes];
     [[self tableView] reloadData];
 }
 

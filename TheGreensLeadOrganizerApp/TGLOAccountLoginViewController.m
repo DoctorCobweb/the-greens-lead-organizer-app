@@ -14,6 +14,7 @@
 #import "TGLOUtils.h"
 
 static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logthedawgin";
+//static NSString *loginEndpoint =@"http://localhost:5000/logthedawgin";
 
 
 @interface TGLOAccountLoginViewController ()
