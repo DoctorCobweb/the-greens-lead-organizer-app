@@ -24,6 +24,10 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
     //this will always hold all of the searchResults. can use this
     //to cache or reset tableView to show all events
     NSArray *searchResultsCache;
+    
+    NSString *previousSearchTerm;
+    
+    NSMutableArray *undoStack;
 }
 
 @end
@@ -47,6 +51,7 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
     // Do any additional setup after loading the view.
     
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
+    undoStack = [[NSMutableArray alloc] init];
     
     [self getAllEvents];
     
@@ -99,38 +104,109 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    NSLog(@"in textDidChange");
-    NSLog(@"%@", searchText);
+    NSInteger searchTextLength = [searchText length];
+    NSInteger previousSearchTermLength = [previousSearchTerm length];
+    
+    
     
     if ([searchText isEqualToString:@""]) {
         NSLog(@"searchText is empty String");
+        
         //reload table with original all events array
         searchResults = [[NSMutableArray alloc] initWithArray:searchResultsCache];
         [[self tableView] reloadData];
+        
+        [undoStack removeAllObjects];
+        previousSearchTerm = @"";
+        
+       
+        //check we are bak to start
+        for (int k = 0; k < [searchResultsCache count]; k++) {
+            [searchResults containsObject:[searchResultsCache objectAtIndex:k]] ? nil: NSLog(@"ERROR: cache and searchResults not equal!");
+        }
+        
         return;
     }
     
+    if (searchTextLength > previousSearchTermLength) {
+        NSLog(@"drilling down");
+        //push removed objects to undo stack
+        NSMutableArray *collectionOfEvents = [[NSMutableArray alloc] init];
+        
+        NSMutableIndexSet *removeEventsAtIndexes = [self getIndexSetOfMatches:searchText];
+        
+        
+        NSArray *tempArray = [[NSArray alloc] initWithArray:searchResults];
+        int tempArrayCount = [tempArray count];
+        
+        [searchResults removeObjectsAtIndexes:removeEventsAtIndexes];
+        
+        for (int j = 0; j < tempArrayCount; j++) {
+            if (![searchResults containsObject:tempArray[j]]) {
+                //add this to dic of undo stack
+                [collectionOfEvents addObject:tempArray[j]];
+            }
+        }
+        
+        //commented out for the sake of easily poping undoStack
+        //(at expense of adding empty arrays as last object...)
+        /*
+        //only add to undoStack nonempty array
+        if (!![collectionOfEvents count]) {
+            [undoStack addObject:collectionOfEvents];
+        }
+         */
+        
+        [undoStack addObject:collectionOfEvents];
+        
+        [[self tableView] reloadData];
+        previousSearchTerm = searchText;
+        
+        NSLog(@"pushing: %d objects to undoStack", [[undoStack lastObject ] count]);
+        //NSLog(@"collectionOfEvents: %@", collectionOfEvents);
+        //NSLog(@"undoStack: %@", undoStack);
+        return;
+    }
+    
+    if (searchTextLength < previousSearchTermLength) {
+        NSLog(@"drilling up");
+        //pop objects off stack back onto searchResults
+        
+        //NSLog(@"searchResults count BEFORE POP: %d", [searchResults count]);
+        [searchResults addObjectsFromArray:[undoStack lastObject]];
+        //NSLog(@"poping: %d objects off undoStack", [[undoStack lastObject ] count]);
+        
+        [undoStack removeLastObject];
+        //NSLog(@"searchResults count AFTER POP: %d", [searchResults count]);
+        
+        [[self tableView] reloadData];
+        previousSearchTerm = searchText;
+        return;
+    }
+}
+
+
+- (NSMutableIndexSet *)getIndexSetOfMatches:(NSString *)searchTerm
+{
     NSMutableIndexSet *indexes = [[NSMutableIndexSet alloc] init];
-    
-    
-    
     int searchCount = [searchResults count];
+    
     for (int i = 0; i < searchCount; i++) {
         NSString *tempName = [[searchResults[i] objectForKey:@"name"] lowercaseString];
         
-        if ([tempName rangeOfString:[searchText lowercaseString]].location == NSNotFound) {
-            //NSLog(@"%@ does NOT contain %@", tempName, searchText);
+        if ([tempName rangeOfString:[searchTerm lowercaseString]].location == NSNotFound) {
+            //no match so add to index set
             [indexes addIndex:i];
             
         } else {
-            //NSLog(@"%@ DOES contain %@", tempName, searchText);
+            //match, do nothing
+            
         }
     }
-    
-    
-    [searchResults removeObjectsAtIndexes:indexes];
-    [[self tableView] reloadData];
+    return indexes;
 }
+
+
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar_
 {

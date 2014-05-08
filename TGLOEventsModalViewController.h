@@ -18,4 +18,6 @@
 - (IBAction)cancelModal:(id)sender;
 
 - (void)getAllEvents;
+- (NSMutableIndexSet *)getIndexSetOfMatches:(NSString *)searchTerm;
+
 @end
