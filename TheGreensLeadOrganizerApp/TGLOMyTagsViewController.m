@@ -67,9 +67,8 @@ static NSString * myTaggingsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
 
 - (void) getAllMyTags
 {
-    #warning CHANGE BACK NBId
     NSString *myNBId = [TGLOUtils getUserNationBuilderId];
-    NSString * myTaggingsUrl_ = [NSString stringWithFormat:myTaggingsUrl, nationBuilderSlugValue, @"9", token];
+    NSString * myTaggingsUrl_ = [NSString stringWithFormat:myTaggingsUrl, nationBuilderSlugValue, myNBId, token];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     

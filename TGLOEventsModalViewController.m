@@ -129,7 +129,19 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"selected event: %@", searchResults[ indexPath.row]);
+    [[self delegate] dismissViewControllerAnimated:YES completion:nil];
+    TGLOEditMyProfileViewController *delegate = [self delegate];
+    
+    
+    UIButton *rsvpButton = (UIButton *)[[delegate view] viewWithTag:41];
+    [rsvpButton titleLabel].font = [UIFont systemFontOfSize:13];
+    //rsvpButton.titleEdgeInsets = UIEdgeInsetsMake(0, -30, 0, 30);
+    [rsvpButton setTitle:[searchResults[indexPath.row] objectForKey:@"name"] forState:UIControlStateNormal];
+    
+    delegate.rsvpDetails = [[NSMutableDictionary alloc] initWithDictionary:searchResults[indexPath.row]];
+    delegate.sendInANewRSVP = YES;
 }
+
 
 /*
  // Override to support conditional editing of the table view.
@@ -186,8 +198,8 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
 
 
 - (IBAction)cancelModal:(id)sender {
-    NSLog(@"cancelModal fired");
     [[self delegate] dismissViewControllerAnimated:YES completion:nil];
+    [self delegate].sendInANewRSVP = NO;
 }
 
 @end

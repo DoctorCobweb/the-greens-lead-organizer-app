@@ -635,7 +635,7 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
                          @"method":contactMethod,
                          @"sender_id":myNBId,
                          @"status":contactStatus,
-                         @"broadcaster_id": myNBId,
+                         //@"broadcaster_id": myNBId,
                          @"recipient_id": self.person.recordID}};
 
     //post endpoint for making new contact

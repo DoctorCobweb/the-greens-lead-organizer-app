@@ -1473,8 +1473,8 @@
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Dfx-0K-0J0">
-                                        <rect key="frame" x="20" y="372" width="280" height="35"/>
+                                    <button opaque="NO" tag="41" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="clip" id="Dfx-0K-0J0">
+                                        <rect key="frame" x="20" y="372" width="280" height="38"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.45098039220000002" green="0.34901960780000002" blue="0.63529411759999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -1487,7 +1487,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="40" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="lUM-fh-bHY">
-                                        <rect key="frame" x="20" y="448" width="280" height="38"/>
+                                        <rect key="frame" x="20" y="448" width="280" height="37"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.91764705879999997" green="0.4039215686" blue="0.24313725489999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal">

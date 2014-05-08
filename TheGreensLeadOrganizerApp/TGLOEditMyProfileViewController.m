@@ -16,6 +16,7 @@
 //3. the label "Current Tags" has tag = 50. set in storyboard.
 //we need this to rerender add/remove tags in ui after saving
 //4. the UIButton for Support Level has tag = 40. set in storyboard.
+//5. the UIButton for RSVP to an event has tag = 41. set in storybrd.
 
 
 #import "TGLOEditMyProfileViewController.h"
@@ -31,6 +32,13 @@
 
 static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=10&access_token=%@";
 static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people/%@?access_token=%@";
+
+//agv.nationbuilder.com/api/v1/sites/agv/pages/events/328/rsvps?access_token=102fe210786667df8a04708a471e549738cc4e72506c66bf44ddccf7c280794a
+
+static NSString * myRsvpUrl = @"https://%@.nationbuilder.com/api/v1/sites/%@/pages/events/%@/rsvps?access_token=%@";
+
+
+
 static NSString *buttonBackground = @"%@/appIcon120x120.png";
 static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 
@@ -47,6 +55,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     
     //used to see if we should save a contact
     BOOL sendInANewContact;
+    
 }
 
 @property (nonatomic, strong) UIAlertView *updateAlert;
@@ -74,6 +83,10 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     //used to determine if user has signified they want to
     //add a new contact to  save
     sendInANewContact = NO;
+    
+    //used to determine if user has signified they want to
+    //add a new RSVP to  save
+    self.sendInANewRSVP = NO;
     
 	// Do any additional setup after loading the view.
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
@@ -451,6 +464,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 
 - (IBAction)saveChanges:(id)sender {
     NSLog(@"saveChanges button hit");
+    NSLog(@"RSVP dic: %@", [self rsvpDetails]);
     
     [self resignAllFirstResponders];
     
@@ -563,19 +577,106 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         //NSLog(@"oldPersonDetails.tags: %@", oldPersonDetails.tags);
         
         
+        //*** CONTROL FLOW ***
         //we should go onto saving a new contact as soon as possible
         //if it has been signalled to be added
+        
         if (sendInANewContact) {
+            //we will handle saving RSVP in callback
+            //of saving new contact
             [self saveTheNewContact];
+        } else if (self.sendInANewRSVP) {
+            [self saveTheRsvp];
         } else {
+            //we are done with network calls
             [self reRenderUI];
         }
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
 }
 
+
+- (void)saveTheRsvp
+{
+    
+   NSString *testGet = @"https://agv.nationbuilder.com/api/v1/sites/agv/pages/events/328/rsvps?page=1&per_page=10&access_token=102fe210786667df8a04708a471e549738cc4e72506c66bf44ddccf7c280794a";
+   
+    AFHTTPRequestOperationManager *managerTest = [AFHTTPRequestOperationManager manager];
+    
+    [managerTest GET:testGet parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"TEST GET and response for events: %@", responseObject);
+        
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    NSLog(@"saveTheRsvp");
+    //construct uri
+    //make network call
+    //reset sendInNewRSVP to NO
+    //re render ui
+    NSString *myNBId = [TGLOUtils getUserNationBuilderId];
+    NSDictionary *rsvpBody =
+        @{ @"rsvp": @{
+                      @"person_id":    myNBId,
+                      @"guests_count": @1,
+                      //@"volunteer":    @"false",
+                      //@"private":      @"true",
+                      //@"canceled":     @"false",
+                      //@"attended":     @"true",
+                      //@"shift_ids":    @"[]"
+                      }};
+    
+    //id 328
+    NSLog(@"rsvpBody: %@", rsvpBody);
+    
+    //post endpoint for making new contact
+    NSString *myRsvpUrl_ = [NSString stringWithFormat:myRsvpUrl, nationBuilderSlugValue, nationBuilderSlugValue, [self.rsvpDetails objectForKey:@"eventId"], token];
+   //NSString * myRsvpUrl_ = @"https://agv.nationbuilder.com/api/v1/sites/agv/pages/events/328/rsvps?access_token=102fe210786667df8a04708a471e549738cc4e72506c66bf44ddccf7c280794a";
+    
+    //PUT url
+    //NSString *myRsvpUrl_ = @"https://agv.nationbuilder.com/api/v1/sites/agv/pages/events/328/rsvps/1169?access_token=102fe210786667df8a04708a471e549738cc4e72506c66bf44ddccf7c280794a";
+    
+    NSLog(@"myRsvpUrl_: %@", myRsvpUrl_);
+    
+    //need to get notes on the person from a different api, namely
+    // the contacts api
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    //must set request serializer to application/json. otherwise 406
+    //is responded
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [manager POST:myRsvpUrl_ parameters:rsvpBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@" POST => updating RSVP with response %@",responseObject);
+        NSLog(@"SUCCESSfully added new RSVP.");
+        
+        //remember to reset the sendInANewContact back to false
+        self.sendInANewRSVP = false;
+        
+        //and we done now
+        [self reRenderUI];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
 
 
 - (void)parseTagString:(NSMutableDictionary *)tagsToKeep
@@ -635,7 +736,14 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     //
     //if there's no id associated for *broadcaster_id* then broadcaster is left out of semantic string
     
-    NSDictionary *contactBody = @{ @"contact": @{@"note": noteType, @"type_id":contactType, @"method":contactMethod, @"sender_id":myNBId, @"status":contactStatus, @"broadcaster_id": myNBId, @"recipient_id": self.person.recordID}  };
+    NSDictionary *contactBody =
+        @{ @"contact": @{@"note": noteType,
+                         @"type_id":contactType,
+                         @"method":contactMethod,
+                         @"sender_id":myNBId,
+                         @"status":contactStatus,
+                         //@"broadcaster_id": myNBId,
+                         @"recipient_id": self.person.recordID}};
     
     //post endpoint for making new contact
     NSString * myContactsUrl_ = [NSString stringWithFormat:myContactsUrl, nationBuilderSlugValue, self.person.recordID, token];
@@ -654,8 +762,12 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         //remember to reset the sendInANewContact back to false
         sendInANewContact = false;
         
-        [self reRenderUI];
-        
+        // *** CONTROL FLOW ***
+        if (self.sendInANewRSVP) {
+            [self sendInANewRSVP];
+        } else {
+            [self reRenderUI];
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
@@ -925,31 +1037,25 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     [self.addANewTag resignFirstResponder];
 }
 
+
 - (IBAction)chooseEventToRsvp:(id)sender {
     
     NSLog(@"chooseEventToRsvp button clicked");
-    //TGLOEventsModalViewController *eventsViewController = [[TGLOEventsModalViewController alloc] init];
-    
-    
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     TGLOEventsModalViewController *eventsViewController = [storyboard instantiateViewControllerWithIdentifier:@"eventsModalVC"];
     
-    
     eventsViewController.modalPresentationStyle = UIModalPresentationFullScreen;
     eventsViewController.delegate = self;
     
-    NSLog(@"%@", eventsViewController);
     
     UINavigationController *navigationController =
         [[UINavigationController alloc]
             initWithRootViewController:eventsViewController];
     [navigationController navigationBar].topItem.title = @"Events";
     
+    //finally, present the events model VC
     [self presentViewController:navigationController animated:YES completion: nil];
-    
-    //[self presentViewController:eventsViewController animated:YES completion:nil];
-    
 }
     
     
