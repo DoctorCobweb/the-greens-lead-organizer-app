@@ -81,7 +81,6 @@ static NSString *eventUrl= @"https://%@.nationbuilder.com/api/v1/sites/%@/pages/
     NSString * eventUrl_ = [NSString stringWithFormat:eventUrl, nationBuilderSlugValue, nationBuilderSlugValue, self.selectedEventId, token];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
     [manager GET:eventUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"EVENT DETAILS VIEW CONTROLLER and response: %@", responseObject);
         
@@ -102,33 +101,15 @@ static NSString *eventUrl= @"https://%@.nationbuilder.com/api/v1/sites/%@/pages/
 
 - (void)fillOutEventFields:(TGLOEvent *)event
 {
-    if (event.name != nil) {
-        self.nameTextField.text = event.name;
-    }
-    
-    //no date formatting for now
-    if (event.dateString != nil) {
-        self.dateTextField.text = event.dateString;
-    }
-    
-    //only address1 for now
-    if (!([event.venue objectForKey:@"address"] == [NSNull null]) && !([[event.venue objectForKey:@"address"]objectForKey:@"address1"] == [NSNull null])) {
-        NSLog(@"should NOT BE HERE");
-        self.venueTextField.text = [[event.venue objectForKey:@"address"] objectForKey:@"address1"];
-    }
-    
-    
-    if (event.details != nil) {
-        self.detailsTextView.text = event.details;
-    }
-    
-    //only name for now
-    if ([event.contactDetails objectForKey:@"name"] != nil) {
-        self.contactTextField.text = [event.contactDetails objectForKey:@"name"];
-    }
+    self.nameTextField.text = event.name;
+    self.dateTextField.text = event.dateString;
+    self.venueTextField.text = [[event.venue objectForKey:@"address"] objectForKey:@"address1"];
+    self.detailsTextView.text = event.details;
+    self.contactTextField.text = [event.contactDetails objectForKey:@"name"];
     
     //only first tag for now
-    if (!![event.tags count]) {
+    if (event.tags && [event.tags count]) {
+        NSLog(@"TAGS NOT EMPTY");
         self.tagsTextField.text = event.tags[0];
     }
 }
