@@ -413,28 +413,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" id="lNk-SL-GhW">
+                            <searchBar contentMode="redraw" id="fS9-n9-4LO">
                                 <rect key="frame" x="0.0" y="63" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="G8H-vg-WxX">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="5GQ-8a-Wct">
                                 <rect key="frame" x="0.0" y="107" width="320" height="461"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="eventsAllCell" id="glC-GL-zvI">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="eventsAllCell" id="lhv-GZ-u0C">
                                         <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="glC-GL-zvI" id="rwD-ax-ase">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lhv-GZ-u0C" id="FwO-Ge-RZt">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="LT9-Ll-tUF" kind="push" identifier="showEventDetails" id="bbb-ec-sGD"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="8t6-Ip-Tm2" id="rV6-a4-V94"/>
-                                    <outlet property="delegate" destination="8t6-Ip-Tm2" id="o0O-dR-RC6"/>
+                                    <outlet property="dataSource" destination="8t6-Ip-Tm2" id="hrv-No-8mK"/>
+                                    <outlet property="delegate" destination="8t6-Ip-Tm2" id="cCx-bE-IhW"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -443,13 +446,49 @@
                     <navigationItem key="navigationItem" id="P9d-4Y-okK"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <outlet property="searchBar" destination="lNk-SL-GhW" id="IOI-Je-LlZ"/>
-                        <outlet property="tableView" destination="G8H-vg-WxX" id="CDq-hD-OWG"/>
+                        <outlet property="searchBar" destination="fS9-n9-4LO" id="Pth-Ul-tBb"/>
+                        <outlet property="searchDisplayController" destination="q9d-ny-9TP" id="KRY-Lo-kOs"/>
+                        <outlet property="tableView" destination="5GQ-8a-Wct" id="iN4-On-m8P"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lpx-I3-qKk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="q9d-ny-9TP">
+                    <connections>
+                        <outlet property="delegate" destination="8t6-Ip-Tm2" id="7U8-XT-trO"/>
+                        <outlet property="searchContentsController" destination="8t6-Ip-Tm2" id="MfZ-Bm-Anb"/>
+                        <outlet property="searchResultsDataSource" destination="8t6-Ip-Tm2" id="cNH-ym-bpH"/>
+                        <outlet property="searchResultsDelegate" destination="8t6-Ip-Tm2" id="Nda-rV-XVg"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="2192" y="668"/>
+        </scene>
+        <!--Event Details View Controller-->
+        <scene sceneID="TOf-gv-VdN">
+            <objects>
+                <viewController id="LT9-Ll-tUF" customClass="TGLOEventDetailsViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zpm-LL-SUs">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="V9L-4c-7DX">
+                                <rect key="frame" x="52" y="187" width="233" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="oa5-s0-VgE"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="testTextFieldView" destination="V9L-4c-7DX" id="eio-cF-LK9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qeI-T7-Tg0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2606" y="668"/>
         </scene>
         <!--List View Controller-->
         <scene sceneID="GeR-y4-C7O">

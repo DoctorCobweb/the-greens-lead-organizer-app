@@ -15,5 +15,6 @@
 
 
 - (void)getAllEvents;
+- (NSMutableIndexSet *)getIndexSetOfMatches:(NSString *)searchTerm;
 
 @end
