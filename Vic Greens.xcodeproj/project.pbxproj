@@ -44,6 +44,7 @@
 		658278FF191B2BFB001BF4BB /* TGLOEventsAllViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 658278FE191B2BFB001BF4BB /* TGLOEventsAllViewController.m */; };
 		65827905191B3012001BF4BB /* TGLOEventsNewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65827904191B3012001BF4BB /* TGLOEventsNewViewController.m */; };
 		65827908191B736F001BF4BB /* TGLOEventDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65827907191B736F001BF4BB /* TGLOEventDetailsViewController.m */; };
+		6582790E191B81B6001BF4BB /* TGLOEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 6582790D191B81B6001BF4BB /* TGLOEvent.m */; };
 		65A812961910F34700C46959 /* theGreens58x58.png in Resources */ = {isa = PBXBuildFile; fileRef = 65A812931910F34700C46959 /* theGreens58x58.png */; };
 		65A812971910F34700C46959 /* theGreens80x80.png in Resources */ = {isa = PBXBuildFile; fileRef = 65A812941910F34700C46959 /* theGreens80x80.png */; };
 		65A812981910F34700C46959 /* theGreens120x120.png in Resources */ = {isa = PBXBuildFile; fileRef = 65A812951910F34700C46959 /* theGreens120x120.png */; };
@@ -166,6 +167,8 @@
 		65827904191B3012001BF4BB /* TGLOEventsNewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOEventsNewViewController.m; sourceTree = "<group>"; };
 		65827906191B736F001BF4BB /* TGLOEventDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOEventDetailsViewController.h; sourceTree = "<group>"; };
 		65827907191B736F001BF4BB /* TGLOEventDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOEventDetailsViewController.m; sourceTree = "<group>"; };
+		6582790C191B81B6001BF4BB /* TGLOEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOEvent.h; sourceTree = "<group>"; };
+		6582790D191B81B6001BF4BB /* TGLOEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOEvent.m; sourceTree = "<group>"; };
 		65A812931910F34700C46959 /* theGreens58x58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = theGreens58x58.png; sourceTree = "<group>"; };
 		65A812941910F34700C46959 /* theGreens80x80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = theGreens80x80.png; sourceTree = "<group>"; };
 		65A812951910F34700C46959 /* theGreens120x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = theGreens120x120.png; sourceTree = "<group>"; };
@@ -366,6 +369,8 @@
 				65827904191B3012001BF4BB /* TGLOEventsNewViewController.m */,
 				65827906191B736F001BF4BB /* TGLOEventDetailsViewController.h */,
 				65827907191B736F001BF4BB /* TGLOEventDetailsViewController.m */,
+				6582790C191B81B6001BF4BB /* TGLOEvent.h */,
+				6582790D191B81B6001BF4BB /* TGLOEvent.m */,
 			);
 			name = "Vic Greens";
 			path = TheGreensLeadOrganizerApp;
@@ -619,6 +624,7 @@
 				654CF49E190CAA08005ABF5A /* TGLOLogoutViewController.m in Sources */,
 				656174761906380600EE712F /* TGLOUtils.m in Sources */,
 				65827908191B736F001BF4BB /* TGLOEventDetailsViewController.m in Sources */,
+				6582790E191B81B6001BF4BB /* TGLOEvent.m in Sources */,
 				651318BA18FE1A3F00995995 /* TGLOPersonFromTagViewController.m in Sources */,
 				651318C718FF71B000995995 /* TGLOCustomEditContactView.m in Sources */,
 				65BC972218F3CE52006063CA /* TGLOMainViewController.m in Sources */,

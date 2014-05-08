@@ -264,9 +264,9 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
         
         TGLOEventDetailsViewController *destViewController = (TGLOEventDetailsViewController *) segue.destinationViewController;
         
-        NSLog(@"name to send: %@", [searchResults[indexPath.row] valueForKey:@"name"]);
+        //NSLog(@"name to send: %@", [searchResults[indexPath.row] valueForKey:@"name"]);
         
-        destViewController.testTextFieldValue = [searchResults[indexPath.row] valueForKey:@"name"];
+        destViewController.selectedEventId = [searchResults[indexPath.row] valueForKey:@"eventId"];
     }
 }
 
