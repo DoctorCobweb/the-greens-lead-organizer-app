@@ -10,9 +10,11 @@
 #import "AFNetworking.h"
 #import "AFNetworkActivityIndicatorManager.h"
 #import "TGLOUtils.h"
+#import "TGLOAppDelegate.h"
 
-
-static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/all/%@/%@";
+//agv.nationbuilder.com/api/v1/sites/agv/pages/events/357/rsvps?page=1&per_page=10&access_token=102fe210786667df8a04708a471e549738cc4e72506c66bf44ddccf7c280794a
+static NSString *eventRsvpsUrl = @"https://agv.nationbuilder.com/api/v1/sites/%@/pages/events/%@/rsvps?page=1&per_page=1000&access_token=%@";
+static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/all/%@/%@";
 
 @interface TGLOEventsModalViewController () {
 
@@ -244,33 +246,65 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"selected event: %@", searchResults[ indexPath.row]);
-    TGLOEditMyProfileViewController *delegate = [self delegate];
     
     
-    UIButton *rsvpButton = (UIButton *)[[delegate view] viewWithTag:41];
-    [rsvpButton titleLabel].font = [UIFont systemFontOfSize:13];
-    //rsvpButton.titleEdgeInsets = UIEdgeInsetsMake(0, -30, 0, 30);
-    [rsvpButton setTitle:[searchResults[indexPath.row] objectForKey:@"name"] forState:UIControlStateNormal];
+    //static NSString *eventRsvpUrl = @"https://agv.nationbuilder.com/api/v1/sites/%@/pages/events/%@/rsvps?page=1&per_page=1000&access_token=%@";
     
-    delegate.rsvpDetails = [[NSMutableDictionary alloc] initWithDictionary:searchResults[indexPath.row]];
+    //gotta check to see if user has already rsvpd to this event
+    NSString *eventRsvpsUrl_ = [NSString stringWithFormat:eventRsvpsUrl, nationBuilderSlugValue, [searchResults[indexPath.row] objectForKey:@"eventId"],[TGLOUtils getUserAccessToken]];
     
-    delegate.sendInANewRSVP = YES;
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:eventRsvpsUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"EVENTS RSVP check and response for events: %@", responseObject);
+        
+        NSArray *results_array = [[responseObject objectForKey:@"results"] allObjects];
+        NSString *myNBId = [TGLOUtils getUserNationBuilderId];
+        
+        if (![results_array isEqual:[NSNull null]] && [results_array count] > 0) {
+            NSLog(@"we HAVE rsvps. check to see if user NB id is in there");
+            [results_array enumerateObjectsUsingBlock: ^(id obj, NSUInteger indx, BOOL *stop){
+            
+                NSString *personIdString = [[NSString alloc] initWithFormat:@"%@",[obj valueForKey:@"person_id"]];
+                
+                //NSLog(@"personIdString: %@", personIdString);
+                //NSLog(@"myNBId: %@", myNBId);
+                
+                if ([personIdString isEqualToString:myNBId]) {
+                    NSLog(@"person has ALREADY resvpd to this event");
+                    
+                    *stop = YES;
+                }
+            }];
+        }
     
-    //prompt user to choose how many addional guests also.
-    //this also handles dismissing the modal VC in its body
-    [self chooseHowManyGuests];
+        TGLOEditMyProfileViewController *delegate = [self delegate];
+        UIButton *rsvpButton = (UIButton *)[[delegate view] viewWithTag:41];
+        [rsvpButton titleLabel].font = [UIFont systemFontOfSize:13];
+        //rsvpButton.titleEdgeInsets = UIEdgeInsetsMake(0, -30, 0, 30);
+        [rsvpButton setTitle:[searchResults[indexPath.row] objectForKey:@"name"] forState:UIControlStateNormal];
+    
+        delegate.rsvpDetails = [[NSMutableDictionary alloc] initWithDictionary:searchResults[indexPath.row]];
+    
+        delegate.sendInANewRSVP = YES;
+    
+        //prompt user to choose how many addional guests also.
+        //this also handles dismissing the modal VC in its body
+        [self chooseHowManyGuests];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
 }
 
 
 - (void)chooseHowManyGuests
 {
-    NSArray *reward = @[@"(prizes in mail)",
+    NSArray *reward = @[@"(prize in mail)",
                         @"(high five)",
                         @"(have a seat)",
                         @"(wow wa wee wa)",
-                        @"(BAM)",
                         @"(B..B...BOOOOM)",
-                        @"(nothing but net)",
+                        @"(nothin but net)",
                         @"(have a dance)"];
     
     NSUInteger r = arc4random_uniform([reward count]);

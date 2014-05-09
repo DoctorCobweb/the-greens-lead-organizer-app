@@ -369,12 +369,25 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.0" green="0.64313725489999995" blue="0.71372549019999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" title="Find ALL Events">
+                                <state key="normal" title="SEARCH for an Event">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <segue destination="8t6-Ip-Tm2" kind="push" id="uo8-wQ-NQE"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="W5g-1J-QRT">
+                                <rect key="frame" x="0.0" y="235" width="320" height="167"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.45098039220000002" green="0.34901960780000002" blue="0.63529411759999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="Browse ALL Events">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="VOC-db-Dgs" kind="push" id="Dtm-Uz-pXR"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="R80-r4-xF6">
@@ -403,7 +416,42 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NU9-fB-ql5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1750" y="992"/>
+            <point key="canvasLocation" x="1618" y="1326"/>
+        </scene>
+        <!--Collection View Controller-->
+        <scene sceneID="lmD-Xz-MYO">
+            <objects>
+                <collectionViewController autoresizesArchivedViewToFullSize="NO" id="VOC-db-Dgs" sceneMemberID="viewController">
+                    <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="WEj-Df-nWE">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="JK8-cc-xNA">
+                            <size key="itemSize" width="50" height="50"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="nmt-U1-35d">
+                                <rect key="frame" x="0.0" y="64" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="VOC-db-Dgs" id="tRS-Zv-dXK"/>
+                            <outlet property="delegate" destination="VOC-db-Dgs" id="ebq-vd-qxV"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" id="xvv-UP-W3I"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ldt-nq-z1g" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2149" y="1362"/>
         </scene>
         <!--Events All View Controller-->
         <scene sceneID="ag9-Z5-twk">
@@ -461,7 +509,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="2192" y="668"/>
+            <point key="canvasLocation" x="2130" y="678"/>
         </scene>
         <!--Event Details View Controller-->
         <scene sceneID="TOf-gv-VdN">
@@ -568,7 +616,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qeI-T7-Tg0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2606" y="668"/>
+            <point key="canvasLocation" x="2544" y="678"/>
         </scene>
         <!--List View Controller-->
         <scene sceneID="GeR-y4-C7O">
@@ -1467,7 +1515,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IxT-bd-N9T" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1762" y="2180"/>
+            <point key="canvasLocation" x="1698" y="2844"/>
         </scene>
         <!--Events New View Controller-->
         <scene sceneID="vXW-qw-qSF">
@@ -1490,7 +1538,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="usk-aG-CVL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2192" y="1418"/>
+            <point key="canvasLocation" x="2160" y="2056"/>
         </scene>
         <!--Edit My Profile View Controller-->
         <scene sceneID="gSb-pe-lAH">
@@ -1661,7 +1709,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sfz-e0-Vy6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2201" y="2160"/>
+            <point key="canvasLocation" x="2137" y="2824"/>
         </scene>
         <!--Events Modal View Controller-->
         <scene sceneID="3lg-8D-2Fi">
@@ -1721,7 +1769,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="2620" y="2153"/>
+            <point key="canvasLocation" x="2556" y="2817"/>
         </scene>
         <!--Account Login View Controller-->
         <scene sceneID="kQb-w4-Fty">

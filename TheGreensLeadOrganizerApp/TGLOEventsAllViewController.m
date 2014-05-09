@@ -55,7 +55,7 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
     undoStack = [[NSMutableArray alloc] init];
     
-    self.title = @"All Vic events";
+    self.title = @"Search Events";
     searchBar.delegate = self;
     
     [self getAllEvents];
