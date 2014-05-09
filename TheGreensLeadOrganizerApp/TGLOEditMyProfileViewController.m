@@ -17,6 +17,7 @@
 //we need this to rerender add/remove tags in ui after saving
 //4. the UIButton for Support Level has tag = 40. set in storyboard.
 //5. the UIButton for RSVP to an event has tag = 41. set in storybrd.
+//6. the RSVP lable above RSVP UIButton has tag = 42. set in storybrd.
 
 
 #import "TGLOEditMyProfileViewController.h"
@@ -32,9 +33,6 @@
 
 static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=10&access_token=%@";
 static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people/%@?access_token=%@";
-
-//agv.nationbuilder.com/api/v1/sites/agv/pages/events/328/rsvps?access_token=102fe210786667df8a04708a471e549738cc4e72506c66bf44ddccf7c280794a
-
 static NSString * myRsvpUrl = @"https://%@.nationbuilder.com/api/v1/sites/%@/pages/events/%@/rsvps?access_token=%@";
 
 

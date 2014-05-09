@@ -244,7 +244,6 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"selected event: %@", searchResults[ indexPath.row]);
-    [[self delegate] dismissViewControllerAnimated:YES completion:nil];
     TGLOEditMyProfileViewController *delegate = [self delegate];
     
     
@@ -254,9 +253,67 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
     [rsvpButton setTitle:[searchResults[indexPath.row] objectForKey:@"name"] forState:UIControlStateNormal];
     
     delegate.rsvpDetails = [[NSMutableDictionary alloc] initWithDictionary:searchResults[indexPath.row]];
+    
     delegate.sendInANewRSVP = YES;
+    
+    //prompt user to choose how many addional guests also.
+    //this also handles dismissing the modal VC in its body
+    [self chooseHowManyGuests];
 }
 
+
+- (void)chooseHowManyGuests
+{
+    NSArray *reward = @[@"(prizes in mail)",
+                        @"(high five)",
+                        @"(have a seat)",
+                        @"(wow wa wee wa)",
+                        @"(BAM)",
+                        @"(B..B...BOOOOM)",
+                        @"(nothing but net)",
+                        @"(have a dance)"];
+    
+    NSUInteger r = arc4random_uniform([reward count]);
+    NSString *tenTitle = [[NSString alloc] initWithFormat:@"10 %@", reward[r]];
+    UIActionSheet *guestsNumberActionSheet =
+    [[UIActionSheet alloc]
+     initWithTitle:@"Any guests?"
+     delegate:self
+     cancelButtonTitle:@"Nope"
+     destructiveButtonTitle:nil
+     otherButtonTitles:@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", tenTitle, nil];
+    
+    [guestsNumberActionSheet showInView:self.view];
+}
+
+
+#pragma UIActionSheetDelegate methods
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"buttonIndex: %d", buttonIndex);
+    NSLog(@"actionSheet.title: %@", actionSheet.title);
+    
+    TGLOEditMyProfileViewController *delegate = [self delegate];
+
+    if (buttonIndex == [actionSheet cancelButtonIndex]) {
+        // User pressed cancel -- abort
+        NSLog(@"user cancelled guest selection");
+        [delegate.rsvpDetails setObject:@0 forKey:@"guests_count"];
+        NSLog(@"delegate.rsvpDetails: %@", delegate.rsvpDetails);
+        [delegate dismissViewControllerAnimated:YES completion:nil];
+        return;
+    }
+    
+    [delegate.rsvpDetails setObject:[NSNumber numberWithInt:buttonIndex + 1] forKey:@"guests_count"];
+    NSLog(@"delegate.rsvpDetails: %@", delegate.rsvpDetails);
+    
+    //also update the RSVP label to show additional guests
+    UILabel *rsvpLabel = (UILabel *)[delegate.containerView viewWithTag:42];
+    rsvpLabel.text = [[NSString alloc] initWithFormat:@"RSVP + %d guests", (buttonIndex + 1)];
+    
+    [delegate dismissViewControllerAnimated:YES completion:nil];
+    
+}
 
 /*
  // Override to support conditional editing of the table view.

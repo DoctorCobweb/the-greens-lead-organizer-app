@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "TGLOEditMyProfileViewController.h"
 
-@interface TGLOEventsModalViewController : UIViewController<UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface TGLOEventsModalViewController : UIViewController<UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -19,5 +19,6 @@
 
 - (void)getAllEvents;
 - (NSMutableIndexSet *)getIndexSetOfMatches:(NSString *)searchTerm;
+- (void)chooseHowManyGuests;
 
 @end
