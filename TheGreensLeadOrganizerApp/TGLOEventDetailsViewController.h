@@ -28,6 +28,8 @@
 - (void)getEvent;
 - (void)getAllRsvps;
 - (void)fillOutEventFields:(TGLOEvent *)event;
+- (void) addRsvpsLabel;
+-(void) translateRsvpIdsToNames:(NSSet *)rsvps;
 - (void)addRsvpsToUI:(NSSet *)rsvps;
 - (void)updateScrollAndContainerViewSize:(CGFloat)makeMoreRoom;
 

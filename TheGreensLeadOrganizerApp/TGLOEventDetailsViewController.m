@@ -18,6 +18,9 @@ static NSString *eventUrl= @"https://%@.nationbuilder.com/api/v1/sites/%@/pages/
 
 static NSString *rsvpsUrl = @"https://%@.nationbuilder.com/api/v1/sites/%@/pages/events/%@/rsvps?page=1&per_page=1000&access_token=%@";
 
+//static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuapp.com/namesForId/%@/%@";
+static NSString *translateIdsToNamesUrl = @"http://localhost:5000/namesForId/%@/%@";
+
 
 
 @interface TGLOEventDetailsViewController () {
@@ -83,7 +86,7 @@ static NSString *rsvpsUrl = @"https://%@.nationbuilder.com/api/v1/sites/%@/pages
         //NSLog(@"EVENT DETAILS VIEW CONTROLLER and response: %@", responseObject);
         
         NSSet *event_set = [responseObject objectForKey:@"event"];
-        NSLog(@"event_set: %@", event_set);
+        //NSLog(@"event_set: %@", event_set);
         
         
         parsedEvent = [TGLOEvent eventFieldsForObject:event_set];
@@ -108,10 +111,20 @@ static NSString *rsvpsUrl = @"https://%@.nationbuilder.com/api/v1/sites/%@/pages
     NSString *contactNumber = [event.contactDetails objectForKey:@"phone"];
     self.contactTextField.text = [[NSString alloc] initWithFormat:@"%@ %@", contactName, contactNumber];
     
+    NSMutableString *tagsConcatenated = [[NSMutableString alloc] init];
     //only first tag for now
     if (event.tags && [event.tags count]) {
         NSLog(@"TAGS NOT EMPTY");
-        self.tagsTextField.text = event.tags[0];
+        [event.tags enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            
+            NSString *addStr = [[NSString alloc] initWithFormat:@"%@, ", (NSString *)obj];
+        
+            [tagsConcatenated appendString:addStr];
+        }];
+        
+        //remove trailing comma and space
+        self.tagsTextField.text = [tagsConcatenated substringToIndex:([tagsConcatenated length] -2)];
+       
     }
 }
 
@@ -124,14 +137,77 @@ static NSString *rsvpsUrl = @"https://%@.nationbuilder.com/api/v1/sites/%@/pages
         NSLog(@"RSVPS TO EVENT DETAILS VIEW CONTROLLER and response: %@", responseObject);
         
         NSSet *rsvpsSet = [responseObject objectForKey:@"results"];
-        NSLog(@"rsvpsSet: %@", rsvpsSet);
+        //NSLog(@"rsvpsSet: %@", rsvpsSet);
         
-        [self addRsvpsToUI:rsvpsSet];
+        [self addRsvpsLabel];
+        [self translateRsvpIdsToNames:rsvpsSet];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
 }
+
+- (void) addRsvpsLabel
+{
+    CGFloat labelSpacing = 10; //spacing between the views
+    CGFloat makeMoreRoom = 40; //additional room scroll/containerView
+    CGFloat labelWidth = 280;  //new label width
+    CGFloat labelHeight= 30;   //new label height
+    
+    
+    UILabel *newLabel = (UILabel *)[self fabricateANewView:@"UILabel" width:labelWidth height:labelHeight spacing:labelSpacing];
+    
+    newLabel.text = @"RSVPS";
+    newLabel.font = [UIFont boldSystemFontOfSize:13];
+    
+    
+    [self updateScrollAndContainerViewSize:makeMoreRoom];
+    
+    //finally add the new view to as last subview
+    [self.containerView addSubview:newLabel];
+}
+
+
+
+-(void) translateRsvpIdsToNames:(NSSet *)rsvps
+{
+    NSLog(@"translating rsvp ids to names...");
+    
+    
+    NSString * translateIdsToNamesUrl_ = [NSString stringWithFormat:translateIdsToNamesUrl, [TGLOUtils getUserNationBuilderId], token];
+    NSMutableArray *idsArray = [[NSMutableArray alloc] init];
+    
+    //extract only person_ids which we want to translate
+    [rsvps enumerateObjectsUsingBlock:^(id obj, BOOL *stop){
+        if ([obj valueForKey:@"person_id"] != [NSNull null]) {
+            [idsArray addObject:[obj valueForKey:@"person_id"]];
+        }
+    }];
+    
+    NSDictionary *postBody = @{ @"people": idsArray};
+    
+    //need to get notes on the person from a different api, namely
+    // the contacts api
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    //must set request serializer to application/json. otherwise 406
+    //is responded
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [manager POST:translateIdsToNamesUrl_ parameters:postBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"=> RSVPS ids to names translation response %@",responseObject);
+        
+        //remember to reset the sendInANewContact back to false
+        //sendInANewContact = false;
+        
+        //for now just render with ids until backend is implemented
+        [self addRsvpsToUI:rsvps];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+
 
 
 - (void)addRsvpsToUI:(NSSet *)rsvps
