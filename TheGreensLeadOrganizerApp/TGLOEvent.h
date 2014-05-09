@@ -19,5 +19,6 @@
 @property (nonatomic, strong) NSMutableArray  *tags;
 
 + (TGLOEvent *) eventFieldsForObject:(NSSet *)event;
++ (NSString *)parseOutHtml:(NSString *)info;
 
 @end

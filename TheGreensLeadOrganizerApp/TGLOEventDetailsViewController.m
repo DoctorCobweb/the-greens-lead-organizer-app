@@ -103,7 +103,10 @@ static NSString *rsvpsUrl = @"https://%@.nationbuilder.com/api/v1/sites/%@/pages
     self.dateTextField.text = event.dateString;
     self.venueTextField.text = [[event.venue objectForKey:@"address"] objectForKey:@"address1"];
     self.detailsTextView.text = event.details;
-    self.contactTextField.text = [event.contactDetails objectForKey:@"name"];
+    
+    NSString *contactName = [event.contactDetails objectForKey:@"name"];
+    NSString *contactNumber = [event.contactDetails objectForKey:@"phone"];
+    self.contactTextField.text = [[NSString alloc] initWithFormat:@"%@ %@", contactName, contactNumber];
     
     //only first tag for now
     if (event.tags && [event.tags count]) {

@@ -107,10 +107,9 @@
     if ([event valueForKey:@"start_time"] == [NSNull null]) {
         _event.dateString= nil;
     } else {
-        NSDateFormatter *dFormatter = [[NSDateFormatter alloc] init];
-        
-        NSDate *date = [dFormatter dateFromString:[event valueForKey:@"start_time"]];
-        NSLog(@"date: %@", date);
+        //NSDateFormatter *dFormatter = [[NSDateFormatter alloc] init];
+        //NSDate *date = [dFormatter dateFromString:[event valueForKey:@"start_time"]];
+        //NSLog(@"date: %@", date);
         
         _event.dateString = [event valueForKey:@"start_time"];
     }
@@ -119,7 +118,9 @@
     if ([event valueForKey:@"intro"] == [NSNull null]) {
         _event.details = nil;
     } else {
-        _event.details = [event valueForKey:@"intro"];
+        
+        _event.details = [self parseOutHtml:[event valueForKey:@"intro"]];
+        //_event.details = [event valueForKey:@"intro"];
     }
     
     
@@ -140,6 +141,43 @@
     return _event;
 }
 
++ (NSString *)parseOutHtml:(NSString *)info
+{
+    NSUInteger infoLength = [info length];
+    NSMutableString *filteredInfo = [[NSMutableString alloc] init];
+    BOOL htmlTag = NO;
+    
+    
+    for (int i = 0; i < infoLength; i++) {
+        unichar c = [info characterAtIndex:i];
+        
+        NSString *charAtIString = [[NSString alloc] initWithFormat:@"%c", c];
+        
+        if ([charAtIString isEqualToString:@"<"]) {
+            //start of opening html tag.
+            htmlTag = YES;
+            continue;
+        }
+        if ([charAtIString isEqualToString:@">"]) {
+            //ending an html tag
+            htmlTag = NO;
+            continue;
+        }
+        if (!htmlTag) {
+            //we have proper text content that we want to keep
+            [filteredInfo appendString:charAtIString];
+        }
+    }
+    
+    
+    
+    NSString *finalFilteredString = [NSString stringWithString:filteredInfo];
+    
+    
+    NSLog(@"UNFILTEREDSTRING info: %@", info);
+    NSLog(@"finalFilteredString: %@", finalFilteredString);
+    return finalFilteredString;
+}
 
 
 @end
