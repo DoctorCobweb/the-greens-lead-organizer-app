@@ -414,6 +414,7 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
 
 - (void)chooseHowManyGuests
 {
+    //used for displaying a random addition for 10 guests. just having fun.
     NSArray *reward = @[@"(prize in mail)",
                         @"(high five)",
                         @"(have a seat)",
@@ -425,12 +426,12 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     NSUInteger r = arc4random_uniform([reward count]);
     NSString *tenTitle = [[NSString alloc] initWithFormat:@"10 %@", reward[r]];
     UIActionSheet *guestsNumberActionSheet =
-    [[UIActionSheet alloc]
-     initWithTitle:@"Any guests?"
-     delegate:self
-     cancelButtonTitle:@"Nope"
-     destructiveButtonTitle:nil
-     otherButtonTitles:@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", tenTitle, nil];
+        [[UIActionSheet alloc]
+            initWithTitle:@"Any guests?"
+            delegate:self
+            cancelButtonTitle:@"No guests"
+            destructiveButtonTitle:nil
+            otherButtonTitles:@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", tenTitle, nil];
     
     [guestsNumberActionSheet showInView:self.view];
 }

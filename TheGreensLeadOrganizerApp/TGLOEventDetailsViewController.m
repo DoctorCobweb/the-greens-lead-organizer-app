@@ -20,7 +20,7 @@ static NSString *rsvpsUrl = @"https://%@.nationbuilder.com/api/v1/sites/%@/pages
 
 #warning TODO: not use localhost for translating ids to names
 //static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuapp.com/namesForId/%@/%@";
-static NSString *translateIdsToNamesUrl = @"http://localhost:5000/namesForId/%@/%@";
+static NSString *translateIdsToNamesUrl = @"http://localhost:5000/namesForIds/%@/%@";
 
 
 
@@ -185,7 +185,7 @@ static NSString *translateIdsToNamesUrl = @"http://localhost:5000/namesForId/%@/
         }
     }];
     
-    NSDictionary *postBody = @{ @"people": idsArray};
+    NSDictionary *postBody = @{ @"peopleIds": idsArray};
     
     //need to get notes on the person from a different api, namely
     // the contacts api
@@ -195,13 +195,14 @@ static NSString *translateIdsToNamesUrl = @"http://localhost:5000/namesForId/%@/
     //is responded
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     [manager POST:translateIdsToNamesUrl_ parameters:postBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"=> RSVPS ids to names translation response %@",responseObject);
+        //NSLog(@"=> RSVPS ids to names translation response %@",responseObject);
         
         //remember to reset the sendInANewContact back to false
         //sendInANewContact = false;
+        NSSet *rsvpsSet = [responseObject objectForKey:@"rsvps"];
         
         //for now just render with ids until backend is implemented
-        [self addRsvpsToUI:rsvps];
+        [self addRsvpsToUI:rsvpsSet];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
@@ -211,12 +212,13 @@ static NSString *translateIdsToNamesUrl = @"http://localhost:5000/namesForId/%@/
 
 
 
-- (void)addRsvpsToUI:(NSSet *)rsvps
+- (void)addRsvpsToUI:(NSSet *)rsvpsSet
 {
     NSLog(@"adding in RSVPS to UI...");
-    NSArray *rsvpsArray = [rsvps allObjects];
+    NSArray *rsvpsArray = [rsvpsSet allObjects];
     int rsvpsCount = [rsvpsArray count];
     
+    //NSLog(@"rsvpsArray: %@", rsvpsArray);
     
     CGFloat labelSpacing = 10; //spacing between the views
     CGFloat makeMoreRoom = 40; //additional room on end of scroll/container view
@@ -226,14 +228,20 @@ static NSString *translateIdsToNamesUrl = @"http://localhost:5000/namesForId/%@/
     UIColor * purpleColor = [UIColor colorWithRed:115/255.0f green:89/255.0f blue:162/255.0f alpha:1.0f];
     
     
+#warning TODO: change rsvp ids to person names
     //add each rsvp individually
     for (int i = 0; i < rsvpsCount; i++) {
         
         UITextField *newTextField = (UITextField *)[self fabricateANewView:@"UITextField" width:labelWidth height:labelHeight spacing:labelSpacing];
-        NSString *personId= [[NSString alloc] initWithFormat:@"%@",[rsvpsArray[i] valueForKey:@"person_id"]];
+        //NSString *personId= [[NSString alloc] initWithFormat:@"%@",[rsvpsArray[i] valueForKey:@"person_id"]];
+        NSString *firstName = [rsvpsArray[i] objectForKey:@"firstName"];
+        NSString *lastName = [rsvpsArray[i] objectForKey:@"lastName"];
     
         newTextField.borderStyle = UITextBorderStyleRoundedRect;
-        newTextField.text = personId;
+        
+        //newTextField.text = personId;
+        newTextField.text = [[NSString alloc] initWithFormat:@"%@ %@", firstName, lastName];
+        
         newTextField.textColor = [UIColor whiteColor];
         newTextField.userInteractionEnabled = NO;
         newTextField.backgroundColor = purpleColor;
