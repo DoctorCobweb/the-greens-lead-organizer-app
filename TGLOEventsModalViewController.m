@@ -303,8 +303,9 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
 {
     NSLog(@"selected event: %@", searchResults[ indexPath.row]);
     
-    
-    //static NSString *eventRsvpUrl = @"https://agv.nationbuilder.com/api/v1/sites/%@/pages/events/%@/rsvps?page=1&per_page=1000&access_token=%@";
+    //__block allows block to access this var
+    __block BOOL alreadyRsvpd = NO;
+    __block NSString *matchedRsvpId = [[NSString alloc] init];
     
     //gotta check to see if user has already rsvpd to this event
     NSString *eventRsvpsUrl_ = [NSString stringWithFormat:eventRsvpsUrl, nationBuilderSlugValue, [searchResults[indexPath.row] objectForKey:@"eventId"],[TGLOUtils getUserAccessToken]];
@@ -326,32 +327,91 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
                 //NSLog(@"myNBId: %@", myNBId);
                 
                 if ([personIdString isEqualToString:myNBId]) {
-                    NSLog(@"person has ALREADY resvpd to this event");
+                    NSLog(@"MATCH => person has ALREADY resvpd to this event");
                     
+                    //extract the rsvp id for match. we need it when PUTing the rsvp
+                    //to update it
+                    matchedRsvpId = [obj valueForKey:@"id"];
+                    
+                    alreadyRsvpd = YES;
                     *stop = YES;
                 }
             }];
         }
+        
+        
+        //now handle the two different cases
+        //1. previously rsvpd
+        //2. new rsvp
+        if (alreadyRsvpd) {
+            //and matchedRsvpId will be a string non-nil
+            [self handleRsvp:@"alreadyRsvpd" selectedRowAtIndexPath:indexPath  matchedRsvpId:matchedRsvpId];
+        } else {
+            //either no rsvps or user id is not in rsvp list
+            //and matchedRsvpId will be nil because there was no match
+            [self handleRsvp:@"newRsvp" selectedRowAtIndexPath:indexPath matchedRsvpId:matchedRsvpId];
+        }
     
-#warning TODO: handle already rsvpd events properly
-        TGLOEditMyProfileViewController *delegate = [self delegate];
-        UIButton *rsvpButton = (UIButton *)[[delegate view] viewWithTag:41];
-        [rsvpButton titleLabel].font = [UIFont systemFontOfSize:13];
-        //rsvpButton.titleEdgeInsets = UIEdgeInsetsMake(0, -30, 0, 30);
-        [rsvpButton setTitle:[searchResults[indexPath.row] objectForKey:@"name"] forState:UIControlStateNormal];
-    
-        delegate.rsvpDetails = [[NSMutableDictionary alloc] initWithDictionary:searchResults[indexPath.row]];
-    
-        delegate.sendInANewRSVP = YES;
-    
-        //prompt user to choose how many addional guests also.
-        //this also handles dismissing the modal VC in its body
-        [self chooseHowManyGuests];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
 }
+
+
+//status is either 1. @"alreadyRsvpd" or 2. @"newRsvp"
+- (void)handleRsvp:(NSString *)status selectedRowAtIndexPath: (NSIndexPath *)indexPath matchedRsvpId:(NSString *)matchedRsvpId
+{
+    TGLOEditMyProfileViewController *delegate = [self delegate];
+    UIButton *rsvpButton = (UIButton *)[[delegate view] viewWithTag:41];
+        
+    [rsvpButton titleLabel].font = [UIFont systemFontOfSize:13];
+    [rsvpButton setTitle:[searchResults[indexPath.row] objectForKey:@"name"] forState:UIControlStateNormal];
+    
+    delegate.rsvpDetails = [[NSMutableDictionary alloc] initWithDictionary:searchResults[indexPath.row]];
+    delegate.sendInRSVP = YES;
+    
+    
+    
+    if ([status isEqualToString:@"newRsvp"]) {
+        NSLog(@"NEW RSVPD to EVENT");
+        
+        //also set the http method to POST
+        [delegate.rsvpDetails setObject:@"POST" forKey:@"httpMethod"];
+    
+        
+        //prompt user to choose how many addional guests also.
+        //this also handles dismissing the modal VC in its body
+        [self chooseHowManyGuests];
+        
+    } else if ([status isEqualToString:@"alreadyRsvpd"]) {
+        NSLog(@"USER HAS ALREADY RSVPD to EVENT!!! add 1 guest ");
+        //UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Rsvp details" message:@"You have previously Rsvpd to this event" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles: nil];
+        
+        //[alert show];
+        
+        //set the http method to PUT
+        //and the matchedRsvpId which we need for PUT req
+        [delegate.rsvpDetails setObject:@"PUT" forKey:@"httpMethod"];
+        [delegate.rsvpDetails setObject:matchedRsvpId forKey:@"matchedRsvpId"];
+        
+    
+        
+        //also update the RSVP label to show additional guests
+        UILabel *rsvpLabel = (UILabel *)[delegate.containerView viewWithTag:42];
+        rsvpLabel.text = [[NSString alloc] initWithFormat:@"RSVP + 1 guests (HARDCODED)"];
+        
+        [delegate dismissViewControllerAnimated:YES completion:nil];
+        
+        
+        
+        //prompt user to choose how many addional guests also.
+        //this also handles dismissing the modal VC in its body
+        //[self chooseHowManyGuests];
+    }
+    
+}
+
 
 
 - (void)chooseHowManyGuests
@@ -462,7 +522,7 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
 
 - (IBAction)cancelModal:(id)sender {
     [[self delegate] dismissViewControllerAnimated:YES completion:nil];
-    [self delegate].sendInANewRSVP = NO;
+    [self delegate].sendInRSVP = NO;
 }
 
 @end

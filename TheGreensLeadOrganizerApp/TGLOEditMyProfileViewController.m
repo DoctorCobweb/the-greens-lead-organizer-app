@@ -33,7 +33,8 @@
 
 static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=10&access_token=%@";
 static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people/%@?access_token=%@";
-static NSString * myRsvpUrl = @"https://%@.nationbuilder.com/api/v1/sites/%@/pages/events/%@/rsvps?access_token=%@";
+static NSString * postRsvpUrl = @"https://%@.nationbuilder.com/api/v1/sites/%@/pages/events/%@/rsvps?access_token=%@";
+static NSString * putRsvpUrl = @"https://%@.nationbuilder.com/api/v1/sites/%@/pages/events/%@/rsvps/%@?access_token=%@";
 
 
 
@@ -84,7 +85,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     
     //used to determine if user has signified they want to
     //add a new RSVP to  save
-    self.sendInANewRSVP = NO;
+    self.sendInRSVP = NO;
     
 	// Do any additional setup after loading the view.
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
@@ -218,10 +219,10 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 
 - (void)makeABlankContactView
 {
-    CGFloat labelSpacing = 20; //spacing between the views
+    CGFloat labelSpacing = 20;  //spacing between the views
     CGFloat makeMoreRoom = 250; //additional room on end of scrollview
-    CGFloat labelWidth = 280;  //new label width
-    CGFloat labelHeight= 230;   //new label height
+    CGFloat labelWidth   = 280; //new label width
+    CGFloat labelHeight  = 230; //new label height
     
     
     TGLOCustomEditContactView *customView = (TGLOCustomEditContactView*)[self fabricateANewView:@"TGLOCustomEditContactView" width:labelWidth height:labelHeight spacing:labelSpacing];
@@ -583,7 +584,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
             //we will handle saving RSVP in callback
             //of saving new contact
             [self saveTheNewContact];
-        } else if (self.sendInANewRSVP) {
+        } else if (self.sendInRSVP) {
             [self saveTheRsvp];
         } else {
             //we are done with network calls
@@ -604,21 +605,8 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     //re render ui
     
     NSString *myNBId = [TGLOUtils getUserNationBuilderId];
-    NSDictionary *rsvpBody =
-        @{ @"rsvp": @{
-                      @"person_id":    myNBId,
-                      @"guests_count": @0,
-                      @"private":      @"false",
-                      @"volunteer":    @"false",
-                      @"canceled":     @"false",
-                      @"attended":     @"false",
-                      @"shift_ids":    @[]
-                      }};
+    NSDictionary *rsvpBody = [[NSDictionary alloc] init];
     
-    NSLog(@"rsvpBody: %@", rsvpBody);
-    
-    //post endpoint for making new contact
-    NSString *myRsvpUrl_ = [NSString stringWithFormat:myRsvpUrl, nationBuilderSlugValue, nationBuilderSlugValue, [self.rsvpDetails objectForKey:@"eventId"], token];
     
     //need to get notes on the person from a different api, namely
     // the contacts api
@@ -626,19 +614,82 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     
     //must set request serializer to application/json. otherwise 406
     //is responded
+    NSString *httpMethod = [self.rsvpDetails valueForKey:@"httpMethod"];
+    NSLog(@"rsvpDetails httpMethod is: %@", httpMethod);
+    
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    [manager POST:myRsvpUrl_ parameters:rsvpBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@" POST => updating RSVP with response %@",responseObject);
-        NSLog(@"SUCCESSfully added new RSVP.");
+    
+    if ([httpMethod isEqualToString:@"POST"]) {
         
-        //remember to reset the sendInANewContact back to false
-        self.sendInANewRSVP = false;
+        //post endpoint for making new contact
+        NSString *postRsvpUrl_ = [NSString stringWithFormat:postRsvpUrl, nationBuilderSlugValue, nationBuilderSlugValue, [self.rsvpDetails objectForKey:@"eventId"], token];
         
-        //and we done now
-        [self reRenderUI];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-    }];
+        rsvpBody =
+            @{ @"rsvp": @{
+                  @"person_id":    myNBId,
+                  @"guests_count": @0,
+                  @"private":      @"false",
+                  @"volunteer":    @"false",
+                  @"canceled":     @"false",
+                  @"attended":     @"false",
+                  @"shift_ids":    @[]
+            }};
+    
+        NSLog(@"POST rsvpBody: %@", rsvpBody);
+        
+        [manager POST:postRsvpUrl_ parameters:rsvpBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@" POST => create new RSVP with response %@",responseObject);
+            NSLog(@"SUCCESSfully added new RSVP.");
+        
+            //remember to reset the sendInANewContact back to false
+            self.sendInRSVP = false;
+        
+            //and we done now
+            [self reRenderUI];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Error: %@", error);
+        }];
+    } else if([httpMethod isEqualToString:@"PUT"]) {
+        //for now hardcode automatically change guests to 1
+        
+        NSLog(@"PUT rsvp and matchedRsvpId: %@", [self.rsvpDetails objectForKey:@"matchedRsvpId"]);
+        
+        //post endpoint for making new contact
+        NSString *putRsvpUrl_ = [NSString stringWithFormat:putRsvpUrl, nationBuilderSlugValue, nationBuilderSlugValue, [self.rsvpDetails objectForKey:@"eventId"], [self.rsvpDetails objectForKey:@"matchedRsvpId"], token];
+        
+        
+        rsvpBody =
+            @{ @"rsvp": @{
+                  @"person_id":    myNBId,
+                  @"guests_count": @1,
+                  @"private":      @"false",
+                  @"volunteer":    @"false",
+                  @"canceled":     @"false",
+                  @"attended":     @"false",
+                  @"shift_ids":    @[]
+            }};
+        
+        NSLog(@"PUT rsvpBody: %@", rsvpBody);
+    
+        [manager PUT:putRsvpUrl_ parameters:rsvpBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@" PUT => updating RSVP with response %@",responseObject);
+            NSLog(@"SUCCESSfully updated RSVP.");
+        
+            //remember to reset the sendInANewContact back to false
+            self.sendInRSVP = false;
+        
+            //and we done now
+            [self reRenderUI];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Error: %@", error);
+        }];
+    } else {
+        //we're in the gutter.
+        return;
+    }
+    
 }
 
 
@@ -726,8 +777,8 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         sendInANewContact = false;
         
         // *** CONTROL FLOW ***
-        if (self.sendInANewRSVP) {
-            [self sendInANewRSVP];
+        if (self.sendInRSVP) {
+            [self saveTheRsvp];
         } else {
             [self reRenderUI];
         }

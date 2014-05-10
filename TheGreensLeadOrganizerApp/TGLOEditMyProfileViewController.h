@@ -25,7 +25,7 @@
 @property (strong ,nonatomic) TGLOPerson *person;
 @property (strong, nonatomic) NSMutableArray *contacts;
 @property (strong, nonatomic) NSMutableDictionary *rsvpDetails;
-@property BOOL sendInANewRSVP;
+@property BOOL sendInRSVP;
 
 @property (nonatomic, weak) id<TGLOUpdatePersonDelegate>delegate;
 
