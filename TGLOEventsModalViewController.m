@@ -398,16 +398,14 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     
         
         //also update the RSVP label to show additional guests
-        UILabel *rsvpLabel = (UILabel *)[delegate.containerView viewWithTag:42];
-        rsvpLabel.text = [[NSString alloc] initWithFormat:@"RSVP + 1 guests (HARDCODED)"];
-        
-        [delegate dismissViewControllerAnimated:YES completion:nil];
-        
-        
+        //UILabel *rsvpLabel = (UILabel *)[delegate.containerView viewWithTag:42];
+        //rsvpLabel.text = [[NSString alloc] initWithFormat:@"RSVP + 1 guests (HARDCODED)"];
+        //[delegate dismissViewControllerAnimated:YES completion:nil];
         
         //prompt user to choose how many addional guests also.
         //this also handles dismissing the modal VC in its body
-        //[self chooseHowManyGuests];
+        [self chooseHowManyGuests];
+        
     }
     
 }

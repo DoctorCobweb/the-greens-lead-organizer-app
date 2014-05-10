@@ -627,7 +627,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         rsvpBody =
             @{ @"rsvp": @{
                   @"person_id":    myNBId,
-                  @"guests_count": @0,
+                  @"guests_count": [self.rsvpDetails objectForKey:@"guests_count"],
                   @"private":      @"false",
                   @"volunteer":    @"false",
                   @"canceled":     @"false",
@@ -662,7 +662,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         rsvpBody =
             @{ @"rsvp": @{
                   @"person_id":    myNBId,
-                  @"guests_count": @1,
+                  @"guests_count": [self.rsvpDetails objectForKey:@"guests_count"],
                   @"private":      @"false",
                   @"volunteer":    @"false",
                   @"canceled":     @"false",
