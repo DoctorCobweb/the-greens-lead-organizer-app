@@ -11,6 +11,7 @@
 #import "AFNetworkActivityIndicatorManager.h"
 #import "TGLOUtils.h"
 #import "TGLOAppDelegate.h"
+#import "TGLOEventTableViewCell.h"
 
 //agv.nationbuilder.com/api/v1/sites/agv/pages/events/357/rsvps?page=1&per_page=10&access_token=102fe210786667df8a04708a471e549738cc4e72506c66bf44ddccf7c280794a
 static NSString *eventRsvpsUrl = @"https://agv.nationbuilder.com/api/v1/sites/%@/pages/events/%@/rsvps?page=1&per_page=1000&access_token=%@";
@@ -234,13 +235,68 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
 
 - (UITableViewCell *)tableView:(UITableView *)tableView_ cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"eventsSearchCell";
-    UITableViewCell *cell = [tableView_ dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    static NSString *eventCellIdentifier = @"eventTableCell";
     
-    // Configure the cell...
-    cell.textLabel.text = [[searchResults objectAtIndex:indexPath.row] objectForKey:@"name"];
+    TGLOEventTableViewCell *cell = (TGLOEventTableViewCell *)[tableView dequeueReusableCellWithIdentifier:eventCellIdentifier];
+    
+    if (cell == nil)
+    {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TGLOEventTableCell" owner:self options:nil];
+        cell = [nib objectAtIndex:0];
+    }
+    
+    NSDictionary *anEvent = [searchResults objectAtIndex:indexPath.row];
+    
+    NSDictionary *venue   = [[NSDictionary alloc] init];
+    NSDictionary *address = [[NSDictionary alloc] init];
+    NSString *address1    = [[NSString alloc] init];
+    NSString *city        = [[NSString alloc] init];
+    
+    //we MUST check to see if any fields are <null> along the way to
+    //finding the address1 and city value.
+    //if any of checks fail, city or addres1 will just be nil and
+    //UI will display blank to that label.
+    //
+    //check to see if venue is <null>
+    if (![[anEvent objectForKey:@"venue"] isEqual:[NSNull null]]) {
+        
+        venue = [anEvent objectForKey:@"venue"];
+    
+        //check to see if address is <null>
+        if (![[venue objectForKey:@"address"] isEqual:[NSNull null]])
+        {
+            address = [venue objectForKey:@"address"];
+            
+            //check to see if address1 is <null>
+            if (![[address objectForKey:@"address1"] isEqual:[NSNull null]] ) {
+                
+                address1 = [address objectForKey:@"address1"];
+                
+            }
+            
+            //check to see if city is <null>
+            if (![[address objectForKey:@"city"] isEqual:[NSNull null]] ) {
+                
+                city = [address objectForKey:@"city"];
+                
+            }
+        }
+    }
+    
+    //NSLog(@"VENUE: %@", venue);
+    //NSLog(@"ADDRESS: %@", address);
+    
+    //set the text contents finally
+    cell.nameLabel.text = [anEvent objectForKey:@"name"];
+    cell.dateLabel.text = [anEvent objectForKey:@"startTime"];
+    cell.venueLabel.text = [[NSString alloc] initWithFormat:@"%@ %@", address1, city];
     
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 70;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -277,6 +333,7 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
             }];
         }
     
+#warning TODO: handle already rsvpd events properly
         TGLOEditMyProfileViewController *delegate = [self delegate];
         UIButton *rsvpButton = (UIButton *)[[delegate view] viewWithTag:41];
         [rsvpButton titleLabel].font = [UIFont systemFontOfSize:13];

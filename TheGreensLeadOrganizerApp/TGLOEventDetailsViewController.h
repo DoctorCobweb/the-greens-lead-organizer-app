@@ -10,6 +10,7 @@
 #import "TGLOEvent.h"
 
 @interface TGLOEventDetailsViewController : UIViewController
+
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UIView *containerView;
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
@@ -18,9 +19,6 @@
 @property (weak, nonatomic) IBOutlet UITextView  *detailsTextView;
 @property (weak, nonatomic) IBOutlet UITextField *contactTextField;
 @property (weak, nonatomic) IBOutlet UITextField *tagsTextField;
-
-
-
 
 @property (weak, nonatomic) NSString  *selectedEventId;
 @property (weak, nonatomic) TGLOEvent *theEvent;

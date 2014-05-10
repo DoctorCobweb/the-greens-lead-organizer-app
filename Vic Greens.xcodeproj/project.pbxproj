@@ -45,6 +45,8 @@
 		65827905191B3012001BF4BB /* TGLOEventsNewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65827904191B3012001BF4BB /* TGLOEventsNewViewController.m */; };
 		65827908191B736F001BF4BB /* TGLOEventDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65827907191B736F001BF4BB /* TGLOEventDetailsViewController.m */; };
 		6582790E191B81B6001BF4BB /* TGLOEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 6582790D191B81B6001BF4BB /* TGLOEvent.m */; };
+		65827910191E068C001BF4BB /* TGLOEventTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6582790F191E068C001BF4BB /* TGLOEventTableCell.xib */; };
+		65827913191E0861001BF4BB /* TGLOEventTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 65827912191E0861001BF4BB /* TGLOEventTableViewCell.m */; };
 		65A812961910F34700C46959 /* theGreens58x58.png in Resources */ = {isa = PBXBuildFile; fileRef = 65A812931910F34700C46959 /* theGreens58x58.png */; };
 		65A812971910F34700C46959 /* theGreens80x80.png in Resources */ = {isa = PBXBuildFile; fileRef = 65A812941910F34700C46959 /* theGreens80x80.png */; };
 		65A812981910F34700C46959 /* theGreens120x120.png in Resources */ = {isa = PBXBuildFile; fileRef = 65A812951910F34700C46959 /* theGreens120x120.png */; };
@@ -169,6 +171,9 @@
 		65827907191B736F001BF4BB /* TGLOEventDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOEventDetailsViewController.m; sourceTree = "<group>"; };
 		6582790C191B81B6001BF4BB /* TGLOEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOEvent.h; sourceTree = "<group>"; };
 		6582790D191B81B6001BF4BB /* TGLOEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOEvent.m; sourceTree = "<group>"; };
+		6582790F191E068C001BF4BB /* TGLOEventTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TGLOEventTableCell.xib; sourceTree = "<group>"; };
+		65827911191E0861001BF4BB /* TGLOEventTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOEventTableViewCell.h; sourceTree = "<group>"; };
+		65827912191E0861001BF4BB /* TGLOEventTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOEventTableViewCell.m; sourceTree = "<group>"; };
 		65A812931910F34700C46959 /* theGreens58x58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = theGreens58x58.png; sourceTree = "<group>"; };
 		65A812941910F34700C46959 /* theGreens80x80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = theGreens80x80.png; sourceTree = "<group>"; };
 		65A812951910F34700C46959 /* theGreens120x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = theGreens120x120.png; sourceTree = "<group>"; };
@@ -371,6 +376,9 @@
 				65827907191B736F001BF4BB /* TGLOEventDetailsViewController.m */,
 				6582790C191B81B6001BF4BB /* TGLOEvent.h */,
 				6582790D191B81B6001BF4BB /* TGLOEvent.m */,
+				6582790F191E068C001BF4BB /* TGLOEventTableCell.xib */,
+				65827911191E0861001BF4BB /* TGLOEventTableViewCell.h */,
+				65827912191E0861001BF4BB /* TGLOEventTableViewCell.m */,
 			);
 			name = "Vic Greens";
 			path = TheGreensLeadOrganizerApp;
@@ -541,6 +549,7 @@
 				65BC975718F3D144006063CA /* menu@2x.png in Resources */,
 				65A812971910F34700C46959 /* theGreens80x80.png in Resources */,
 				651626F918F7A13100DCC064 /* theGreens.png in Resources */,
+				65827910191E068C001BF4BB /* TGLOEventTableCell.xib in Resources */,
 				65A812A419111E2000C46959 /* forest-fog-2.jpg in Resources */,
 				65A812961910F34700C46959 /* theGreens58x58.png in Resources */,
 				65185408190FFD6900D865C4 /* rain_forest-flowering.png in Resources */,
@@ -642,6 +651,7 @@
 				65BC976118F3DCE6006063CA /* NationBuilder.m in Sources */,
 				651318CA18FFA40C00995995 /* TGLOCustomEditContactHeaderView.m in Sources */,
 				658278FF191B2BFB001BF4BB /* TGLOEventsAllViewController.m in Sources */,
+				65827913191E0861001BF4BB /* TGLOEventTableViewCell.m in Sources */,
 				651626F718F6DB4F00DCC064 /* TGLOSearchResultsViewController.m in Sources */,
 				651318BD18FE48F100995995 /* TGLOEditPersonFromSearchViewController.m in Sources */,
 				651318D7190508E600995995 /* TGLOEditPersonFromTagViewController.m in Sources */,
