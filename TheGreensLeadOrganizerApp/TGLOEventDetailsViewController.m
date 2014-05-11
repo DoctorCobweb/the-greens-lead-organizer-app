@@ -195,14 +195,49 @@ static NSString *translateIdsToNamesUrl = @"http://localhost:5000/namesForIds/%@
     //is responded
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     [manager POST:translateIdsToNamesUrl_ parameters:postBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        //NSLog(@"=> RSVPS ids to names translation response %@",responseObject);
+        NSLog(@"=> RSVPS ids to names translation response %@",responseObject);
         
         //remember to reset the sendInANewContact back to false
         //sendInANewContact = false;
-        NSSet *rsvpsSet = [responseObject objectForKey:@"rsvps"];
+        NSSet *translatedPeopleSet = [responseObject objectForKey:@"translatedPeople"];
+        
+        NSMutableArray *joinedRsvps = [[NSMutableArray alloc] init];
+        
+        //need to add in person names to rsvp set matched by person_id
+        [rsvps enumerateObjectsUsingBlock:^(id outerObj, BOOL *stop) {
+            
+            NSNumber *personIdFromRsvpNum = [outerObj valueForKey:@"person_id" ];
+            NSString *personIdFromRsvp = [[NSString alloc] initWithFormat:@"%@", personIdFromRsvpNum ];
+        
+            
+            [translatedPeopleSet enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+                
+                NSNumber *personIdFromTranslationNum = [obj valueForKey:@"personId"];
+                NSString *personIdFromTranslation = [[NSString alloc] initWithFormat:@"%@",personIdFromTranslationNum];
+                
+                
+                if ([personIdFromRsvp isEqualToString:personIdFromTranslation]) {
+                    NSLog(@"found match to personIds");
+                    
+                    //add first, last names to that specific rsvp
+                    NSString *firstName = [obj valueForKey:@"firstName"];
+                    NSString *lastName = [obj valueForKey:@"lastName"];
+                    NSMutableDictionary *singleJoinedRsvp = [[NSMutableDictionary alloc] initWithDictionary:outerObj];
+                    NSLog(@"singleJoinedRsvp: %@", singleJoinedRsvp);
+                    [singleJoinedRsvp setObject:firstName forKey:@"firstName"];
+                    [singleJoinedRsvp setObject:lastName forKey:@"lastName"];
+                
+                    [joinedRsvps addObject:singleJoinedRsvp];
+                }
+            }];
+        }];
+        
+        //NSLog(@"joinedRsvps: %@", joinedRsvps);
         
         //for now just render with ids until backend is implemented
-        [self addRsvpsToUI:rsvpsSet];
+        //[self addRsvpsToUI:translatedPeopleSet];
+        [self addRsvpsToUI:joinedRsvps];
+        
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
@@ -212,11 +247,12 @@ static NSString *translateIdsToNamesUrl = @"http://localhost:5000/namesForIds/%@
 
 
 
-- (void)addRsvpsToUI:(NSSet *)rsvpsSet
+- (void)addRsvpsToUI:(NSMutableArray *)joinedRsvps
 {
     NSLog(@"adding in RSVPS to UI...");
-    NSArray *rsvpsArray = [rsvpsSet allObjects];
-    int rsvpsCount = [rsvpsArray count];
+    //NSArray *rsvpsArray = [rsvpsSet allObjects];
+    //int rsvpsCount = [rsvpsArray count];
+    int rsvpsCount = [joinedRsvps count];
     
     //NSLog(@"rsvpsArray: %@", rsvpsArray);
     
@@ -234,13 +270,18 @@ static NSString *translateIdsToNamesUrl = @"http://localhost:5000/namesForIds/%@
         
         UITextField *newTextField = (UITextField *)[self fabricateANewView:@"UITextField" width:labelWidth height:labelHeight spacing:labelSpacing];
         //NSString *personId= [[NSString alloc] initWithFormat:@"%@",[rsvpsArray[i] valueForKey:@"person_id"]];
-        NSString *firstName = [rsvpsArray[i] objectForKey:@"firstName"];
-        NSString *lastName = [rsvpsArray[i] objectForKey:@"lastName"];
+        NSString *firstName = [joinedRsvps[i] objectForKey:@"firstName"];
+        NSString *lastName = [joinedRsvps[i] objectForKey:@"lastName"];
+        NSNumber *guestsCount= [joinedRsvps[i] objectForKey:@"guests_count"];
     
         newTextField.borderStyle = UITextBorderStyleRoundedRect;
         
-        //newTextField.text = personId;
-        newTextField.text = [[NSString alloc] initWithFormat:@"%@ %@", firstName, lastName];
+        if ([guestsCount isEqual:@0]) {
+            newTextField.text = [[NSString alloc] initWithFormat:@"%@ %@", firstName, lastName];
+        } else {
+            newTextField.text = [[NSString alloc] initWithFormat:@"%@ %@ + %@ guests", firstName, lastName, guestsCount];
+        
+        }
         
         newTextField.textColor = [UIColor whiteColor];
         newTextField.userInteractionEnabled = NO;
