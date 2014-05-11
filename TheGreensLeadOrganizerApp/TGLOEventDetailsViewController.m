@@ -92,6 +92,7 @@ static NSString *translateIdsToNamesUrl = @"http://localhost:5000/namesForIds/%@
         
         parsedEvent = [TGLOEvent eventFieldsForObject:event_set];
         [self fillOutEventFields:parsedEvent];
+        [self addRsvpsLabel];
         [self getAllRsvps];
         
         
@@ -140,7 +141,6 @@ static NSString *translateIdsToNamesUrl = @"http://localhost:5000/namesForIds/%@
         NSSet *rsvpsSet = [responseObject objectForKey:@"results"];
         //NSLog(@"rsvpsSet: %@", rsvpsSet);
         
-        [self addRsvpsLabel];
         [self translateRsvpIdsToNames:rsvpsSet];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -273,19 +273,29 @@ static NSString *translateIdsToNamesUrl = @"http://localhost:5000/namesForIds/%@
         NSString *firstName = [joinedRsvps[i] objectForKey:@"firstName"];
         NSString *lastName = [joinedRsvps[i] objectForKey:@"lastName"];
         NSNumber *guestsCount= [joinedRsvps[i] objectForKey:@"guests_count"];
+        NSString *canceled = [[NSString alloc] init];
+        
+        if ([[joinedRsvps[i] objectForKey:@"canceled"] isEqual:@1]) {
+            
+            canceled = @"CANCELED";
+            newTextField.backgroundColor = [UIColor darkGrayColor];
+            newTextField.textColor = [UIColor blackColor];
+        } else {
+        
+            canceled = @"";
+            newTextField.backgroundColor = [UIColor purpleColor];
+            newTextField.textColor = [UIColor whiteColor];
+        }
     
         newTextField.borderStyle = UITextBorderStyleRoundedRect;
         
         if ([guestsCount isEqual:@0]) {
-            newTextField.text = [[NSString alloc] initWithFormat:@"%@ %@", firstName, lastName];
+            newTextField.text = [[NSString alloc] initWithFormat:@"%@ %@ %@", firstName, lastName, canceled];
         } else {
-            newTextField.text = [[NSString alloc] initWithFormat:@"%@ %@ + %@ guests", firstName, lastName, guestsCount];
-        
+            newTextField.text = [[NSString alloc] initWithFormat:@"%@ %@ + %@ %@", firstName, lastName, guestsCount, canceled];
         }
         
-        newTextField.textColor = [UIColor whiteColor];
         newTextField.userInteractionEnabled = NO;
-        newTextField.backgroundColor = purpleColor;
         
         
         //update the scroll and container view to fit/display new content
