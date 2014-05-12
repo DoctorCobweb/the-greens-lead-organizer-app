@@ -24,6 +24,7 @@
 + (void)setAccessTokenInUserDefaults:(NSString *)token;
 + (void)setMyNationBuilderIdInUserDefaults:(NSString *)myNBId;
 + (BOOL)clearOutUserSession;
++ (NSString *)formatTheDate:(NSString *)dateString withCustomFormat:(NSString *)customFormat;
 
 
 @end

@@ -53,6 +53,7 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
     undoStack = [[NSMutableArray alloc] init];
     
@@ -286,9 +287,10 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     //NSLog(@"VENUE: %@", venue);
     //NSLog(@"ADDRESS: %@", address);
     
+    cell.dateLabel.text = [TGLOUtils formatTheDate:[anEvent objectForKey:@"startTime"] withCustomFormat:@"yyyy-MM-dd'T'HH:mm:ss+HH:mm"];
+    
     //set the text contents finally
     cell.nameLabel.text = [anEvent objectForKey:@"name"];
-    cell.dateLabel.text = [anEvent objectForKey:@"startTime"];
     cell.venueLabel.text = [[NSString alloc] initWithFormat:@"%@ %@", address1, city];
     
     return cell;

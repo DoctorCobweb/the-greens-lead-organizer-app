@@ -189,4 +189,29 @@ static NSString *permissionLevelVolunteer = @"volunteer";
 }
 
 
+
+
++ (NSString *)formatTheDate:(NSString *)dateString withCustomFormat:(NSString *)customFormat
+{
+    //need to format the startTime to display better
+    //create a date formatter
+    //create a custom date format string & use to format the startTime sent from NB
+    //change the date formatter to make date have less detail
+    //create the string version of the date
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    
+    //custom date format string
+    [dateFormatter setDateFormat:customFormat];
+    
+    NSDate *date =[dateFormatter dateFromString:dateString];
+    
+    //now set the format to a simpler detail form for date
+    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+    
+    //return the string from simpler date format
+    return[dateFormatter stringFromDate:date];
+}
+
+
 @end

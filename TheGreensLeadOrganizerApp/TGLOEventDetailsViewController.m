@@ -105,7 +105,7 @@ static NSString *translateIdsToNamesUrl = @"http://localhost:5000/namesForIds/%@
 - (void)fillOutEventFields:(TGLOEvent *)event
 {
     self.nameTextField.text = event.name;
-    self.dateTextField.text = event.dateString;
+    self.dateTextField.text = [TGLOUtils formatTheDate:event.dateString withCustomFormat:@"yyyy-MM-dd'T'HH:mm:ss+HH:mm"];
     self.venueTextField.text = [[event.venue objectForKey:@"address"] objectForKey:@"address1"];
     self.detailsTextView.text = event.details;
     
