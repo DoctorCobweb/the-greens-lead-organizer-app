@@ -578,6 +578,14 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
 - (IBAction)cancelModal:(id)sender {
     [[self delegate] dismissViewControllerAnimated:YES completion:nil];
     [self delegate].sendInRSVP = NO;
+    
+    //also update the RSVP label to show additional guests
+    UILabel *rsvpLabel = (UILabel *)[ [self delegate].containerView viewWithTag:42];
+    UIButton *rsvpButton = (UIButton *)[[[self delegate ] view] viewWithTag:41];
+    
+    rsvpLabel.text = @"Add new RSVP";
+    [rsvpButton titleLabel].font = [UIFont systemFontOfSize:18];
+    [rsvpButton setTitle:@"Choose the event..." forState:UIControlStateNormal];
 }
 
 @end
