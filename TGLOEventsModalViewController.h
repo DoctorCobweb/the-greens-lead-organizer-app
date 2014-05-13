@@ -21,5 +21,6 @@
 - (NSMutableIndexSet *)getIndexSetOfMatches:(NSString *)searchTerm;
 - (void)handleRsvp:(NSString *)status selectedRowAtIndexPath: (NSIndexPath *)indexPath matchedRsvpId:(NSString *)matchedRsvpId;
 - (void)chooseHowManyGuests;
+- (void)cancelRsvpOrChooseGuestsNumber;
 
 @end

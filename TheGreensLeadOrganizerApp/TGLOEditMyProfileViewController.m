@@ -630,7 +630,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
                   @"guests_count": [self.rsvpDetails objectForKey:@"guests_count"],
                   @"private":      @"false",
                   @"volunteer":    @"false",
-                  @"canceled":     @"false",
+                  @"canceled":     [self.rsvpDetails objectForKey:@"canceled"],
                   @"attended":     @"false",
                   @"shift_ids":    @[]
             }};
@@ -658,6 +658,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         //post endpoint for making new contact
         NSString *putRsvpUrl_ = [NSString stringWithFormat:putRsvpUrl, nationBuilderSlugValue, nationBuilderSlugValue, [self.rsvpDetails objectForKey:@"eventId"], [self.rsvpDetails objectForKey:@"matchedRsvpId"], token];
         
+        NSLog(@"guests_count: %@", [self.rsvpDetails objectForKey:@"guests_count"]);
         
         rsvpBody =
             @{ @"rsvp": @{
@@ -665,7 +666,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
                   @"guests_count": [self.rsvpDetails objectForKey:@"guests_count"],
                   @"private":      @"false",
                   @"volunteer":    @"false",
-                  @"canceled":     @"false",
+                  @"canceled":     [self.rsvpDetails objectForKey:@"canceled"],
                   @"attended":     @"false",
                   @"shift_ids":    @[]
             }};

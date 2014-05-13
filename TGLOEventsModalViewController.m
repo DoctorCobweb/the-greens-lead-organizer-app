@@ -406,34 +406,51 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
         
         //prompt user to choose how many addional guests also.
         //this also handles dismissing the modal VC in its body
-        [self chooseHowManyGuests];
+        [self cancelRsvpOrChooseGuestsNumber];
         
     }
     
 }
 
 
+- (void) cancelRsvpOrChooseGuestsNumber
+{
+    UIActionSheet *updateRsvpActionSheet =
+        [[UIActionSheet alloc]
+            initWithTitle:@"Already RSVPd: Cancel RSVP or update number of guests"
+            delegate:self
+            cancelButtonTitle:@"Back to events list"
+            destructiveButtonTitle:nil
+            otherButtonTitles:@"CANCEL THIS RSVP", @"0", @"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", nil];
+    
+    [updateRsvpActionSheet showInView:self.view];
+
+
+
+}
+
 
 - (void)chooseHowManyGuests
 {
     //used for displaying a random addition for 10 guests. just having fun.
-    NSArray *reward = @[@"(prize in mail)",
-                        @"(high five)",
-                        @"(have a seat)",
-                        @"(wow wa wee wa)",
-                        @"(B..B...BOOOOM)",
-                        @"(nothin but net)",
-                        @"(have a dance)"];
+    //NSArray *reward = @[@"(prize in mail)",
+    //                    @"(high five)",
+    //                    @"(have a seat)",
+    //                    @"(wow wa wee wa)",
+    //                    @"(B..B...BOOOOM)",
+    //                    @"(nothin but net)",
+    //                    @"(have a dance)"];
+    //
+    //NSUInteger r = arc4random_uniform([reward count]);
+    //NSString *tenTitle = [[NSString alloc] initWithFormat:@"10 %@", reward[r]];
     
-    NSUInteger r = arc4random_uniform([reward count]);
-    NSString *tenTitle = [[NSString alloc] initWithFormat:@"10 %@", reward[r]];
     UIActionSheet *guestsNumberActionSheet =
         [[UIActionSheet alloc]
-            initWithTitle:@"Any guests?"
+            initWithTitle:@"New RSVP. Any guests?"
             delegate:self
-            cancelButtonTitle:@"No guests"
+            cancelButtonTitle:@"Back to events list"
             destructiveButtonTitle:nil
-            otherButtonTitles:@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", tenTitle, nil];
+            otherButtonTitles:@"0", @"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", nil];
     
     [guestsNumberActionSheet showInView:self.view];
 }
@@ -446,24 +463,69 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     NSLog(@"actionSheet.title: %@", actionSheet.title);
     
     TGLOEditMyProfileViewController *delegate = [self delegate];
-
-    if (buttonIndex == [actionSheet cancelButtonIndex]) {
-        // User pressed cancel -- abort
-        NSLog(@"user cancelled guest selection");
-        [delegate.rsvpDetails setObject:@0 forKey:@"guests_count"];
+    //also update the RSVP label to show additional guests
+    UILabel *rsvpLabel = (UILabel *)[delegate.containerView viewWithTag:42];
+    
+    if ([actionSheet.title isEqualToString:@"New RSVP. Any guests?"]) {
+        NSLog(@"NEW RSVP ACTIONSHEET");
+        if (buttonIndex == [actionSheet cancelButtonIndex]) {
+            // User pressed cancel -- abort
+            NSLog(@"user cancelled guest selection");
+        
+            //[delegate.rsvpDetails setObject:@0 forKey:@"guests_count"];
+            //NSLog(@"delegate.rsvpDetails: %@", delegate.rsvpDetails);
+            //[delegate dismissViewControllerAnimated:YES completion:nil];
+        
+            //just dismiss actionsheet
+            return;
+        }
+        
+        [delegate.rsvpDetails setObject:[NSNumber numberWithInt:buttonIndex] forKey:@"guests_count"];
+        [delegate.rsvpDetails setObject:@"false" forKey:@"canceled"];
+        
         NSLog(@"delegate.rsvpDetails: %@", delegate.rsvpDetails);
+        
+        //also update the RSVP label to show additional guests
+        rsvpLabel.text = [[NSString alloc] initWithFormat:@"RSVP + %d guests", buttonIndex];
+        
         [delegate dismissViewControllerAnimated:YES completion:nil];
         return;
     }
     
-    [delegate.rsvpDetails setObject:[NSNumber numberWithInt:buttonIndex + 1] forKey:@"guests_count"];
-    NSLog(@"delegate.rsvpDetails: %@", delegate.rsvpDetails);
     
-    //also update the RSVP label to show additional guests
-    UILabel *rsvpLabel = (UILabel *)[delegate.containerView viewWithTag:42];
-    rsvpLabel.text = [[NSString alloc] initWithFormat:@"RSVP + %d guests", (buttonIndex + 1)];
+    if ([actionSheet.title isEqualToString:@"Already RSVPd: Cancel RSVP or update number of guests"]) {
+        NSLog(@"ALREADY RSVPED ACTIONSHEET");
+        if (buttonIndex == [actionSheet cancelButtonIndex]) {
+            // User pressed cancel -- abort
+        
+            //set a dummy guest count so we dont pass in null
+        
+            //then just dismiss actionsheet
+            return;
+        }
+        
+        if (buttonIndex == 0) {
+            NSLog(@"user wants to CANCEL RSVP");
+            //user wants to cancel the event
+            [delegate.rsvpDetails setObject:@"true" forKey:@"canceled"];
+            [delegate.rsvpDetails setObject:[NSNumber numberWithInt:0] forKey:@"guests_count"];
+            
+            rsvpLabel.text = @"RSVP CANCEL";
+
+            [delegate dismissViewControllerAnimated:YES completion:nil];
+            return;
+        }
+        
     
-    [delegate dismissViewControllerAnimated:YES completion:nil];
+        [delegate.rsvpDetails setObject:@"false" forKey:@"canceled"];
+        [delegate.rsvpDetails setObject:[NSNumber numberWithInt:(buttonIndex - 1)] forKey:@"guests_count"];
+    
+        rsvpLabel.text = [[NSString alloc] initWithFormat:@"RSVP + %d guests", (buttonIndex- 1)];
+        
+        [delegate dismissViewControllerAnimated:YES completion:nil];
+        return;
+    }
+
     
 }
 

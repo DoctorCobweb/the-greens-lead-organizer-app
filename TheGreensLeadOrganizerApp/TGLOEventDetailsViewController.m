@@ -19,8 +19,8 @@ static NSString *eventUrl= @"https://%@.nationbuilder.com/api/v1/sites/%@/pages/
 static NSString *rsvpsUrl = @"https://%@.nationbuilder.com/api/v1/sites/%@/pages/events/%@/rsvps?page=1&per_page=1000&access_token=%@";
 
 #warning TODO: not use localhost for translating ids to names
-//static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuapp.com/namesForId/%@/%@";
-static NSString *translateIdsToNamesUrl = @"http://localhost:5000/namesForIds/%@/%@";
+static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuapp.com/namesForIds/%@/%@";
+//static NSString *translateIdsToNamesUrl = @"http://localhost:5000/namesForIds/%@/%@";
 
 
 
