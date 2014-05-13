@@ -19,7 +19,7 @@
 
 - (void)getAllEvents;
 - (NSMutableIndexSet *)getIndexSetOfMatches:(NSString *)searchTerm;
-- (void)handleRsvp:(NSString *)status selectedRowAtIndexPath: (NSIndexPath *)indexPath matchedRsvpId:(NSString *)matchedRsvpId;
+- (void)handleRsvp:(NSString *)status selectedRowAtIndexPath: (NSIndexPath *)indexPath matchedRsvpId:(NSString *)matchedRsvpId alreadyCanceledRsvp:(BOOL)alreadyCanceledRsvp;
 - (void)chooseHowManyGuests;
 - (void)cancelRsvpOrChooseGuestsNumber;
 

@@ -13,7 +13,7 @@
 #import "TGLOAppDelegate.h"
 #import "TGLOEventTableViewCell.h"
 
-//agv.nationbuilder.com/api/v1/sites/agv/pages/events/357/rsvps?page=1&per_page=10&access_token=102fe210786667df8a04708a471e549738cc4e72506c66bf44ddccf7c280794a
+
 static NSString *eventRsvpsUrl = @"https://agv.nationbuilder.com/api/v1/sites/%@/pages/events/%@/rsvps?page=1&per_page=1000&access_token=%@";
 static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/all/%@/%@";
 
@@ -59,23 +59,19 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     
     [self getAllEvents];
     
-    
-    NSLog(@"in TGLOEventsModalViewController");
-    //NSLog(@"%@", searchBar);
     searchBar.delegate = self;
-    
     UINavigationBar *navbar = [[self navigationController] navigationBar];
     
     UIColor * black_color = [UIColor colorWithRed:0/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f];
     
-    //this will set the 'back button' to be black
+    //this will set the 'back' button to be black
     navbar.tintColor = black_color;
 }
 
 - (void)getAllEvents
 {
 
-    NSString *myNBId = [TGLOUtils getUserNationBuilderId];
+    NSString *myNBId =      [TGLOUtils getUserNationBuilderId];
     NSString *accessToken = [TGLOUtils getUserAccessToken];
     NSString * eventsUrl_ = [NSString stringWithFormat:eventsUrl, myNBId, accessToken];
     
@@ -114,7 +110,7 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     
     
     if ([searchText isEqualToString:@""]) {
-        NSLog(@"searchText is empty String");
+        //NSLog(@"searchText is empty String");
         
         //reload table with original all events array
         searchResults = [[NSMutableArray alloc] initWithArray:searchResultsCache];
@@ -133,7 +129,7 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     }
     
     if (searchTextLength > previousSearchTermLength) {
-        NSLog(@"drilling down");
+        //NSLog(@"drilling down");
         //push removed objects to undo stack
         NSMutableArray *collectionOfEvents = [[NSMutableArray alloc] init];
         
@@ -166,14 +162,14 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
         [[self tableView] reloadData];
         previousSearchTerm = searchText;
         
-        NSLog(@"pushing: %d objects to undoStack", [[undoStack lastObject ] count]);
+        //NSLog(@"pushing: %d objects to undoStack", [[undoStack lastObject ] count]);
         //NSLog(@"collectionOfEvents: %@", collectionOfEvents);
         //NSLog(@"undoStack: %@", undoStack);
         return;
     }
     
     if (searchTextLength < previousSearchTermLength) {
-        NSLog(@"drilling up");
+        //NSLog(@"drilling up");
         //pop objects off stack back onto searchResults
         
         //NSLog(@"searchResults count BEFORE POP: %d", [searchResults count]);
@@ -214,7 +210,7 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar_
 {
-    NSLog(@"searchBar SEARCH clicked");
+    //NSLog(@"searchBar SEARCH clicked");
     [searchBar_ resignFirstResponder];
 }
 
@@ -307,6 +303,7 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     
     //__block allows block to access this var
     __block BOOL alreadyRsvpd = NO;
+    __block BOOL alreadyCanceledRsvpd = NO;
     __block NSString *matchedRsvpId = [[NSString alloc] init];
     
     //gotta check to see if user has already rsvpd to this event
@@ -334,24 +331,39 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
                     //extract the rsvp id for match. we need it when PUTing the rsvp
                     //to update it
                     matchedRsvpId = [obj valueForKey:@"id"];
-                    
                     alreadyRsvpd = YES;
+                    
+                    NSNumber *canceled = [obj valueForKey:@"canceled"];
+                    if ([canceled isEqualToNumber:@1]) {
+                        NSLog(@"ALREADY CANCELED RSVP");
+                        alreadyCanceledRsvpd = YES;
+                    }
+                    
                     *stop = YES;
                 }
             }];
         }
         
         
-        //now handle the two different cases
-        //1. previously rsvpd
-        //2. new rsvp
+        //now handle the three different cases:
+        //1. previously rsvpd and not canceled
+        //2. previously rsvpd and canceled
+        //3. new rsvp
+        
         if (alreadyRsvpd) {
             //and matchedRsvpId will be a string non-nil
-            [self handleRsvp:@"alreadyRsvpd" selectedRowAtIndexPath:indexPath  matchedRsvpId:matchedRsvpId];
+            if (!alreadyCanceledRsvpd) {
+                [self handleRsvp:@"alreadyRsvpd" selectedRowAtIndexPath:indexPath  matchedRsvpId:matchedRsvpId alreadyCanceledRsvp:NO];
+            } else {
+                //careful
+                //just show the newRsvp actionsheet. but set method to POST
+                [self handleRsvp:@"newRsvp" selectedRowAtIndexPath:indexPath  matchedRsvpId:matchedRsvpId alreadyCanceledRsvp:YES];
+            }
+            
         } else {
-            //either no rsvps or user id is not in rsvp list
-            //and matchedRsvpId will be nil because there was no match
-            [self handleRsvp:@"newRsvp" selectedRowAtIndexPath:indexPath matchedRsvpId:matchedRsvpId];
+            //either no rsvps or user id is not in rsvp list or has rsvpd but canceled
+            //matchedRsvpId will be nil because there was no match
+            [self handleRsvp:@"newRsvp" selectedRowAtIndexPath:indexPath matchedRsvpId:matchedRsvpId alreadyCanceledRsvp:NO];
         }
     
         
@@ -362,7 +374,7 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
 
 
 //status is either 1. @"alreadyRsvpd" or 2. @"newRsvp"
-- (void)handleRsvp:(NSString *)status selectedRowAtIndexPath: (NSIndexPath *)indexPath matchedRsvpId:(NSString *)matchedRsvpId
+- (void)handleRsvp:(NSString *)status selectedRowAtIndexPath: (NSIndexPath *)indexPath matchedRsvpId:(NSString *)matchedRsvpId alreadyCanceledRsvp:(BOOL)alreadyCanceledRsvp
 {
     TGLOEditMyProfileViewController *delegate = [self delegate];
     UIButton *rsvpButton = (UIButton *)[[delegate view] viewWithTag:41];
@@ -378,8 +390,16 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     if ([status isEqualToString:@"newRsvp"]) {
         NSLog(@"NEW RSVPD to EVENT");
         
-        //also set the http method to POST
-        [delegate.rsvpDetails setObject:@"POST" forKey:@"httpMethod"];
+        if (!alreadyCanceledRsvp) {
+            //also set the http method to POST
+            [delegate.rsvpDetails setObject:@"POST" forKey:@"httpMethod"];
+            NSLog(@"alreadyCanceledRsvp is NO so we are POSTting");
+        } else {
+            NSLog(@"alreadyCanceledRsvp is YES so we are PUTting");
+            //remember that an already canceled rsvp needs to use PUT instead
+            [delegate.rsvpDetails setObject:@"PUT" forKey:@"httpMethod"];
+            [delegate.rsvpDetails setObject:matchedRsvpId forKey:@"matchedRsvpId"];
+        }
     
         
         //prompt user to choose how many addional guests also.
@@ -387,27 +407,17 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
         [self chooseHowManyGuests];
         
     } else if ([status isEqualToString:@"alreadyRsvpd"]) {
-        NSLog(@"USER HAS ALREADY RSVPD to EVENT!!! add 1 guest ");
-        //UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Rsvp details" message:@"You have previously Rsvpd to this event" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles: nil];
-        
-        //[alert show];
+        NSLog(@"USER HAS ALREADY RSVPD to EVENT!!!");
         
         //set the http method to PUT
         //and the matchedRsvpId which we need for PUT req
         [delegate.rsvpDetails setObject:@"PUT" forKey:@"httpMethod"];
         [delegate.rsvpDetails setObject:matchedRsvpId forKey:@"matchedRsvpId"];
-        
     
-        
-        //also update the RSVP label to show additional guests
-        //UILabel *rsvpLabel = (UILabel *)[delegate.containerView viewWithTag:42];
-        //rsvpLabel.text = [[NSString alloc] initWithFormat:@"RSVP + 1 guests (HARDCODED)"];
-        //[delegate dismissViewControllerAnimated:YES completion:nil];
         
         //prompt user to choose how many addional guests also.
         //this also handles dismissing the modal VC in its body
         [self cancelRsvpOrChooseGuestsNumber];
-        
     }
     
 }
@@ -424,26 +434,11 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
             otherButtonTitles:@"CANCEL THIS RSVP", @"0", @"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", nil];
     
     [updateRsvpActionSheet showInView:self.view];
-
-
-
 }
 
 
 - (void)chooseHowManyGuests
 {
-    //used for displaying a random addition for 10 guests. just having fun.
-    //NSArray *reward = @[@"(prize in mail)",
-    //                    @"(high five)",
-    //                    @"(have a seat)",
-    //                    @"(wow wa wee wa)",
-    //                    @"(B..B...BOOOOM)",
-    //                    @"(nothin but net)",
-    //                    @"(have a dance)"];
-    //
-    //NSUInteger r = arc4random_uniform([reward count]);
-    //NSString *tenTitle = [[NSString alloc] initWithFormat:@"10 %@", reward[r]];
-    
     UIActionSheet *guestsNumberActionSheet =
         [[UIActionSheet alloc]
             initWithTitle:@"New RSVP. Any guests?"
@@ -459,10 +454,11 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
 #pragma UIActionSheetDelegate methods
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    NSLog(@"buttonIndex: %d", buttonIndex);
-    NSLog(@"actionSheet.title: %@", actionSheet.title);
+    //NSLog(@"buttonIndex: %d", buttonIndex);
+    //NSLog(@"actionSheet.title: %@", actionSheet.title);
     
     TGLOEditMyProfileViewController *delegate = [self delegate];
+    
     //also update the RSVP label to show additional guests
     UILabel *rsvpLabel = (UILabel *)[delegate.containerView viewWithTag:42];
     
@@ -471,10 +467,6 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
         if (buttonIndex == [actionSheet cancelButtonIndex]) {
             // User pressed cancel -- abort
             NSLog(@"user cancelled guest selection");
-        
-            //[delegate.rsvpDetails setObject:@0 forKey:@"guests_count"];
-            //NSLog(@"delegate.rsvpDetails: %@", delegate.rsvpDetails);
-            //[delegate dismissViewControllerAnimated:YES completion:nil];
         
             //just dismiss actionsheet
             return;
@@ -495,12 +487,9 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     
     if ([actionSheet.title isEqualToString:@"Already RSVPd: Cancel RSVP or update number of guests"]) {
         NSLog(@"ALREADY RSVPED ACTIONSHEET");
+        
         if (buttonIndex == [actionSheet cancelButtonIndex]) {
             // User pressed cancel -- abort
-        
-            //set a dummy guest count so we dont pass in null
-        
-            //then just dismiss actionsheet
             return;
         }
         
@@ -508,6 +497,8 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
             NSLog(@"user wants to CANCEL RSVP");
             //user wants to cancel the event
             [delegate.rsvpDetails setObject:@"true" forKey:@"canceled"];
+            
+            //just set a dummy val so we dont attempt to set nil in a dic literal
             [delegate.rsvpDetails setObject:[NSNumber numberWithInt:0] forKey:@"guests_count"];
             
             rsvpLabel.text = @"RSVP CANCEL";
