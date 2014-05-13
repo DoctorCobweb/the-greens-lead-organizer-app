@@ -29,7 +29,7 @@
 #import "AFNetworkActivityIndicatorManager.h"
 #import "TGLOAppDelegate.h"
 #import "TGLOUtils.h"
-#import "TGLOEventsModalViewController.h"
+#import "TGLOEventsModalMyProfileViewController.h"
 
 static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=10&access_token=%@";
 static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people/%@?access_token=%@";
@@ -1058,7 +1058,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     NSLog(@"chooseEventToRsvp button clicked");
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    TGLOEventsModalViewController *eventsViewController = [storyboard instantiateViewControllerWithIdentifier:@"eventsModalVC"];
+    TGLOEventsModalMyProfileViewController *eventsViewController = [storyboard instantiateViewControllerWithIdentifier:@"eventsModalMyProfileVC"];
     
     eventsViewController.modalPresentationStyle = UIModalPresentationFullScreen;
     eventsViewController.delegate = self;

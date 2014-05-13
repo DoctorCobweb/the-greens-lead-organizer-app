@@ -10,7 +10,8 @@
 #import "SWRevealViewController.h"
 
 
-NSString * const theGreensAddress = @"https://greens.org.au";
+//NSString * const theGreensAddress = @"https://greens.org.au";
+NSString * const theGreensAddress = @"http://greens.org.au/vic/candidates/western-victoria";
 
 
 @interface TGLOTheGreensViewController ()
@@ -47,7 +48,7 @@ NSString * const theGreensAddress = @"https://greens.org.au";
 
 - (void)setUpAppearance
 {
-    self.title = @"The Greens";
+    self.title = @"Western Victoria candidate";
     
     // Change button color
     //self.sidebarButton.tintColor = [UIColor colorWithWhite:0.04f alpha:0.9f];
@@ -72,7 +73,7 @@ NSString * const theGreensAddress = @"https://greens.org.au";
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-    NSLog(@"webViewDidStartLoad");
+    //NSLog(@"webViewDidStartLoad");
     self.activityIndicator.hidden = NO;
     [self.activityIndicator startAnimating];
 }
@@ -80,7 +81,7 @@ NSString * const theGreensAddress = @"https://greens.org.au";
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    NSLog(@"webViewDidFinishLoad");
+    //NSLog(@"webViewDidFinishLoad");
     self.activityIndicator.hidden = YES;
     [self.activityIndicator stopAnimating];
 

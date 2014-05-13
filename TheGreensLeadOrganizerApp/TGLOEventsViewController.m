@@ -8,9 +8,10 @@
 
 #import "TGLOEventsViewController.h"
 #import "SWRevealViewController.h"
+#import "FXBlurView.h"
 
 @interface TGLOEventsViewController ()
-
+@property (nonatomic, weak) IBOutlet FXBlurView *blurView;
 @end
 
 @implementation TGLOEventsViewController
@@ -28,6 +29,11 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    //setup the burring of the background image
+    self.blurView.dynamic = NO;
+    self.blurView.blurRadius =15;
+    self.blurView.tintColor = [UIColor colorWithRed:20/255.0f green:0/255.0f blue:80/255.0f alpha:1.0f];
+    
     NSLog(@"TGLOEventsViewController");
     [self setUpAppearance];
 }

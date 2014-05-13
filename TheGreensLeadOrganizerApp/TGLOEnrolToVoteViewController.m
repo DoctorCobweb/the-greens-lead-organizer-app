@@ -73,7 +73,7 @@ NSString * const enrolToVoteAddress= @"http://www.aec.gov.au/enrol/";
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-    NSLog(@"webViewDidStartLoad");
+    //NSLog(@"webViewDidStartLoad");
     self.activityIndicator.hidden = NO;
     [self.activityIndicator startAnimating];
 }
@@ -81,7 +81,7 @@ NSString * const enrolToVoteAddress= @"http://www.aec.gov.au/enrol/";
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    NSLog(@"webViewDidFinishLoad");
+    //NSLog(@"webViewDidFinishLoad");
     self.activityIndicator.hidden = YES;
     [self.activityIndicator stopAnimating];
     

@@ -9,7 +9,11 @@
 #import "TGLODonationsViewController.h"
 #import "SWRevealViewController.h"
 
-NSString * const donationsAddress = @"https://greens.org.au/civicrm/contribute/transact?reset=1&id=372";
+//the greens
+//NSString * const donationsAddress = @"https://greens.org.au/civicrm/contribute/transact?reset=1&id=372";
+
+//lloyd davies donate
+NSString * const donationsAddress = @"https://greens.org.au/civicrm/contribute/transact?reset=1&id=456";
 
 @interface TGLODonationsViewController ()
 
@@ -77,7 +81,7 @@ NSString * const donationsAddress = @"https://greens.org.au/civicrm/contribute/t
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-    NSLog(@"webViewDidStartLoad");
+    //NSLog(@"webViewDidStartLoad");
     self.activityIndicator.hidden = NO;
     [self.activityIndicator startAnimating];
     
@@ -86,7 +90,7 @@ NSString * const donationsAddress = @"https://greens.org.au/civicrm/contribute/t
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    NSLog(@"webViewDidFinishLoad");
+    //NSLog(@"webViewDidFinishLoad");
     self.activityIndicator.hidden = YES;
     [self.activityIndicator stopAnimating];
     
