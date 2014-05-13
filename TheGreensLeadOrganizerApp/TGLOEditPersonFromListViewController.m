@@ -793,6 +793,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         //remember to reset the sendInANewContact back to false
         sendInANewContact = false;
         
+        
         // *** CONTROL FLOW ***
         if (self.sendInRSVP) {
             [self saveTheRsvp];

@@ -25,6 +25,8 @@
 
 @property (strong ,nonatomic) TGLOPerson *person;
 @property (strong, nonatomic) NSMutableArray *contacts;
+@property (strong, nonatomic) NSMutableDictionary *rsvpDetails;
+@property BOOL sendInRSVP;
 
 @property (nonatomic, weak) id<TGLOUpdatePersonDelegate>delegate;
 
@@ -56,6 +58,7 @@
 - (void)parseTagString:(NSMutableDictionary *)tagsToKeep;
 - (void)resignAllFirstResponders;
 
-
+- (IBAction)chooseEventToRsvp:(id)sender;
+- (void)saveTheRsvp;
 
 @end

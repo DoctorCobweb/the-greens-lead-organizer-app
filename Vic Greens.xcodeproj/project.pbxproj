@@ -91,6 +91,8 @@
 		65BC976418F3DCF2006063CA /* OAuthLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65BC976318F3DCF2006063CA /* OAuthLoginViewController.m */; };
 		65D63A28192244D400533C3F /* TGLOEventsModalMyProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65D63A27192244D400533C3F /* TGLOEventsModalMyProfileViewController.m */; };
 		65D63A2B19224D4900533C3F /* TGLOEventsModalMyListsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65D63A2A19224D4900533C3F /* TGLOEventsModalMyListsViewController.m */; };
+		65D63A2E19225FF200533C3F /* TGLOEventsModalSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65D63A2D19225FF200533C3F /* TGLOEventsModalSearchViewController.m */; };
+		65D63A31192266F900533C3F /* TGLOEventsModalMyTagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65D63A30192266F900533C3F /* TGLOEventsModalMyTagsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -229,6 +231,10 @@
 		65D63A27192244D400533C3F /* TGLOEventsModalMyProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOEventsModalMyProfileViewController.m; sourceTree = "<group>"; };
 		65D63A2919224D4900533C3F /* TGLOEventsModalMyListsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOEventsModalMyListsViewController.h; sourceTree = "<group>"; };
 		65D63A2A19224D4900533C3F /* TGLOEventsModalMyListsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOEventsModalMyListsViewController.m; sourceTree = "<group>"; };
+		65D63A2C19225FF200533C3F /* TGLOEventsModalSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOEventsModalSearchViewController.h; sourceTree = "<group>"; };
+		65D63A2D19225FF200533C3F /* TGLOEventsModalSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOEventsModalSearchViewController.m; sourceTree = "<group>"; };
+		65D63A2F192266F900533C3F /* TGLOEventsModalMyTagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOEventsModalMyTagsViewController.h; sourceTree = "<group>"; };
+		65D63A30192266F900533C3F /* TGLOEventsModalMyTagsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOEventsModalMyTagsViewController.m; sourceTree = "<group>"; };
 		950AE0EADB7042F4B10AC436 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -384,6 +390,10 @@
 				65D63A27192244D400533C3F /* TGLOEventsModalMyProfileViewController.m */,
 				65D63A2919224D4900533C3F /* TGLOEventsModalMyListsViewController.h */,
 				65D63A2A19224D4900533C3F /* TGLOEventsModalMyListsViewController.m */,
+				65D63A2C19225FF200533C3F /* TGLOEventsModalSearchViewController.h */,
+				65D63A2D19225FF200533C3F /* TGLOEventsModalSearchViewController.m */,
+				65D63A2F192266F900533C3F /* TGLOEventsModalMyTagsViewController.h */,
+				65D63A30192266F900533C3F /* TGLOEventsModalMyTagsViewController.m */,
 			);
 			name = "Vic Greens";
 			path = TheGreensLeadOrganizerApp;
@@ -652,6 +662,7 @@
 				655572B418FBD5AD00FA4297 /* TGLOCustomContactView.m in Sources */,
 				65BC96F118F3BBE3006063CA /* TGLOAppDelegate.m in Sources */,
 				651626D418F4FEDF00DCC064 /* TGLODonationsViewController.m in Sources */,
+				65D63A31192266F900533C3F /* TGLOEventsModalMyTagsViewController.m in Sources */,
 				651626D718F525F700DCC064 /* TGLOTheGreensViewController.m in Sources */,
 				65BC976118F3DCE6006063CA /* NationBuilder.m in Sources */,
 				651318CA18FFA40C00995995 /* TGLOCustomEditContactHeaderView.m in Sources */,
@@ -667,6 +678,7 @@
 				65BC976418F3DCF2006063CA /* OAuthLoginViewController.m in Sources */,
 				651626ED18F6253900DCC064 /* TGLOPerson.m in Sources */,
 				651318DD1905136000995995 /* TGLOEditMyProfileViewController.m in Sources */,
+				65D63A2E19225FF200533C3F /* TGLOEventsModalSearchViewController.m in Sources */,
 				65BC96ED18F3BBE3006063CA /* main.m in Sources */,
 				65B022F018FD27A50057E741 /* TGLOPersonFromListViewController.m in Sources */,
 				651318DA19050B9F00995995 /* TGLOEditPersonFromListViewController.m in Sources */,
