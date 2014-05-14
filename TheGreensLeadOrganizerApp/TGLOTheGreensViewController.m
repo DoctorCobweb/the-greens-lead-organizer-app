@@ -48,7 +48,7 @@ NSString * const theGreensAddress = @"http://greens.org.au/vic/candidates/wester
 
 - (void)setUpAppearance
 {
-    self.title = @"Western Victoria candidate";
+    self.title = @"Western Victoria Candidate";
     
     // Change button color
     //self.sidebarButton.tintColor = [UIColor colorWithWhite:0.04f alpha:0.9f];

@@ -41,7 +41,6 @@
 		656174761906380600EE712F /* TGLOUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 656174751906380600EE712F /* TGLOUtils.m */; };
 		6561747919090B1900EE712F /* TGLOAccountLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6561747819090B1900EE712F /* TGLOAccountLoginViewController.m */; };
 		658278FF191B2BFB001BF4BB /* TGLOEventsAllViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 658278FE191B2BFB001BF4BB /* TGLOEventsAllViewController.m */; };
-		65827905191B3012001BF4BB /* TGLOEventsNewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65827904191B3012001BF4BB /* TGLOEventsNewViewController.m */; };
 		65827908191B736F001BF4BB /* TGLOEventDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65827907191B736F001BF4BB /* TGLOEventDetailsViewController.m */; };
 		6582790E191B81B6001BF4BB /* TGLOEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 6582790D191B81B6001BF4BB /* TGLOEvent.m */; };
 		65827910191E068C001BF4BB /* TGLOEventTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6582790F191E068C001BF4BB /* TGLOEventTableCell.xib */; };
@@ -166,8 +165,6 @@
 		6561747819090B1900EE712F /* TGLOAccountLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOAccountLoginViewController.m; sourceTree = "<group>"; };
 		658278FD191B2BFB001BF4BB /* TGLOEventsAllViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOEventsAllViewController.h; sourceTree = "<group>"; };
 		658278FE191B2BFB001BF4BB /* TGLOEventsAllViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOEventsAllViewController.m; sourceTree = "<group>"; };
-		65827903191B3012001BF4BB /* TGLOEventsNewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOEventsNewViewController.h; sourceTree = "<group>"; };
-		65827904191B3012001BF4BB /* TGLOEventsNewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOEventsNewViewController.m; sourceTree = "<group>"; };
 		65827906191B736F001BF4BB /* TGLOEventDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOEventDetailsViewController.h; sourceTree = "<group>"; };
 		65827907191B736F001BF4BB /* TGLOEventDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOEventDetailsViewController.m; sourceTree = "<group>"; };
 		6582790C191B81B6001BF4BB /* TGLOEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOEvent.h; sourceTree = "<group>"; };
@@ -377,8 +374,6 @@
 				654CC32D1917C9F500600473 /* TGLOEventsViewController.m */,
 				658278FD191B2BFB001BF4BB /* TGLOEventsAllViewController.h */,
 				658278FE191B2BFB001BF4BB /* TGLOEventsAllViewController.m */,
-				65827903191B3012001BF4BB /* TGLOEventsNewViewController.h */,
-				65827904191B3012001BF4BB /* TGLOEventsNewViewController.m */,
 				65827906191B736F001BF4BB /* TGLOEventDetailsViewController.h */,
 				65827907191B736F001BF4BB /* TGLOEventDetailsViewController.m */,
 				6582790C191B81B6001BF4BB /* TGLOEvent.h */,
@@ -672,7 +667,6 @@
 				651318BD18FE48F100995995 /* TGLOEditPersonFromSearchViewController.m in Sources */,
 				651318D7190508E600995995 /* TGLOEditPersonFromTagViewController.m in Sources */,
 				65BC971C18F3C611006063CA /* TGLOLoginViewController.m in Sources */,
-				65827905191B3012001BF4BB /* TGLOEventsNewViewController.m in Sources */,
 				655572A518FAB34C00FA4297 /* TGLOListViewController.m in Sources */,
 				65D63A28192244D400533C3F /* TGLOEventsModalMyProfileViewController.m in Sources */,
 				65BC976418F3DCF2006063CA /* OAuthLoginViewController.m in Sources */,
