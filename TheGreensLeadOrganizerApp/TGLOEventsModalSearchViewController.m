@@ -88,6 +88,24 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     
     //an array of managedObjects of Entity type Event
     __block NSArray *fetchedEventsArray = [moc executeFetchRequest:fetchRequest error:nil];
+    
+    //first time visit to this 'page', automatically fetch events
+    if ([fetchedEventsArray count] == 0) {
+        [self getAllEvents:^(NSError *error) {
+            NSLog(@"in getAllEvents completionHandler, error: %@", error);
+            
+            if (error == nil) {
+                NSLog(@"error is nil");
+                [self.tableView reloadData];
+            }
+            
+            if (error) {
+                NSLog(@"ERROR: %@", error);
+                [self displayErrorAlert:@"Network Error" message:@"Unable to download events. Pleas try again."];
+            }
+        }];
+    }
+    
     __block NSMutableArray *extractedEvents = [[NSMutableArray alloc] init];
     
     [fetchedEventsArray enumerateObjectsUsingBlock:^(id obj, NSUInteger i, BOOL *stop) {
@@ -138,11 +156,8 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     
     
     //add all new events now
-    __block int counter = 0;
-    
     [results enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         
-        counter++;
         // Create a new managed object, new Event
         NSManagedObject *newE = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:moc];
         
@@ -163,7 +178,6 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
         }
     
     }];
-    NSLog(@"coutner: %d", counter);
     
     //success in saving to database so we can assigned results to table data source
     searchResults =      [[NSMutableArray alloc] initWithArray:results];
