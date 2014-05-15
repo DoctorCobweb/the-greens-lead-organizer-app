@@ -10,6 +10,7 @@
 
 extern NSString *const nationBuilderSlugKey;
 extern NSString *const nationBuilderSlugValue;
+extern NSString *const nationBuilderLoginEmailKey;
 
 @interface TGLOAppDelegate : UIResponder <UIApplicationDelegate>
 

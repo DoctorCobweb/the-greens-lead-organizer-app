@@ -15,8 +15,9 @@
 
 //app wide identifier used to construct urls for api calls
 //stored in UserDefaults object
-NSString * const nationBuilderSlugKey = @"nationBuilderSlug";
-NSString * const nationBuilderSlugValue = @"agv";
+NSString *const nationBuilderSlugKey = @"nationBuilderSlug";
+NSString *const nationBuilderSlugValue = @"agv";
+NSString *const nationBuilderLoginEmailKey = @"loginEmail";
 
 
 @implementation TGLOAppDelegate

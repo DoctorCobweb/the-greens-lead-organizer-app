@@ -53,6 +53,19 @@ static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logt
         NSLog(@"Cannot set placeholder text's color, because deployment target is earlier than iOS 6.0");
         // TODO: Add fall-back code to set placeholder color.
     }
+    
+    //for convienence prefill email address if it is
+    //stored in user defaults
+    NSUserDefaults *uDef = [NSUserDefaults standardUserDefaults];
+    
+    NSString *loginEmail = [uDef valueForKey:nationBuilderLoginEmailKey];
+    if (![loginEmail isEqual:nil]) {
+        NSLog(@"loginEmail: %@", loginEmail);
+        self.email.text = loginEmail;
+    }
+   
+    
+    
 }
 
 
@@ -82,6 +95,12 @@ static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logt
          otherButtonTitles:nil];
     
     [loggingInAlert show];
+    
+    
+    NSUserDefaults *uDef = [NSUserDefaults standardUserDefaults];
+    
+    [uDef setObject:self.email.text forKey:nationBuilderLoginEmailKey];
+    [uDef synchronize];
     
     //need to get notes on the person from a different api, namely
     // the contacts api
