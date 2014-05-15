@@ -70,17 +70,105 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     //this will set the 'back' button to be black
     navbar.tintColor = black_color;
     
-    [self loadEventsFromDatabase];
+    [self loadAllEventEntities];
 }
 
-- (void) loadEventsFromDatabase
+- (void) loadAllEventEntities
 {
     NSLog(@"in loadEventsFromDatabase method");
+    //get all events and assign them to searchResults and searchResultsCache arrays
 
-
+    TGLOAppDelegate *delegate = (TGLOAppDelegate *)[[UIApplication sharedApplication] delegate];
+    NSManagedObjectContext *moc = [delegate managedObjectContext];
+    
+    
+    
+    // Fetch the devices from persistent data store
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Event"];
+    
+    //an array of managedObjects of Entity type Event
+    __block NSArray *fetchedEventsArray = [moc executeFetchRequest:fetchRequest error:nil];
+    __block NSMutableArray *extractedEvents = [[NSMutableArray alloc] init];
+    
+    [fetchedEventsArray enumerateObjectsUsingBlock:^(id obj, NSUInteger i, BOOL *stop) {
+        
+        NSDictionary *dic = @{ @"eventId":   [obj valueForKey:@"eventId"],
+                               @"name":      [obj valueForKey:@"name"],
+                               @"startTime": [obj valueForKey:@"startTime"],
+                               @"venue":     [obj valueForKey:@"venue"]
+                              };
+    
+        [extractedEvents addObject:dic];
+    }];
+    
+    searchResults = [extractedEvents mutableCopy];
+    searchResultsCache = [[NSArray alloc] initWithArray:extractedEvents];
 }
 
 
+//results is a mutable array of dics
+- (void) saveAllEventEntities:(NSMutableArray *)results
+{
+    TGLOAppDelegate *delegate = (TGLOAppDelegate *)[[UIApplication sharedApplication] delegate];
+    NSManagedObjectContext *moc = [delegate managedObjectContext];
+    
+    
+    
+    //reset the database to empty
+    //fetch em all and delete em all
+    NSFetchRequest * allEvents = [[NSFetchRequest alloc] init];
+    [allEvents setEntity:[NSEntityDescription entityForName:@"Event" inManagedObjectContext:moc]];
+    [allEvents setIncludesPropertyValues:NO]; //only fetch the managedObjectID
+    
+    NSError * error = nil;
+    NSArray * events = [moc executeFetchRequest:allEvents error:&error];
+    
+    //error handling goes here
+    for (NSManagedObject * event in events) {
+        [moc deleteObject:event];
+    }
+    
+    //save delete all changes
+    NSError *saveError = nil;
+    if(![moc save:&saveError]) {
+        NSLog(@"Can't Save reset! %@ %@", error, [error localizedDescription]);
+        [self displayErrorAlert:@"Database Reset Error" message:@"Unable to reset database. Please try again."];
+        return;
+    }
+    
+    
+    //add all new events now
+    __block int counter = 0;
+    
+    [results enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        
+        counter++;
+        // Create a new managed object, new Event
+        NSManagedObject *newE = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:moc];
+        
+        NSDate *date = [TGLOUtils formattedDateFromString:[obj valueForKey:@"startTime"]];
+
+        [newE setValue:[obj valueForKey:@"eventId"] forKey:@"eventId"];
+        [newE setValue:[obj valueForKey:@"name"] forKey:@"name"];
+        [newE setValue:date forKey:@"startTime"];
+        [newE setValue:[obj valueForKey:@"venue"] forKey:@"venue"];
+        
+        NSError *error = nil;
+        // Save the object to persistent store
+        if (![moc save:&error]) {
+            NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+            *stop = YES;
+            [self displayErrorAlert:@"Database Error" message:@"Unable to save event to database. Please try again."];
+            return;
+        }
+    
+    }];
+    NSLog(@"coutner: %d", counter);
+    
+    //success in saving to database so we can assigned results to table data source
+    searchResults =      [[NSMutableArray alloc] initWithArray:results];
+    searchResultsCache = [[NSArray alloc] initWithArray:results];
+}
 
 - (void)refresh:(UIRefreshControl *)refreshControl {
     NSLog(@"in refresh method");
@@ -96,15 +184,8 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
         
         if (error) {
             NSLog(@"ERROR: %@", error);
+            [self displayErrorAlert:@"Network Error" message:@"Unable to download events. Pleas try again."];
             
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle:@"Network Error"
-                                  message:@"Unable to download events. Please try again."
-                                  delegate:nil
-                                  cancelButtonTitle:@"Okay"
-                                  otherButtonTitles:nil];
-            
-            [alert show];
         }
         
     }];
@@ -127,16 +208,15 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
         //NSLog(@"EVENTS MODAL VIEW CONTROLLER and response for events: %@", responseObject);
         
         NSArray *results_array = [[responseObject objectForKey:@"events"] allObjects];
-        searchResults = [[NSMutableArray alloc] initWithArray:results_array];
+        NSMutableArray *results_array_mutable = [[NSMutableArray alloc] initWithArray:results_array];
         
-        searchResultsCache = [[NSArray alloc] initWithArray:results_array];
-        
+        //searchResults = [[NSMutableArray alloc] initWithArray:results_array];
+        //searchResultsCache = [[NSArray alloc] initWithArray:results_array];
         //reload tableview to display new data returned from server
         //[self.tableView reloadData];
-    
-        //TODO
-        //refresh the events databse with new events
         
+        //refresh the events databse with new events
+        [self saveAllEventEntities:results_array_mutable];
         
         completionBlock(error);
         
@@ -146,6 +226,21 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
         error = [NSError errorWithDomain:@"GreensApp" code:1 userInfo:nil];
         completionBlock(error);
     }];
+}
+
+
+- (void)displayErrorAlert:(NSString *)errorTitle message:(NSString *)message
+{
+    // show alert view saying we are getting token
+    UIAlertView *alert =
+    [[UIAlertView alloc]
+     initWithTitle:errorTitle
+     message:message
+     delegate:nil
+     cancelButtonTitle:@"Okay"
+     otherButtonTitles:nil];
+    
+    [alert show];
 }
 
 - (void)didReceiveMemoryWarning
@@ -298,11 +393,23 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
         cell = [nib objectAtIndex:0];
     }
     
+    //NSLog(@"anEvent: %@", anEvent);
     
     //NSLog(@"VENUE: %@", venue);
     //NSLog(@"ADDRESS: %@", address);
     
-    cell.dateLabel.text = [TGLOUtils formatTheDate:[anEvent objectForKey:@"startTime"] withCustomFormat:@"yyyy-MM-dd'T'HH:mm:ss+HH:mm"];
+    //cell.dateLabel.text = [TGLOUtils formatTheDate:[anEvent objectForKey:@"startTime"] withCustomFormat:@"yyyy-MM-dd'T'HH:mm:ss+HH:mm"];
+    
+    //whillst we are enumerating, change the date type to formatted string for
+    //results
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    //now set the format to a simpler detail form for date
+    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+    
+    NSString *dateString = [dateFormatter stringFromDate:[anEvent objectForKey:@"startTime"]];
+    
+    cell.dateLabel.text = dateString;
     
     //set the text contents finally
     cell.nameLabel.text = [anEvent objectForKey:@"name"];

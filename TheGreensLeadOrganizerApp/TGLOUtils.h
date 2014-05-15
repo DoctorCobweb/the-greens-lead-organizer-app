@@ -25,6 +25,7 @@
 + (void)setMyNationBuilderIdInUserDefaults:(NSString *)myNBId;
 + (BOOL)clearOutUserSession;
 + (NSString *)formatTheDate:(NSString *)dateString withCustomFormat:(NSString *)customFormat;
++ (NSDate *)formattedDateFromString:(NSString *)dateString;
 
 
 @end

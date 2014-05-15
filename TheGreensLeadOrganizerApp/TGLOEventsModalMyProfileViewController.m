@@ -63,7 +63,6 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
     undoStack = [[NSMutableArray alloc] init];
     
-    //[self getAllEvents];
     
     searchBar.delegate = self;
     UINavigationBar *navbar = [[self navigationController] navigationBar];
