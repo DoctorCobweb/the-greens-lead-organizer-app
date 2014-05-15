@@ -14,12 +14,15 @@
 @interface TGLOEventsModalMyProfileViewController : UIViewController<UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
 @property (strong, nonatomic) TGLOEditMyProfileViewController *delegate;
+
+
+typedef void (^allEventsCompletionHandler)(NSError *error);
+
 
 - (IBAction)cancelModal:(id)sender;
 
-- (void)getAllEvents;
+- (void)getAllEvents: (allEventsCompletionHandler)comletionBlock;
 - (NSMutableIndexSet *)getIndexSetOfMatches:(NSString *)searchTerm;
 - (void)handleRsvp:(NSString *)status selectedRowAtIndexPath: (NSIndexPath *)indexPath matchedRsvpId:(NSString *)matchedRsvpId alreadyCanceledRsvp:(BOOL)alreadyCanceledRsvp;
 - (void)chooseHowManyGuests;

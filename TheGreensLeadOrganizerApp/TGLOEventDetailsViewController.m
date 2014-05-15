@@ -47,6 +47,8 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    
+    
     //set an initial scroll view size
     self.scrollView.contentSize =CGSizeMake(320, 550);
     

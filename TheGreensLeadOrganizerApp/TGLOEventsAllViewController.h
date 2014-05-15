@@ -13,8 +13,10 @@
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+typedef void (^allEventsCompletionHandler)(NSError *error);
 
-- (void)getAllEvents;
+
+- (void)getAllEvents: (allEventsCompletionHandler)completionBlock;
 - (NSMutableIndexSet *)getIndexSetOfMatches:(NSString *)searchTerm;
 
 @end

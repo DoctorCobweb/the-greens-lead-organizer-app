@@ -54,24 +54,57 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    //use pull to refresh even without having a UITableViewController
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:refreshControl]; //the trick
+    
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
     undoStack = [[NSMutableArray alloc] init];
     
     self.title = @"Search Events";
     searchBar.delegate = self;
-    
-    [self getAllEvents];
 }
 
 
 
+- (void)refresh:(UIRefreshControl *)refreshControl {
+    NSLog(@"in refresh method");
+    
+    [self getAllEvents:^(NSError *error) {
+        NSLog(@"in getAllEvents completionHandler, error: %@", error);
+        [refreshControl endRefreshing];
+        
+        if (error == nil) {
+            NSLog(@"error is nil");
+            [self.tableView reloadData];
+        }
+        
+        if (error) {
+            NSLog(@"ERROR: %@", error);
+            
+            UIAlertView *alert = [[UIAlertView alloc]
+                                 initWithTitle:@"Network Error"
+                                 message:@"Unable to download events. Please try again."
+                                 delegate:nil
+                                 cancelButtonTitle:@"Okay"
+                                 otherButtonTitles:nil];
+            
+            [alert show];
+        }
+        
+    }];
+}
 
-- (void)getAllEvents
+
+- (void)getAllEvents:(allEventsCompletionHandler)completionBlock
 {
     
     NSString *myNBId = [TGLOUtils getUserNationBuilderId];
     NSString *accessToken = [TGLOUtils getUserAccessToken];
     NSString * eventsUrl_ = [NSString stringWithFormat:eventsUrl, myNBId, accessToken];
+    __block NSError *error;
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
@@ -85,10 +118,15 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
 
         
         //reload tableview to display new data returned from server
-        [self.tableView reloadData];
+        //[self.tableView reloadData];
+        
+        completionBlock(error);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
+        
+        error = [NSError errorWithDomain:@"GreensApp" code:1 userInfo:nil];
+        completionBlock(error);
     }];
 }
 

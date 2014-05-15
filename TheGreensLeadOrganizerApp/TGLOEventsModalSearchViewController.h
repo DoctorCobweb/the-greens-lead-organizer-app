@@ -17,12 +17,14 @@
 
 //passed in from TGLOEditPersonFromSearchViewController
 @property (strong, nonatomic) NSNumber *personIdFromList;
-
 @property (strong, nonatomic) TGLOEditPersonFromSearchViewController *delegate;
+
+typedef void (^allEventsCompletionHandler)(NSError *error);
+
 
 - (IBAction)cancelModal:(id)sender;
 
-- (void)getAllEvents;
+- (void)getAllEvents: (allEventsCompletionHandler)completionBlock;
 - (NSMutableIndexSet *)getIndexSetOfMatches:(NSString *)searchTerm;
 - (void)handleRsvp:(NSString *)status selectedRowAtIndexPath: (NSIndexPath *)indexPath matchedRsvpId:(NSString *)matchedRsvpId alreadyCanceledRsvp:(BOOL)alreadyCanceledRsvp;
 - (void)chooseHowManyGuests;
