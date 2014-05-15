@@ -16,7 +16,14 @@
 typedef void (^allEventsCompletionHandler)(NSError *error);
 
 
+
+- (void)loadAllEventEntities;
+- (void)saveAllEventEntities:(NSMutableArray *)results;
 - (void)getAllEvents: (allEventsCompletionHandler)completionBlock;
+- (void)displayErrorAlert:(NSString *)errorTitle message:(NSString *)message;
+
+
+
 - (NSMutableIndexSet *)getIndexSetOfMatches:(NSString *)searchTerm;
 
 @end

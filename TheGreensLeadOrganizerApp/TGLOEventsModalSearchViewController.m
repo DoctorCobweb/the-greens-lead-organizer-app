@@ -73,6 +73,8 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     [self loadAllEventEntities];
 }
 
+
+
 - (void) loadAllEventEntities
 {
     NSLog(@"in loadEventsFromDatabase method");
@@ -184,6 +186,8 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     searchResultsCache = [[NSArray alloc] initWithArray:results];
 }
 
+
+
 - (void)refresh:(UIRefreshControl *)refreshControl {
     NSLog(@"in refresh method");
     
@@ -199,7 +203,6 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
         if (error) {
             NSLog(@"ERROR: %@", error);
             [self displayErrorAlert:@"Network Error" message:@"Unable to download events. Pleas try again."];
-            
         }
         
     }];
@@ -256,6 +259,7 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     
     [alert show];
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -408,11 +412,10 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     }
     
     //NSLog(@"anEvent: %@", anEvent);
-    
     //NSLog(@"VENUE: %@", venue);
     //NSLog(@"ADDRESS: %@", address);
-    
     //cell.dateLabel.text = [TGLOUtils formatTheDate:[anEvent objectForKey:@"startTime"] withCustomFormat:@"yyyy-MM-dd'T'HH:mm:ss+HH:mm"];
+    
     
     //whillst we are enumerating, change the date type to formatted string for
     //results

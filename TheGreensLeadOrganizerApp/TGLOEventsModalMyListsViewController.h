@@ -25,7 +25,13 @@ typedef void (^allEventsCompletionHandler)(NSError *error);
 
 - (IBAction)cancelModal:(id)sender;
 
+
+- (void)loadAllEventEntities;
+- (void)saveAllEventEntities:(NSMutableArray *)results;
 - (void)getAllEvents: (allEventsCompletionHandler)completionBlock;
+- (void)displayErrorAlert:(NSString *)errorTitle message:(NSString *)message;
+
+
 - (NSMutableIndexSet *)getIndexSetOfMatches:(NSString *)searchTerm;
 - (void)handleRsvp:(NSString *)status selectedRowAtIndexPath: (NSIndexPath *)indexPath matchedRsvpId:(NSString *)matchedRsvpId alreadyCanceledRsvp:(BOOL)alreadyCanceledRsvp;
 - (void)chooseHowManyGuests;
