@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "TGLOEvent.h"
 
-@interface TGLOEventDetailsViewController : UIViewController
+@interface TGLOEventDetailsViewController : UIViewController<UIActionSheetDelegate>
 
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UIView *containerView;
@@ -31,6 +31,8 @@
 - (void)addRsvpsToUI;
 - (id) fabricateANewView:(NSString *)viewType width:(CGFloat)viewWidth height:(CGFloat)viewHeight spacing: (CGFloat)viewSpacing;
 - (void)rsvpButtonHit:(id)sender;
+- (void)updateRsvpDetails:(NSDictionary *)matchedJoinedRsvp;
+- (void)updateTheRsvpOnNationBuilder;
 - (void)updateScrollAndContainerViewSize:(CGFloat)makeMoreRoom;
 
 @end

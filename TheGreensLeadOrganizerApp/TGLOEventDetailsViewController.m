@@ -18,6 +18,7 @@
 static NSString *eventUrl= @"https://%@.nationbuilder.com/api/v1/sites/%@/pages/events/%@?access_token=%@";
 
 static NSString *rsvpsUrl = @"https://%@.nationbuilder.com/api/v1/sites/%@/pages/events/%@/rsvps?page=1&per_page=1000&access_token=%@";
+static NSString * putRsvpUrl = @"https://%@.nationbuilder.com/api/v1/sites/%@/pages/events/%@/rsvps/%@?access_token=%@";
 
 #warning TODO: not use localhost for translating ids to names
 static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuapp.com/namesForIds/%@/%@";
@@ -29,6 +30,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     NSString *token;
     TGLOEvent *parsedEvent;
     NSMutableArray *joinedRsvps;
+    NSMutableDictionary *aRsvpToUpdate;
 }
 
 @end
@@ -50,6 +52,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     // Do any additional setup after loading the view.
     
     joinedRsvps = [[NSMutableArray alloc] init];
+    aRsvpToUpdate = [[NSMutableDictionary alloc] init];
     
     
     //set an initial scroll view size
@@ -310,11 +313,138 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
         
         if ([runningPersonId isEqual:personId]) {
             NSLog(@"hit person, matched personId record: %@", joinedRsvps[i]);
+            [self updateRsvpDetails:joinedRsvps[i]];
             *stop = YES;
+            
         }
     }];
 }
 
+
+- (void)updateRsvpDetails:(NSDictionary *)matchedJoinedRsvp
+{
+    
+  
+    
+    //partially fill in the aRsvpToUpdate
+    [aRsvpToUpdate setObject:[matchedJoinedRsvp valueForKey:@"id"] forKey:@"id"];
+    [aRsvpToUpdate setObject:[matchedJoinedRsvp valueForKey:@"event_id"] forKey:@"event_id"];
+    [aRsvpToUpdate setObject:[matchedJoinedRsvp valueForKey:@"person_id"] forKey:@"person_id"];
+    [aRsvpToUpdate setObject:[matchedJoinedRsvp valueForKey:@"person_id"] forKey:@"person_id"];
+    [aRsvpToUpdate setObject:[matchedJoinedRsvp valueForKey:@"guests_count"] forKey:@"guests_count"];
+    [aRsvpToUpdate setObject:[matchedJoinedRsvp valueForKey:@"private"] forKey:@"private"];
+    [aRsvpToUpdate setObject:[matchedJoinedRsvp valueForKey:@"volunteer"] forKey:@"volunteer"];
+    [aRsvpToUpdate setObject:[matchedJoinedRsvp valueForKey:@"canceled"] forKey:@"canceled"];
+    [aRsvpToUpdate setObject:[matchedJoinedRsvp valueForKey:@"shift_ids"] forKey:@"shift_ids"];
+    
+    NSLog(@"aRsvpToUpdate PARTOAL FILL: %@", aRsvpToUpdate);
+    
+    
+    UIActionSheet *updateRsvpActionSheet =
+    [[UIActionSheet alloc]
+     initWithTitle:@"Did the person attend?"
+     delegate:self
+     cancelButtonTitle:@"Cancel"
+     destructiveButtonTitle:nil
+     otherButtonTitles:@"YES", @"NO", nil];
+    
+    [updateRsvpActionSheet showInView:self.view];
+}
+
+
+
+#pragma UIActionSheetDelegate methods
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    
+    if ([actionSheet.title isEqualToString:@"Did the person attend?"]) {
+        if (buttonIndex == [actionSheet cancelButtonIndex]) {
+            // User pressed cancel -- abort
+            NSLog(@"user cancelled guest selection");
+            
+            //just dismiss actionsheet
+            return;
+        }
+        
+        if (buttonIndex == 0) {
+            NSLog(@"YES button hit");
+            
+            [aRsvpToUpdate setObject:@"true" forKey:@"attended"];
+            [self updateTheRsvpOnNationBuilder];
+            return;
+        }
+        
+        if (buttonIndex == 1) {
+            NSLog(@"NO button hit");
+            
+            [aRsvpToUpdate setObject:@"false" forKey:@"attended"];
+            [self updateTheRsvpOnNationBuilder];
+            return;
+        }
+        
+        return;
+    }
+}
+
+
+- (void)updateTheRsvpOnNationBuilder
+{
+
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Updating rsvp" message:@"Syncing the rsvp with Nation Builder" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    
+    [alert show];
+    
+    
+    
+    NSDictionary *rsvpBody = [[NSDictionary alloc] init];
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    
+    //NSDictionary *theRsvp = [aRsvpToUpdate objectForKey:@"rsvp"];
+    NSString *eventId = [[NSString alloc] initWithFormat:@"%@", [aRsvpToUpdate objectForKey:@"event_id"]];
+    NSString *rsvpId = [[NSString alloc] initWithFormat:@"%@", [aRsvpToUpdate objectForKey:@"id"]];
+    NSLog(@"eventId: %@", eventId);
+    NSLog(@"rsvpId: %@", rsvpId);
+    
+    //post endpoint for updating rsvp for person
+    NSString *putRsvpUrl_ = [NSString stringWithFormat:putRsvpUrl, nationBuilderSlugValue, nationBuilderSlugValue, eventId, rsvpId, token];
+    
+    /*
+    //structure:
+    rsvpBody =
+    @{ @"rsvp": @{
+               @"person_id":    [rsvpToUpdate valueForKey:@"person_id"],
+               @"guests_count": [rsvpToUpdate valueForKey:@"guests_count"],
+               @"private":      @"false",
+               @"volunteer":    @"false",
+               @"canceled":     [rsvpToUpdate valueForKey:@"canceled"],
+               @"attended":     [rsvpToUpdate valueForKey:@"attended"],
+               @"shift_ids":    @[]
+               }};
+     */
+    
+    rsvpBody = @{ @"rsvp": aRsvpToUpdate};
+    
+    NSLog(@"PUT rsvpBody: %@", rsvpBody);
+    
+    [manager PUT:putRsvpUrl_ parameters:rsvpBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@" PUT => updating RSVP with response %@",responseObject);
+        NSLog(@"SUCCESSfully updated RSVP.");
+        
+        [alert dismissWithClickedButtonIndex:0 animated:NO];
+        
+        //remember to reset the sendInANewContact back to false
+        //self.sendInRSVP = false;
+        
+        //and we done now
+        //[self reRenderUI];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
 
 // utility method for construct different types of views
 - (id) fabricateANewView:(NSString *)viewType width:(CGFloat)viewWidth height:(CGFloat)viewHeight spacing: (CGFloat)viewSpacing
