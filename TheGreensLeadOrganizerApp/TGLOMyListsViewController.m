@@ -85,7 +85,7 @@ static NSString * myListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/myLis
 - (void) getAllLists
 {
     NSString *myNBId = [TGLOUtils getUserNationBuilderId];
-    NSString * myListsUrl_ = [NSString stringWithFormat:myListsUrl, myNBId, token];
+    NSString * myListsUrl_ = [NSString stringWithFormat:myListsUrl, @"9", token];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
@@ -141,6 +141,8 @@ static NSString * myListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/myLis
     
     // Configure the cell...
     cell.textLabel.text = [allLists[indexPath.row] objectForKey:@"name"];
+    
+    cell.detailTextLabel.text = [[NSString alloc] initWithFormat:@"%@",[allLists[indexPath.row] objectForKey:@"count"]];
     
     return cell;
 }
