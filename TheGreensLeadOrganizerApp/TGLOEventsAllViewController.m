@@ -438,16 +438,6 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
     cell.venueLabel.text = [anEvent objectForKey:@"venue"];
     
     return cell;
-    
-    /*
-    static NSString *CellIdentifier = @"eventsAllCell";
-    UITableViewCell *cell = [tableView_ dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    // Configure the cell...
-    cell.textLabel.text = [[searchResults objectAtIndex:indexPath.row] objectForKey:@"name"];
-    
-    return cell;
-     */
 }
 
 

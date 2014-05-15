@@ -28,7 +28,9 @@
 - (void)fillOutEventFields:(TGLOEvent *)event;
 - (void) addRsvpsLabel;
 - (void) translateRsvpIdsToNames:(NSSet *)rsvps;
-- (void)addRsvpsToUI:(NSMutableArray *)joinedRsvps;
+- (void)addRsvpsToUI;
+- (id) fabricateANewView:(NSString *)viewType width:(CGFloat)viewWidth height:(CGFloat)viewHeight spacing: (CGFloat)viewSpacing;
+- (void)rsvpButtonHit:(id)sender;
 - (void)updateScrollAndContainerViewSize:(CGFloat)makeMoreRoom;
 
 @end

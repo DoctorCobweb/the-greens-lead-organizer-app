@@ -28,6 +28,7 @@
 		651626FC18F90D5300DCC064 /* TGLOPersonFromSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 651626FB18F90D5300DCC064 /* TGLOPersonFromSearchViewController.m */; };
 		651853FE190FEF1A00D865C4 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 651853FD190FEF1A00D865C4 /* Accelerate.framework */; };
 		65185408190FFD6900D865C4 /* rain_forest-flowering.png in Resources */ = {isa = PBXBuildFile; fileRef = 65185407190FFD6900D865C4 /* rain_forest-flowering.png */; };
+		6526A38D1924FCE900B7BB1F /* TGLOCustomRsvpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6526A38C1924FCE900B7BB1F /* TGLOCustomRsvpView.m */; };
 		654CC32119152F5D00600473 /* the-greens-rally.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 654CC32019152F5D00600473 /* the-greens-rally.jpg */; };
 		654CC32919163BE700600473 /* appIcon58x58.png in Resources */ = {isa = PBXBuildFile; fileRef = 654CC32619163BE600600473 /* appIcon58x58.png */; };
 		654CC32A19163BE700600473 /* appIcon80x80.png in Resources */ = {isa = PBXBuildFile; fileRef = 654CC32719163BE600600473 /* appIcon80x80.png */; };
@@ -144,6 +145,8 @@
 		651626FB18F90D5300DCC064 /* TGLOPersonFromSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOPersonFromSearchViewController.m; sourceTree = "<group>"; };
 		651853FD190FEF1A00D865C4 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		65185407190FFD6900D865C4 /* rain_forest-flowering.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rain_forest-flowering.png"; path = "../../../../Desktop/rain_forest-flowering.png"; sourceTree = "<group>"; };
+		6526A38B1924FCE900B7BB1F /* TGLOCustomRsvpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOCustomRsvpView.h; sourceTree = "<group>"; };
+		6526A38C1924FCE900B7BB1F /* TGLOCustomRsvpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOCustomRsvpView.m; sourceTree = "<group>"; };
 		654CC32019152F5D00600473 /* the-greens-rally.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "the-greens-rally.jpg"; sourceTree = "<group>"; };
 		654CC32619163BE600600473 /* appIcon58x58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon58x58.png; sourceTree = "<group>"; };
 		654CC32719163BE600600473 /* appIcon80x80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon80x80.png; sourceTree = "<group>"; };
@@ -274,6 +277,8 @@
 				651318C618FF71B000995995 /* TGLOCustomEditContactView.m */,
 				651318C818FFA40C00995995 /* TGLOCustomEditContactHeaderView.h */,
 				651318C918FFA40C00995995 /* TGLOCustomEditContactHeaderView.m */,
+				6526A38B1924FCE900B7BB1F /* TGLOCustomRsvpView.h */,
+				6526A38C1924FCE900B7BB1F /* TGLOCustomRsvpView.m */,
 			);
 			name = CustomViews;
 			sourceTree = "<group>";
@@ -651,6 +656,7 @@
 				651626DA18F52A0400DCC064 /* TGLOEnrolToVoteViewController.m in Sources */,
 				651626DD18F5312300DCC064 /* TGLOMyTagsViewController.m in Sources */,
 				65BC96F418F3BBE3006063CA /* TheGreensLeadOrganizerApp.xcdatamodeld in Sources */,
+				6526A38D1924FCE900B7BB1F /* TGLOCustomRsvpView.m in Sources */,
 				651318C418FE708D00995995 /* TGLOCustomEditTagView.m in Sources */,
 				651626E018F54D8100DCC064 /* TGLOTagViewController.m in Sources */,
 				655572A218FAAF3B00FA4297 /* TGLOMyListsViewController.m in Sources */,

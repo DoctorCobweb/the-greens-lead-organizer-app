@@ -11,6 +11,7 @@
 #import "AFNetworkActivityIndicatorManager.h"
 #import "TGLOUtils.h"
 #import "TGLOAppDelegate.h"
+#import "TGLOCustomRsvpView.h"
 
 //default to get 1000 (max) people for a list. not making multiple
 //page calls to get all people as yet.
@@ -27,6 +28,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 @interface TGLOEventDetailsViewController () {
     NSString *token;
     TGLOEvent *parsedEvent;
+    NSMutableArray *joinedRsvps;
 }
 
 @end
@@ -47,6 +49,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    joinedRsvps = [[NSMutableArray alloc] init];
     
     
     //set an initial scroll view size
@@ -199,11 +202,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     [manager POST:translateIdsToNamesUrl_ parameters:postBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"=> RSVPS ids to names translation response %@",responseObject);
         
-        //remember to reset the sendInANewContact back to false
-        //sendInANewContact = false;
         NSSet *translatedPeopleSet = [responseObject objectForKey:@"translatedPeople"];
-        
-        NSMutableArray *joinedRsvps = [[NSMutableArray alloc] init];
         
         //need to add in person names to rsvp set matched by person_id
         [rsvps enumerateObjectsUsingBlock:^(id outerObj, BOOL *stop) {
@@ -222,24 +221,19 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
                     NSLog(@"found match to personIds");
                     
                     //add first, last names to that specific rsvp
-                    NSString *firstName = [obj valueForKey:@"firstName"];
-                    NSString *lastName = [obj valueForKey:@"lastName"];
+                    NSString *fullName = [obj valueForKey:@"fullName"];
                     NSMutableDictionary *singleJoinedRsvp = [[NSMutableDictionary alloc] initWithDictionary:outerObj];
-                    NSLog(@"singleJoinedRsvp: %@", singleJoinedRsvp);
-                    [singleJoinedRsvp setObject:firstName forKey:@"firstName"];
-                    [singleJoinedRsvp setObject:lastName forKey:@"lastName"];
+                    //NSLog(@"singleJoinedRsvp: %@", singleJoinedRsvp);
+                    [singleJoinedRsvp setObject:fullName forKey:@"fullName"];
                 
                     [joinedRsvps addObject:singleJoinedRsvp];
                 }
             }];
         }];
         
-        //NSLog(@"joinedRsvps: %@", joinedRsvps);
+        NSLog(@"joinedRsvps: %@", joinedRsvps);
         
-        //for now just render with ids until backend is implemented
-        //[self addRsvpsToUI:translatedPeopleSet];
-        [self addRsvpsToUI:joinedRsvps];
-        
+        [self addRsvpsToUI];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
@@ -249,67 +243,77 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 
 
 
-- (void)addRsvpsToUI:(NSMutableArray *)joinedRsvps
+- (void)addRsvpsToUI
 {
     NSLog(@"adding in RSVPS to UI...");
-    //NSArray *rsvpsArray = [rsvpsSet allObjects];
-    //int rsvpsCount = [rsvpsArray count];
+    
     int rsvpsCount = [joinedRsvps count];
-    
-    //NSLog(@"rsvpsArray: %@", rsvpsArray);
-    
     CGFloat labelSpacing = 10; //spacing between the views
     CGFloat makeMoreRoom = 40; //additional room on end of scroll/container view
     CGFloat labelWidth = 280;  //new label width
     CGFloat labelHeight= 30;   //new label height
-    
     UIColor * purpleColor = [UIColor colorWithRed:115/255.0f green:89/255.0f blue:162/255.0f alpha:1.0f];
     
-    
-#warning TODO: change rsvp ids to person names
     //add each rsvp individually
     for (int i = 0; i < rsvpsCount; i++) {
-        
-        UITextField *newTextField = (UITextField *)[self fabricateANewView:@"UITextField" width:labelWidth height:labelHeight spacing:labelSpacing];
-        //NSString *personId= [[NSString alloc] initWithFormat:@"%@",[rsvpsArray[i] valueForKey:@"person_id"]];
-        NSString *firstName = [joinedRsvps[i] objectForKey:@"firstName"];
-        NSString *lastName = [joinedRsvps[i] objectForKey:@"lastName"];
+        NSString *fullName = [joinedRsvps[i] objectForKey:@"fullName"];
         NSNumber *guestsCount= [joinedRsvps[i] objectForKey:@"guests_count"];
         NSString *canceled = [[NSString alloc] init];
+        NSString *rsvpButtonTitle;
+        
+        TGLOCustomRsvpView *newRsvpView = (TGLOCustomRsvpView *)[self fabricateANewView:@"TGLOCustomRsvpView" width:labelWidth height:labelHeight spacing:labelSpacing];
+        
+        newRsvpView.personId = [joinedRsvps[i] objectForKey:@"person_id"];
+        
+        [newRsvpView.rsvpButton addTarget:self action:@selector(rsvpButtonHit:) forControlEvents:UIControlEventTouchUpInside];
         
         if ([[joinedRsvps[i] objectForKey:@"canceled"] isEqual:@1]) {
             
             canceled = @"CANCELED";
-            newTextField.backgroundColor = [UIColor darkGrayColor];
-            newTextField.textColor = [UIColor blackColor];
+            
+            [newRsvpView.rsvpButton setBackgroundColor:[UIColor darkGrayColor]];
+            
         } else {
         
             canceled = @"";
-            newTextField.backgroundColor = [UIColor purpleColor];
-            newTextField.textColor = [UIColor whiteColor];
+            
         }
-    
-        newTextField.borderStyle = UITextBorderStyleRoundedRect;
         
         if ([guestsCount isEqual:@0]) {
-            newTextField.text = [[NSString alloc] initWithFormat:@"%@ %@ %@", firstName, lastName, canceled];
+            
+            rsvpButtonTitle = [[NSString alloc] initWithFormat:@"%@ %@", fullName, canceled];
+            
         } else {
-            newTextField.text = [[NSString alloc] initWithFormat:@"%@ %@ + %@ %@", firstName, lastName, guestsCount, canceled];
+            
+            rsvpButtonTitle = [[NSString alloc] initWithFormat:@"%@ + %@ %@", fullName, guestsCount, canceled];
+            
         }
         
-        newTextField.userInteractionEnabled = NO;
-        
+        [newRsvpView.rsvpButton setTitle:rsvpButtonTitle forState:UIControlStateNormal];
         
         //update the scroll and container view to fit/display new content
         [self updateScrollAndContainerViewSize:makeMoreRoom];
         
         //finally add the new view to as last subview
-        [self.containerView addSubview:newTextField];
+        [self.containerView addSubview:newRsvpView];
     }
     
-    //NSLog(@"containerViews subviews: %@", [self.containerView subviews]);
 }
 
+- (void)rsvpButtonHit:(id)sender
+{
+    NSNumber *personId = ((TGLOCustomRsvpView *)[sender superview]).personId;
+    
+    //find specific joined person record using personId
+    [joinedRsvps enumerateObjectsUsingBlock:^(id obj, NSUInteger i, BOOL *stop) {
+        NSNumber *runningPersonId = [obj valueForKey:@"person_id"];
+        
+        if ([runningPersonId isEqual:personId]) {
+            NSLog(@"hit person, matched personId record: %@", joinedRsvps[i]);
+            *stop = YES;
+        }
+    }];
+}
 
 
 // utility method for construct different types of views
@@ -336,7 +340,10 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
         return [[UILabel alloc] initWithFrame:viewRect];
     } else if ([viewType isEqualToString:@"UITextField"]) {
         return [[UITextField alloc] initWithFrame:viewRect];
-    }  else {
+    } else if ([viewType isEqualToString:@"TGLOCustomRsvpView"]) {
+        return [[TGLOCustomRsvpView alloc] initWithFrame:viewRect];
+    
+    } else {
         return @"ERROR";
     }
 }
