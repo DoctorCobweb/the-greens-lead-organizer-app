@@ -24,6 +24,7 @@ typedef void (^allEventsCompletionHandler)(NSError *error);
 
 - (IBAction)cancelModal:(id)sender;
 
+- (void) loadEventsFromDatabase;
 - (void)getAllEvents: (allEventsCompletionHandler)completionBlock;
 - (NSMutableIndexSet *)getIndexSetOfMatches:(NSString *)searchTerm;
 - (void)handleRsvp:(NSString *)status selectedRowAtIndexPath: (NSIndexPath *)indexPath matchedRsvpId:(NSString *)matchedRsvpId alreadyCanceledRsvp:(BOOL)alreadyCanceledRsvp;

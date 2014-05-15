@@ -69,6 +69,15 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     
     //this will set the 'back' button to be black
     navbar.tintColor = black_color;
+    
+    [self loadEventsFromDatabase];
+}
+
+- (void) loadEventsFromDatabase
+{
+    NSLog(@"in loadEventsFromDatabase method");
+
+
 }
 
 
@@ -104,7 +113,7 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
 - (void)getAllEvents:(allEventsCompletionHandler)completionBlock
 {
     
-#warning  TODO could/should change backend to reflect this
+    #warning  TODO could/should change backend to reflect this
     //all events url doesnt really require myNBId nor the persons NBid
     //to get all events.
     NSString *myNBId =      [TGLOUtils getUserNationBuilderId];
@@ -124,6 +133,10 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
         
         //reload tableview to display new data returned from server
         //[self.tableView reloadData];
+    
+        //TODO
+        //refresh the events databse with new events
+        
         
         completionBlock(error);
         
@@ -275,6 +288,7 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
 - (UITableViewCell *)tableView:(UITableView *)tableView_ cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *eventCellIdentifier = @"eventTableCell";
+    NSDictionary *anEvent = [searchResults objectAtIndex:indexPath.row];
     
     TGLOEventTableViewCell *cell = (TGLOEventTableViewCell *)[tableView dequeueReusableCellWithIdentifier:eventCellIdentifier];
     
@@ -284,43 +298,6 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
         cell = [nib objectAtIndex:0];
     }
     
-    NSDictionary *anEvent = [searchResults objectAtIndex:indexPath.row];
-    
-    NSDictionary *venue   = [[NSDictionary alloc] init];
-    NSDictionary *address = [[NSDictionary alloc] init];
-    NSString *address1    = [[NSString alloc] init];
-    NSString *city        = [[NSString alloc] init];
-    
-    //we MUST check to see if any fields are <null> along the way to
-    //finding the address1 and city value.
-    //if any of checks fail, city or addres1 will just be nil and
-    //UI will display blank to that label.
-    //
-    //check to see if venue is <null>
-    if (![[anEvent objectForKey:@"venue"] isEqual:[NSNull null]]) {
-        
-        venue = [anEvent objectForKey:@"venue"];
-        
-        //check to see if address is <null>
-        if (![[venue objectForKey:@"address"] isEqual:[NSNull null]])
-        {
-            address = [venue objectForKey:@"address"];
-            
-            //check to see if address1 is <null>
-            if (![[address objectForKey:@"address1"] isEqual:[NSNull null]] ) {
-                
-                address1 = [address objectForKey:@"address1"];
-                
-            }
-            
-            //check to see if city is <null>
-            if (![[address objectForKey:@"city"] isEqual:[NSNull null]] ) {
-                
-                city = [address objectForKey:@"city"];
-                
-            }
-        }
-    }
     
     //NSLog(@"VENUE: %@", venue);
     //NSLog(@"ADDRESS: %@", address);
@@ -329,7 +306,7 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     
     //set the text contents finally
     cell.nameLabel.text = [anEvent objectForKey:@"name"];
-    cell.venueLabel.text = [[NSString alloc] initWithFormat:@"%@ %@", address1, city];
+    cell.venueLabel.text = [anEvent objectForKey:@"venue"];
     
     return cell;
 }
