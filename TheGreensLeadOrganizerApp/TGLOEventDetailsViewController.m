@@ -313,6 +313,12 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
         
         if ([runningPersonId isEqual:personId]) {
             NSLog(@"hit person, matched personId record: %@", joinedRsvps[i]);
+            
+            
+            //we need to keep a ref to the hit rsvp button because later we will need to
+            //update the button title to reflect rsvp state change
+            [aRsvpToUpdate setObject:(UIButton *)sender forKey:@"hitRsvp"];
+            
             [self updateRsvpDetails:joinedRsvps[i]];
             *stop = YES;
             
@@ -325,17 +331,18 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 {
     
   
+    [aRsvpToUpdate setObject:[[NSMutableDictionary alloc] init] forKey:@"rsvpDetails"];
     
     //partially fill in the aRsvpToUpdate
-    [aRsvpToUpdate setObject:[matchedJoinedRsvp valueForKey:@"id"] forKey:@"id"];
-    [aRsvpToUpdate setObject:[matchedJoinedRsvp valueForKey:@"event_id"] forKey:@"event_id"];
-    [aRsvpToUpdate setObject:[matchedJoinedRsvp valueForKey:@"person_id"] forKey:@"person_id"];
-    [aRsvpToUpdate setObject:[matchedJoinedRsvp valueForKey:@"person_id"] forKey:@"person_id"];
-    [aRsvpToUpdate setObject:[matchedJoinedRsvp valueForKey:@"guests_count"] forKey:@"guests_count"];
-    [aRsvpToUpdate setObject:[matchedJoinedRsvp valueForKey:@"private"] forKey:@"private"];
-    [aRsvpToUpdate setObject:[matchedJoinedRsvp valueForKey:@"volunteer"] forKey:@"volunteer"];
-    [aRsvpToUpdate setObject:[matchedJoinedRsvp valueForKey:@"canceled"] forKey:@"canceled"];
-    [aRsvpToUpdate setObject:[matchedJoinedRsvp valueForKey:@"shift_ids"] forKey:@"shift_ids"];
+    [[aRsvpToUpdate objectForKey:@"rsvpDetails" ] setObject:[matchedJoinedRsvp valueForKey:@"id"] forKey:@"id"];
+    [[aRsvpToUpdate objectForKey:@"rsvpDetails" ]setObject:[matchedJoinedRsvp valueForKey:@"event_id"] forKey:@"event_id"];
+    [[aRsvpToUpdate objectForKey:@"rsvpDetails" ]setObject:[matchedJoinedRsvp valueForKey:@"person_id"] forKey:@"person_id"];
+    [[aRsvpToUpdate objectForKey:@"rsvpDetails" ]setObject:[matchedJoinedRsvp valueForKey:@"person_id"] forKey:@"person_id"];
+    [[aRsvpToUpdate objectForKey:@"rsvpDetails" ]setObject:[matchedJoinedRsvp valueForKey:@"guests_count"] forKey:@"guests_count"];
+    [[aRsvpToUpdate objectForKey:@"rsvpDetails" ]setObject:[matchedJoinedRsvp valueForKey:@"private"] forKey:@"private"];
+    [[aRsvpToUpdate objectForKey:@"rsvpDetails" ]setObject:[matchedJoinedRsvp valueForKey:@"volunteer"] forKey:@"volunteer"];
+    [[aRsvpToUpdate objectForKey:@"rsvpDetails" ]setObject:[matchedJoinedRsvp valueForKey:@"canceled"] forKey:@"canceled"];
+    [[aRsvpToUpdate objectForKey:@"rsvpDetails" ]setObject:[matchedJoinedRsvp valueForKey:@"shift_ids"] forKey:@"shift_ids"];
     
     NSLog(@"aRsvpToUpdate PARTOAL FILL: %@", aRsvpToUpdate);
     
@@ -369,7 +376,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
         if (buttonIndex == 0) {
             NSLog(@"YES button hit");
             
-            [aRsvpToUpdate setObject:@"true" forKey:@"attended"];
+            [[aRsvpToUpdate objectForKey:@"rsvpDetails"] setObject:@"true" forKey:@"attended"];
             [self updateTheRsvpOnNationBuilder];
             return;
         }
@@ -377,7 +384,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
         if (buttonIndex == 1) {
             NSLog(@"NO button hit");
             
-            [aRsvpToUpdate setObject:@"false" forKey:@"attended"];
+            [[aRsvpToUpdate objectForKey:@"rsvpDetails"] setObject:@"false" forKey:@"attended"];
             [self updateTheRsvpOnNationBuilder];
             return;
         }
@@ -389,6 +396,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 
 - (void)updateTheRsvpOnNationBuilder
 {
+    NSLog(@"aRsvpToUpdate: %@", aRsvpToUpdate);
 
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Updating rsvp" message:@"Syncing the rsvp with Nation Builder" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     
@@ -402,9 +410,9 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     
-    //NSDictionary *theRsvp = [aRsvpToUpdate objectForKey:@"rsvp"];
-    NSString *eventId = [[NSString alloc] initWithFormat:@"%@", [aRsvpToUpdate objectForKey:@"event_id"]];
-    NSString *rsvpId = [[NSString alloc] initWithFormat:@"%@", [aRsvpToUpdate objectForKey:@"id"]];
+    NSMutableDictionary *theRsvpDetails = [aRsvpToUpdate objectForKey:@"rsvpDetails"];
+    NSString *eventId = [[NSString alloc] initWithFormat:@"%@", [theRsvpDetails objectForKey:@"event_id"]];
+    NSString *rsvpId = [[NSString alloc] initWithFormat:@"%@", [theRsvpDetails objectForKey:@"id"]];
     NSLog(@"eventId: %@", eventId);
     NSLog(@"rsvpId: %@", rsvpId);
     
@@ -425,7 +433,10 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
                }};
      */
     
-    rsvpBody = @{ @"rsvp": aRsvpToUpdate};
+    
+    
+    
+    rsvpBody = @{ @"rsvp": [aRsvpToUpdate objectForKey:@"rsvpDetails"]};
     
     NSLog(@"PUT rsvpBody: %@", rsvpBody);
     
@@ -435,11 +446,18 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
         
         [alert dismissWithClickedButtonIndex:0 animated:NO];
         
-        //remember to reset the sendInANewContact back to false
-        //self.sendInRSVP = false;
+        UIButton *hitButton = (UIButton *)[aRsvpToUpdate objectForKey:@"hitRsvp"];
+        NSString *oldHitButtonTitle =  hitButton.titleLabel.text;
+        NSNumber *attended = [[responseObject objectForKey:@"rsvp"] valueForKey:@"attended"];
+        NSString *attendedString;
         
-        //and we done now
-        //[self reRenderUI];
+        if ([attended isEqual:@1]) {
+            NSLog(@"person DID attended");
+            attendedString = @"ATTENDED";
+        }
+        
+        [hitButton setTitle:[[NSString alloc] initWithFormat:@"%@ %@", oldHitButtonTitle, attendedString] forState:UIControlStateNormal];
+        
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
