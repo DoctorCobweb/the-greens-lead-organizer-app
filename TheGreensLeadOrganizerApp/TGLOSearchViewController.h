@@ -13,7 +13,7 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 
 
-@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UITextField *firstName;
 @property (weak, nonatomic) IBOutlet UITextField *lastName;
 @property (weak, nonatomic) IBOutlet UITextField *mobile;

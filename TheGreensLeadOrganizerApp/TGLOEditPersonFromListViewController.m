@@ -55,7 +55,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     BOOL sendInANewContact;
 }
 
-@property (nonatomic, strong) UIAlertView *updateAlert;
+@property (strong, nonatomic) UIAlertView *updateAlert;
 
 @end
 

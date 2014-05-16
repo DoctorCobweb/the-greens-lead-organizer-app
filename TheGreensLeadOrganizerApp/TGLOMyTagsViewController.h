@@ -10,7 +10,7 @@
 
 @interface TGLOMyTagsViewController : UITableViewController
 
-@property (nonatomic, strong) IBOutlet UIBarButtonItem *sidebarButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 
 - (void)setUpAppearance;
 - (void)getAllMyTags;

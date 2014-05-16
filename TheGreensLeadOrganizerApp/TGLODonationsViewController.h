@@ -10,7 +10,7 @@
 
 @interface TGLODonationsViewController : UIViewController<UIWebViewDelegate>
 
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 

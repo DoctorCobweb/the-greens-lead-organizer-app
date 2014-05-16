@@ -11,7 +11,7 @@
 #import "FXBlurView.h"
 
 @interface TGLOEventsViewController ()
-@property (nonatomic, weak) IBOutlet FXBlurView *blurView;
+@property (weak, nonatomic) IBOutlet FXBlurView *blurView;
 @end
 
 @implementation TGLOEventsViewController

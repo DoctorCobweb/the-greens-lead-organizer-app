@@ -12,10 +12,10 @@
 @interface TGLOCustomEditContactView : UIView 
 
 
-@property (strong, nonatomic) IBOutlet UILabel *typeLabel;
-@property (strong, nonatomic) IBOutlet UILabel *methodLabel;
-@property (strong, nonatomic) IBOutlet UILabel *statusLabel;
-@property (strong, nonatomic) IBOutlet UILabel *noteLabel;
+@property (weak, nonatomic) IBOutlet UILabel *typeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *methodLabel;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+@property (weak, nonatomic) IBOutlet UILabel *noteLabel;
 
 
 - (NSString *)getFormattedTypeValue:(NSString *)typeValue;

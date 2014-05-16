@@ -10,9 +10,8 @@
 #import "NationBuilder.h"
 
 @interface TGLOLoginViewController ()
-//@property (weak, nonatomic) IBOutlet UITextView *loginView;
-//@property (weak, nonatomic) IBOutlet UIButton *loginButton;
-@property (nonatomic, strong) UIAlertView *tokenAlert;
+
+@property (strong, nonatomic) UIAlertView *tokenAlert;
 
 @end
 

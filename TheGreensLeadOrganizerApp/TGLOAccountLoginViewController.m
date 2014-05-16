@@ -19,7 +19,7 @@ static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logt
 
 @interface TGLOAccountLoginViewController ()
 
-@property (nonatomic, weak) IBOutlet FXBlurView *blurView;
+@property (strong, nonatomic) IBOutlet FXBlurView *blurView;
 
 @end
 

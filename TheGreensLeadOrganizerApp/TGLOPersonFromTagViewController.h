@@ -12,8 +12,8 @@
 
 @interface TGLOPersonFromTagViewController : UIViewController<TGLOUpdatePersonDelegate>
 
-@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (strong, nonatomic) IBOutlet UIView *containerView;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIView *containerView;
 @property (weak, nonatomic) IBOutlet UITextField *firstName;
 @property (weak, nonatomic) IBOutlet UITextField *lastName;
 @property (weak, nonatomic) IBOutlet UIButton *email;

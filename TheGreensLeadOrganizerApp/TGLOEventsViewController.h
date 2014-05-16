@@ -11,8 +11,8 @@
 
 @interface TGLOEventsViewController : UIViewController
 
-@property (nonatomic, strong) IBOutlet UIBarButtonItem *sidebarButton;
-@property (nonatomic, strong) TGLOEditMyProfileViewController *delegate;
+@property (weak, nonatomic)   IBOutlet UIBarButtonItem *sidebarButton;
+@property (strong, nonatomic) TGLOEditMyProfileViewController *delegate;
 
 - (void)setUpAppearance;
 

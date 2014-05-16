@@ -23,7 +23,7 @@ static NSString *myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     NSString *token;
 }
 
-@property (nonatomic, strong) UIAlertView *tokenAlert;
+@property (strong, nonatomic) UIAlertView *tokenAlert;
 
 
 @end

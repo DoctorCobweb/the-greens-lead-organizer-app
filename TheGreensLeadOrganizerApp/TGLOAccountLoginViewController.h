@@ -10,8 +10,8 @@
 
 @interface TGLOAccountLoginViewController :UIViewController<UITextFieldDelegate>
 
-@property (strong, nonatomic) IBOutlet UITextField *email;
-@property (strong, nonatomic) IBOutlet UITextField *password;
+@property (weak, nonatomic) IBOutlet UITextField *email;
+@property (weak, nonatomic) IBOutlet UITextField *password;
 
 - (IBAction)login:(id)sender;
 @end

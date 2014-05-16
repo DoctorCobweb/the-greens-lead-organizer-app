@@ -11,8 +11,8 @@
 
 @interface TGLOEventDetailsViewController : UIViewController<UIActionSheetDelegate>
 
-@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (strong, nonatomic) IBOutlet UIView *containerView;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIView *containerView;
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *dateTextField;
 @property (weak, nonatomic) IBOutlet UITextField *venueTextField;
