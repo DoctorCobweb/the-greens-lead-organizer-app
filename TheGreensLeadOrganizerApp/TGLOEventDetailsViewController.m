@@ -166,7 +166,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     
     UILabel *newLabel = (UILabel *)[self fabricateANewView:@"UILabel" width:labelWidth height:labelHeight spacing:labelSpacing];
     
-    newLabel.text = @"RSVPS";
+    newLabel.text = @"RSVPS                                              Attended";
     newLabel.font = [UIFont boldSystemFontOfSize:13];
     
     
@@ -251,11 +251,10 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     NSLog(@"adding in RSVPS to UI...");
     
     int rsvpsCount = [joinedRsvps count];
-    CGFloat labelSpacing = 10; //spacing between the views
+    CGFloat labelSpacing = 15; //spacing between the views
     CGFloat makeMoreRoom = 40; //additional room on end of scroll/container view
     CGFloat labelWidth = 280;  //new label width
     CGFloat labelHeight= 30;   //new label height
-    UIColor * purpleColor = [UIColor colorWithRed:115/255.0f green:89/255.0f blue:162/255.0f alpha:1.0f];
     
     //add each rsvp individually
     for (int i = 0; i < rsvpsCount; i++) {
@@ -263,41 +262,49 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
         NSNumber *guestsCount= [joinedRsvps[i] objectForKey:@"guests_count"];
         NSString *canceled = [[NSString alloc] init];
         NSString *rsvpButtonTitle;
-        
         TGLOCustomRsvpView *newRsvpView = (TGLOCustomRsvpView *)[self fabricateANewView:@"TGLOCustomRsvpView" width:labelWidth height:labelHeight spacing:labelSpacing];
+        NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
+        NSString *imageLocation;
+        UIImage *backgroundImage;
         
         newRsvpView.personId = [joinedRsvps[i] objectForKey:@"person_id"];
+        newRsvpView.fullName = [joinedRsvps[i] objectForKey:@"fullName"];
         
         [newRsvpView.rsvpButton addTarget:self action:@selector(rsvpButtonHit:) forControlEvents:UIControlEventTouchUpInside];
         
+        
+        //check if canceled
         if ([[joinedRsvps[i] objectForKey:@"canceled"] isEqual:@1]) {
-            
             canceled = @"CANCELED";
+            //[newRsvpView.rsvpButton setBackgroundColor:[UIColor darkGrayColor]];
             
-            [newRsvpView.rsvpButton setBackgroundColor:[UIColor darkGrayColor]];
+            //cant have a checker mark sayin they attended if they cancelled.
+            imageLocation = [[NSString alloc] initWithFormat:@"%@/grey120x120.png", bundlePath ];
+            backgroundImage = [[UIImage alloc] initWithContentsOfFile:imageLocation];
+            [newRsvpView.attendedImageView setImage:backgroundImage];
             
         } else {
-        
             canceled = @"";
-            
+            //must also check for attended
+            if ([[joinedRsvps[i] objectForKey:@"attended"] isEqual:@1]) {
+                //person has attended
+                imageLocation = [[NSString alloc] initWithFormat:@"%@/checkerMark60x60.png", bundlePath ];
+                backgroundImage = [[UIImage alloc] initWithContentsOfFile:imageLocation];
+                [newRsvpView.attendedImageView setImage:backgroundImage];
+            }
         }
         
+        
+        //check guests_count
         if ([guestsCount isEqual:@0]) {
-            
             rsvpButtonTitle = [[NSString alloc] initWithFormat:@"%@ %@", fullName, canceled];
-            
         } else {
-            
             rsvpButtonTitle = [[NSString alloc] initWithFormat:@"%@ + %@ %@", fullName, guestsCount, canceled];
-            
         }
+        
         
         [newRsvpView.rsvpButton setTitle:rsvpButtonTitle forState:UIControlStateNormal];
-        
-        //update the scroll and container view to fit/display new content
         [self updateScrollAndContainerViewSize:makeMoreRoom];
-        
-        //finally add the new view to as last subview
         [self.containerView addSubview:newRsvpView];
     }
     
@@ -336,7 +343,6 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     //partially fill in the aRsvpToUpdate
     [[aRsvpToUpdate objectForKey:@"rsvpDetails" ] setObject:[matchedJoinedRsvp valueForKey:@"id"] forKey:@"id"];
     [[aRsvpToUpdate objectForKey:@"rsvpDetails" ]setObject:[matchedJoinedRsvp valueForKey:@"event_id"] forKey:@"event_id"];
-    [[aRsvpToUpdate objectForKey:@"rsvpDetails" ]setObject:[matchedJoinedRsvp valueForKey:@"person_id"] forKey:@"person_id"];
     [[aRsvpToUpdate objectForKey:@"rsvpDetails" ]setObject:[matchedJoinedRsvp valueForKey:@"person_id"] forKey:@"person_id"];
     [[aRsvpToUpdate objectForKey:@"rsvpDetails" ]setObject:[matchedJoinedRsvp valueForKey:@"guests_count"] forKey:@"guests_count"];
     [[aRsvpToUpdate objectForKey:@"rsvpDetails" ]setObject:[matchedJoinedRsvp valueForKey:@"private"] forKey:@"private"];
@@ -377,12 +383,17 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
             NSLog(@"YES button hit");
             
             [[aRsvpToUpdate objectForKey:@"rsvpDetails"] setObject:@"true" forKey:@"attended"];
+            
+            //if they attended then they didnt cancel did they.
+            [[aRsvpToUpdate objectForKey:@"rsvpDetails"] setObject:@"false" forKey:@"canceled"];
+            
             [self updateTheRsvpOnNationBuilder];
             return;
         }
         
         if (buttonIndex == 1) {
             NSLog(@"NO button hit");
+            //just leave canceled value as it is
             
             [[aRsvpToUpdate objectForKey:@"rsvpDetails"] setObject:@"false" forKey:@"attended"];
             [self updateTheRsvpOnNationBuilder];
@@ -396,7 +407,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 
 - (void)updateTheRsvpOnNationBuilder
 {
-    NSLog(@"aRsvpToUpdate: %@", aRsvpToUpdate);
+    NSLog(@"THE RSVP TO UPDATE: aRsvpToUpdate: %@", aRsvpToUpdate);
 
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Updating rsvp" message:@"Syncing the rsvp with Nation Builder" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     
@@ -447,16 +458,52 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
         [alert dismissWithClickedButtonIndex:0 animated:NO];
         
         UIButton *hitButton = (UIButton *)[aRsvpToUpdate objectForKey:@"hitRsvp"];
-        NSString *oldHitButtonTitle =  hitButton.titleLabel.text;
         NSNumber *attended = [[responseObject objectForKey:@"rsvp"] valueForKey:@"attended"];
-        NSString *attendedString;
+        NSNumber *canceled = [[responseObject objectForKey:@"rsvp"] valueForKey:@"canceled"];
+        NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
+        NSString *imageLocation;
+        UIImage *backgroundImage;
+        
+        
+        //NSLog(@"joinedRsvps BEFORE: %@", joinedRsvps);
+        
+        //gotta also update the rsvp in joinedRsvps
+        for (int i = 0; i < [joinedRsvps count]; i++) {
+            
+            if ([[[responseObject valueForKey:@"rsvp"] valueForKey:@"id"] isEqual:[joinedRsvps[i] valueForKey:@"id"]]) {
+                
+                [joinedRsvps[i] setObject:[[responseObject valueForKey:@"rsvp"] valueForKey:@"canceled"] forKey:@"canceled"];
+                [joinedRsvps[i] setObject:[[responseObject valueForKey:@"rsvp"] valueForKey:@"attended"] forKey:@"attended"];
+            }
+        }
+        
+        //NSLog(@"joinedRsvps AFTER: %@", joinedRsvps);
         
         if ([attended isEqual:@1]) {
             NSLog(@"person DID attended");
-            attendedString = @"ATTENDED";
+            
+            imageLocation = [[NSString alloc] initWithFormat:@"%@/checkerMark60x60.png", bundlePath ];
+            backgroundImage = [[UIImage alloc] initWithContentsOfFile:imageLocation];
+            
+            //also reset button title to fullName and also set background color to purple (default)
+            [hitButton setTitle:((TGLOCustomRsvpView *)[hitButton superview]).fullName forState:UIControlStateNormal];
+            [hitButton setBackgroundColor: ((TGLOCustomRsvpView *)[hitButton superview]).defaultColor];
+            
+        } else {
+            
+            if ([canceled isEqual:@1]) {
+                //stay with grey for attended ui color
+                imageLocation = [[NSString alloc] initWithFormat:@"%@/grey120x120.png", bundlePath ];
+            } else {
+                //go back to blank green
+                imageLocation = [[NSString alloc] initWithFormat:@"%@/appIcon120x120.png", bundlePath ];
+            }
+            
+            backgroundImage = [[UIImage alloc] initWithContentsOfFile:imageLocation];
         }
         
-        [hitButton setTitle:[[NSString alloc] initWithFormat:@"%@ %@", oldHitButtonTitle, attendedString] forState:UIControlStateNormal];
+        //finally set the actaul image to be the background
+        [((TGLOCustomRsvpView *)[hitButton superview]).attendedImageView setImage:backgroundImage];
         
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

@@ -11,6 +11,9 @@
 @interface TGLOCustomRsvpView : UIView
 
 @property (strong, nonatomic) NSNumber *personId;
+@property (strong, nonatomic) NSString *fullName;
 @property (strong, nonatomic) UIButton *rsvpButton;
+@property (strong, nonatomic) UIImageView *attendedImageView;
+@property (strong, nonatomic) UIColor *defaultColor;
 
 @end
