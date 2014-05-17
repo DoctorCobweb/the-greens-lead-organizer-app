@@ -30,6 +30,9 @@
 		65185408190FFD6900D865C4 /* rain_forest-flowering.png in Resources */ = {isa = PBXBuildFile; fileRef = 65185407190FFD6900D865C4 /* rain_forest-flowering.png */; };
 		6526A38D1924FCE900B7BB1F /* TGLOCustomRsvpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6526A38C1924FCE900B7BB1F /* TGLOCustomRsvpView.m */; };
 		6526A38F1925BD1000B7BB1F /* checkerMark60x60.png in Resources */ = {isa = PBXBuildFile; fileRef = 6526A38E1925BD1000B7BB1F /* checkerMark60x60.png */; };
+		6526A3911926052000B7BB1F /* globe30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = 6526A3901926052000B7BB1F /* globe30x30.png */; };
+		6526A3931926052B00B7BB1F /* star30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = 6526A3921926052B00B7BB1F /* star30x30.png */; };
+		6526A3961926096000B7BB1F /* TGLOAllListsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6526A3951926096000B7BB1F /* TGLOAllListsViewController.m */; };
 		654CC32119152F5D00600473 /* the-greens-rally.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 654CC32019152F5D00600473 /* the-greens-rally.jpg */; };
 		654CC32919163BE700600473 /* appIcon58x58.png in Resources */ = {isa = PBXBuildFile; fileRef = 654CC32619163BE600600473 /* appIcon58x58.png */; };
 		654CC32A19163BE700600473 /* appIcon80x80.png in Resources */ = {isa = PBXBuildFile; fileRef = 654CC32719163BE600600473 /* appIcon80x80.png */; };
@@ -149,6 +152,10 @@
 		6526A38B1924FCE900B7BB1F /* TGLOCustomRsvpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOCustomRsvpView.h; sourceTree = "<group>"; };
 		6526A38C1924FCE900B7BB1F /* TGLOCustomRsvpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOCustomRsvpView.m; sourceTree = "<group>"; };
 		6526A38E1925BD1000B7BB1F /* checkerMark60x60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkerMark60x60.png; sourceTree = "<group>"; };
+		6526A3901926052000B7BB1F /* globe30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = globe30x30.png; sourceTree = "<group>"; };
+		6526A3921926052B00B7BB1F /* star30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star30x30.png; sourceTree = "<group>"; };
+		6526A3941926096000B7BB1F /* TGLOAllListsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOAllListsViewController.h; sourceTree = "<group>"; };
+		6526A3951926096000B7BB1F /* TGLOAllListsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOAllListsViewController.m; sourceTree = "<group>"; };
 		654CC32019152F5D00600473 /* the-greens-rally.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "the-greens-rally.jpg"; sourceTree = "<group>"; };
 		654CC32619163BE600600473 /* appIcon58x58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon58x58.png; sourceTree = "<group>"; };
 		654CC32719163BE600600473 /* appIcon80x80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon80x80.png; sourceTree = "<group>"; };
@@ -358,6 +365,8 @@
 				651626FB18F90D5300DCC064 /* TGLOPersonFromSearchViewController.m */,
 				655572A018FAAF3B00FA4297 /* TGLOMyListsViewController.h */,
 				655572A118FAAF3B00FA4297 /* TGLOMyListsViewController.m */,
+				6526A3941926096000B7BB1F /* TGLOAllListsViewController.h */,
+				6526A3951926096000B7BB1F /* TGLOAllListsViewController.m */,
 				655572A318FAB34C00FA4297 /* TGLOListViewController.h */,
 				655572A418FAB34C00FA4297 /* TGLOListViewController.m */,
 				65B022EE18FD27A50057E741 /* TGLOPersonFromListViewController.h */,
@@ -435,6 +444,8 @@
 		65BC972318F3CFE7006063CA /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				6526A3921926052B00B7BB1F /* star30x30.png */,
+				6526A3901926052000B7BB1F /* globe30x30.png */,
 				654CC32F1917D23200600473 /* eventsIcon60x60.png */,
 				654CC32619163BE600600473 /* appIcon58x58.png */,
 				6526A38E1925BD1000B7BB1F /* checkerMark60x60.png */,
@@ -582,6 +593,7 @@
 				65B25ADC19138B16000A8349 /* listsIcon60x60.png in Resources */,
 				65B25ADA19138A69000A8349 /* logoutIcon60x60.png in Resources */,
 				65BC96EB18F3BBE3006063CA /* InfoPlist.strings in Resources */,
+				6526A3931926052B00B7BB1F /* star30x30.png in Resources */,
 				65BC975618F3D144006063CA /* menu.png in Resources */,
 				654CC32A19163BE700600473 /* appIcon80x80.png in Resources */,
 				65BC975218F3D144006063CA /* Default-568h@2x.png in Resources */,
@@ -592,6 +604,7 @@
 				65B25AE01914F61C000A8349 /* grey120x120.png in Resources */,
 				65BC96F618F3BBE3006063CA /* Images.xcassets in Resources */,
 				65A812A019111C3200C46959 /* forest-fog.jpg in Resources */,
+				6526A3911926052000B7BB1F /* globe30x30.png in Resources */,
 				654CC32919163BE700600473 /* appIcon58x58.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -655,6 +668,7 @@
 				65827908191B736F001BF4BB /* TGLOEventDetailsViewController.m in Sources */,
 				6582790E191B81B6001BF4BB /* TGLOEvent.m in Sources */,
 				651318BA18FE1A3F00995995 /* TGLOPersonFromTagViewController.m in Sources */,
+				6526A3961926096000B7BB1F /* TGLOAllListsViewController.m in Sources */,
 				651318C718FF71B000995995 /* TGLOCustomEditContactView.m in Sources */,
 				65BC972218F3CE52006063CA /* TGLOMainViewController.m in Sources */,
 				651626DA18F52A0400DCC064 /* TGLOEnrolToVoteViewController.m in Sources */,

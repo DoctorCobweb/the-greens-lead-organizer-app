@@ -54,6 +54,7 @@ NSString *const nationBuilderLoginEmailKey = @"loginEmail";
     UIViewController *initViewController = [storyboard instantiateViewControllerWithIdentifier:controllerId];
     
     
+    
     // always assumes token is valid - should probably check in a real app
     if (token) {
         //SWRevealViewController will be rootViewController

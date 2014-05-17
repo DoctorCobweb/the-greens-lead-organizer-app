@@ -1,10 +1,14 @@
 //
-//  TGLOMyListsViewController.m
-//  TheGreensLeadOrganizerApp
+//  TGLOAllListsViewController.m
+//  Vic Greens
 //
-//  Created by andre on 13/04/2014.
+//  Created by andre on 16/05/2014.
 //  Copyright (c) 2014 andre trosky. All rights reserved.
 //
+
+#import "TGLOAllListsViewController.h"
+
+
 
 #import "TGLOMyListsViewController.h"
 #import "AFNetworking.h"
@@ -14,10 +18,10 @@
 #import "TGLOListViewController.h"
 #import "TGLOUtils.h"
 
-static NSString * myListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/myLists/%@/%@";
+static NSString * allListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/allLists/%@/%@";
 
 
-@interface TGLOMyListsViewController ()
+@interface TGLOAllListsViewController ()
 {
     NSString *token;
     
@@ -28,7 +32,7 @@ static NSString * myListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/myLis
 
 @end
 
-@implementation TGLOMyListsViewController
+@implementation TGLOAllListsViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -42,12 +46,12 @@ static NSString * myListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/myLis
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
     
     //preserve selection between presentations.
     self.clearsSelectionOnViewWillAppear = NO;
- 
+    
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
@@ -65,28 +69,8 @@ static NSString * myListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/myLis
 
 - (void)setUpAppearance
 {
-    self.title = @"My Lists";
-    NSLog(@"self.title: %@", self.title);
-    NSLog(@"navCont: %@",self.navigationController);
-    NSLog(@"navBar: %@",[self.navigationController navigationBar]);
-    NSLog(@"navBar: %d",[[self.navigationController navigationBar] isHidden]);
-    NSLog(@"view controllers: %@", [self.navigationController viewControllers]);
-    NSLog(@"navBar items: %@",[[self.navigationController navigationBar] items]);
+    self.title = @"All Lists";
     
-    NSLog(@"navBarItem 0th title: %@", [(([[self.navigationController navigationBar] items])[0]) title]);
-    NSLog(@"navBarItem 0th titleView: %@", [(([[self.navigationController navigationBar] items])[0]) titleView]);
-    NSLog(@"navBarItem 0th backBarButtonItem: %@", [(([[self.navigationController navigationBar] items])[0]) backBarButtonItem]);
-    
-    //[[self.navigationController navigationBar] setHidden:YES];
-    //NSLog(@"navBar: %d",[[self.navigationController navigationBar] isHidden]);
-    
-    TGLOAppDelegate *delegate = (TGLOAppDelegate *)[[UIApplication sharedApplication] delegate];
-
-    NSLog(@"delegate.window.rootViewController: %@", delegate.window.rootViewController);
-    NSLog(@"[delegate.window.rootViewController navigationController]: %@", [delegate.window.rootViewController navigationController]);
-    
-    
-
     // Change button color
     self.sidebarButton.tintColor = [UIColor colorWithWhite:0.05f alpha:1.0f];
     
@@ -96,19 +80,19 @@ static NSString * myListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/myLis
     
     // Set the gesture
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
-    
 }
+
 
 
 
 - (void) getAllLists
 {
     NSString *myNBId = [TGLOUtils getUserNationBuilderId];
-    NSString * myListsUrl_ = [NSString stringWithFormat:myListsUrl, @"9", token];
+    NSString * allListsUrl_ = [NSString stringWithFormat:allListsUrl, myNBId, token];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
-    [manager GET:myListsUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager GET:allListsUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //NSLog(@"LISTS TABLE VIEW CONTROLLER and response for lists: %@", responseObject);
         
         //responseObject is has a single array with all the lists
@@ -121,7 +105,7 @@ static NSString * myListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/myLis
         
         //taggings now has all the tags for person
         //NSLog(@"allLists array: %@", allLists);
-        //NSLog(@"allLists array count: %d", [allLists count]);
+        NSLog(@"ALL LISTS allLists array count: %d", [allLists count]);
         
         //reload tableview to display new data returned from server
         [self.tableView reloadData];
@@ -155,7 +139,7 @@ static NSString * myListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/myLis
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"myListsCell";
+    static NSString *CellIdentifier = @"allListsCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
@@ -167,43 +151,43 @@ static NSString * myListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/myLis
 }
 
 /*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
+ // Override to support conditional editing of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ // Return NO if you do not want the specified item to be editable.
+ return YES;
+ }
+ */
 
 /*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
+ // Override to support editing the table view.
+ - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ if (editingStyle == UITableViewCellEditingStyleDelete) {
+ // Delete the row from the data source
+ [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+ }
+ else if (editingStyle == UITableViewCellEditingStyleInsert) {
+ // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+ }
+ }
+ */
 
 /*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
+ // Override to support rearranging the table view.
+ - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+ {
+ }
+ */
 
 /*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
+ // Override to support conditional rearranging of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ // Return NO if you do not want the item to be re-orderable.
+ return YES;
+ }
+ */
 
 #pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
