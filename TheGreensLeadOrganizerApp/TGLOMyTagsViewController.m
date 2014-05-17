@@ -42,6 +42,13 @@ static NSString * myTaggingsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
 {
     [super viewDidLoad];
     
+    //since Lists tab hides our app wide nav bar
+    //make sure it is NOT hidden before displaying
+    //this view controllers' view
+    [[[self navigationController] navigationBar] setHidden:NO];
+    
+
+    
     //enable afnetworking to show spinner in top bar
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
 

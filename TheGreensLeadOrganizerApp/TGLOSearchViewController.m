@@ -36,6 +36,12 @@ static NSString *searchUrl = @"https://%@.nationbuilder.com/api/v1/people/search
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    //since Lists tab hides our app wide nav bar
+    //make sure it is NOT hidden before displaying
+    //this view controllers' view
+    [[[self navigationController] navigationBar] setHidden:NO];
+    
     self.title = @"Search";
     
     [self setUpAppearance];

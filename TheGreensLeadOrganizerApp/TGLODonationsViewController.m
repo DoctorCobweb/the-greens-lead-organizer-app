@@ -35,6 +35,11 @@ NSString * const donationsAddress = @"https://greens.org.au/civicrm/contribute/t
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    //since Lists tab hides our app wide nav bar
+    //make sure it is NOT hidden before displaying
+    //this view controllers' view
+    [[[self navigationController] navigationBar] setHidden:NO];
+    
     
     self.webView.delegate = self;
     

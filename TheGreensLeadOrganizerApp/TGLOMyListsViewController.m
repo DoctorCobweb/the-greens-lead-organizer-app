@@ -66,26 +66,6 @@ static NSString * myListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/myLis
 - (void)setUpAppearance
 {
     self.title = @"My Lists";
-    NSLog(@"self.title: %@", self.title);
-    NSLog(@"navCont: %@",self.navigationController);
-    NSLog(@"navBar: %@",[self.navigationController navigationBar]);
-    NSLog(@"navBar: %d",[[self.navigationController navigationBar] isHidden]);
-    NSLog(@"view controllers: %@", [self.navigationController viewControllers]);
-    NSLog(@"navBar items: %@",[[self.navigationController navigationBar] items]);
-    
-    NSLog(@"navBarItem 0th title: %@", [(([[self.navigationController navigationBar] items])[0]) title]);
-    NSLog(@"navBarItem 0th titleView: %@", [(([[self.navigationController navigationBar] items])[0]) titleView]);
-    NSLog(@"navBarItem 0th backBarButtonItem: %@", [(([[self.navigationController navigationBar] items])[0]) backBarButtonItem]);
-    
-    //[[self.navigationController navigationBar] setHidden:YES];
-    //NSLog(@"navBar: %d",[[self.navigationController navigationBar] isHidden]);
-    
-    TGLOAppDelegate *delegate = (TGLOAppDelegate *)[[UIApplication sharedApplication] delegate];
-
-    NSLog(@"delegate.window.rootViewController: %@", delegate.window.rootViewController);
-    NSLog(@"[delegate.window.rootViewController navigationController]: %@", [delegate.window.rootViewController navigationController]);
-    
-    
 
     // Change button color
     self.sidebarButton.tintColor = [UIColor colorWithWhite:0.05f alpha:1.0f];
