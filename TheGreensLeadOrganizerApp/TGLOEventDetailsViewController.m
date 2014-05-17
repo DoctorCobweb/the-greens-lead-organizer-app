@@ -78,12 +78,6 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     }
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 
 
 - (void) getEvent
@@ -112,9 +106,12 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 
 - (void)fillOutEventFields:(TGLOEvent *)event
 {
+    NSString *address1 = [[event.venue objectForKey:@"address"] objectForKey:@"address1"];
+    NSString *city = [[event.venue objectForKey:@"address"] objectForKey:@"city"];
+    
     self.nameTextField.text = event.name;
     self.dateTextField.text = [TGLOUtils formatTheDate:event.dateString withCustomFormat:@"yyyy-MM-dd'T'HH:mm:ss+HH:mm"];
-    self.venueTextField.text = [[event.venue objectForKey:@"address"] objectForKey:@"address1"];
+    self.venueTextField.text = [[NSString alloc] initWithFormat:@"%@, %@",address1, city];
     self.detailsTextView.text = event.details;
     
     NSString *contactName = [event.contactDetails objectForKey:@"name"];
@@ -563,6 +560,13 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     //NSLog(@"self.containerView.frame Max Y: %f", CGRectGetMaxY(containerViewFrame));
     
     self.containerView.frame = CGRectMake(0, 0, (CGRectGetMaxX(containerViewFrame)), (CGRectGetMaxY(containerViewFrame)) + makeMoreRoom);
+}
+
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 
