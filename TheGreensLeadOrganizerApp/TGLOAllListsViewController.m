@@ -23,8 +23,6 @@ static NSString * allListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/allL
 
 @interface TGLOAllListsViewController ()
 {
-    NSString *token;
-    
     //contains all the listsfor the user
     //used to populate table cells
     NSMutableArray *allLists;
@@ -34,14 +32,15 @@ static NSString * allListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/allL
 
 @implementation TGLOAllListsViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithStyle:style];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
     }
     return self;
 }
+
 
 - (void)viewDidLoad
 {
@@ -49,22 +48,52 @@ static NSString * allListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/allL
     
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
     
+    //use pull to refresh even without having a UITableViewController
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:refreshControl]; //the trick
+    
+    #warning TODO: fix this
     //preserve selection between presentations.
-    self.clearsSelectionOnViewWillAppear = NO;
+    //self.tableView.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    token = [TGLOUtils getUserAccessToken];
+    /*
+    NSString *token = [TGLOUtils getUserAccessToken];
     if (token) {
         [self getAllLists];
         
     } else {
         NSLog(@"ERROR in TGLOMyListsViewController.m. access_token is nil");
     }
+     */
     
     [self setUpAppearance];
 }
+
+
+- (void)refresh:(UIRefreshControl *)refreshControl {
+    NSLog(@"in refresh method");
+    
+    [self getAllLists:^(NSError *error) {
+        NSLog(@"in getAllLists completionHandler, error: %@", error);
+        [refreshControl endRefreshing];
+        
+        if (error == nil) {
+            NSLog(@"error is nil");
+            [self.tableView reloadData];
+        }
+        
+        if (error) {
+            NSLog(@"ERROR: %@", error);
+            [self displayErrorAlert:@"Network Error" message:@"Unable to download lists. Pleas try again."];
+        }
+        
+    }];
+}
+
 
 
 - (void)setUpAppearance
@@ -85,10 +114,12 @@ static NSString * allListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/allL
 
 
 
-- (void) getAllLists
+- (void) getAllLists:(allListsCompletionHandler)completionBlock
 {
     NSString *myNBId = [TGLOUtils getUserNationBuilderId];
+    NSString *token = [TGLOUtils getUserAccessToken];
     NSString * allListsUrl_ = [NSString stringWithFormat:allListsUrl, myNBId, token];
+    __block NSError *error;
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
@@ -108,13 +139,30 @@ static NSString * allListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/allL
         NSLog(@"ALL LISTS allLists array count: %d", [allLists count]);
         
         //reload tableview to display new data returned from server
-        [self.tableView reloadData];
+        //[self.tableView reloadData];
+        completionBlock(error);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
+        error = [NSError errorWithDomain:@"GreensApp" code:1 userInfo:nil];
+        completionBlock(error);
     }];
 }
 
+
+- (void)displayErrorAlert:(NSString *)errorTitle message:(NSString *)message
+{
+    // show alert view saying we are getting token
+    UIAlertView *alert =
+    [[UIAlertView alloc]
+     initWithTitle:errorTitle
+     message:message
+     delegate:nil
+     cancelButtonTitle:@"Okay"
+     otherButtonTitles:nil];
+    
+    [alert show];
+}
 
 
 - (void)didReceiveMemoryWarning
@@ -148,6 +196,12 @@ static NSString * allListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/allL
     cell.detailTextLabel.text = [[NSString alloc] initWithFormat:@"%@",[allLists[indexPath.row] objectForKey:@"count"]];
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"seelcted: %@", allLists[indexPath.row]);
+    
 }
 
 /*
