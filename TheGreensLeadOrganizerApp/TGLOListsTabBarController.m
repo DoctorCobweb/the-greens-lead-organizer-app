@@ -29,7 +29,7 @@
     // Do any additional setup after loading the view.
     [[[self navigationController] navigationBar] setHidden:YES];
     
-    self.tabBar.tintColor = [UIColor whiteColor];
+    self.tabBar.tintColor = [UIColor blackColor];
 }
 
 - (void)didReceiveMemoryWarning

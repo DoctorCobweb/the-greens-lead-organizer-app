@@ -95,14 +95,9 @@ static NSString * allListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/allL
 
 - (void)setUpAppearance
 {
-    //self.title = @"All Lists";
-    
     // Change button color
     self.sidebarButton.tintColor = [UIColor colorWithWhite:0.05f alpha:1.0f];
     
-    // Set the side bar button action. When it's tapped, it'll show up the sidebar.
-    self.sidebarButton.target = self.revealViewController;
-    self.sidebarButton.action = @selector(revealToggle:);
     
     // Set the gesture
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
@@ -273,6 +268,13 @@ static NSString * allListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/allL
     [alert show];
 }
 
+- (IBAction)menuHit:(id)sender {
+    NSLog(@"menuHit action");
+    [self.searchBar resignFirstResponder];
+    // Set the side bar button action. When it's tapped, it'll show up the sidebar.
+    [self.revealViewController revealToggle:nil];
+}
+
 
 
 #pragma UISearchBarDelegate methods
@@ -388,6 +390,13 @@ static NSString * allListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/allL
     [searchBar_ resignFirstResponder];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    NSLog(@"viewWillDisappear");
+    [self.searchBar resignFirstResponder];
+
+
+}
 
 #pragma mark - Table view data source
 

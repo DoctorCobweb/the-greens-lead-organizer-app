@@ -519,7 +519,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="All Lists" id="yaw-S9-xkv">
-                        <barButtonItem key="leftBarButtonItem" image="menu.png" id="uJM-Ef-IrO"/>
+                        <barButtonItem key="leftBarButtonItem" image="menu.png" id="uJM-Ef-IrO">
+                            <connections>
+                                <action selector="menuHit:" destination="MG5-9z-GSl" id="q7k-CM-d5m"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="searchBar" destination="8zb-VJ-Jt2" id="UWc-T7-VHc"/>

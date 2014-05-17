@@ -28,6 +28,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    //since Lists tab hides our app wide nav bar
+    //make sure it is NOT hidden before displaying
+    //this view controllers' view
+    [[[self navigationController] navigationBar] setHidden:NO];
+    
+    
     // Do any additional setup after loading the view.
     //setup the burring of the background image
     self.blurView.dynamic = NO;

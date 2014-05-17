@@ -23,5 +23,6 @@ typedef void (^allListsCompletionHandler)(NSError *error);
 - (void) saveAllListEntities:(NSMutableArray *)results;
 - (void)getAllLists:(allListsCompletionHandler)completionBlock;
 - (void)displayErrorAlert:(NSString *)errorTitle message:(NSString *)message;
+- (IBAction)menuHit:(id)sender;
 
 @end
