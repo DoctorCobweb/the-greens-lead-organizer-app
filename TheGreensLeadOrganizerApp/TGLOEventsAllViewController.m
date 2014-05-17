@@ -450,6 +450,7 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
+    [self.searchBar resignFirstResponder];
     
     NSLog(@"selected event: %@", searchResults[ indexPath.row]);
 

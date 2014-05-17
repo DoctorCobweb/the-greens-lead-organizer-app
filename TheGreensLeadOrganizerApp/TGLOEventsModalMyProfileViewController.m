@@ -448,6 +448,8 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
 {
     NSLog(@"selected event: %@", searchResults[ indexPath.row]);
     
+    [self.searchBar resignFirstResponder];
+    
     //__block allows block to access this var
     __block BOOL alreadyRsvpd = NO;
     __block BOOL alreadyCanceledRsvpd = NO;

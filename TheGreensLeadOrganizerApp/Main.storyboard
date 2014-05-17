@@ -77,14 +77,14 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="My Profile" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7L6-aj-abg">
-                                            <rect key="frame" x="74" y="0.0" width="231" height="44"/>
+                                            <rect key="frame" x="60" y="0.0" width="245" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="userIcon60x60.png" id="M9K-fu-czq">
-                                            <rect key="frame" x="15" y="0.0" width="44" height="44"/>
+                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="userIcon30x30.png" id="M9K-fu-czq">
+                                            <rect key="frame" x="15" y="7" width="30" height="30"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </imageView>
                                     </subviews>
@@ -102,14 +102,14 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="My Tags" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mGv-kL-6Cb">
-                                            <rect key="frame" x="74" y="0.0" width="231" height="44"/>
+                                            <rect key="frame" x="60" y="0.0" width="245" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="tagsIcon60x60.png" id="bxO-I5-gib">
-                                            <rect key="frame" x="15" y="0.0" width="44" height="44"/>
+                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="tagsIcon30x30.png" id="bxO-I5-gib">
+                                            <rect key="frame" x="15" y="7" width="30" height="30"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </imageView>
                                     </subviews>
@@ -127,14 +127,14 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Lists" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wDF-ao-djw">
-                                            <rect key="frame" x="74" y="0.0" width="231" height="44"/>
+                                            <rect key="frame" x="60" y="0.0" width="245" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="listsIcon60x60.png" id="1cs-Cc-CoC">
-                                            <rect key="frame" x="15" y="0.0" width="44" height="44"/>
+                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="listsIcon30x30.png" id="1cs-Cc-CoC">
+                                            <rect key="frame" x="15" y="7" width="30" height="30"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </imageView>
                                     </subviews>
@@ -152,14 +152,14 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Events" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5Oo-iB-qxo">
-                                            <rect key="frame" x="74" y="0.0" width="231" height="44"/>
+                                            <rect key="frame" x="60" y="0.0" width="245" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="eventsIcon60x60.png" id="4fB-yb-dbN">
-                                            <rect key="frame" x="15" y="0.0" width="44" height="44"/>
+                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="eventsIcon30x30.png" id="4fB-yb-dbN">
+                                            <rect key="frame" x="15" y="7" width="30" height="30"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </imageView>
                                     </subviews>
@@ -177,14 +177,14 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Donations" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BBf-cA-ily">
-                                            <rect key="frame" x="74" y="0.0" width="231" height="44"/>
+                                            <rect key="frame" x="60" y="0.0" width="245" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="donatIcon60x60.png" id="nro-q6-NhT">
-                                            <rect key="frame" x="15" y="0.0" width="44" height="44"/>
+                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="donatIcon30x30.png" id="nro-q6-NhT">
+                                            <rect key="frame" x="15" y="7" width="30" height="30"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </imageView>
                                     </subviews>
@@ -202,14 +202,14 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Enrol To Vote" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="o96-kM-NOp">
-                                            <rect key="frame" x="74" y="0.0" width="231" height="44"/>
+                                            <rect key="frame" x="60" y="0.0" width="245" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="enrolToVoteIcon60x60.png" id="415-U5-6f2">
-                                            <rect key="frame" x="15" y="0.0" width="44" height="44"/>
+                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="enrolToVoteIcon30x30.png" id="415-U5-6f2">
+                                            <rect key="frame" x="15" y="7" width="30" height="30"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </imageView>
                                     </subviews>
@@ -227,14 +227,14 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Search" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sMJ-sF-EiH">
-                                            <rect key="frame" x="74" y="0.0" width="231" height="44"/>
+                                            <rect key="frame" x="60" y="0.0" width="245" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="searchIcon60x60.png" id="5VG-RD-yXX">
-                                            <rect key="frame" x="15" y="0.0" width="44" height="44"/>
+                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="searchIcon30x30.png" id="5VG-RD-yXX">
+                                            <rect key="frame" x="15" y="7" width="30" height="30"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </imageView>
                                     </subviews>
@@ -252,14 +252,14 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Logout" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Bal-ib-aqH">
-                                            <rect key="frame" x="74" y="0.0" width="231" height="44"/>
+                                            <rect key="frame" x="60" y="0.0" width="245" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="logoutIcon60x60.png" id="N08-oV-GrA">
-                                            <rect key="frame" x="15" y="0.0" width="44" height="44"/>
+                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="logoutIcon30x30.png" id="N08-oV-GrA">
+                                            <rect key="frame" x="15" y="7" width="30" height="30"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </imageView>
                                     </subviews>
@@ -2834,20 +2834,20 @@
         </scene>
     </scenes>
     <resources>
-        <image name="donatIcon60x60.png" width="60" height="60"/>
-        <image name="enrolToVoteIcon60x60.png" width="60" height="60"/>
-        <image name="eventsIcon60x60.png" width="60" height="60"/>
+        <image name="donatIcon30x30.png" width="30" height="30"/>
+        <image name="enrolToVoteIcon30x30.png" width="30" height="30"/>
+        <image name="eventsIcon30x30.png" width="30" height="30"/>
         <image name="globe30x30.png" width="30" height="30"/>
-        <image name="listsIcon60x60.png" width="60" height="60"/>
-        <image name="logoutIcon60x60.png" width="60" height="60"/>
+        <image name="listsIcon30x30.png" width="30" height="30"/>
+        <image name="logoutIcon30x30.png" width="30" height="30"/>
         <image name="menu.png" width="28" height="20"/>
         <image name="rain_forest-flowering.png" width="1024" height="768"/>
-        <image name="searchIcon60x60.png" width="60" height="60"/>
+        <image name="searchIcon30x30.png" width="30" height="30"/>
         <image name="star30x30.png" width="30" height="30"/>
-        <image name="tagsIcon60x60.png" width="60" height="60"/>
+        <image name="tagsIcon30x30.png" width="30" height="30"/>
         <image name="the-greens-rally.jpg" width="3000" height="2000"/>
         <image name="theGreens.png" width="90" height="77"/>
-        <image name="userIcon60x60.png" width="60" height="60"/>
+        <image name="userIcon30x30.png" width="30" height="30"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

@@ -29,7 +29,6 @@
 		651853FE190FEF1A00D865C4 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 651853FD190FEF1A00D865C4 /* Accelerate.framework */; };
 		65185408190FFD6900D865C4 /* rain_forest-flowering.png in Resources */ = {isa = PBXBuildFile; fileRef = 65185407190FFD6900D865C4 /* rain_forest-flowering.png */; };
 		6526A38D1924FCE900B7BB1F /* TGLOCustomRsvpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6526A38C1924FCE900B7BB1F /* TGLOCustomRsvpView.m */; };
-		6526A38F1925BD1000B7BB1F /* checkerMark60x60.png in Resources */ = {isa = PBXBuildFile; fileRef = 6526A38E1925BD1000B7BB1F /* checkerMark60x60.png */; };
 		6526A3911926052000B7BB1F /* globe30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = 6526A3901926052000B7BB1F /* globe30x30.png */; };
 		6526A3931926052B00B7BB1F /* star30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = 6526A3921926052B00B7BB1F /* star30x30.png */; };
 		6526A3961926096000B7BB1F /* TGLOAllListsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6526A3951926096000B7BB1F /* TGLOAllListsViewController.m */; };
@@ -59,13 +58,6 @@
 		65A812A419111E2000C46959 /* forest-fog-2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65A812A319111E2000C46959 /* forest-fog-2.jpg */; };
 		65A812AA19112A9B00C46959 /* walking.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65A812A919112A9B00C46959 /* walking.jpg */; };
 		65B022F018FD27A50057E741 /* TGLOPersonFromListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B022EF18FD27A50057E741 /* TGLOPersonFromListViewController.m */; };
-		65B25AD21913874A000A8349 /* userIcon60x60.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B25AD11913874A000A8349 /* userIcon60x60.png */; };
-		65B25AD4191387AC000A8349 /* searchIcon60x60.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B25AD3191387AC000A8349 /* searchIcon60x60.png */; };
-		65B25AD619138928000A8349 /* enrolToVoteIcon60x60.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B25AD519138928000A8349 /* enrolToVoteIcon60x60.png */; };
-		65B25AD819138989000A8349 /* tagsIcon60x60.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B25AD719138989000A8349 /* tagsIcon60x60.png */; };
-		65B25ADA19138A69000A8349 /* logoutIcon60x60.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B25AD919138A69000A8349 /* logoutIcon60x60.png */; };
-		65B25ADC19138B16000A8349 /* listsIcon60x60.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B25ADB19138B16000A8349 /* listsIcon60x60.png */; };
-		65B25ADE19138B83000A8349 /* donatIcon60x60.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B25ADD19138B83000A8349 /* donatIcon60x60.png */; };
 		65B25AE01914F61C000A8349 /* grey120x120.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B25ADF1914F61C000A8349 /* grey120x120.png */; };
 		65BC96DF18F3BBE3006063CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BC96DE18F3BBE3006063CA /* Foundation.framework */; };
 		65BC96E118F3BBE3006063CA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BC96E018F3BBE3006063CA /* CoreGraphics.framework */; };
@@ -98,6 +90,14 @@
 		65D63A2B19224D4900533C3F /* TGLOEventsModalMyListsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65D63A2A19224D4900533C3F /* TGLOEventsModalMyListsViewController.m */; };
 		65D63A2E19225FF200533C3F /* TGLOEventsModalSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65D63A2D19225FF200533C3F /* TGLOEventsModalSearchViewController.m */; };
 		65D63A31192266F900533C3F /* TGLOEventsModalMyTagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65D63A30192266F900533C3F /* TGLOEventsModalMyTagsViewController.m */; };
+		65EDAC441927891B0048A78D /* userIcon30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = 65EDAC431927891B0048A78D /* userIcon30x30.png */; };
+		65EDAC46192789EE0048A78D /* donatIcon30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = 65EDAC45192789EE0048A78D /* donatIcon30x30.png */; };
+		65EDAC4819278A640048A78D /* eventsIcon30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = 65EDAC4719278A640048A78D /* eventsIcon30x30.png */; };
+		65EDAC4A19278AC40048A78D /* listsIcon30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = 65EDAC4919278AC40048A78D /* listsIcon30x30.png */; };
+		65EDAC4C19278B400048A78D /* logoutIcon30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = 65EDAC4B19278B400048A78D /* logoutIcon30x30.png */; };
+		65EDAC4E19278B9F0048A78D /* searchIcon30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = 65EDAC4D19278B9F0048A78D /* searchIcon30x30.png */; };
+		65EDAC5019278DB20048A78D /* enrolToVoteIcon30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = 65EDAC4F19278DB20048A78D /* enrolToVoteIcon30x30.png */; };
+		65EDAC5219278E0F0048A78D /* tagsIcon30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = 65EDAC5119278E0F0048A78D /* tagsIcon30x30.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -152,7 +152,6 @@
 		65185407190FFD6900D865C4 /* rain_forest-flowering.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rain_forest-flowering.png"; path = "../../../../Desktop/rain_forest-flowering.png"; sourceTree = "<group>"; };
 		6526A38B1924FCE900B7BB1F /* TGLOCustomRsvpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOCustomRsvpView.h; sourceTree = "<group>"; };
 		6526A38C1924FCE900B7BB1F /* TGLOCustomRsvpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOCustomRsvpView.m; sourceTree = "<group>"; };
-		6526A38E1925BD1000B7BB1F /* checkerMark60x60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkerMark60x60.png; sourceTree = "<group>"; };
 		6526A3901926052000B7BB1F /* globe30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = globe30x30.png; sourceTree = "<group>"; };
 		6526A3921926052B00B7BB1F /* star30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star30x30.png; sourceTree = "<group>"; };
 		6526A3941926096000B7BB1F /* TGLOAllListsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOAllListsViewController.h; sourceTree = "<group>"; };
@@ -196,13 +195,6 @@
 		65A812A919112A9B00C46959 /* walking.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = walking.jpg; sourceTree = "<group>"; };
 		65B022EE18FD27A50057E741 /* TGLOPersonFromListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOPersonFromListViewController.h; sourceTree = "<group>"; };
 		65B022EF18FD27A50057E741 /* TGLOPersonFromListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOPersonFromListViewController.m; sourceTree = "<group>"; };
-		65B25AD11913874A000A8349 /* userIcon60x60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = userIcon60x60.png; sourceTree = "<group>"; };
-		65B25AD3191387AC000A8349 /* searchIcon60x60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = searchIcon60x60.png; sourceTree = "<group>"; };
-		65B25AD519138928000A8349 /* enrolToVoteIcon60x60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = enrolToVoteIcon60x60.png; sourceTree = "<group>"; };
-		65B25AD719138989000A8349 /* tagsIcon60x60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tagsIcon60x60.png; sourceTree = "<group>"; };
-		65B25AD919138A69000A8349 /* logoutIcon60x60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logoutIcon60x60.png; sourceTree = "<group>"; };
-		65B25ADB19138B16000A8349 /* listsIcon60x60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = listsIcon60x60.png; sourceTree = "<group>"; };
-		65B25ADD19138B83000A8349 /* donatIcon60x60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = donatIcon60x60.png; sourceTree = "<group>"; };
 		65B25ADF1914F61C000A8349 /* grey120x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grey120x120.png; sourceTree = "<group>"; };
 		65BC96DB18F3BBE3006063CA /* Vic Greens.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Vic Greens.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		65BC96DE18F3BBE3006063CA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -247,6 +239,14 @@
 		65D63A2D19225FF200533C3F /* TGLOEventsModalSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOEventsModalSearchViewController.m; sourceTree = "<group>"; };
 		65D63A2F192266F900533C3F /* TGLOEventsModalMyTagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOEventsModalMyTagsViewController.h; sourceTree = "<group>"; };
 		65D63A30192266F900533C3F /* TGLOEventsModalMyTagsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOEventsModalMyTagsViewController.m; sourceTree = "<group>"; };
+		65EDAC431927891B0048A78D /* userIcon30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = userIcon30x30.png; sourceTree = "<group>"; };
+		65EDAC45192789EE0048A78D /* donatIcon30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = donatIcon30x30.png; sourceTree = "<group>"; };
+		65EDAC4719278A640048A78D /* eventsIcon30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eventsIcon30x30.png; sourceTree = "<group>"; };
+		65EDAC4919278AC40048A78D /* listsIcon30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = listsIcon30x30.png; sourceTree = "<group>"; };
+		65EDAC4B19278B400048A78D /* logoutIcon30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logoutIcon30x30.png; sourceTree = "<group>"; };
+		65EDAC4D19278B9F0048A78D /* searchIcon30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = searchIcon30x30.png; sourceTree = "<group>"; };
+		65EDAC4F19278DB20048A78D /* enrolToVoteIcon30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = enrolToVoteIcon30x30.png; sourceTree = "<group>"; };
+		65EDAC5119278E0F0048A78D /* tagsIcon30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tagsIcon30x30.png; sourceTree = "<group>"; };
 		950AE0EADB7042F4B10AC436 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -450,21 +450,21 @@
 			isa = PBXGroup;
 			children = (
 				6526A3921926052B00B7BB1F /* star30x30.png */,
+				65EDAC4B19278B400048A78D /* logoutIcon30x30.png */,
+				65EDAC4D19278B9F0048A78D /* searchIcon30x30.png */,
+				65EDAC4F19278DB20048A78D /* enrolToVoteIcon30x30.png */,
+				65EDAC5119278E0F0048A78D /* tagsIcon30x30.png */,
+				65EDAC4719278A640048A78D /* eventsIcon30x30.png */,
+				65EDAC45192789EE0048A78D /* donatIcon30x30.png */,
+				65EDAC4919278AC40048A78D /* listsIcon30x30.png */,
+				65EDAC431927891B0048A78D /* userIcon30x30.png */,
 				6526A3901926052000B7BB1F /* globe30x30.png */,
 				654CC32F1917D23200600473 /* eventsIcon60x60.png */,
 				654CC32619163BE600600473 /* appIcon58x58.png */,
-				6526A38E1925BD1000B7BB1F /* checkerMark60x60.png */,
 				654CC32719163BE600600473 /* appIcon80x80.png */,
 				654CC32819163BE600600473 /* appIcon120x120.png */,
 				654CC32019152F5D00600473 /* the-greens-rally.jpg */,
-				65B25AD919138A69000A8349 /* logoutIcon60x60.png */,
 				65B25ADF1914F61C000A8349 /* grey120x120.png */,
-				65B25ADD19138B83000A8349 /* donatIcon60x60.png */,
-				65B25ADB19138B16000A8349 /* listsIcon60x60.png */,
-				65B25AD519138928000A8349 /* enrolToVoteIcon60x60.png */,
-				65B25AD719138989000A8349 /* tagsIcon60x60.png */,
-				65B25AD11913874A000A8349 /* userIcon60x60.png */,
-				65B25AD3191387AC000A8349 /* searchIcon60x60.png */,
 				65A8129F19111C3200C46959 /* forest-fog.jpg */,
 				65A812A919112A9B00C46959 /* walking.jpg */,
 				65A812A119111D5C00C46959 /* forest-fog-1.jpg */,
@@ -577,26 +577,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				654CC3301917D23200600473 /* eventsIcon60x60.png in Resources */,
-				65B25AD619138928000A8349 /* enrolToVoteIcon60x60.png in Resources */,
 				65BC971918F3C54B006063CA /* Main.storyboard in Resources */,
-				65B25ADE19138B83000A8349 /* donatIcon60x60.png in Resources */,
 				65BC975718F3D144006063CA /* menu@2x.png in Resources */,
 				65A812971910F34700C46959 /* theGreens80x80.png in Resources */,
+				65EDAC4819278A640048A78D /* eventsIcon30x30.png in Resources */,
+				65EDAC441927891B0048A78D /* userIcon30x30.png in Resources */,
 				651626F918F7A13100DCC064 /* theGreens.png in Resources */,
+				65EDAC46192789EE0048A78D /* donatIcon30x30.png in Resources */,
 				65827910191E068C001BF4BB /* TGLOEventTableCell.xib in Resources */,
 				65A812A419111E2000C46959 /* forest-fog-2.jpg in Resources */,
 				65A812961910F34700C46959 /* theGreens58x58.png in Resources */,
+				65EDAC5019278DB20048A78D /* enrolToVoteIcon30x30.png in Resources */,
 				65185408190FFD6900D865C4 /* rain_forest-flowering.png in Resources */,
-				65B25AD819138989000A8349 /* tagsIcon60x60.png in Resources */,
-				6526A38F1925BD1000B7BB1F /* checkerMark60x60.png in Resources */,
 				65BC975418F3D144006063CA /* Default@2x.png in Resources */,
-				65B25AD4191387AC000A8349 /* searchIcon60x60.png in Resources */,
 				65BC975318F3D144006063CA /* Default.png in Resources */,
+				65EDAC4A19278AC40048A78D /* listsIcon30x30.png in Resources */,
 				65A812981910F34700C46959 /* theGreens120x120.png in Resources */,
 				65A812AA19112A9B00C46959 /* walking.jpg in Resources */,
 				65A812A219111D5C00C46959 /* forest-fog-1.jpg in Resources */,
-				65B25ADC19138B16000A8349 /* listsIcon60x60.png in Resources */,
-				65B25ADA19138A69000A8349 /* logoutIcon60x60.png in Resources */,
+				65EDAC4C19278B400048A78D /* logoutIcon30x30.png in Resources */,
+				65EDAC4E19278B9F0048A78D /* searchIcon30x30.png in Resources */,
 				65BC96EB18F3BBE3006063CA /* InfoPlist.strings in Resources */,
 				6526A3931926052B00B7BB1F /* star30x30.png in Resources */,
 				65BC975618F3D144006063CA /* menu.png in Resources */,
@@ -604,8 +604,8 @@
 				65BC975218F3D144006063CA /* Default-568h@2x.png in Resources */,
 				65BC975818F3D144006063CA /* nav_bg.png in Resources */,
 				654CC32B19163BE700600473 /* appIcon120x120.png in Resources */,
-				65B25AD21913874A000A8349 /* userIcon60x60.png in Resources */,
 				654CC32119152F5D00600473 /* the-greens-rally.jpg in Resources */,
+				65EDAC5219278E0F0048A78D /* tagsIcon30x30.png in Resources */,
 				65B25AE01914F61C000A8349 /* grey120x120.png in Resources */,
 				65BC96F618F3BBE3006063CA /* Images.xcassets in Resources */,
 				65A812A019111C3200C46959 /* forest-fog.jpg in Resources */,
