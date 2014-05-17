@@ -461,7 +461,7 @@
             </objects>
             <point key="canvasLocation" x="2712" y="1973"/>
         </scene>
-        <!--All Lists View Controller-->
+        <!--All Lists View Controller - All Lists-->
         <scene sceneID="1eO-dk-Xcz">
             <objects>
                 <viewController id="MG5-9z-GSl" customClass="TGLOAllListsViewController" sceneMemberID="viewController">
@@ -469,7 +469,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" id="8zb-VJ-Jt2">
+                            <searchBar contentMode="redraw" placeholder="Pull to refresh" id="8zb-VJ-Jt2">
                                 <rect key="frame" x="0.0" y="63" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -518,7 +518,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="yaw-S9-xkv">
+                    <navigationItem key="navigationItem" title="All Lists" id="yaw-S9-xkv">
                         <barButtonItem key="leftBarButtonItem" image="menu.png" id="uJM-Ef-IrO"/>
                     </navigationItem>
                     <connections>
@@ -557,7 +557,7 @@
             </objects>
             <point key="canvasLocation" x="2204" y="611"/>
         </scene>
-        <!--My Lists View Controller-->
+        <!--My Lists View Controller - My Lists-->
         <scene sceneID="Q15-p7-D1f">
             <objects>
                 <tableViewController id="mJa-ZF-cyd" customClass="TGLOMyListsViewController" sceneMemberID="viewController">
@@ -599,7 +599,7 @@
                             <outlet property="delegate" destination="mJa-ZF-cyd" id="muJ-gS-DYw"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="wWJ-e5-EdQ">
+                    <navigationItem key="navigationItem" title="My Lists" id="wWJ-e5-EdQ">
                         <barButtonItem key="leftBarButtonItem" image="menu.png" id="e99-IV-iUe"/>
                     </navigationItem>
                     <connections>

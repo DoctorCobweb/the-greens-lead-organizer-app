@@ -90,6 +90,7 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     
     //an array of managedObjects of Entity type Event
     __block NSArray *fetchedEventsArray = [moc executeFetchRequest:fetchRequest error:nil];
+    NSLog(@"fetchedEventsArray: %@", fetchedEventsArray);
     
     //first time visit to this 'page', automatically fetch events
     if ([fetchedEventsArray count] == 0) {

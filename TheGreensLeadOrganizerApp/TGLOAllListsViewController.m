@@ -7,10 +7,6 @@
 //
 
 #import "TGLOAllListsViewController.h"
-
-
-
-#import "TGLOMyListsViewController.h"
 #import "AFNetworking.h"
 #import "AFNetworkActivityIndicatorManager.h"
 #import "SWRevealViewController.h"
@@ -26,6 +22,14 @@ static NSString * allListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/allL
     //contains all the listsfor the user
     //used to populate table cells
     NSMutableArray *allLists;
+    
+    //this will always hold all of the lists. can use this
+    //to cache or reset tableView to show all lists
+    NSArray *allListsCache;
+    
+    NSString *previousSearchTerm;
+    
+    NSMutableArray *undoStack;
 }
 
 @end
@@ -53,24 +57,17 @@ static NSString * allListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/allL
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:refreshControl]; //the trick
     
-    #warning TODO: fix this
     //preserve selection between presentations.
-    //self.tableView.clearsSelectionOnViewWillAppear = NO;
+    self.tableView.clearsContextBeforeDrawing = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    /*
-    NSString *token = [TGLOUtils getUserAccessToken];
-    if (token) {
-        [self getAllLists];
-        
-    } else {
-        NSLog(@"ERROR in TGLOMyListsViewController.m. access_token is nil");
-    }
-     */
     
     [self setUpAppearance];
+    
+    
+    [self loadAllListEntities];
 }
 
 
@@ -98,7 +95,7 @@ static NSString * allListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/allL
 
 - (void)setUpAppearance
 {
-    self.title = @"All Lists";
+    //self.title = @"All Lists";
     
     // Change button color
     self.sidebarButton.tintColor = [UIColor colorWithWhite:0.05f alpha:1.0f];
@@ -109,6 +106,120 @@ static NSString * allListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/allL
     
     // Set the gesture
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+}
+
+
+- (void) loadAllListEntities
+{
+    NSLog(@"in loadListsFromDatabase method");
+    
+    TGLOAppDelegate *delegate = (TGLOAppDelegate *)[[UIApplication sharedApplication] delegate];
+    NSManagedObjectContext *moc = [delegate managedObjectContext];
+    
+    
+    // Fetch the devices from persistent data store
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"List"];
+    
+    //an array of managedObjects of Entity type List
+    __block NSArray *fetchedListsArray = [moc executeFetchRequest:fetchRequest error:nil];
+    NSLog(@"fetchedListsArray count: %d", [fetchedListsArray count]);
+    
+    //first time visit to this 'page', automatically fetch events
+    if ([fetchedListsArray count] == 0) {
+        [self getAllLists:^(NSError *error) {
+            NSLog(@"in getAllLists completionHandler, error: %@", error);
+            
+            if (error == nil) {
+                NSLog(@"error is nil");
+                [self.tableView reloadData];
+            }
+            
+            if (error) {
+                NSLog(@"ERROR: %@", error);
+                [self displayErrorAlert:@"Network Error" message:@"Unable to download events. Pleas try again."];
+            }
+        }];
+    }
+    
+    __block NSMutableArray *extractedLists = [[NSMutableArray alloc] init];
+    
+    [fetchedListsArray enumerateObjectsUsingBlock:^(id obj, NSUInteger i, BOOL *stop) {
+        
+        NSDictionary *dic = @{ @"name":       [obj valueForKey:@"name"],
+                               @"count":      [obj valueForKey:@"count"],
+                               @"id":         [obj valueForKey:@"id"],
+                               @"slug":       [obj valueForKey:@"slug"],
+                               @"sortOrder":  [obj valueForKey:@"sortOrder"],
+                               @"authorId":   [obj valueForKey:@"authorId"]
+                               };
+        
+        [extractedLists addObject:dic];
+    }];
+    
+    allLists = [extractedLists mutableCopy];
+    allListsCache = [[NSArray alloc] initWithArray:extractedLists];
+}
+
+
+//results is a mutable array of dics
+- (void) saveAllListEntities:(NSMutableArray *)results
+{
+    TGLOAppDelegate *delegate = (TGLOAppDelegate *)[[UIApplication sharedApplication] delegate];
+    NSManagedObjectContext *moc = [delegate managedObjectContext];
+    
+    
+    
+    //reset the database to empty
+    //fetch em all and delete em all
+    NSFetchRequest * allListsFR = [[NSFetchRequest alloc] init];
+    [allListsFR setEntity:[NSEntityDescription entityForName:@"List" inManagedObjectContext:moc]];
+    [allListsFR setIncludesPropertyValues:NO]; //only fetch the managedObjectID
+    
+    NSError * error = nil;
+    NSArray * lists = [moc executeFetchRequest:allListsFR error:&error];
+    
+    //error handling goes here
+    for (NSManagedObject * list in lists) {
+        [moc deleteObject:list];
+    }
+    
+    //save delete all changes
+    NSError *saveError = nil;
+    if(![moc save:&saveError]) {
+        NSLog(@"Can't Save reset! %@ %@", error, [error localizedDescription]);
+        [self displayErrorAlert:@"Database Reset Error" message:@"Unable to reset database. Please try again."];
+        return;
+    }
+    
+    
+    //add all new events now
+    [results enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        
+        // Create a new managed object, new Event
+        NSManagedObject *newList = [NSEntityDescription insertNewObjectForEntityForName:@"List" inManagedObjectContext:moc];
+        
+        
+        [newList setValue:[obj valueForKey:@"name"] forKey:@"name"];
+        [newList setValue:[obj valueForKey:@"count"] forKey:@"count"];
+        [newList setValue:[obj valueForKey:@"id"] forKey:@"id"];
+        [newList setValue:[obj valueForKey:@"slug"] forKey:@"slug"];
+        [newList setValue:[obj valueForKey:@"sort_order"] forKey:@"sortOrder"];
+        [newList setValue:[obj valueForKey:@"author_id"] forKey:@"authorId"];
+        
+        NSError *error = nil;
+        // Save the object to persistent store
+        if (![moc save:&error]) {
+            NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+            *stop = YES;
+            [self displayErrorAlert:@"Database Error" message:@"Unable to save event to database. Please try again."];
+            return;
+        }
+        
+    }];
+    
+    //success in saving to database so we can assigned results to table data source
+    allLists =      [[NSMutableArray alloc] initWithArray:results];
+    allListsCache = [[NSArray alloc] initWithArray:results];
 }
 
 
@@ -124,22 +235,20 @@ static NSString * allListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/allL
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     [manager GET:allListsUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //responseObject is has a single array with all the lists
         //NSLog(@"LISTS TABLE VIEW CONTROLLER and response for lists: %@", responseObject);
         
-        //responseObject is has a single array with all the lists
-        //=> results_array[0] is the array of lists
-        NSArray *results_array = [responseObject allObjects];
-        //NSLog(@"results_array: %@", results_array);
-        //NSLog(@"%d results records returned", [results_array[0] count]);
+        NSArray *results_array = [[responseObject objectForKey:@"lists" ] allObjects];
+        NSMutableArray *results_array_mutable = [[NSMutableArray alloc] initWithArray:results_array];
         
-        allLists = [[NSMutableArray alloc] initWithArray:results_array[0]];
+        //NSLog(@"results_array_mutable: %@", results_array_mutable);
+        //allLists = [[NSMutableArray alloc] initWithArray:results_array];
+        //allListsCache = [[NSArray alloc] initWithArray: results_array];
+        //NSLog(@"ALL LISTS allLists array count: %d", [allLists count]);
         
-        //taggings now has all the tags for person
-        //NSLog(@"allLists array: %@", allLists);
-        NSLog(@"ALL LISTS allLists array count: %d", [allLists count]);
         
-        //reload tableview to display new data returned from server
-        //[self.tableView reloadData];
+        [self saveAllListEntities:results_array_mutable];
+        
         completionBlock(error);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -165,11 +274,120 @@ static NSString * allListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/allL
 }
 
 
-- (void)didReceiveMemoryWarning
+
+#pragma UISearchBarDelegate methods
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    NSInteger searchTextLength = [searchText length];
+    NSInteger previousSearchTermLength = [previousSearchTerm length];
+    
+    
+    if ([searchText isEqualToString:@""]) {
+        //NSLog(@"searchText is empty String");
+        
+        //reload table with original all lists array
+        allLists = [[NSMutableArray alloc] initWithArray:allListsCache];
+        [[self tableView] reloadData];
+        
+        [undoStack removeAllObjects];
+        previousSearchTerm = @"";
+        
+        
+        //check we are bak to start
+        for (int k = 0; k < [allListsCache count]; k++) {
+            [allLists containsObject:[allListsCache objectAtIndex:k]] ? nil: NSLog(@"ERROR: cache and searchResults not equal!");
+        }
+        
+        return;
+    }
+    
+    if (searchTextLength > previousSearchTermLength) {
+        //NSLog(@"drilling down");
+        //push removed objects to undo stack
+        NSMutableArray *collectionOfEvents = [[NSMutableArray alloc] init];
+        
+        NSMutableIndexSet *removeEventsAtIndexes = [self getIndexSetOfMatches:searchText];
+        
+        
+        NSArray *tempArray = [[NSArray alloc] initWithArray:allLists];
+        int tempArrayCount = [tempArray count];
+        
+        [allLists removeObjectsAtIndexes:removeEventsAtIndexes];
+        
+        for (int j = 0; j < tempArrayCount; j++) {
+            if (![allLists containsObject:tempArray[j]]) {
+                //add this to dic of undo stack
+                [collectionOfEvents addObject:tempArray[j]];
+            }
+        }
+        
+        //commented out for the sake of easily poping undoStack
+        //(at expense of adding empty arrays as last object...)
+        /*
+         //only add to undoStack nonempty array
+         if (!![collectionOfEvents count]) {
+         [undoStack addObject:collectionOfEvents];
+         }
+         */
+        
+        [undoStack addObject:collectionOfEvents];
+        
+        [[self tableView] reloadData];
+        previousSearchTerm = searchText;
+        
+        //NSLog(@"pushing: %d objects to undoStack", [[undoStack lastObject ] count]);
+        //NSLog(@"collectionOfEvents: %@", collectionOfEvents);
+        //NSLog(@"undoStack: %@", undoStack);
+        return;
+    }
+    
+    if (searchTextLength < previousSearchTermLength) {
+        //NSLog(@"drilling up");
+        //pop objects off stack back onto searchResults
+        
+        //NSLog(@"searchResults count BEFORE POP: %d", [searchResults count]);
+        [allLists addObjectsFromArray:[undoStack lastObject]];
+        //NSLog(@"poping: %d objects off undoStack", [[undoStack lastObject ] count]);
+        
+        [undoStack removeLastObject];
+        //NSLog(@"searchResults count AFTER POP: %d", [searchResults count]);
+        
+        [[self tableView] reloadData];
+        previousSearchTerm = searchText;
+        return;
+    }
 }
+
+
+- (NSMutableIndexSet *)getIndexSetOfMatches:(NSString *)searchTerm
+{
+    NSMutableIndexSet *indexes = [[NSMutableIndexSet alloc] init];
+    int listCount = [allLists count];
+    
+    for (int i = 0; i < listCount; i++) {
+        NSString *tempName = [[allLists[i] objectForKey:@"name"] lowercaseString];
+        
+        if ([tempName rangeOfString:[searchTerm lowercaseString]].location == NSNotFound) {
+            //no match so add to index set
+            [indexes addIndex:i];
+            
+        } else {
+            //match, do nothing
+            
+        }
+    }
+    return indexes;
+}
+
+
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar_
+{
+    //NSLog(@"searchBar SEARCH clicked");
+    [searchBar_ resignFirstResponder];
+}
+
 
 #pragma mark - Table view data source
 
@@ -242,6 +460,15 @@ static NSString * allListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/allL
  return YES;
  }
  */
+
+
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
 
 #pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

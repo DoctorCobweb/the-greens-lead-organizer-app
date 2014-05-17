@@ -19,6 +19,8 @@
 typedef void (^allListsCompletionHandler)(NSError *error);
 
 - (void)setUpAppearance;
+- (void) loadAllListEntities;
+- (void) saveAllListEntities:(NSMutableArray *)results;
 - (void)getAllLists:(allListsCompletionHandler)completionBlock;
 - (void)displayErrorAlert:(NSString *)errorTitle message:(NSString *)message;
 

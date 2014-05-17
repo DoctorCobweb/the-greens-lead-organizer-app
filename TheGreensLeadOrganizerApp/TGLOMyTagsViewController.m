@@ -83,19 +83,17 @@ static NSString * myTaggingsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
         //NSLog(@"TAGGINGS TABLE VIEW CONTROLLER and response for taggings: %@", responseObject);
         
         NSSet * taggings_set = [responseObject objectForKey:@"taggings"];
-        //NSLog(@"taggins_set SET: %@", taggings_set);
         
         //an array of dicts e.g.
         //{"person_id":9; tag=xyz}
         NSArray * taggings_array = [taggings_set allObjects];
-        NSLog(@"%d taggings records returned", [taggings_array count]);
+        //NSLog(@"%d taggings records returned", [taggings_array count]);
         
         //alloc and init the people array
         taggings = [[NSMutableArray alloc] initWithCapacity:[taggings_array count]];
         
         
         for (NSDictionary *tag in taggings_array) {
-            NSLog(@"%@", tag);
             [taggings addObject:[tag objectForKey:@"tag"]];
         }
         

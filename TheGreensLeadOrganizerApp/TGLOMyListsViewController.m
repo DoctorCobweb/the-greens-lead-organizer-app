@@ -65,7 +65,7 @@ static NSString * myListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/myLis
 
 - (void)setUpAppearance
 {
-    self.title = @"My Lists";
+    //self.title = @"My Lists";
 
     // Change button color
     self.sidebarButton.tintColor = [UIColor colorWithWhite:0.05f alpha:1.0f];
@@ -84,7 +84,7 @@ static NSString * myListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/myLis
 - (void) getAllLists
 {
     NSString *myNBId = [TGLOUtils getUserNationBuilderId];
-    NSString * myListsUrl_ = [NSString stringWithFormat:myListsUrl, @"9", token];
+    NSString * myListsUrl_ = [NSString stringWithFormat:myListsUrl, myNBId, token];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     

@@ -6,7 +6,16 @@
         <attribute name="startTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="venue" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="List" syncable="YES">
+        <attribute name="authorId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="count" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="slug" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sortOrder" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <elements>
         <element name="Event" positionX="-36" positionY="9" width="128" height="105"/>
+        <element name="List" positionX="-36" positionY="36" width="128" height="133"/>
     </elements>
 </model>
