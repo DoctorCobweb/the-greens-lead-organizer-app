@@ -10,6 +10,8 @@
 
 @interface TGLOEventsAllViewController : UIViewController<UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource>
 
+
+@property (weak, nonatomic)   IBOutlet UIBarButtonItem *sidebarButton;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -22,7 +24,7 @@ typedef void (^allEventsCompletionHandler)(NSError *error);
 - (void)getAllEvents: (allEventsCompletionHandler)completionBlock;
 - (void)displayErrorAlert:(NSString *)errorTitle message:(NSString *)message;
 
-
+-(IBAction)menuHit:(id)sender;
 
 - (NSMutableIndexSet *)getIndexSetOfMatches:(NSString *)searchTerm;
 

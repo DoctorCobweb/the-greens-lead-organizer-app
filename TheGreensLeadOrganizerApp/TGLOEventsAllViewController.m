@@ -9,6 +9,7 @@
 
 
 #import "TGLOEventsAllViewController.h"
+#import "SWRevealViewController.h"
 #import "AFNetworking.h"
 #import "AFNetworkActivityIndicatorManager.h"
 #import "TGLOUtils.h"
@@ -53,7 +54,14 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    //preserve selection between presentations.
+    self.tableView.clearsContextBeforeDrawing = NO;
+    
     // Do any additional setup after loading the view.
+    //since Lists tab hides our app wide nav bar
+    //make sure it is NOT hidden before displaying
+    //this view controllers' view
+    [[[self navigationController] navigationBar] setHidden:NO];
     
     //use pull to refresh even without having a UITableViewController
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
@@ -63,12 +71,26 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
     undoStack = [[NSMutableArray alloc] init];
     
-    self.title = @"Search Events";
+    [self setUpAppearance];
+    
     searchBar.delegate = self;
     
     [self loadAllEventEntities];
 }
 
+-(void)setUpAppearance
+{
+    self.title = @"Search Events";
+    // Change button color
+    self.sidebarButton.tintColor = [UIColor colorWithWhite:0.05f alpha:1.0f];
+    
+    // Set the gesture
+    [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    
+
+
+
+}
 
 
 - (void) loadAllEventEntities
@@ -260,13 +282,12 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
 
 
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (IBAction)menuHit:(id)sender {
+    NSLog(@"menuHit action");
+    [self.searchBar resignFirstResponder];
+    // Set the side bar button action. When it's tapped, it'll show up the sidebar.
+    [self.revealViewController revealToggle:nil];
 }
-
-
 
 
 #pragma UISearchBarDelegate methods
@@ -459,6 +480,12 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
     [self performSegueWithIdentifier:@"showEventDetails" sender:self];
 }
 
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
 
 
 #pragma mark - Navigation
