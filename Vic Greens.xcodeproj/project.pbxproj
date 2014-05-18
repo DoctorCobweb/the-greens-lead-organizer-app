@@ -98,6 +98,7 @@
 		65EDAC4E19278B9F0048A78D /* searchIcon30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = 65EDAC4D19278B9F0048A78D /* searchIcon30x30.png */; };
 		65EDAC5019278DB20048A78D /* enrolToVoteIcon30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = 65EDAC4F19278DB20048A78D /* enrolToVoteIcon30x30.png */; };
 		65EDAC5219278E0F0048A78D /* tagsIcon30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = 65EDAC5119278E0F0048A78D /* tagsIcon30x30.png */; };
+		65EDAC5419287B940048A78D /* checkerMark60x60.png in Resources */ = {isa = PBXBuildFile; fileRef = 65EDAC5319287B940048A78D /* checkerMark60x60.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -247,6 +248,7 @@
 		65EDAC4D19278B9F0048A78D /* searchIcon30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = searchIcon30x30.png; sourceTree = "<group>"; };
 		65EDAC4F19278DB20048A78D /* enrolToVoteIcon30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = enrolToVoteIcon30x30.png; sourceTree = "<group>"; };
 		65EDAC5119278E0F0048A78D /* tagsIcon30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tagsIcon30x30.png; sourceTree = "<group>"; };
+		65EDAC5319287B940048A78D /* checkerMark60x60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkerMark60x60.png; sourceTree = "<group>"; };
 		950AE0EADB7042F4B10AC436 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -451,6 +453,7 @@
 			children = (
 				6526A3921926052B00B7BB1F /* star30x30.png */,
 				65EDAC4B19278B400048A78D /* logoutIcon30x30.png */,
+				65EDAC5319287B940048A78D /* checkerMark60x60.png */,
 				65EDAC4D19278B9F0048A78D /* searchIcon30x30.png */,
 				65EDAC4F19278DB20048A78D /* enrolToVoteIcon30x30.png */,
 				65EDAC5119278E0F0048A78D /* tagsIcon30x30.png */,
@@ -603,6 +606,7 @@
 				654CC32A19163BE700600473 /* appIcon80x80.png in Resources */,
 				65BC975218F3D144006063CA /* Default-568h@2x.png in Resources */,
 				65BC975818F3D144006063CA /* nav_bg.png in Resources */,
+				65EDAC5419287B940048A78D /* checkerMark60x60.png in Resources */,
 				654CC32B19163BE700600473 /* appIcon120x120.png in Resources */,
 				654CC32119152F5D00600473 /* the-greens-rally.jpg in Resources */,
 				65EDAC5219278E0F0048A78D /* tagsIcon30x30.png in Resources */,
@@ -831,7 +835,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TheGreensLeadOrganizerApp/Vic Greens-Prefix.pch";
 				INFOPLIST_FILE = "TheGreensLeadOrganizerApp/Vic Greens-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "Vic Greens";
 				PROVISIONING_PROFILE = "4A0FDC0E-C45E-496F-911A-12D1FC41583A";
 				"PROVISIONING_PROFILE[sdk=*]" = "F9B718F4-CF09-4360-BA8F-6E767607E2CA";
@@ -852,7 +856,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TheGreensLeadOrganizerApp/Vic Greens-Prefix.pch";
 				INFOPLIST_FILE = "TheGreensLeadOrganizerApp/Vic Greens-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "Vic Greens";
 				PROVISIONING_PROFILE = "F9B718F4-CF09-4360-BA8F-6E767607E2CA";
 				"PROVISIONING_PROFILE[sdk=iphoneos7.1]" = "F9B718F4-CF09-4360-BA8F-6E767607E2CA";
