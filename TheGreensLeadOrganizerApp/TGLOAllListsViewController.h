@@ -13,7 +13,6 @@
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 
 typedef void (^allListsCompletionHandler)(NSError *error);

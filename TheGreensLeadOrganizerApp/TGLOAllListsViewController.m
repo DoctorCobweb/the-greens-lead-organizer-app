@@ -65,8 +65,6 @@ static NSString * allListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/allL
     
     
     [self setUpAppearance];
-    
-    
     [self loadAllListEntities];
 }
 

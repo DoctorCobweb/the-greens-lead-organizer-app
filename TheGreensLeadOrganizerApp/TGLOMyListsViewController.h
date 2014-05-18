@@ -8,11 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TGLOMyListsViewController : UITableViewController
+@interface TGLOMyListsViewController : UIViewController<UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource>
 
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 
+typedef void (^allListsCompletionHandler)(NSError *error);
+
+
 - (void)setUpAppearance;
-- (void)getAllLists;
+- (void)loadAllListEntities;
+- (void)saveAllListEntities:(NSMutableArray *)results;
+- (NSArray *)filterForMyLists;
+- (void)getAllLists:(allListsCompletionHandler)completionBlock;
+- (NSMutableArray *)extractLists:(NSArray *)myFetchedLists;
+- (void)displayErrorAlert:(NSString *)errorTitle message:(NSString *)message;
+- (IBAction)menuHit:(id)sender;
 
 @end
