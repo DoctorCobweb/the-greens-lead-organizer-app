@@ -13,11 +13,12 @@
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *containerView;
-@property (weak, nonatomic) IBOutlet UITextField *nameTextField;
-@property (weak, nonatomic) IBOutlet UITextField *dateTextField;
-@property (weak, nonatomic) IBOutlet UITextField *venueTextField;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *venue;
+@property (weak, nonatomic) IBOutlet UILabel *contactLabel;
 @property (weak, nonatomic) IBOutlet UITextView  *detailsTextView;
-@property (weak, nonatomic) IBOutlet UITextField *contactTextField;
+//@property (weak, nonatomic) IBOutlet UITextField *contactTextField;
 @property (weak, nonatomic) IBOutlet UITextField *tagsTextField;
 
 @property (weak, nonatomic) NSString  *selectedEventId;

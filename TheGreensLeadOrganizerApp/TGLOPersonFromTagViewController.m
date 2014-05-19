@@ -143,23 +143,12 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     newLabel.textColor = [UIColor blackColor];
     
     
-    /*
-    UITextField *newTextField = (UITextField *)[self fabricateANewView:@"UITextField" width:labelWidth height:labelHeight spacing:labelSpacing];
-    
-    newTextField.borderStyle = UITextBorderStyleRoundedRect;
-    newTextField.text = tag;
-    newTextField.userInteractionEnabled = NO;
-    newTextField.backgroundColor = greenColor;
-     */
-    
     
     //update the scroll and container view to fit/display new content
     [self updateScrollAndContainerViewSize:makeMoreRoom];
     
     //finally add the new view to as last subview
-    //[self.containerView addSubview:newTextField];
     [self.containerView addSubview:newLabel];
-    
 }
 
 

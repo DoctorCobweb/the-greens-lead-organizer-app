@@ -16,13 +16,9 @@
 //default to get 1000 (max) people for a list. not making multiple
 //page calls to get all people as yet.
 static NSString *eventUrl= @"https://%@.nationbuilder.com/api/v1/sites/%@/pages/events/%@?access_token=%@";
-
 static NSString *rsvpsUrl = @"https://%@.nationbuilder.com/api/v1/sites/%@/pages/events/%@/rsvps?page=1&per_page=1000&access_token=%@";
 static NSString * putRsvpUrl = @"https://%@.nationbuilder.com/api/v1/sites/%@/pages/events/%@/rsvps/%@?access_token=%@";
-
-#warning TODO: not use localhost for translating ids to names
 static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuapp.com/namesForIds/%@/%@";
-//static NSString *translateIdsToNamesUrl = @"http://localhost:5000/namesForIds/%@/%@";
 
 
 
@@ -108,15 +104,20 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 {
     NSString *address1 = [[event.venue objectForKey:@"address"] objectForKey:@"address1"];
     NSString *city = [[event.venue objectForKey:@"address"] objectForKey:@"city"];
+    UIColor *lightOrange = [UIColor colorWithRed:0.918 green:0.472 blue:0.247 alpha:1.000];
     
-    self.nameTextField.text = event.name;
-    self.dateTextField.text = [TGLOUtils formatTheDate:event.dateString withCustomFormat:@"yyyy-MM-dd'T'HH:mm:ss+HH:mm"];
-    self.venueTextField.text = [[NSString alloc] initWithFormat:@"%@, %@",address1, city];
+    self.nameLabel.text = event.name;
+    self.nameLabel.backgroundColor = lightOrange;
+    
+    
+    
+    self.dateLabel.text = [TGLOUtils formatTheDate:event.dateString withCustomFormat:@"yyyy-MM-dd'T'HH:mm:ss+HH:mm"];
+    self.venue.text = [[NSString alloc] initWithFormat:@"%@, %@",address1, city];
     self.detailsTextView.text = event.details;
     
     NSString *contactName = [event.contactDetails objectForKey:@"name"];
     NSString *contactNumber = [event.contactDetails objectForKey:@"phone"];
-    self.contactTextField.text = [[NSString alloc] initWithFormat:@"%@ %@", contactName, contactNumber];
+    self.contactLabel.text = [[NSString alloc] initWithFormat:@"%@ %@", contactName, contactNumber];
     
     NSMutableString *tagsConcatenated = [[NSMutableString alloc] init];
     //only first tag for now
@@ -511,10 +512,6 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 // utility method for construct different types of views
 - (id) fabricateANewView:(NSString *)viewType width:(CGFloat)viewWidth height:(CGFloat)viewHeight spacing: (CGFloat)viewSpacing
 {
-    CGRect containerFrame = [self.containerView frame];
-    CGFloat containerHeight = CGRectGetHeight(containerFrame);
-    CGFloat containerWidth = CGRectGetWidth(containerFrame);
-    
     NSArray *containerSubviews = [self.containerView subviews];
     CGRect lastViewFrame = ((UILabel *)[containerSubviews lastObject]).frame;
     
@@ -543,21 +540,15 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 
 - (void)updateScrollAndContainerViewSize:(CGFloat)makeMoreRoom
 {
-    //NSLog(@"in updateScrollAndContainerViewSize");
     //update the scroll height to accomodate for
     //new added view
     CGSize contentSize = self.scrollView.contentSize;
     CGFloat scrollHeight = contentSize.height;
     
     self.scrollView.contentSize =CGSizeMake(320, scrollHeight + makeMoreRoom);
-    //NSLog(@"self.scrollView.contentSize: %@", NSStringFromCGSize(self.scrollView.contentSize));
-    
     
     //must also update the containerView height
     CGRect containerViewFrame = self.containerView.frame;
-    
-    //NSLog(@"self.containerView.frame Max X: %f", CGRectGetMaxX(containerViewFrame));
-    //NSLog(@"self.containerView.frame Max Y: %f", CGRectGetMaxY(containerViewFrame));
     
     self.containerView.frame = CGRectMake(0, 0, (CGRectGetMaxX(containerViewFrame)), (CGRectGetMaxY(containerViewFrame)) + makeMoreRoom);
 }

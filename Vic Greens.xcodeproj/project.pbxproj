@@ -58,6 +58,9 @@
 		65A812AA19112A9B00C46959 /* walking.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65A812A919112A9B00C46959 /* walking.jpg */; };
 		65B022F018FD27A50057E741 /* TGLOPersonFromListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B022EF18FD27A50057E741 /* TGLOPersonFromListViewController.m */; };
 		65B25AE01914F61C000A8349 /* grey120x120.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B25ADF1914F61C000A8349 /* grey120x120.png */; };
+		65B32837192A1CF500336CBD /* clock30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B32836192A1CF500336CBD /* clock30x30.png */; };
+		65B32839192A1CFF00336CBD /* home30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B32838192A1CFF00336CBD /* home30x30.png */; };
+		65B3283B192A218100336CBD /* phone30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B3283A192A218100336CBD /* phone30x30.png */; };
 		65BC96DF18F3BBE3006063CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BC96DE18F3BBE3006063CA /* Foundation.framework */; };
 		65BC96E118F3BBE3006063CA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BC96E018F3BBE3006063CA /* CoreGraphics.framework */; };
 		65BC96E318F3BBE3006063CA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BC96E218F3BBE3006063CA /* UIKit.framework */; };
@@ -194,6 +197,9 @@
 		65B022EE18FD27A50057E741 /* TGLOPersonFromListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOPersonFromListViewController.h; sourceTree = "<group>"; };
 		65B022EF18FD27A50057E741 /* TGLOPersonFromListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOPersonFromListViewController.m; sourceTree = "<group>"; };
 		65B25ADF1914F61C000A8349 /* grey120x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grey120x120.png; sourceTree = "<group>"; };
+		65B32836192A1CF500336CBD /* clock30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clock30x30.png; sourceTree = "<group>"; };
+		65B32838192A1CFF00336CBD /* home30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home30x30.png; sourceTree = "<group>"; };
+		65B3283A192A218100336CBD /* phone30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = phone30x30.png; sourceTree = "<group>"; };
 		65BC96DB18F3BBE3006063CA /* Vic Greens.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Vic Greens.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		65BC96DE18F3BBE3006063CA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65BC96E018F3BBE3006063CA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -447,7 +453,10 @@
 			isa = PBXGroup;
 			children = (
 				6526A3921926052B00B7BB1F /* star30x30.png */,
+				65B3283A192A218100336CBD /* phone30x30.png */,
+				65B32836192A1CF500336CBD /* clock30x30.png */,
 				65EDAC4B19278B400048A78D /* logoutIcon30x30.png */,
+				65B32838192A1CFF00336CBD /* home30x30.png */,
 				65EDAC571929AED50048A78D /* star60x60.png */,
 				65EDAC4D19278B9F0048A78D /* searchIcon30x30.png */,
 				65EDAC4F19278DB20048A78D /* enrolToVoteIcon30x30.png */,
@@ -583,6 +592,7 @@
 				651626F918F7A13100DCC064 /* theGreens.png in Resources */,
 				65EDAC46192789EE0048A78D /* donatIcon30x30.png in Resources */,
 				65827910191E068C001BF4BB /* TGLOEventTableCell.xib in Resources */,
+				65B32839192A1CFF00336CBD /* home30x30.png in Resources */,
 				65A812A419111E2000C46959 /* forest-fog-2.jpg in Resources */,
 				65EDAC581929AED50048A78D /* star60x60.png in Resources */,
 				65A812961910F34700C46959 /* theGreens58x58.png in Resources */,
@@ -597,11 +607,13 @@
 				65EDAC4C19278B400048A78D /* logoutIcon30x30.png in Resources */,
 				65EDAC4E19278B9F0048A78D /* searchIcon30x30.png in Resources */,
 				65BC96EB18F3BBE3006063CA /* InfoPlist.strings in Resources */,
+				65B3283B192A218100336CBD /* phone30x30.png in Resources */,
 				6526A3931926052B00B7BB1F /* star30x30.png in Resources */,
 				65BC975618F3D144006063CA /* menu.png in Resources */,
 				654CC32A19163BE700600473 /* appIcon80x80.png in Resources */,
 				65BC975218F3D144006063CA /* Default-568h@2x.png in Resources */,
 				65BC975818F3D144006063CA /* nav_bg.png in Resources */,
+				65B32837192A1CF500336CBD /* clock30x30.png in Resources */,
 				654CC32B19163BE700600473 /* appIcon120x120.png in Resources */,
 				654CC32119152F5D00600473 /* the-greens-rally.jpg in Resources */,
 				65EDAC5219278E0F0048A78D /* tagsIcon30x30.png in Resources */,

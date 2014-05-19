@@ -144,22 +144,11 @@ static NSString *myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     newLabel.textColor = [UIColor blackColor];
     
     
-    /*
-    UITextField *newTextField = (UITextField *)[self fabricateANewView:@"UITextField" width:labelWidth height:labelHeight spacing:labelSpacing];
-    
-    newTextField.borderStyle = UITextBorderStyleRoundedRect;
-    newTextField.text = tag;
-    newTextField.userInteractionEnabled = NO;
-    newTextField.backgroundColor = greenColor;
-     */
-    
     //update the scroll and container view to fit/display new content
     [self updateScrollAndContainerViewSize:makeMoreRoom];
     
     //finally add the new view to as last subview
-    //[self.containerView addSubview:newTextField];
     [self.containerView addSubview:newLabel];
-    
 }
 
 
@@ -326,11 +315,6 @@ static NSString *myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     //NSLog(@"mod: %d", mod);
     //NSLog(@"lastViewFrame: %@", NSStringFromCGRect(lastViewFrame));
     
-    //get dimensions of the lower left corner of
-    //last subview of containerView
-    //CGFloat lastViewYLocation = CGRectGetMaxY(lastViewFrame);
-    //CGFloat lastViewXLocation = CGRectGetMinX(lastViewFrame);
-    
     
     if (mod == 0) {
         //NSLog(@"mod == 0");
@@ -398,28 +382,18 @@ static NSString *myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
 //adding in more room to the scroll and container view to fit in newly added content
 - (void)updateScrollAndContainerViewSize:(CGFloat)makeMoreRoom
 {
-    //NSLog(@"in updateScrollAndContainerViewSize");
     //update the scroll height to accomodate for
     //new added view
     CGSize contentSize = self.scrollView.contentSize;
     CGFloat scrollHeight = contentSize.height;
     
     self.scrollView.contentSize =CGSizeMake(320, scrollHeight + makeMoreRoom);
-    //NSLog(@"self.scrollView.contentSize: %@", NSStringFromCGSize(self.scrollView.contentSize));
-    
     
     //must also update the containerView height
     CGRect containerViewFrame = self.containerView.frame;
     
-    //NSLog(@"self.containerView.frame Max X: %f", CGRectGetMaxX(containerViewFrame));
-    //NSLog(@"self.containerView.frame Max Y: %f", CGRectGetMaxY(containerViewFrame));
-    
     self.containerView.frame = CGRectMake(0, 0, (CGRectGetMaxX(containerViewFrame)), (CGRectGetMaxY(containerViewFrame)) + makeMoreRoom);
 }
-
-
-
-
 
 
 
