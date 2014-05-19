@@ -21,6 +21,10 @@ static NSString *myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
 @interface TGLOPersonFromListViewController ()
 {
     NSString *token;
+    NSInteger tagCount;
+    NSInteger rowNumber;
+    CGFloat finalXPos;
+    CGFloat finalYPos;
 }
 
 @property (strong, nonatomic) UIAlertView *tokenAlert;
@@ -83,8 +87,9 @@ static NSString *myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     
     if(self.person){
         //get the person object passed through from segue
-        self.firstName.text = self.person.firstName;
-        self.lastName.text = self.person.lastName;
+        //self.firstName.text = self.person.firstName;
+        //self.lastName.text = self.person.lastName;
+        self.fullName.text = [[NSString alloc]initWithFormat:@"%@ %@", self.person.firstName, self.person.lastName];
         self.supportLevel.text = [TGLOPerson formattedSupportLevel:self.person.supportLevel];
         
         
@@ -108,10 +113,13 @@ static NSString *myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
 -(void)addTagViews
 {
     NSLog(@"SETTING UP ALL MY TAGS");
+    rowNumber = -1;
     
     for (NSString *tag in self.person.tags) {
         [self addASingleTag:tag];
     }
+    
+    rowNumber = -1;
     
     [self getAllMyContacts];
 }
@@ -121,25 +129,36 @@ static NSString *myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
 {
     CGFloat labelSpacing = 10; //spacing between the views
     CGFloat makeMoreRoom = 40; //additional room on end of scroll/container view
-    CGFloat labelWidth = 280;  //new label width
-    CGFloat labelHeight= 30;   //new label height
-    
-    UIColor * greenColor = [UIColor colorWithRed:129/255.0f green:193/255.0f blue:87/255.0f alpha:1.0f];
+    CGFloat labelHeight= 15;   //new label height
     
     
+    UIColor *lightGrey = [UIColor colorWithRed:240/255.0f green:240/255.0f blue:240/255.0f alpha:1.0f];
+    CGFloat tagWidth = (320 - (2 * 20) - (2 * 8))/3;
+    
+    //special fabrication method
+    UILabel *newLabel = (UILabel *)[self fabricateANewTagWithWidth:tagWidth height:labelHeight spacing:labelSpacing];
+    
+    newLabel.text = tag;
+    newLabel.font = [UIFont systemFontOfSize:12];
+    newLabel.backgroundColor = lightGrey;
+    newLabel.textColor = [UIColor blackColor];
+    
+    
+    /*
     UITextField *newTextField = (UITextField *)[self fabricateANewView:@"UITextField" width:labelWidth height:labelHeight spacing:labelSpacing];
     
     newTextField.borderStyle = UITextBorderStyleRoundedRect;
     newTextField.text = tag;
     newTextField.userInteractionEnabled = NO;
     newTextField.backgroundColor = greenColor;
-    
+     */
     
     //update the scroll and container view to fit/display new content
     [self updateScrollAndContainerViewSize:makeMoreRoom];
     
     //finally add the new view to as last subview
-    [self.containerView addSubview:newTextField];
+    //[self.containerView addSubview:newTextField];
+    [self.containerView addSubview:newLabel];
     
 }
 
@@ -296,31 +315,68 @@ static NSString *myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
 }
 
 
-
 // utility method for construct different types of views
-- (id) fabricateANewView:(NSString *)viewType width:(CGFloat)viewWidth height:(CGFloat)viewHeight spacing: (CGFloat)viewSpacing
+- (UILabel *) fabricateANewTagWithWidth:(CGFloat)viewWidth height:(CGFloat)viewHeight spacing: (CGFloat)viewSpacing
 {
+    NSLog(@"viewWidth: %f", viewWidth);
     
-    //NSLog(@"self.containerView frame: %@",NSStringFromCGRect([self.containerView frame]));
+    NSInteger mod = tagCount % 3;
+    tagCount++;
     
-    CGRect containerFrame = [self.containerView frame];
-    CGFloat containerHeight = CGRectGetHeight(containerFrame);
-    CGFloat containerWidth = CGRectGetWidth(containerFrame);
-    
-    //NSLog(@"containerFrame height: %f", containerHeight);
-    //NSLog(@"containerFrame width: %f", containerWidth);
-    
-    
-    NSArray *containerSubviews = [self.containerView subviews];
-    
-    CGRect lastViewFrame = ((UILabel *)[containerSubviews lastObject]).frame;
+    //NSLog(@"mod: %d", mod);
     //NSLog(@"lastViewFrame: %@", NSStringFromCGRect(lastViewFrame));
     
     //get dimensions of the lower left corner of
     //last subview of containerView
+    //CGFloat lastViewYLocation = CGRectGetMaxY(lastViewFrame);
+    //CGFloat lastViewXLocation = CGRectGetMinX(lastViewFrame);
+    
+    
+    if (mod == 0) {
+        //NSLog(@"mod == 0");
+        rowNumber++;
+        finalXPos = 20;
+        
+        NSArray *containerSubviews = [self.containerView subviews];
+        CGRect lastViewFrame = ((UILabel *)[containerSubviews lastObject]).frame;
+        finalYPos = CGRectGetMaxY(lastViewFrame) + 5;
+        
+    } else {
+        //NSLog(@"mod != 0");
+        finalXPos = 20 + (mod * (viewWidth + 5));
+    }
+    
+    
+    //now create a new rect, taking into account
+    //location of last subview
+    CGRect viewRect = CGRectMake(finalXPos + 5, finalYPos, viewWidth, viewHeight);
+    
+    NSLog(@"(finalXPos, finalYPos) = (%f, %f)", finalXPos, finalYPos);
+    NSLog(@"viewRect: %@", NSStringFromCGRect(viewRect));
+    
+    
+    return [[UILabel alloc] initWithFrame:viewRect];
+}
+
+
+
+// utility method for construct different types of views
+- (id) fabricateANewView:(NSString *)viewType width:(CGFloat)viewWidth height:(CGFloat)viewHeight spacing: (CGFloat)viewSpacing
+{
+    NSArray *containerSubviews = [self.containerView subviews];
+    CGRect lastViewFrame = ((UILabel *)[containerSubviews lastObject]).frame;
+    
+    //get dimensions of the lower left corner of
+    //last subview of containerView
     CGFloat lastViewYLocation = CGRectGetMaxY(lastViewFrame);
-    CGFloat lastViewXLocation = CGRectGetMinX(lastViewFrame);
-    //NSLog(@"lastViewYLocation: %f, lastViewXLocation: %f", lastViewYLocation, lastViewXLocation);
+    CGFloat lastViewXLocation ;
+    
+    if (rowNumber == -1) {
+        lastViewXLocation = 20;
+    } else {
+        lastViewXLocation = CGRectGetMinX(lastViewFrame);
+    }
+    
     
     //now create a new rect, taking into account
     //location of last subview

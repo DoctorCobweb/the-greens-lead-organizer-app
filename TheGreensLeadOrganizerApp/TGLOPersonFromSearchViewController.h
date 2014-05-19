@@ -17,12 +17,16 @@
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *containerView;
-@property (weak, nonatomic) IBOutlet UITextField *firstName;
-@property (weak, nonatomic) IBOutlet UITextField *lastName;
+
+@property (weak, nonatomic) IBOutlet UILabel *fullName;
+@property (weak, nonatomic) IBOutlet UILabel *supportLevel;
+
+//@property (weak, nonatomic) IBOutlet UITextField *firstName;
+//@property (weak, nonatomic) IBOutlet UITextField *lastName;
 @property (weak, nonatomic) IBOutlet UIButton *email;
 @property (weak, nonatomic) IBOutlet UIButton *phone;
 @property (weak, nonatomic) IBOutlet UIButton *mobile;
-@property (weak, nonatomic) IBOutlet UITextField *supportLevel;
+//@property (weak, nonatomic) IBOutlet UITextField *supportLevel;
 
 @property (strong, nonatomic) TGLOPerson *person;
 @property (strong, nonatomic) NSMutableArray *contacts;
@@ -33,6 +37,9 @@
 - (void)addTagViews;
 - (void)addASingleTag:(NSString *)tag;
 - (void)addContactsLabel;
+
+- (UILabel *) fabricateANewTagWithWidth:(CGFloat)viewWidth height:(CGFloat)viewHeight spacing: (CGFloat)viewSpacing;
+
 - (id) fabricateANewView:(NSString *)viewType width:(CGFloat)viewWidth height:(CGFloat)viewHeight spacing: (CGFloat)viewSpacing;
 - (void)updateScrollAndContainerViewSize:(CGFloat)makeMoreRoom;
 

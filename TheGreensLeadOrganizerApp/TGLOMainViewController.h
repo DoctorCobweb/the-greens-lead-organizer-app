@@ -33,7 +33,7 @@
 - (void)addTagViews;
 - (void)addASingleTag:(NSString *)tag;
 - (void)addContactsLabel;
-- (UILabel *) fabricateANewLabelWithWidth:(CGFloat)viewWidth height:(CGFloat)viewHeight spacing: (CGFloat)viewSpacing;
+- (UILabel *) fabricateANewTagWithWidth:(CGFloat)viewWidth height:(CGFloat)viewHeight spacing: (CGFloat)viewSpacing;
 
 - (id) fabricateANewView:(NSString *)viewType width:(CGFloat)width height:(CGFloat)viewHeight spacing: (CGFloat)viewSpacing;
 - (void)updateScrollAndContainerViewSize:(CGFloat)makeMoreRoom;

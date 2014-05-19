@@ -175,20 +175,18 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
 {
     CGFloat labelSpacing = 5; //spacing between the views
     CGFloat makeMoreRoom = 40; //additional room on end of scroll/container view
-    CGFloat labelWidth = 280;  //new label width
     CGFloat labelHeight= 15;   //new label height
     
-    UIColor * greenColor = [UIColor colorWithRed:129/255.0f green:193/255.0f blue:87/255.0f alpha:1.0f];
-    
+    UIColor *lightGrey = [UIColor colorWithRed:240/255.0f green:240/255.0f blue:240/255.0f alpha:1.0f];
     
     CGFloat tagWidth = (320 - (2 * 20) - (2 * 8))/3;
     
     //special fabrication method
-    UILabel *newLabel = (UILabel *)[self fabricateANewLabelWithWidth:tagWidth height:labelHeight spacing:labelSpacing];
+    UILabel *newLabel = (UILabel *)[self fabricateANewTagWithWidth:tagWidth height:labelHeight spacing:labelSpacing];
     
     newLabel.text = tag;
     newLabel.font = [UIFont systemFontOfSize:12];
-    newLabel.backgroundColor = greenColor;
+    newLabel.backgroundColor = lightGrey;
     newLabel.textColor = [UIColor blackColor];
 
     //update the scroll and container view to fit/display new content
@@ -335,22 +333,14 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
 
 
 // utility method for construct different types of views
-- (UILabel *) fabricateANewLabelWithWidth:(CGFloat)viewWidth height:(CGFloat)viewHeight spacing: (CGFloat)viewSpacing
+- (UILabel *) fabricateANewTagWithWidth:(CGFloat)viewWidth height:(CGFloat)viewHeight spacing: (CGFloat)viewSpacing
 {
     
     NSLog(@"viewWidth: %f", viewWidth);
     
     NSInteger mod = tagCount % 3;
     tagCount++;
-    
     //NSLog(@"mod: %d", mod);
-    //NSLog(@"lastViewFrame: %@", NSStringFromCGRect(lastViewFrame));
-    
-    //get dimensions of the lower left corner of
-    //last subview of containerView
-    //CGFloat lastViewYLocation = CGRectGetMaxY(lastViewFrame);
-    //CGFloat lastViewXLocation = CGRectGetMinX(lastViewFrame);
-    
     
     if (mod == 0) {
         //NSLog(@"mod == 0");
@@ -384,33 +374,20 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
 - (id) fabricateANewView:(NSString *)viewType width:(CGFloat)viewWidth height:(CGFloat)viewHeight spacing: (CGFloat)viewSpacing
 {
     
-    //NSLog(@"self.containerView frame: %@",NSStringFromCGRect([self.containerView frame]));
-    
-    CGRect containerFrame = [self.containerView frame];
-    CGFloat containerHeight = CGRectGetHeight(containerFrame);
-    CGFloat containerWidth = CGRectGetWidth(containerFrame);
-    
-    //NSLog(@"containerFrame height: %f", containerHeight);
-    //NSLog(@"containerFrame width: %f", containerWidth);
-    
-    
     NSArray *containerSubviews = [self.containerView subviews];
-    
     CGRect lastViewFrame = ((UILabel *)[containerSubviews lastObject]).frame;
-    //NSLog(@"lastViewFrame: %@", NSStringFromCGRect(lastViewFrame));
     
     //get dimensions of the lower left corner of
     //last subview of containerView
     CGFloat lastViewYLocation = CGRectGetMaxY(lastViewFrame);
-    
     CGFloat lastViewXLocation ;
+    
     if (rowNumber == -1) {
         lastViewXLocation = 20;
     } else {
         lastViewXLocation = CGRectGetMinX(lastViewFrame);
     }
     
-    //NSLog(@"lastViewYLocation: %f, lastViewXLocation: %f", lastViewYLocation, lastViewXLocation);
     
     //now create a new rect, taking into account
     //location of last subview
