@@ -250,7 +250,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     
     int rsvpsCount = [joinedRsvps count];
     CGFloat labelSpacing = 15; //spacing between the views
-    CGFloat makeMoreRoom = 40; //additional room on end of scroll/container view
+    CGFloat makeMoreRoom = 50; //additional room on end of scroll/container view
     CGFloat labelWidth = 280;  //new label width
     CGFloat labelHeight= 30;   //new label height
     
