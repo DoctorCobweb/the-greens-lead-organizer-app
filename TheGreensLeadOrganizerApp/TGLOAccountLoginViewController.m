@@ -110,7 +110,6 @@ static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logt
     //is responded
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     [manager POST:loginEndpoint parameters:loginDetails success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@" POST loggin the  user in, responseObeject => %@",responseObject);
         
         [loggingInAlert dismissWithClickedButtonIndex:0 animated:NO];
         
