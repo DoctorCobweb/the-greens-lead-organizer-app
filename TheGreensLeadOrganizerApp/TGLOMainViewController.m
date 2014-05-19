@@ -176,12 +176,12 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     CGFloat labelSpacing = 5; //spacing between the views
     CGFloat makeMoreRoom = 40; //additional room on end of scroll/container view
     CGFloat labelWidth = 280;  //new label width
-    CGFloat labelHeight= 30;   //new label height
+    CGFloat labelHeight= 15;   //new label height
     
     UIColor * greenColor = [UIColor colorWithRed:129/255.0f green:193/255.0f blue:87/255.0f alpha:1.0f];
     
     
-    CGFloat tagWidth = (320 - (2 * 20) - (2 * 5))/3;
+    CGFloat tagWidth = (320 - (2 * 20) - (2 * 8))/3;
     
     //special fabrication method
     UILabel *newLabel = (UILabel *)[self fabricateANewLabelWithWidth:tagWidth height:labelHeight spacing:labelSpacing];
