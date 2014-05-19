@@ -26,6 +26,7 @@
 + (BOOL)clearOutUserSession;
 + (NSString *)formatTheDate:(NSString *)dateString withCustomFormat:(NSString *)customFormat;
 + (NSDate *)formattedDateFromString:(NSString *)dateString;
++ (NSString *)formattedDateStringFromDate:(NSDate *)date;
 
 
 @end

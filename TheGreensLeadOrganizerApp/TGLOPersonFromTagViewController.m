@@ -126,7 +126,7 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
 - (void)addASingleTag:(NSString *)tag
 {
     CGFloat labelSpacing = 10; //spacing between the views
-    CGFloat makeMoreRoom = 40; //additional room on end of scroll/container view
+    CGFloat makeMoreRoom = 20; //additional room on end of scroll/container view
     CGFloat labelHeight= 15;   //new label height
     
     UIColor *lightGrey = [UIColor colorWithRed:240/255.0f green:240/255.0f blue:240/255.0f alpha:1.0f];
@@ -292,7 +292,14 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
         ((UITextView *)[customView viewWithTag:4]).text =noteValue;
     }
     
-    //NSLog(@"customView.frame: %@",NSStringFromCGRect(customView.frame));
+    NSString *dateValue = [contacts[index] objectForKey:@"created_at"];
+    if ([contacts[index] objectForKey:@""] != null) {
+        
+        NSString *dateString = [TGLOUtils formattedDateStringFromDate:[TGLOUtils formattedDateFromString:dateValue]];
+        
+        ((UILabel *)[customView viewWithTag:5]).text = dateString;
+    }
+    
     
     [self updateScrollAndContainerViewSize:makeMoreRoom];
     
@@ -304,9 +311,6 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
 // utility method for construct different types of views
 - (UILabel *) fabricateANewTagWithWidth:(CGFloat)viewWidth height:(CGFloat)viewHeight spacing: (CGFloat)viewSpacing
 {
-    
-    NSLog(@"viewWidth: %f", viewWidth);
-    
     NSInteger mod = tagCount % 3;
     tagCount++;
     
@@ -338,8 +342,8 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     //location of last subview
     CGRect viewRect = CGRectMake(finalXPos + 5, finalYPos, viewWidth, viewHeight);
     
-    NSLog(@"(finalXPos, finalYPos) = (%f, %f)", finalXPos, finalYPos);
-    NSLog(@"viewRect: %@", NSStringFromCGRect(viewRect));
+    //NSLog(@"(finalXPos, finalYPos) = (%f, %f)", finalXPos, finalYPos);
+    //NSLog(@"viewRect: %@", NSStringFromCGRect(viewRect));
     
     
     return [[UILabel alloc] initWithFrame:viewRect];

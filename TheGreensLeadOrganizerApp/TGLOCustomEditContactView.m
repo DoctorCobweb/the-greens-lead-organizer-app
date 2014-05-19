@@ -44,26 +44,71 @@ static NSDictionary *contactStatuses;
         
         //agtest and agv have different contact TYPES
         if([nationBuilderSlugValue isEqualToString:@"agtest"]) {
-            contactTypes = @{ @"1": @"Event debrief", @"2": @"Event confirmation", @"3":@"Inbox response", @"4":@"Donation thank-you", @"5":@"Donation request", @"6":@"Volunteer recruitment", @"7": @"Meeting 1:1", @"8": @"Volunteer intake",@"9": @"Voter outreach election",@"10": @"Voter outreach issue",@"11": @"Voter persuasion",@"12": @"diggity"};
+            contactTypes = @{ @"1": @"Event debrief",
+                              @"2": @"Event confirmation",
+                              @"3":@"Inbox response",
+                              @"4":@"Donation thank-you",
+                              @"5":@"Donation request",
+                              @"6":@"Volunteer recruitment",
+                              @"7": @"Meeting 1:1",
+                              @"8": @"Volunteer intake",
+                              @"9": @"Voter outreach election",
+                              @"10": @"Voter outreach issue",
+                              @"11": @"Voter persuasion",
+                              @"12": @"diggity"};
             
             
         }
         
         if ([nationBuilderSlugValue isEqualToString:@"agv"]) {
-            contactTypes = @{ @"6": @"Volunteer recruitment", @"21": @"Supporter Event Invitation", @"14":@"Voter persuasion", @"2":@"Volunteer intake", @"15": @"Donation thank-you", @"16": @"Donation request",@"17": @"Event confirmation",@"18": @"Event debrief",@"19": @"Meeting 1:1",@"1": @"Inbox response",@"13": @"Voter outreach election",@"4": @"Voter outreach issue"};
+            contactTypes = @{ @"6": @"Volunteer recruitment",
+                              @"21": @"Supporter Event Invitation",
+                              @"14":@"Voter persuasion",
+                              @"2":@"Volunteer intake",
+                              @"15": @"Donation thank-you",
+                              @"16": @"Donation request",
+                              @"17": @"Event confirmation",
+                              @"18": @"Event debrief",
+                              @"19": @"Meeting 1:1",
+                              @"1": @"Inbox response",
+                              @"13": @"Voter outreach election",
+                              @"4": @"Voter outreach issue"};
             
         }
         
-        contactMethods = @{@"delivery":@"Delivery",@"door_knock":@"Door knock",@"email":@"Email",@"email_blast":@"Email blast",@"face_to_face":@"Face to face",@"facebook":@"Facebook",@"meeting":@"Meeting",@"phone_call":@"Phone call",@"robocall":@"Robocall",@"snail_mail":@"Snail mail",@"text":@"Text",@"text_blast":@"Text blast",@"tweet":@"Tweet",@"video_call":@"Video call",@"webinar":@"Webinar",@"other":@"Other"};
+        contactMethods = @{@"delivery":@"Delivery",
+                           @"door_knock":@"Door knock",
+                           @"email":@"Email",
+                           @"email_blast":@"Email blast",
+                           @"face_to_face":@"Face to face",
+                           @"facebook":@"Facebook",
+                           @"meeting":@"Meeting",
+                           @"phone_call":@"Phone call",
+                           @"robocall":@"Robocall",
+                           @"snail_mail":@"Snail mail",
+                           @"text":@"Text",
+                           @"text_blast":@"Text blast",
+                           @"tweet":@"Tweet",
+                           @"video_call":@"Video call",
+                           @"webinar":@"Webinar",
+                           @"other":@"Other"};
         
         
-        contactStatuses = @{@"answered":@"Answered",@"bad_info":@"Bad info",@"inaccessible":@"Inaccessible",@"left_message":@"Left message",@"meaningful_interaction":@"Meaningful interaction",@"not_interested":@"Not interested",@"no_answer":@"No answer",@"refused":@"Refused",@"send_information":@"Send information",@"other":@"Other"};
+        contactStatuses = @{@"answered":@"Answered",
+                            @"bad_info":@"Bad info",
+                            @"inaccessible":@"Inaccessible",
+                            @"left_message":@"Left message",
+                            @"meaningful_interaction":@"Meaningful interaction",
+                            @"not_interested":@"Not interested",
+                            @"no_answer":@"No answer",
+                            @"refused":@"Refused",
+                            @"send_information":@"Send information",
+                            @"other":@"Other"};
         
         
         
         // Initialization code
         UIColor * blackColor = [UIColor colorWithRed:0/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f];
-        UIColor * greenColor = [UIColor colorWithRed:129/255.0f green:193/255.0f blue:87/255.0f alpha:1.0f];
         
         
         UILabel *typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 30)];
@@ -103,7 +148,7 @@ static NSDictionary *contactStatuses;
         //[statusValue setTitle:@"random STATUS text" forState:UIControlStateNormal];
         
         
-        UITextView *noteValue = [[UITextView alloc] initWithFrame:CGRectMake(0, 140, 280, 100)];
+        UITextView *noteValue = [[UITextView alloc] initWithFrame:CGRectMake(0, 140, 280, 150)];
         
         //add tags to these. used in other classes to get a ref
         //to them

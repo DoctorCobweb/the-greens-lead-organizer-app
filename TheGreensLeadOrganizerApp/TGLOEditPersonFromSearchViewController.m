@@ -214,7 +214,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 - (void)makeABlankContactView
 {
     CGFloat labelSpacing = 20; //spacing between the views
-    CGFloat makeMoreRoom = 250; //additional room on end of scrollview
+    CGFloat makeMoreRoom = 350; //additional room on end of scrollview
     CGFloat labelWidth = 280;  //new label width
     CGFloat labelHeight= 230;   //new label height
     

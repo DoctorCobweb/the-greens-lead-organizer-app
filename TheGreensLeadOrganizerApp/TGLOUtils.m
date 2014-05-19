@@ -230,5 +230,21 @@ static NSString *permissionLevelVolunteer = @"volunteer";
     return date;
 }
 
++ (NSString *)formattedDateStringFromDate:(NSDate *)date
+{
+
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    //now set the format to a simpler detail form for date
+    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+    
+    NSString *dateString = [dateFormatter stringFromDate:date];
+
+
+
+
+    return dateString;
+}
+
 
 @end

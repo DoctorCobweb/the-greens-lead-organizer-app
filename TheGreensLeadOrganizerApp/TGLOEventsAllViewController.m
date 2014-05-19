@@ -428,6 +428,7 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
 {
     static NSString *eventCellIdentifier = @"eventTableCell";
     NSDictionary *anEvent = [searchResults objectAtIndex:indexPath.row];
+    NSLog(@"anEvent: %@", anEvent);
     
     TGLOEventTableViewCell *cell = (TGLOEventTableViewCell *)[tableView dequeueReusableCellWithIdentifier:eventCellIdentifier];
     
