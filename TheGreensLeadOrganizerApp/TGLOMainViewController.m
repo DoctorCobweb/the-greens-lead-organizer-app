@@ -21,6 +21,10 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
 @interface TGLOMainViewController ()
 {
     NSString *token;
+    NSInteger tagCount;
+    NSInteger rowNumber;
+    CGFloat finalXPos;
+    CGFloat finalYPos;
 }
 
 @property (strong, nonatomic) UIAlertView *tokenAlert;
@@ -153,11 +157,15 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
 - (void)addTagViews
 {
     NSLog(@"SETTING UP ALL MY TAGS");
+    rowNumber = -1;
     
     //for (NSString *tag in taggings) {
     for (NSString *tag in self.person.tags) {
         [self addASingleTag:tag];
     }
+    
+    //reset rowNumber
+    rowNumber = -1;
     
     [self getAllMyContacts];
 }
@@ -173,21 +181,22 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     UIColor * greenColor = [UIColor colorWithRed:129/255.0f green:193/255.0f blue:87/255.0f alpha:1.0f];
     
     
-    UITextField *newTextField = (UITextField *)[self fabricateANewView:@"UITextField" width:labelWidth height:labelHeight spacing:labelSpacing];
+    CGFloat tagWidth = (320 - (2 * 20) - (2 * 5))/3;
     
-    newTextField.borderStyle = UITextBorderStyleRoundedRect;
-    newTextField.text = tag;
-    newTextField.userInteractionEnabled = NO;
-    newTextField.backgroundColor = greenColor;
-    newTextField.textColor = [UIColor whiteColor];
-    newTextField.font = [UIFont systemFontOfSize:13];
+    //special fabrication method
+    UILabel *newLabel = (UILabel *)[self fabricateANewLabelWithWidth:tagWidth height:labelHeight spacing:labelSpacing];
     
+    newLabel.text = tag;
+    newLabel.font = [UIFont systemFontOfSize:12];
+    newLabel.backgroundColor = greenColor;
+    newLabel.textColor = [UIColor blackColor];
 
     //update the scroll and container view to fit/display new content
     [self updateScrollAndContainerViewSize:makeMoreRoom];
     
     //finally add the new view to as last subview
-    [self.containerView addSubview:newTextField];
+    //[self.containerView addSubview:newTextField];
+    [self.containerView addSubview:newLabel];
 }
 
 
@@ -326,6 +335,52 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
 
 
 // utility method for construct different types of views
+- (UILabel *) fabricateANewLabelWithWidth:(CGFloat)viewWidth height:(CGFloat)viewHeight spacing: (CGFloat)viewSpacing
+{
+    
+    NSLog(@"viewWidth: %f", viewWidth);
+    
+    NSInteger mod = tagCount % 3;
+    tagCount++;
+    
+    //NSLog(@"mod: %d", mod);
+    //NSLog(@"lastViewFrame: %@", NSStringFromCGRect(lastViewFrame));
+    
+    //get dimensions of the lower left corner of
+    //last subview of containerView
+    //CGFloat lastViewYLocation = CGRectGetMaxY(lastViewFrame);
+    //CGFloat lastViewXLocation = CGRectGetMinX(lastViewFrame);
+    
+    
+    if (mod == 0) {
+        //NSLog(@"mod == 0");
+        rowNumber++;
+        finalXPos = 20;
+        
+        NSArray *containerSubviews = [self.containerView subviews];
+        CGRect lastViewFrame = ((UILabel *)[containerSubviews lastObject]).frame;
+        finalYPos = CGRectGetMaxY(lastViewFrame) + 5;
+        
+    } else {
+        //NSLog(@"mod != 0");
+        finalXPos = 20 + (mod * (viewWidth + 5));
+    }
+    
+    
+    //now create a new rect, taking into account
+    //location of last subview
+    CGRect viewRect = CGRectMake(finalXPos + 5, finalYPos, viewWidth, viewHeight);
+    
+    NSLog(@"(finalXPos, finalYPos) = (%f, %f)", finalXPos, finalYPos);
+    NSLog(@"viewRect: %@", NSStringFromCGRect(viewRect));
+    
+    
+    return [[UILabel alloc] initWithFrame:viewRect];
+}
+
+
+
+// utility method for construct different types of views
 - (id) fabricateANewView:(NSString *)viewType width:(CGFloat)viewWidth height:(CGFloat)viewHeight spacing: (CGFloat)viewSpacing
 {
     
@@ -347,7 +402,14 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     //get dimensions of the lower left corner of
     //last subview of containerView
     CGFloat lastViewYLocation = CGRectGetMaxY(lastViewFrame);
-    CGFloat lastViewXLocation = CGRectGetMinX(lastViewFrame);
+    
+    CGFloat lastViewXLocation ;
+    if (rowNumber == -1) {
+        lastViewXLocation = 20;
+    } else {
+        lastViewXLocation = CGRectGetMinX(lastViewFrame);
+    }
+    
     //NSLog(@"lastViewYLocation: %f, lastViewXLocation: %f", lastViewYLocation, lastViewXLocation);
     
     //now create a new rect, taking into account
@@ -365,6 +427,8 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
         return @"ERROR";
     }
 }
+
+
 
 
 //adding in more room to the scroll and container view to fit in newly added content
