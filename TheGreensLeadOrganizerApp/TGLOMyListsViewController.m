@@ -14,7 +14,6 @@
 #import "TGLOListViewController.h"
 #import "TGLOUtils.h"
 
-static NSString * myListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/myLists/%@/%@";
 static NSString * allListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/allLists/%@/%@";
 
 

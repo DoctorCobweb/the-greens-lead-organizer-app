@@ -129,8 +129,8 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     //UIColor * white_color = [UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:1.0f];
     
 
-    self.firstName.text = self.person.firstName;
-    self.lastName.text = self.person.lastName;
+    self.fullName.text = [[NSString alloc] initWithFormat:@"%@ %@", self.person.firstName, self.person.lastName];
+    
     self.supportLevel.text = [TGLOPerson formattedSupportLevel:self.person.supportLevel];
     
     [self.email setTitle:self.person.email forState:UIControlStateNormal];
@@ -165,7 +165,7 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
 
 - (void) addASingleTag:(NSString*)tag
 {
-    CGFloat labelSpacing = 10; //spacing between the views
+    CGFloat labelSpacing = 5; //spacing between the views
     CGFloat makeMoreRoom = 40; //additional room on end of scroll/container view
     CGFloat labelWidth = 280;  //new label width
     CGFloat labelHeight= 30;   //new label height
@@ -179,6 +179,8 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     newTextField.text = tag;
     newTextField.userInteractionEnabled = NO;
     newTextField.backgroundColor = greenColor;
+    newTextField.textColor = [UIColor whiteColor];
+    newTextField.font = [UIFont systemFontOfSize:13];
     
 
     //update the scroll and container view to fit/display new content

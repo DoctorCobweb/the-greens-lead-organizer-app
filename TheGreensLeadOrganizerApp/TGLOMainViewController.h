@@ -15,12 +15,14 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *containerView;
-@property (weak, nonatomic) IBOutlet UITextField *firstName;
-@property (weak, nonatomic) IBOutlet UITextField *lastName;
+//@property (weak, nonatomic) IBOutlet UITextField *firstName;
+//@property (weak, nonatomic) IBOutlet UITextField *lastName;
+@property (weak, nonatomic) IBOutlet UILabel *fullName;
+@property (weak, nonatomic) IBOutlet UILabel *supportLevel;
 @property (weak, nonatomic) IBOutlet UIButton *email;
 @property (weak, nonatomic) IBOutlet UIButton *phone;
 @property (weak, nonatomic) IBOutlet UIButton *mobile;
-@property (weak, nonatomic) IBOutlet UITextField *supportLevel;
+//@property (weak, nonatomic) IBOutlet UITextField *supportLevel;
 
 @property (strong, nonatomic) TGLOPerson *person;
 @property (strong, nonatomic) NSMutableArray *contacts;
