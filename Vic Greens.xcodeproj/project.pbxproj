@@ -61,6 +61,7 @@
 		65B32837192A1CF500336CBD /* clock30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B32836192A1CF500336CBD /* clock30x30.png */; };
 		65B32839192A1CFF00336CBD /* home30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B32838192A1CFF00336CBD /* home30x30.png */; };
 		65B3283B192A218100336CBD /* phone30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B3283A192A218100336CBD /* phone30x30.png */; };
+		65B3283E192B058500336CBD /* TGLOListsModalMyProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3283D192B058500336CBD /* TGLOListsModalMyProfileViewController.m */; };
 		65BC96DF18F3BBE3006063CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BC96DE18F3BBE3006063CA /* Foundation.framework */; };
 		65BC96E118F3BBE3006063CA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BC96E018F3BBE3006063CA /* CoreGraphics.framework */; };
 		65BC96E318F3BBE3006063CA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BC96E218F3BBE3006063CA /* UIKit.framework */; };
@@ -200,6 +201,8 @@
 		65B32836192A1CF500336CBD /* clock30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clock30x30.png; sourceTree = "<group>"; };
 		65B32838192A1CFF00336CBD /* home30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home30x30.png; sourceTree = "<group>"; };
 		65B3283A192A218100336CBD /* phone30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = phone30x30.png; sourceTree = "<group>"; };
+		65B3283C192B058500336CBD /* TGLOListsModalMyProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOListsModalMyProfileViewController.h; sourceTree = "<group>"; };
+		65B3283D192B058500336CBD /* TGLOListsModalMyProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOListsModalMyProfileViewController.m; sourceTree = "<group>"; };
 		65BC96DB18F3BBE3006063CA /* Vic Greens.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Vic Greens.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		65BC96DE18F3BBE3006063CA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65BC96E018F3BBE3006063CA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -413,6 +416,8 @@
 				65D63A30192266F900533C3F /* TGLOEventsModalMyTagsViewController.m */,
 				6526A39A1927267000B7BB1F /* TGLOListsTabBarController.h */,
 				6526A39B1927267000B7BB1F /* TGLOListsTabBarController.m */,
+				65B3283C192B058500336CBD /* TGLOListsModalMyProfileViewController.h */,
+				65B3283D192B058500336CBD /* TGLOListsModalMyProfileViewController.m */,
 			);
 			name = "Vic Greens";
 			path = TheGreensLeadOrganizerApp;
@@ -715,6 +720,7 @@
 				65D63A2E19225FF200533C3F /* TGLOEventsModalSearchViewController.m in Sources */,
 				65BC96ED18F3BBE3006063CA /* main.m in Sources */,
 				65B022F018FD27A50057E741 /* TGLOPersonFromListViewController.m in Sources */,
+				65B3283E192B058500336CBD /* TGLOListsModalMyProfileViewController.m in Sources */,
 				651318DA19050B9F00995995 /* TGLOEditPersonFromListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

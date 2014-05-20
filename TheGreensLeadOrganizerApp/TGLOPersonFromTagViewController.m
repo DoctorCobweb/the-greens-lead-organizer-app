@@ -314,15 +314,6 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     NSInteger mod = tagCount % 3;
     tagCount++;
     
-    //NSLog(@"mod: %d", mod);
-    //NSLog(@"lastViewFrame: %@", NSStringFromCGRect(lastViewFrame));
-    
-    //get dimensions of the lower left corner of
-    //last subview of containerView
-    //CGFloat lastViewYLocation = CGRectGetMaxY(lastViewFrame);
-    //CGFloat lastViewXLocation = CGRectGetMinX(lastViewFrame);
-    
-    
     if (mod == 0) {
         //NSLog(@"mod == 0");
         rowNumber++;

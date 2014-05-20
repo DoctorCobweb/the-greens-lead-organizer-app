@@ -18,6 +18,8 @@
 //4. the UIButton for Support Level has tag = 40. set in storyboard.
 //5. the UIButton for RSVP to an event has tag = 41. set in storybrd.
 //6. the RSVP lable above RSVP UIButton has tag = 42. set in storybrd.
+//7. the LIST lable above LIST UIButton has tag = 43. set in storybrd.
+//5. the UIButton for add to LIST  has tag = 44. set in storybrd.
 
 
 #import "TGLOEditMyProfileViewController.h"
@@ -30,11 +32,13 @@
 #import "TGLOAppDelegate.h"
 #import "TGLOUtils.h"
 #import "TGLOEventsModalMyProfileViewController.h"
+#import "TGLOListsModalMyProfileViewController.h"
 
 static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=10&access_token=%@";
 static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people/%@?access_token=%@";
 static NSString * postRsvpUrl = @"https://%@.nationbuilder.com/api/v1/sites/%@/pages/events/%@/rsvps?access_token=%@";
 static NSString * putRsvpUrl = @"https://%@.nationbuilder.com/api/v1/sites/%@/pages/events/%@/rsvps/%@?access_token=%@";
+static NSString *postListUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/listings?access_token=%@";
 
 
 
@@ -86,6 +90,9 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     //used to determine if user has signified they want to
     //add a new RSVP to  save
     self.sendInRSVP = NO;
+    
+    //used to determin if user wants to add to the person to the list
+    self.sendInAddToList = NO;
     
 	// Do any additional setup after loading the view.
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
@@ -346,27 +353,13 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 // utility method for construct different types of views
 - (id) fabricateANewView:(NSString *)viewType width:(CGFloat)viewWidth height:(CGFloat)viewHeight spacing: (CGFloat)viewSpacing
 {
-    
-    //NSLog(@"self.containerView frame: %@",NSStringFromCGRect([self.containerView frame]));
-    
-    //CGRect containerFrame = [self.containerView frame];
-    //CGFloat containerHeight = CGRectGetHeight(containerFrame);
-    //CGFloat containerWidth = CGRectGetWidth(containerFrame);
-    
-    //NSLog(@"containerFrame height: %f", containerHeight);
-    //NSLog(@"containerFrame width: %f", containerWidth);
-    
-    
     NSArray *containerSubviews = [self.containerView subviews];
-    
     CGRect lastViewFrame = ((UILabel *)[containerSubviews lastObject]).frame;
-    //NSLog(@"lastViewFrame: %@", NSStringFromCGRect(lastViewFrame));
     
     //get dimensions of the lower left corner of
     //last subview of containerView
     CGFloat lastViewYLocation = CGRectGetMaxY(lastViewFrame);
     CGFloat lastViewXLocation = CGRectGetMinX(lastViewFrame);
-    //NSLog(@"lastViewYLocation: %f, lastViewXLocation: %f", lastViewYLocation, lastViewXLocation);
     
     //now create a new rect, taking into account
     //location of last subview
@@ -464,6 +457,9 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 - (IBAction)saveChanges:(id)sender {
     NSLog(@"saveChanges button hit");
     NSLog(@"RSVP dic: %@", [self rsvpDetails]);
+    NSLog(@"listDetails dic: %@", [self listDetails]);
+    NSLog(@"self.sendInAddToList: %d", self.sendInAddToList);
+    
     
     [self resignAllFirstResponders];
     
@@ -567,19 +563,13 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         //self.person to use updated details
         //change over to use new person details. careful.
         self.person = updatedPerson;
-        //sanity check:
-        //NSLog(@"self.person.firstName: %@", self.person.firstName);
-        //NSLog(@"oldPersonDetails.firstName: %@", oldPersonDetails.firstName);
-        //NSLog(@"self.person.supportLevel: %@", self.person.supportLevel);
-        //NSLog(@"oldPersonDetails.supportLevel: %@", oldPersonDetails.supportLevel);
-        //NSLog(@"self.person.tags: %@", self.person.tags);
-        //NSLog(@"oldPersonDetails.tags: %@", oldPersonDetails.tags);
-        
         
         //*** CONTROL FLOW ***
         //we should go onto saving a new contact as soon as possible
         //if it has been signalled to be added
         
+        //OLD CONTROL FLOW
+        /*
         if (sendInANewContact) {
             //we will handle saving RSVP in callback
             //of saving new contact
@@ -590,135 +580,28 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
             //we are done with network calls
             [self reRenderUI];
         }
+         */
+        
+        
+        if (sendInANewContact) {
+            //we will handle saving RSVP, Lists in callback
+            //of saving new contact
+            [self saveTheNewContact];
+        } else if (self.sendInRSVP) {
+            [self saveTheRsvp];
+        } else if (self.sendInAddToList) {
+            [self saveToList];
+        } else {
+            [self reRenderUI];
+        }
+        
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
 }
 
 
-- (void)saveTheRsvp
-{
-    NSLog(@"saveTheRsvp");
-    //construct uri
-    //make network call
-    //reset sendInNewRSVP to NO
-    //re render ui
-    
-    NSString *myNBId = [TGLOUtils getUserNationBuilderId];
-    NSDictionary *rsvpBody = [[NSDictionary alloc] init];
-    
-    
-    //need to get notes on the person from a different api, namely
-    // the contacts api
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    //must set request serializer to application/json. otherwise 406
-    //is responded
-    NSString *httpMethod = [self.rsvpDetails valueForKey:@"httpMethod"];
-    NSLog(@"rsvpDetails httpMethod is: %@", httpMethod);
-    
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    
-    if ([httpMethod isEqualToString:@"POST"]) {
-        
-        //post endpoint for making new contact
-        NSString *postRsvpUrl_ = [NSString stringWithFormat:postRsvpUrl, nationBuilderSlugValue, nationBuilderSlugValue, [self.rsvpDetails objectForKey:@"eventId"], token];
-        
-        rsvpBody =
-            @{ @"rsvp": @{
-                  @"person_id":    myNBId,
-                  @"guests_count": [self.rsvpDetails objectForKey:@"guests_count"],
-                  @"private":      @"false",
-                  @"volunteer":    @"false",
-                  @"canceled":     [self.rsvpDetails objectForKey:@"canceled"],
-                  @"attended":     @"false",
-                  @"shift_ids":    @[]
-            }};
-    
-        NSLog(@"POST rsvpBody: %@", rsvpBody);
-        
-        [manager POST:postRsvpUrl_ parameters:rsvpBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@" POST => create new RSVP with response %@",responseObject);
-            NSLog(@"SUCCESSfully added new RSVP.");
-        
-            //remember to reset the sendInANewContact back to false
-            self.sendInRSVP = false;
-        
-            //and we done now
-            [self reRenderUI];
-            
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Error: %@", error);
-        }];
-    } else if([httpMethod isEqualToString:@"PUT"]) {
-        //for now hardcode automatically change guests to 1
-        
-        NSLog(@"PUT rsvp and matchedRsvpId: %@", [self.rsvpDetails objectForKey:@"matchedRsvpId"]);
-        
-        //post endpoint for making new contact
-        NSString *putRsvpUrl_ = [NSString stringWithFormat:putRsvpUrl, nationBuilderSlugValue, nationBuilderSlugValue, [self.rsvpDetails objectForKey:@"eventId"], [self.rsvpDetails objectForKey:@"matchedRsvpId"], token];
-        
-        NSLog(@"guests_count: %@", [self.rsvpDetails objectForKey:@"guests_count"]);
-        
-        rsvpBody =
-            @{ @"rsvp": @{
-                  @"person_id":    myNBId,
-                  @"guests_count": [self.rsvpDetails objectForKey:@"guests_count"],
-                  @"private":      @"false",
-                  @"volunteer":    @"false",
-                  @"canceled":     [self.rsvpDetails objectForKey:@"canceled"],
-                  @"attended":     @"false",
-                  @"shift_ids":    @[]
-            }};
-        
-        NSLog(@"PUT rsvpBody: %@", rsvpBody);
-    
-        [manager PUT:putRsvpUrl_ parameters:rsvpBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@" PUT => updating RSVP with response %@",responseObject);
-            NSLog(@"SUCCESSfully updated RSVP.");
-        
-            //remember to reset the sendInANewContact back to false
-            self.sendInRSVP = false;
-        
-            //and we done now
-            [self reRenderUI];
-            
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Error: %@", error);
-        }];
-    } else {
-        //we're in the gutter.
-        return;
-    }
-    
-}
-
-
-- (void)parseTagString:(NSMutableDictionary *)tagsToKeep
-{
-    NSString *addNewTagString = self.addANewTag.text;
-    NSString *trimmedNewTagString = [addNewTagString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet ]];
-    
-    
-    NSArray *parsedTags = [trimmedNewTagString componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@","]];
-    
-    int no_of_parsed_tags = [parsedTags count];
-    for (int j = 0; j < no_of_parsed_tags; j++) {
-        if ([parsedTags[j] isEqualToString:@""]) {
-            //if there is an empty tag, skip over it
-            continue;
-        }
-        //trim further whitespace for each element
-        NSString *temp = [parsedTags[j] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-        
-        //now add this trimmed string tag to the tagsToKeep dic
-        [tagsToKeep setObject:@"1" forKey:temp];
-    }
-    //NSLog(@"addNewTagString: %@", addNewTagString);
-    //NSLog(@"trimmedNetTagString: %@", trimmedNewTagString);
-    //NSLog(@"parsedTags: %@", parsedTags);
-    //NSLog(@"tagsToKeep: %@", tagsToKeep);
-}
 
 - (void) saveTheNewContact
 {
@@ -778,15 +661,207 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         sendInANewContact = false;
         
         // *** CONTROL FLOW ***
+        
+        //OLD CONTROLE FLOW
+        /*
         if (self.sendInRSVP) {
             [self saveTheRsvp];
         } else {
             [self reRenderUI];
         }
+         */
+        
+        if (self.sendInRSVP) {
+            [self saveTheRsvp];
+        } else if(self.sendInAddToList) {
+            [self saveToList];
+        } else {
+            [self reRenderUI];
+        }
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
 }
+
+
+
+- (void)saveTheRsvp
+{
+    NSLog(@"saveTheRsvp");
+    //construct uri
+    //make network call
+    //reset sendInNewRSVP to NO
+    //re render ui
+    
+    NSString *myNBId = [TGLOUtils getUserNationBuilderId];
+    NSDictionary *rsvpBody = [[NSDictionary alloc] init];
+    
+    
+    //need to get notes on the person from a different api, namely
+    // the contacts api
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    //must set request serializer to application/json. otherwise 406
+    //is responded
+    NSString *httpMethod = [self.rsvpDetails valueForKey:@"httpMethod"];
+    NSLog(@"rsvpDetails httpMethod is: %@", httpMethod);
+    
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    
+    if ([httpMethod isEqualToString:@"POST"]) {
+        
+        //post endpoint for making new contact
+        NSString *postRsvpUrl_ = [NSString stringWithFormat:postRsvpUrl, nationBuilderSlugValue, nationBuilderSlugValue, [self.rsvpDetails objectForKey:@"eventId"], token];
+        
+        rsvpBody =
+            @{ @"rsvp": @{
+                  @"person_id":    myNBId,
+                  @"guests_count": [self.rsvpDetails objectForKey:@"guests_count"],
+                  @"private":      @"false",
+                  @"volunteer":    @"false",
+                  @"canceled":     [self.rsvpDetails objectForKey:@"canceled"],
+                  @"attended":     @"false",
+                  @"shift_ids":    @[]
+            }};
+    
+        NSLog(@"POST rsvpBody: %@", rsvpBody);
+        
+        [manager POST:postRsvpUrl_ parameters:rsvpBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@" POST => create new RSVP with response %@",responseObject);
+            NSLog(@"SUCCESSfully added new RSVP.");
+        
+            //remember to reset the sendInANewContact back to false
+            self.sendInRSVP = false;
+        
+            // *** CONTROLE FLOW ***
+            // OLD CONTROL FLOW
+            //[self reRenderUI];
+            
+            if (self.sendInAddToList) {
+                [self saveToList];
+            } else {
+                [self reRenderUI];
+            }
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Error: %@", error);
+        }];
+    } else if([httpMethod isEqualToString:@"PUT"]) {
+        //for now hardcode automatically change guests to 1
+        
+        NSLog(@"PUT rsvp and matchedRsvpId: %@", [self.rsvpDetails objectForKey:@"matchedRsvpId"]);
+        
+        //post endpoint for making new contact
+        NSString *putRsvpUrl_ = [NSString stringWithFormat:putRsvpUrl, nationBuilderSlugValue, nationBuilderSlugValue, [self.rsvpDetails objectForKey:@"eventId"], [self.rsvpDetails objectForKey:@"matchedRsvpId"], token];
+        
+        NSLog(@"guests_count: %@", [self.rsvpDetails objectForKey:@"guests_count"]);
+        
+        rsvpBody =
+            @{ @"rsvp": @{
+                  @"person_id":    myNBId,
+                  @"guests_count": [self.rsvpDetails objectForKey:@"guests_count"],
+                  @"private":      @"false",
+                  @"volunteer":    @"false",
+                  @"canceled":     [self.rsvpDetails objectForKey:@"canceled"],
+                  @"attended":     @"false",
+                  @"shift_ids":    @[]
+            }};
+        
+        NSLog(@"PUT rsvpBody: %@", rsvpBody);
+    
+        [manager PUT:putRsvpUrl_ parameters:rsvpBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@" PUT => updating RSVP with response %@",responseObject);
+            NSLog(@"SUCCESSfully updated RSVP.");
+        
+            //remember to reset the sendInANewContact back to false
+            self.sendInRSVP = false;
+        
+            // *** CONTROLE FLOW ***
+            // OLD CONTROL FLOW
+            //[self reRenderUI];
+            
+            if (self.sendInAddToList) {
+                [self saveToList];
+            } else {
+                [self reRenderUI];
+            }
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Error: %@", error);
+        }];
+    } else {
+        //we're in the gutter.
+        return;
+    }
+    
+}
+
+
+- (void)saveToList
+{
+    NSLog(@"saveToList");
+    NSString *myNBId = [TGLOUtils getUserNationBuilderId];
+    NSDictionary *listBody = [[NSDictionary alloc] init];
+    
+    //static NSString *postListUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/listings?access_token=%@";
+    
+    //post endpoint for making new contact
+    NSString *postListUrl_ = [NSString stringWithFormat:postListUrl, nationBuilderSlugValue, [self.listDetails valueForKey:@"id"], token];
+    
+    listBody =
+    @{ @"listing": @{@"person_id":  myNBId}};
+    NSLog(@"POST listBody: %@", listBody);
+    
+    
+    //need to get notes on the person from a different api, namely
+    // the contacts api
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    
+    [manager POST:postListUrl_ parameters:listBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@" POST => added person to LIST with response %@",responseObject);
+        NSLog(@"SUCCESSfully added person to list.");
+        
+        //remember to reset the sendInANewContact back to false
+        self.sendInAddToList = false;
+        
+        // *** CONTROL FLOW ***
+        //and FINALLY we done
+        [self reRenderUI];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+
+- (void)parseTagString:(NSMutableDictionary *)tagsToKeep
+{
+    NSString *addNewTagString = self.addANewTag.text;
+    NSString *trimmedNewTagString = [addNewTagString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet ]];
+    
+    
+    NSArray *parsedTags = [trimmedNewTagString componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@","]];
+    
+    int no_of_parsed_tags = [parsedTags count];
+    for (int j = 0; j < no_of_parsed_tags; j++) {
+        if ([parsedTags[j] isEqualToString:@""]) {
+            //if there is an empty tag, skip over it
+            continue;
+        }
+        //trim further whitespace for each element
+        NSString *temp = [parsedTags[j] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        
+        //now add this trimmed string tag to the tagsToKeep dic
+        [tagsToKeep setObject:@"1" forKey:temp];
+    }
+    //NSLog(@"addNewTagString: %@", addNewTagString);
+    //NSLog(@"trimmedNetTagString: %@", trimmedNewTagString);
+    //NSLog(@"parsedTags: %@", parsedTags);
+    //NSLog(@"tagsToKeep: %@", tagsToKeep);
+}
+
 
 - (void)displaySuccessAlert
 {
@@ -1072,6 +1147,27 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     //finally, present the events model VC
     [self presentViewController:navigationController animated:YES completion: nil];
 }
+
+
+- (IBAction)chooseListToAddTo:(id)sender
+{
+    NSLog(@"chooseListToAddTo button clicked");
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    TGLOListsModalMyProfileViewController *listsViewController = [storyboard instantiateViewControllerWithIdentifier:@"listsModalMyProfileVC"];
+    
+    listsViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+    listsViewController.delegate = self;
     
     
+    UINavigationController *navigationController =
+    [[UINavigationController alloc]
+     initWithRootViewController:listsViewController];
+    [navigationController navigationBar].topItem.title = @"Lists";
+    
+    //finally, present the events model VC
+    [self presentViewController:navigationController animated:YES completion: nil];
+
+
+}
+
 @end
