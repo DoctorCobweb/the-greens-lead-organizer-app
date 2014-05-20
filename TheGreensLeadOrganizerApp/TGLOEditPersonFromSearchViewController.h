@@ -26,7 +26,9 @@
 @property (strong ,nonatomic) TGLOPerson *person;
 @property (strong, nonatomic) NSMutableArray *contacts;
 @property (strong, nonatomic) NSMutableDictionary *rsvpDetails;
+@property (strong, nonatomic) NSMutableDictionary *listDetails;
 @property BOOL sendInRSVP;
+@property BOOL sendInAddToList;
 
 @property (nonatomic, weak) id<TGLOUpdatePersonDelegate>delegate;
 
@@ -60,5 +62,9 @@
 
 - (IBAction)chooseEventToRsvp:(id)sender;
 - (void)saveTheRsvp;
+
+- (void)saveToList;
+
+- (IBAction)chooseListToAddTo:(id)sender;
 
 @end

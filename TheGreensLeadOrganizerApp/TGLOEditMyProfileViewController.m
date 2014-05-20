@@ -19,7 +19,7 @@
 //5. the UIButton for RSVP to an event has tag = 41. set in storybrd.
 //6. the RSVP lable above RSVP UIButton has tag = 42. set in storybrd.
 //7. the LIST lable above LIST UIButton has tag = 43. set in storybrd.
-//5. the UIButton for add to LIST  has tag = 44. set in storybrd.
+//8. the UIButton for add to LIST  has tag = 44. set in storybrd.
 
 
 #import "TGLOEditMyProfileViewController.h"
@@ -804,7 +804,6 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     NSString *myNBId = [TGLOUtils getUserNationBuilderId];
     NSDictionary *listBody = [[NSDictionary alloc] init];
     
-    //static NSString *postListUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/listings?access_token=%@";
     
     //post endpoint for making new contact
     NSString *postListUrl_ = [NSString stringWithFormat:postListUrl, nationBuilderSlugValue, [self.listDetails valueForKey:@"id"], token];
