@@ -164,6 +164,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     
     UILabel *newLabel = (UILabel *)[self fabricateANewView:@"UILabel" width:labelWidth height:labelHeight spacing:labelSpacing];
     
+    #warning TODO: better newLable.text string literal
     newLabel.text = @"RSVPS                                              Attended";
     newLabel.font = [UIFont boldSystemFontOfSize:13];
     
@@ -219,7 +220,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
                 
                 
                 if ([personIdFromRsvp isEqualToString:personIdFromTranslation]) {
-                    NSLog(@"found match to personIds");
+                    //NSLog(@"found match to personIds");
                     
                     //add first, last names to that specific rsvp
                     NSString *fullName = [obj valueForKey:@"fullName"];

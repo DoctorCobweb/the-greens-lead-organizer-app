@@ -152,7 +152,6 @@ static NSString *searchUrl = @"https://%@.nationbuilder.com/api/v1/people/search
     //first we must construct the searchUrl to
     //pass to next view controller
     NSString *searchUrl_ = [self makeSearchUrl];
-    NSLog(@"searchUrl_: %@", searchUrl_);
     
     if ([segue.identifier isEqualToString:@"showSearchResults"]) {
         
