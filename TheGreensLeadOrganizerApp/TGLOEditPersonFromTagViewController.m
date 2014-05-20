@@ -115,10 +115,6 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 {
     self.title = @"Edit Person";
     
-    //UIColor * whiteColor = [UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:1.0f];
-    UIColor * blackColor = [UIColor colorWithRed:0/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f];
-    
-    
     //set an initial scroll view size
     self.scrollView.contentSize =CGSizeMake(320, 750);
     
@@ -135,7 +131,8 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         self.firstName.text = self.person.firstName;
         self.lastName.text = self.person.lastName;
         [self.supportLevel setTitle:[TGLOPerson formattedSupportLevel:self.person.supportLevel] forState:UIControlStateNormal];
-        [self.supportLevel setTitleColor:blackColor forState:UIControlStateNormal];
+        [self.supportLevel setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        self.supportLevel.titleLabel.font = [UIFont systemFontOfSize:18];
         self.email.text = self.person.email;
         self.phone.text = self.person.phone;
         self.mobile.text = self.person.mobile;

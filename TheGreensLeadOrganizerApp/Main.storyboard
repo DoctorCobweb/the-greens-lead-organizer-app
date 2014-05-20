@@ -604,7 +604,7 @@
             </objects>
             <point key="canvasLocation" x="2174" y="1453"/>
         </scene>
-        <!--Event Details View Controller-->
+        <!--Event Details View Controller - Event Details-->
         <scene sceneID="TOf-gv-VdN">
             <objects>
                 <viewController id="LT9-Ll-tUF" customClass="TGLOEventDetailsViewController" sceneMemberID="viewController">
@@ -691,7 +691,7 @@
                             </view>
                         </subviews>
                     </scrollView>
-                    <navigationItem key="navigationItem" id="oa5-s0-VgE"/>
+                    <navigationItem key="navigationItem" title="Event Details" id="oa5-s0-VgE"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="contactLabel" destination="yq6-fr-qi2" id="ER0-jE-8Is"/>
@@ -2898,6 +2898,16 @@
                                 <rect key="frame" x="0.0" y="106" width="320" height="462"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="listsCell" id="BFP-Hl-e2D">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BFP-Hl-e2D" id="UZU-xd-mtD">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="VxW-mF-qZx" id="I51-fJ-N9f"/>
                                     <outlet property="delegate" destination="VxW-mF-qZx" id="ec1-p7-WTZ"/>
