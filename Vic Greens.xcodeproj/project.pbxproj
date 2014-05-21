@@ -65,6 +65,7 @@
 		65B32841192B3AEE00336CBD /* TGLOListsModalListsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B32840192B3AEE00336CBD /* TGLOListsModalListsViewController.m */; };
 		65B32844192B449C00336CBD /* TGLOListsModalTagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B32843192B449C00336CBD /* TGLOListsModalTagsViewController.m */; };
 		65B32847192B52E300336CBD /* TGLOListsModalSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B32846192B52E300336CBD /* TGLOListsModalSearchViewController.m */; };
+		65B3284A192C527300336CBD /* TGLOCustomContactSmallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B32849192C527300336CBD /* TGLOCustomContactSmallView.m */; };
 		65BC96DF18F3BBE3006063CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BC96DE18F3BBE3006063CA /* Foundation.framework */; };
 		65BC96E118F3BBE3006063CA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BC96E018F3BBE3006063CA /* CoreGraphics.framework */; };
 		65BC96E318F3BBE3006063CA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BC96E218F3BBE3006063CA /* UIKit.framework */; };
@@ -212,6 +213,8 @@
 		65B32843192B449C00336CBD /* TGLOListsModalTagsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOListsModalTagsViewController.m; sourceTree = "<group>"; };
 		65B32845192B52E300336CBD /* TGLOListsModalSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOListsModalSearchViewController.h; sourceTree = "<group>"; };
 		65B32846192B52E300336CBD /* TGLOListsModalSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOListsModalSearchViewController.m; sourceTree = "<group>"; };
+		65B32848192C527300336CBD /* TGLOCustomContactSmallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOCustomContactSmallView.h; sourceTree = "<group>"; };
+		65B32849192C527300336CBD /* TGLOCustomContactSmallView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOCustomContactSmallView.m; sourceTree = "<group>"; };
 		65BC96DB18F3BBE3006063CA /* Vic Greens.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Vic Greens.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		65BC96DE18F3BBE3006063CA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65BC96E018F3BBE3006063CA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -308,6 +311,8 @@
 				651318C918FFA40C00995995 /* TGLOCustomEditContactHeaderView.m */,
 				6526A38B1924FCE900B7BB1F /* TGLOCustomRsvpView.h */,
 				6526A38C1924FCE900B7BB1F /* TGLOCustomRsvpView.m */,
+				65B32848192C527300336CBD /* TGLOCustomContactSmallView.h */,
+				65B32849192C527300336CBD /* TGLOCustomContactSmallView.m */,
 			);
 			name = CustomViews;
 			sourceTree = "<group>";
@@ -717,6 +722,7 @@
 				65B32847192B52E300336CBD /* TGLOListsModalSearchViewController.m in Sources */,
 				655572A218FAAF3B00FA4297 /* TGLOMyListsViewController.m in Sources */,
 				655572B418FBD5AD00FA4297 /* TGLOCustomContactView.m in Sources */,
+				65B3284A192C527300336CBD /* TGLOCustomContactSmallView.m in Sources */,
 				65BC96F118F3BBE3006063CA /* TGLOAppDelegate.m in Sources */,
 				651626D418F4FEDF00DCC064 /* TGLODonationsViewController.m in Sources */,
 				65D63A31192266F900533C3F /* TGLOEventsModalMyTagsViewController.m in Sources */,

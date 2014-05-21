@@ -11,6 +11,7 @@
 #import "AFNetworking.h"
 #import "TGLOAppDelegate.h"
 #import "TGLOCustomContactView.h"
+#import "TGLOCustomContactSmallView.h"
 #import "TGLOEditMyProfileViewController.h"
 #import "TGLOUtils.h"
 
@@ -283,53 +284,126 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     CGFloat labelSpacing = 20; //spacing between the views
     CGFloat makeMoreRoom = 250; //additional room on end of scroll/container view
     CGFloat labelWidth = 280;  //new label width
-    CGFloat labelHeight= 230;   //new label height
+    CGFloat labelHeight= 300;   //new label height
+    
+    NSString *senderIdString = [[NSString alloc] initWithFormat:@"%@", [contacts[index] objectForKey:@"sender_id"]];
+    NSString *recipientIdString = [[NSString alloc] initWithFormat:@"%@", [contacts[index] objectForKey:@"recipient_id"]];
+    NSString *typeString;
+    NSString *methodString;
+    NSString *statusString;
+    NSString *dateString;
+    NSString *noteString;
+    NSString *contactSentenceLabelString;
+    NSString *noteLabelString;
     
     
-    TGLOCustomContactView *customView = (TGLOCustomContactView*)[self fabricateANewView:@"TGLOCustomContactView" width:labelWidth height:labelHeight spacing:labelSpacing];
     
-    customView.clipsToBounds = YES;
-    customView.opaque = NO;
     
     //make sure we dont try to assign null to
     //text property of a view
     //using view.tag to find respective views of
     //TGLOCustomContactView
     NSNull *null = [NSNull null];
+    
     NSNumber *typeValue = [contacts[index] objectForKey:@"type_id"];
     //NSLog(@"typeValue: %@", typeValue);
     if ([contacts[index] objectForKey:@"type_id"] != null) {
-        ((UILabel *)[customView viewWithTag:1]).text = [customView getFormattedTypeValue:[typeValue stringValue]];
+        
+        //((UILabel *)[customView viewWithTag:1]).text = [customView getFormattedTypeValue:[typeValue stringValue]];
+        
+        typeString = [TGLOCustomContactSmallView getFormattedTypeValue:[typeValue stringValue]];
     }
     
     NSString *methodValue = [contacts[index] objectForKey:@"method"];
-    //NSLog(@"methodValue: %@", methodValue);
     if ([contacts[index] objectForKey:@"method"] != null) {
-        ((UILabel *)[customView viewWithTag:2]).text = [customView getFormattedMethodValue:methodValue];
+        
+        methodString = [TGLOCustomContactSmallView getFormattedMethodValue:methodValue];
     }
     
     NSString *statusValue = [contacts[index] objectForKey:@"status"];
-    //NSLog(@"statusValue: %@", statusValue);
     if ([contacts[index] objectForKey:@"status"] != null) {
-        ((UILabel *)[customView viewWithTag:3]).text = [customView getFormattedStatusesValue:statusValue];
+        
+        statusString = [TGLOCustomContactSmallView getFormattedStatusesValue:statusValue];
     }
     
     NSString *noteValue = [contacts[index] objectForKey:@"note"];
-    //NSLog(@"noteValue: %@", noteValue);
     if ([contacts[index] objectForKey:@"note"] != null) {
-        ((UITextView *)[customView viewWithTag:4]).text =noteValue;
+        
+        noteString =[contacts[index] objectForKey:@"note"];
     }
     
     NSString *dateValue = [contacts[index] objectForKey:@"created_at"];
     if ([contacts[index] objectForKey:@""] != null) {
         
-        NSString *dateString = [TGLOUtils formattedDateStringFromDate:[TGLOUtils formattedDateFromString:dateValue]];
+        dateString = [TGLOUtils formattedDateStringFromDate:[TGLOUtils formattedDateFromString:dateValue]];
         
-        ((UILabel *)[customView viewWithTag:5]).text = dateString;
     }
     
     
-    [self updateScrollAndContainerViewSize:makeMoreRoom];
+    contactSentenceLabelString = [[NSString alloc] initWithFormat:@"%@ contacted %@ for  %@ via %@. Status is: %@.", senderIdString, recipientIdString, typeString, methodString, statusString];
+    noteLabelString = noteString;
+    
+    //NSLog(@"contaceSentenceLabelString: %@", contactSentenceLabelString);
+    //NSLog(@"noteLabelString %@", noteLabelString);
+    
+    
+    
+    
+    NSAttributedString *noteAttributedString = [[NSAttributedString alloc] initWithString:noteLabelString];
+    NSAttributedString *contactSentenceAttributedString = [[NSAttributedString alloc] initWithString:contactSentenceLabelString];
+    
+    CGRect noteParagraphRect = [noteAttributedString boundingRectWithSize:CGSizeMake(280.f, CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) context:nil];
+    CGRect contactSentenceParagraphRect = [contactSentenceAttributedString boundingRectWithSize:CGSizeMake(280.f, CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) context:nil];
+    
+    
+    //NSLog(@"contactSentenceParagraphRect: %@", NSStringFromCGRect(contactSentenceParagraphRect));
+    //NSLog(@"noteParagraphRect: %@", NSStringFromCGRect(noteParagraphRect));
+    
+    
+    
+    CGFloat customHeight = ceil(contactSentenceParagraphRect.size.height + noteParagraphRect.size.height);
+    
+    
+    TGLOCustomContactSmallView *customView = (TGLOCustomContactSmallView*)[self fabricateANewView:@"TGLOCustomContactSmallView" width:labelWidth height:customHeight spacing:labelSpacing + 50];
+    
+    //customView.clipsToBounds = YES;
+    //customView.opaque = NO;
+    
+    
+    UILabel *contactSentenceLabel = (UILabel *)[customView viewWithTag:1];
+    UILabel *noteLabel = (UILabel *)[customView viewWithTag:2];
+    
+    contactSentenceLabel.frame =  CGRectMake(0, 0, 280, contactSentenceParagraphRect.size.height + 20);
+    noteLabel.frame = CGRectMake(0, contactSentenceParagraphRect.size.height + 25, 280, noteParagraphRect.size.height + 20);
+    
+    /*
+    //adjusts the subviews to use calculated height
+    CGRect newSentenceFrame = contactSentenceLabel.frame;
+    newSentenceFrame.size.height = ceil(contactSentenceParagraphRect.size.height);
+    //contactSentenceLabel.frame = newSentenceFrame;
+    
+    CGRect newNoteFrame = noteLabel.frame;
+    newNoteFrame.size.height = ceil(noteParagraphRect.size.height );
+    noteLabel.frame = newNoteFrame;
+     */
+    
+    
+    //now do the same for the parent custom view
+    //CGFloat customHeight = ceil(contactSentenceParagraphRect.size.height + noteParagraphRect.size.height);
+    
+    
+    //CGRect customFrame = customView.frame;
+    //customFrame.size.height = customHeight;
+    //customView.frame = customFrame;
+    
+    
+    //NSLog(@"customView.frame: %@",NSStringFromCGRect(customView.frame));
+    
+    contactSentenceLabel.attributedText = contactSentenceAttributedString;
+    noteLabel.attributedText = noteAttributedString;
+    
+    //[self updateScrollAndContainerViewSize:makeMoreRoom];
+    [self updateScrollAndContainerViewSize:customHeight + 90];
     
     //finally add the new custom contact view
     [self.containerView addSubview:customView];
@@ -402,6 +476,11 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
         return [[UITextField alloc] initWithFrame:viewRect];
     } else if ([viewType isEqualToString:@"TGLOCustomContactView"]) {
         return [[TGLOCustomContactView alloc] initWithFrame:viewRect];
+    } else if([viewType isEqualToString:@"TGLOCustomContactSmallView"]) {
+        
+        
+        return [[TGLOCustomContactSmallView alloc] initWithFrame:viewRect];
+        //return [[TGLOCustomContactSmallView alloc] init];
     } else {
         return @"ERROR";
     }
