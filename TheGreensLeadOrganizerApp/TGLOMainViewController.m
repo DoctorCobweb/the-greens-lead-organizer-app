@@ -284,9 +284,6 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     CGFloat labelSpacing = 15; //spacing between the views
     CGFloat labelWidth = 280;  //new label width
     
-    //CGFloat makeMoreRoom = 250; //additional room on end of scroll/container view
-    //CGFloat labelHeight= 300;   //new label height
-    
     NSString *senderIdString = [[NSString alloc] initWithFormat:@"%@", [contacts[index] objectForKey:@"sender_id"]];
     
     NSString *recipientIdString = [[NSString alloc] initWithFormat:@"%@", [contacts[index] objectForKey:@"recipient_id"]];
@@ -305,14 +302,11 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     //make sure we dont try to assign null to
     //text property of a view
     //using view.tag to find respective views of
-    //TGLOCustomContactView
     NSNull *null = [NSNull null];
     
     NSNumber *typeValue = [contacts[index] objectForKey:@"type_id"];
-    //NSLog(@"typeValue: %@", typeValue);
     if ([contacts[index] objectForKey:@"type_id"] != null) {
         
-        //((UILabel *)[customView viewWithTag:1]).text = [customView getFormattedTypeValue:[typeValue stringValue]];
         
         typeString = [TGLOCustomContactSmallView getFormattedTypeValue:[typeValue stringValue]];
     }
@@ -459,13 +453,8 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
         return [[UILabel alloc] initWithFrame:viewRect];
     } else if ([viewType isEqualToString:@"UITextField"]) {
         return [[UITextField alloc] initWithFrame:viewRect];
-    } else if ([viewType isEqualToString:@"TGLOCustomContactView"]) {
-        return [[TGLOCustomContactView alloc] initWithFrame:viewRect];
     } else if([viewType isEqualToString:@"TGLOCustomContactSmallView"]) {
-        
-        
         return [[TGLOCustomContactSmallView alloc] initWithFrame:viewRect];
-        //return [[TGLOCustomContactSmallView alloc] init];
     } else {
         return @"ERROR";
     }
