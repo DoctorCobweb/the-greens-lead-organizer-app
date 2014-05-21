@@ -344,11 +344,27 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     UILabel *dateLabel = (UILabel *)[customView viewWithTag:2];
     UILabel *noteLabel = (UILabel *)[customView viewWithTag:3];
     
-    contactSentenceLabel.frame =  CGRectMake(0, 0, 280, contactSentenceParagraphRect.size.height + 20);
+    CGFloat padding = 15;
+    CGFloat contactWidth = 280;
     
-    dateLabel.frame = CGRectMake(0, contactSentenceParagraphRect.size.height + 20, 280, dateParagraphRect.size.height + 5);
+    contactSentenceLabel.frame =
+    CGRectMake(0,
+               0,
+               contactWidth,
+               contactSentenceParagraphRect.size.height + padding);
     
-    noteLabel.frame = CGRectMake(0, dateParagraphRect.size.height + contactSentenceParagraphRect.size.height + 25, 280, noteParagraphRect.size.height + 35);
+    dateLabel.frame =
+    CGRectMake(0,
+               contactSentenceParagraphRect.size.height + padding,
+               contactWidth,
+               dateParagraphRect.size.height + padding);
+    
+    noteLabel.frame =
+    CGRectMake(0,
+               dateParagraphRect.size.height + contactSentenceParagraphRect.size.height + (2 * padding),
+               contactWidth,
+               noteParagraphRect.size.height + 35);
+    
     
     
     

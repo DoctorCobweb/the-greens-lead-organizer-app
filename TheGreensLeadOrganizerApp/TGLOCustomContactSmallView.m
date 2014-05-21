@@ -99,7 +99,7 @@ static NSDictionary *contactStatuses;
         
         
         contactSentence.font = [UIFont systemFontOfSize:14];
-        date.font = [UIFont systemFontOfSize:14];
+        date.font = [UIFont systemFontOfSize:12];
         note.font = [UIFont systemFontOfSize:14];
         
         
@@ -118,10 +118,12 @@ static NSDictionary *contactStatuses;
         self.backgroundColor = [UIColor whiteColor];
         contactSentence.backgroundColor = dateColor;
         date.backgroundColor = sentenceColor;
-        note.backgroundColor = [UIColor colorWithWhite:0.923 alpha:1.000];
+        note.backgroundColor = [UIColor colorWithWhite:0.894 alpha:1.000];
         
         
         contactSentence.textColor = [UIColor whiteColor];
+        date.textColor = [UIColor colorWithWhite:0.215 alpha:1.000];
+        note.textColor = [UIColor colorWithWhite:0.215 alpha:1.000];
         
         [self addSubview:contactSentence];
         [self addSubview:date];
