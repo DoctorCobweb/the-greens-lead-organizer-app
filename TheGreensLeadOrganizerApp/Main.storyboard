@@ -2277,42 +2277,6 @@
             </objects>
             <point key="canvasLocation" x="-110" y="-474"/>
         </scene>
-        <!--Login View Controller-->
-        <scene sceneID="hSk-yd-bv6">
-            <objects>
-                <viewController storyboardIdentifier="login" id="g6R-Wb-KAo" customClass="TGLOLoginViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="SMg-9H-7FA">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="zVX-l5-2Vr">
-                                <rect key="frame" x="88" y="343" width="144" height="43"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.50588235294117645" green="0.75686274509803919" blue="0.3411764705882353" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                <state key="normal" title="Let's Go">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="signIn:" destination="g6R-Wb-KAo" eventType="touchUpInside" id="Req-MW-I0n"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="agZ-aa-OcW">
-                                <rect key="frame" x="20" y="121" width="280" height="164"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <string key="text">Nation Builder requires you to authorize this app to use your Nation Builder account. Press the button below to be taken to Nation Builder's authorization page.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="5pj-9b-mx6" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-110" y="-1217"/>
-        </scene>
         <!--Logout View Controller-->
         <scene sceneID="DFA-1A-iEB">
             <objects>

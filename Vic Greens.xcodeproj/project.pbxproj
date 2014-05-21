@@ -82,7 +82,6 @@
 		65BC970818F3BBE3006063CA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65BC970618F3BBE3006063CA /* InfoPlist.strings */; };
 		65BC970A18F3BBE3006063CA /* TheGreensLeadOrganizerAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 65BC970918F3BBE3006063CA /* TheGreensLeadOrganizerAppTests.m */; };
 		65BC971918F3C54B006063CA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65BC971818F3C54B006063CA /* Main.storyboard */; };
-		65BC971C18F3C611006063CA /* TGLOLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65BC971B18F3C611006063CA /* TGLOLoginViewController.m */; };
 		65BC971F18F3CDA8006063CA /* TGLOSideBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65BC971E18F3CDA8006063CA /* TGLOSideBarViewController.m */; };
 		65BC972218F3CE52006063CA /* TGLOMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65BC972118F3CE52006063CA /* TGLOMainViewController.m */; };
 		65BC975218F3D144006063CA /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65BC974318F3D144006063CA /* Default-568h@2x.png */; };
@@ -92,7 +91,6 @@
 		65BC975718F3D144006063CA /* menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65BC974818F3D144006063CA /* menu@2x.png */; };
 		65BC975818F3D144006063CA /* nav_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 65BC974918F3D144006063CA /* nav_bg.png */; };
 		65BC976118F3DCE6006063CA /* NationBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 65BC976018F3DCE6006063CA /* NationBuilder.m */; };
-		65BC976418F3DCF2006063CA /* OAuthLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65BC976318F3DCF2006063CA /* OAuthLoginViewController.m */; };
 		65D63A28192244D400533C3F /* TGLOEventsModalMyProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65D63A27192244D400533C3F /* TGLOEventsModalMyProfileViewController.m */; };
 		65D63A2B19224D4900533C3F /* TGLOEventsModalMyListsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65D63A2A19224D4900533C3F /* TGLOEventsModalMyListsViewController.m */; };
 		65D63A2E19225FF200533C3F /* TGLOEventsModalSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65D63A2D19225FF200533C3F /* TGLOEventsModalSearchViewController.m */; };
@@ -234,8 +232,6 @@
 		65BC970718F3BBE3006063CA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		65BC970918F3BBE3006063CA /* TheGreensLeadOrganizerAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TheGreensLeadOrganizerAppTests.m; sourceTree = "<group>"; };
 		65BC971818F3C54B006063CA /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		65BC971A18F3C611006063CA /* TGLOLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOLoginViewController.h; sourceTree = "<group>"; };
-		65BC971B18F3C611006063CA /* TGLOLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOLoginViewController.m; sourceTree = "<group>"; };
 		65BC971D18F3CDA8006063CA /* TGLOSideBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOSideBarViewController.h; sourceTree = "<group>"; };
 		65BC971E18F3CDA8006063CA /* TGLOSideBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOSideBarViewController.m; sourceTree = "<group>"; };
 		65BC972018F3CE52006063CA /* TGLOMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOMainViewController.h; sourceTree = "<group>"; };
@@ -248,8 +244,6 @@
 		65BC974918F3D144006063CA /* nav_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_bg.png; sourceTree = "<group>"; };
 		65BC975F18F3DCE6006063CA /* NationBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NationBuilder.h; sourceTree = "<group>"; };
 		65BC976018F3DCE6006063CA /* NationBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NationBuilder.m; sourceTree = "<group>"; };
-		65BC976218F3DCF2006063CA /* OAuthLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAuthLoginViewController.h; sourceTree = "<group>"; };
-		65BC976318F3DCF2006063CA /* OAuthLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAuthLoginViewController.m; sourceTree = "<group>"; };
 		65D63A26192244D400533C3F /* TGLOEventsModalMyProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOEventsModalMyProfileViewController.h; sourceTree = "<group>"; };
 		65D63A27192244D400533C3F /* TGLOEventsModalMyProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOEventsModalMyProfileViewController.m; sourceTree = "<group>"; };
 		65D63A2919224D4900533C3F /* TGLOEventsModalMyListsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOEventsModalMyListsViewController.h; sourceTree = "<group>"; };
@@ -363,8 +357,6 @@
 				65BC971818F3C54B006063CA /* Main.storyboard */,
 				6561747719090B1900EE712F /* TGLOAccountLoginViewController.h */,
 				6561747819090B1900EE712F /* TGLOAccountLoginViewController.m */,
-				65BC971A18F3C611006063CA /* TGLOLoginViewController.h */,
-				65BC971B18F3C611006063CA /* TGLOLoginViewController.m */,
 				65BC971D18F3CDA8006063CA /* TGLOSideBarViewController.h */,
 				65BC971E18F3CDA8006063CA /* TGLOSideBarViewController.m */,
 				65BC972018F3CE52006063CA /* TGLOMainViewController.h */,
@@ -519,8 +511,6 @@
 		65BC975E18F3DCAA006063CA /* OAuth2 */ = {
 			isa = PBXGroup;
 			children = (
-				65BC976218F3DCF2006063CA /* OAuthLoginViewController.h */,
-				65BC976318F3DCF2006063CA /* OAuthLoginViewController.m */,
 				65BC975F18F3DCE6006063CA /* NationBuilder.h */,
 				65BC976018F3DCE6006063CA /* NationBuilder.m */,
 			);
@@ -734,10 +724,8 @@
 				651626F718F6DB4F00DCC064 /* TGLOSearchResultsViewController.m in Sources */,
 				651318BD18FE48F100995995 /* TGLOEditPersonFromSearchViewController.m in Sources */,
 				651318D7190508E600995995 /* TGLOEditPersonFromTagViewController.m in Sources */,
-				65BC971C18F3C611006063CA /* TGLOLoginViewController.m in Sources */,
 				655572A518FAB34C00FA4297 /* TGLOListViewController.m in Sources */,
 				65D63A28192244D400533C3F /* TGLOEventsModalMyProfileViewController.m in Sources */,
-				65BC976418F3DCF2006063CA /* OAuthLoginViewController.m in Sources */,
 				651626ED18F6253900DCC064 /* TGLOPerson.m in Sources */,
 				651318DD1905136000995995 /* TGLOEditMyProfileViewController.m in Sources */,
 				65D63A2E19225FF200533C3F /* TGLOEventsModalSearchViewController.m in Sources */,
