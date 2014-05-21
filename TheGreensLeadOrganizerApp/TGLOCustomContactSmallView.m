@@ -88,36 +88,44 @@ static NSDictionary *contactStatuses;
         UIColor *sentenceColor = [UIColor colorWithRed:242/255.0f green:178/255.0f blue:210/255.0f alpha:1.0f];
         
         UIColor *backgroundDark = [UIColor colorWithRed:235/255.0f green:230/255.0f blue:235/255.0f alpha:1.0f];;
-        UIColor *backgroundLabel = [UIColor colorWithRed:197/255.0f green:72/255.0f blue:148/255.0f alpha:1.0f];;
+        UIColor *dateColor = [UIColor colorWithRed:197/255.0f green:72/255.0f blue:148/255.0f alpha:1.0f];;
  
         self.frame = frame;
         
         //UILabel *contactSentence = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 280, 60)];
         //UILabel *note = [[UILabel alloc] initWithFrame:CGRectMake(0, 85, 280, 80)];
         UILabel *contactSentence = [[UILabel alloc] init];
+        UILabel *date = [[UILabel alloc] init];
         UILabel *note = [[UILabel alloc] init];
         
         
         contactSentence.font = [UIFont systemFontOfSize:14];
+        date.font = [UIFont systemFontOfSize:14];
         note.font = [UIFont systemFontOfSize:14];
         
         
         //this makes labels use as many lines as needed to fit all the text in
         contactSentence.numberOfLines = 0;
+        date.numberOfLines = 1;
         note.numberOfLines = 0;
         
         contactSentence.lineBreakMode = NSLineBreakByWordWrapping;
         note.lineBreakMode = NSLineBreakByWordWrapping;
         
         contactSentence.tag = 1;
-        note.tag = 2;
+        date.tag = 2;
+        note.tag = 3;
         
-        self.backgroundColor = [UIColor darkGrayColor];
-        contactSentence.backgroundColor = sentenceColor;
-        note.backgroundColor = [UIColor colorWithWhite:0.871 alpha:1.000];
+        self.backgroundColor = [UIColor whiteColor];
+        contactSentence.backgroundColor = dateColor;
+        date.backgroundColor = sentenceColor;
+        note.backgroundColor = [UIColor colorWithWhite:0.923 alpha:1.000];
         
+        
+        contactSentence.textColor = [UIColor whiteColor];
         
         [self addSubview:contactSentence];
+        [self addSubview:date];
         [self addSubview:note];
         
     }

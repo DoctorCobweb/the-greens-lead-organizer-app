@@ -281,7 +281,7 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
 
 - (void)addASingleContact:(int)index
 {
-    CGFloat labelSpacing = 20; //spacing between the views
+    CGFloat labelSpacing = 15; //spacing between the views
     CGFloat makeMoreRoom = 250; //additional room on end of scroll/container view
     CGFloat labelWidth = 280;  //new label width
     CGFloat labelHeight= 300;   //new label height
@@ -343,38 +343,41 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     contactSentenceLabelString = [[NSString alloc] initWithFormat:@"%@ contacted %@ for  %@ via %@. Status is: %@.", senderIdString, recipientIdString, typeString, methodString, statusString];
     noteLabelString = noteString;
     
-    //NSLog(@"contaceSentenceLabelString: %@", contactSentenceLabelString);
-    //NSLog(@"noteLabelString %@", noteLabelString);
-    
     
     
     
     NSAttributedString *noteAttributedString = [[NSAttributedString alloc] initWithString:noteLabelString];
+    
+    NSAttributedString *dateAttributedString = [[NSAttributedString alloc] initWithString:dateString];
+    
     NSAttributedString *contactSentenceAttributedString = [[NSAttributedString alloc] initWithString:contactSentenceLabelString];
     
     CGRect noteParagraphRect = [noteAttributedString boundingRectWithSize:CGSizeMake(280.f, CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) context:nil];
+    
+    
+    CGRect dateParagraphRect = [dateAttributedString boundingRectWithSize:CGSizeMake(280.f, CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) context:nil];
+    
     CGRect contactSentenceParagraphRect = [contactSentenceAttributedString boundingRectWithSize:CGSizeMake(280.f, CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) context:nil];
     
     
-    //NSLog(@"contactSentenceParagraphRect: %@", NSStringFromCGRect(contactSentenceParagraphRect));
-    //NSLog(@"noteParagraphRect: %@", NSStringFromCGRect(noteParagraphRect));
+    CGFloat customHeight = ceil(contactSentenceParagraphRect.size.height + 30 + noteParagraphRect.size.height + dateParagraphRect.size.height + 30);
     
     
-    
-    CGFloat customHeight = ceil(contactSentenceParagraphRect.size.height + noteParagraphRect.size.height);
-    
-    
-    TGLOCustomContactSmallView *customView = (TGLOCustomContactSmallView*)[self fabricateANewView:@"TGLOCustomContactSmallView" width:labelWidth height:customHeight spacing:labelSpacing + 50];
+    TGLOCustomContactSmallView *customView = (TGLOCustomContactSmallView*)[self fabricateANewView:@"TGLOCustomContactSmallView" width:labelWidth height:customHeight spacing:labelSpacing];
     
     //customView.clipsToBounds = YES;
     //customView.opaque = NO;
     
     
     UILabel *contactSentenceLabel = (UILabel *)[customView viewWithTag:1];
-    UILabel *noteLabel = (UILabel *)[customView viewWithTag:2];
+    UILabel *dateLabel = (UILabel *)[customView viewWithTag:2];
+    UILabel *noteLabel = (UILabel *)[customView viewWithTag:3];
     
     contactSentenceLabel.frame =  CGRectMake(0, 0, 280, contactSentenceParagraphRect.size.height + 20);
-    noteLabel.frame = CGRectMake(0, contactSentenceParagraphRect.size.height + 25, 280, noteParagraphRect.size.height + 20);
+    
+    dateLabel.frame = CGRectMake(0, contactSentenceParagraphRect.size.height + 20, 280, dateParagraphRect.size.height + 5);
+    
+    noteLabel.frame = CGRectMake(0, dateParagraphRect.size.height + contactSentenceParagraphRect.size.height + 25, 280, noteParagraphRect.size.height + 35);
     
     /*
     //adjusts the subviews to use calculated height
@@ -400,10 +403,11 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     //NSLog(@"customView.frame: %@",NSStringFromCGRect(customView.frame));
     
     contactSentenceLabel.attributedText = contactSentenceAttributedString;
+    dateLabel.attributedText = dateAttributedString;
     noteLabel.attributedText = noteAttributedString;
     
     //[self updateScrollAndContainerViewSize:makeMoreRoom];
-    [self updateScrollAndContainerViewSize:customHeight + 90];
+    [self updateScrollAndContainerViewSize:customHeight + 10];
     
     //finally add the new custom contact view
     [self.containerView addSubview:customView];
