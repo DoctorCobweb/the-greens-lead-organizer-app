@@ -13,6 +13,9 @@
 #import "TGLOEditPersonFromTagViewController.h"
 #import "TGLOUtils.h"
 
+
+//view with tag = 654 is Tags label. needed when updating UI after person is updated
+
 #warning TODO: handle proper pagination!!!! set to 100 results. eeek.
 static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=100&access_token=%@";
 
@@ -561,9 +564,18 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     //set person to be the newly saved/updated person
     self.person = updatedPerson;
     
+    //reset the parameters used for adding tags at proper locations
+    finalXPos = 20;
+    
+    //find the bottom of the Tags label
+    finalYPos = CGRectGetMaxY(((UILabel *)[self.containerView viewWithTag:654]).frame);
+    tagCount = 0;
+    
+    #warning TODO: find better way to update UI instead of completely nil ing the view
     //rerender all the ui now
     //1. get rid of all subviews
     self.view = nil;
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
