@@ -84,16 +84,15 @@ static NSDictionary *contactStatuses;
                             @"send_information":@"Send information",
                             @"other":@"Other"};
         
-        UIColor *background = [UIColor colorWithRed:235/255.0f green:230/255.0f blue:235/255.0f alpha:1.0f];;
+        
         UIColor *sentenceColor = [UIColor colorWithRed:242/255.0f green:178/255.0f blue:210/255.0f alpha:1.0f];
         
-        UIColor *backgroundDark = [UIColor colorWithRed:235/255.0f green:230/255.0f blue:235/255.0f alpha:1.0f];;
         UIColor *dateColor = [UIColor colorWithRed:197/255.0f green:72/255.0f blue:148/255.0f alpha:1.0f];;
  
+        
         self.frame = frame;
         
-        //UILabel *contactSentence = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 280, 60)];
-        //UILabel *note = [[UILabel alloc] initWithFrame:CGRectMake(0, 85, 280, 80)];
+        
         UILabel *contactSentence = [[UILabel alloc] init];
         UILabel *date = [[UILabel alloc] init];
         UILabel *note = [[UILabel alloc] init];
