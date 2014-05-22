@@ -7,19 +7,19 @@
 //
 
 
+
 //IMPORTANT INFO on tags set for Views
 //
-//1.views with tag = 123 are the tags to_be_removed when save button
-//is hit
+//0.views with tag = 123 are the tags to_be_removed when save button is hit
+//1. view with tag = 50 is the edit/deltel tags ui label
 //2. the edit contact view has tag = 300 which allows us to get at
 //the text input when save button is hit
-//3. the label "Current Tags" has tag = 50. set in storyboard.
 //we need this to rerender add/remove tags in ui after saving
-//4. the UIButton for Support Level has tag = 40. set in storyboard.
-//5. the UIButton for RSVP to an event has tag = 41. set in storybrd.
-//6. the RSVP lable above RSVP UIButton has tag = 42. set in storybrd.
-//7. the LIST lable above LIST UIButton has tag = 43. set in storybrd.
-//8. the UIButton for add to LIST  has tag = 44. set in storybrd.
+//3. the UIButton for Support Level has tag = 40. set in storyboard.
+//4. the UIButton for RSVP to an event has tag = 41. set in storybrd.
+//5. the RSVP lable above RSVP UIButton has tag = 42. set in storybrd.
+//6. the LIST lable above LIST UIButton has tag = 43. set in storybrd.
+//7. the UIButton for add to LIST  has tag = 44. set in storybrd.
 
 
 #import "TGLOEditMyProfileViewController.h"
@@ -99,6 +99,9 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     token = [TGLOUtils getUserAccessToken];
     [self setupTagsToDeleteArray];
     [self setUpAppearance];
+    [self addContactsLabel];
+    [self makeABlankContactView];
+    [self addEditTagsLabel];
     [self addTagViews];
 }
 
@@ -157,6 +160,28 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     
 }
 
+
+- (void)addEditTagsLabel
+{
+    CGFloat labelSpacing = 30; //spacing between the views
+    CGFloat makeMoreRoom = 45; //additional room on end of scroll/container view
+    CGFloat labelWidth = 280;  //new label width
+    CGFloat labelHeight= 35;   //new label height
+    
+    UILabel *newEditTagsLabel = (UILabel*)[self fabricateANewView:@"UILabel" width:labelWidth height:labelHeight spacing:labelSpacing];
+    
+    //setup the switch toggle for logging a new contact
+    newEditTagsLabel.text = @"Delete TAGS";
+    newEditTagsLabel.font = [UIFont boldSystemFontOfSize:13];
+    newEditTagsLabel.tag = 50;
+    
+    [self updateScrollAndContainerViewSize:makeMoreRoom];
+    
+    //finally add the new view as last subview
+    [self.containerView addSubview:newEditTagsLabel];
+}
+
+
 -(void)addTagViews
 {
     NSLog(@"SETTING UP ALL MY TAGS");
@@ -165,8 +190,8 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         [self addASingleTag:tag];
     }
     
-    [self addContactsLabel];
-    [self makeABlankContactView];
+    //[self addContactsLabel];
+    //[self makeABlankContactView];
     //NSLog(@"self subviews: %@", [self.containerView subviews]);
 }
 
@@ -199,7 +224,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 
 - (void)addContactsLabel
 {
-    CGFloat labelSpacing = 10; //spacing between the views
+    CGFloat labelSpacing = 40; //spacing between the views
     CGFloat makeMoreRoom = 45; //additional room on end of scroll/container view
     CGFloat labelWidth = 280;  //new label width
     CGFloat labelHeight= 35;   //new label height
@@ -209,7 +234,8 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     //setup the switch toggle for logging a new contact
     UISwitch *newContactSwitch = (UISwitch *)[newContactHeader viewWithTag:1];
     UILabel *newContactLabel = (UILabel *) [newContactHeader viewWithTag:2];
-    newContactLabel.text = @"Add a contact for yourself";
+    newContactLabel.text = @"Add a CONTACT to yourself";
+    newContactLabel.font = [UIFont boldSystemFontOfSize:13];
     
     
     [newContactSwitch addTarget:self action:@selector(toggleContact:) forControlEvents:UIControlEventTouchUpInside];

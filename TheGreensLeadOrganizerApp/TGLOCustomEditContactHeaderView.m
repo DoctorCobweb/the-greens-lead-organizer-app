@@ -23,7 +23,7 @@
         UILabel *contactLabel =[[UILabel alloc] init];
         contactLabel.frame = CGRectMake(0,0,200, 35);
         
-        contactLabel.text = @"Log a new Contact";
+        contactLabel.text = @"Log a new CONTACT";
         contactLabel.font = [UIFont boldSystemFontOfSize:13];
         
         //setup the switch now

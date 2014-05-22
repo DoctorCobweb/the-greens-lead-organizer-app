@@ -7,11 +7,10 @@
 //
 
 
-
 //IMPORTANT INFO on tags set for Views
 //
-//1.views with tag = 123 are the tags to_be_removed when save button
-//is hit
+//0.views with tag = 123 are the tags to_be_removed when save button is hit
+//1. view with tag = 50 is the edit/deltel tags ui label
 //2. the edit contact view has tag = 300 which allows us to get at
 //the text input when save button is hit
 //3. the label "Current Tags" has tag = 50. set in storyboard.
@@ -97,6 +96,9 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     token = [TGLOUtils getUserAccessToken];
     [self setupTagsToDeleteArray];
     [self setUpAppearance];
+    [self addContactsLabel];
+    [self makeABlankContactView];
+    [self addEditTagsLabel];
     [self addTagViews];
 }
 
@@ -154,6 +156,31 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     
 }
 
+
+
+
+- (void)addEditTagsLabel
+{
+    CGFloat labelSpacing = 30; //spacing between the views
+    CGFloat makeMoreRoom = 45; //additional room on end of scroll/container view
+    CGFloat labelWidth = 280;  //new label width
+    CGFloat labelHeight= 35;   //new label height
+    
+    UILabel *newEditTagsLabel = (UILabel*)[self fabricateANewView:@"UILabel" width:labelWidth height:labelHeight spacing:labelSpacing];
+    
+    //setup the switch toggle for logging a new contact
+    newEditTagsLabel.text = @"Delete TAGS";
+    newEditTagsLabel.font = [UIFont boldSystemFontOfSize:13];
+    newEditTagsLabel.tag = 50;
+    
+    [self updateScrollAndContainerViewSize:makeMoreRoom];
+    
+    //finally add the new view as last subview
+    [self.containerView addSubview:newEditTagsLabel];
+}
+
+
+
 -(void)addTagViews
 {
     NSLog(@"SETTING UP ALL MY TAGS");
@@ -162,8 +189,8 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         [self addASingleTag:tag];
     }
     
-    [self addContactsLabel];
-    [self makeABlankContactView];
+    //[self addContactsLabel];
+    //[self makeABlankContactView];
     //NSLog(@"self subviews: %@", [self.containerView subviews]);
 }
 
@@ -196,7 +223,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 
 - (void)addContactsLabel
 {
-    CGFloat labelSpacing = 10; //spacing between the views
+    CGFloat labelSpacing = 40; //spacing between the views
     CGFloat makeMoreRoom = 45; //additional room on end of scroll/container view
     CGFloat labelWidth = 280;  //new label width
     CGFloat labelHeight= 35;   //new label height

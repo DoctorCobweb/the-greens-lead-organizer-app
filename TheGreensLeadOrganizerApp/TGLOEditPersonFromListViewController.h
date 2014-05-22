@@ -32,6 +32,7 @@
 @property (nonatomic, weak) id<TGLOUpdatePersonDelegate>delegate;
 
 - (void)setUpAppearance;
+- (void)addEditTagsLabel;
 - (void)addTagViews;
 - (void)addASingleTag:(NSString *)tag;
 - (id) fabricateANewView:(NSString *)viewType width:(CGFloat)viewWidth height:(CGFloat)viewHeight spacing: (CGFloat)viewSpacing;
