@@ -906,25 +906,25 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     //reset the field
     self.addANewTag.text = @"";
     
-    UILabel *currentTagsLabel = (UILabel *)[self.containerView viewWithTag:50];
+    UILabel *deleteTagsLabel = (UILabel *)[self.containerView viewWithTag:50];
     NSArray *allSubViews = [self.containerView subviews];
     
     //this block of code removes all the views below
-    //currentTagsLabel in preparation of rerending updated details
-    NSLog(@"finding currentTagsLabel view...");
+    //deleteTagsLabel in preparation of rerending updated details
+    NSLog(@"finding deleteTagsLabel view...");
     int no_of_subviews = [allSubViews count];
-    int current_tags_label_index;
+    int delete_tags_label_index;
     BOOL foundIt = NO;
-    //this removes all subviews after currentTagsLabel
+    //this removes all subviews after deleteTagsLabel
     for (int j = 0; j < no_of_subviews; j++) {
         
         if (foundIt) {
             [allSubViews[j] removeFromSuperview];
         }
         
-        if (allSubViews[j] == currentTagsLabel) {
-            current_tags_label_index = j;
-            NSLog(@"current_tags_label_index = %d", current_tags_label_index);
+        if (allSubViews[j] == deleteTagsLabel) {
+            delete_tags_label_index = j;
+            NSLog(@"delete_tags_label_index = %d", delete_tags_label_index);
             
             foundIt = YES;
         }
