@@ -290,52 +290,45 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
         NSLog(@"=> CONTACT ids to names translation response %@",responseObject);
         
         NSSet *peopleSet = [responseObject objectForKey:@"translatedPeople"];
+        NSArray *peopleSetArray = [peopleSet allObjects];
+        NSNumber *personId = [[NSNumber alloc] init];
+        NSString *personFullName = [[NSString alloc] init];
+        NSNumber *senderId = [[NSNumber alloc] init];
+        NSNumber *recipientId = [[NSNumber alloc] init];
         
-        __block int k = 0;
-        [peopleSet enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-            __block NSNumber *personId = [obj valueForKey:@"personId"];
-            __block NSString *personFullName = [obj valueForKey:@"fullName"];
+        
+        #warning TODO: prefill contacts senderFullName, recipientFullName with nils
+        //fill out contacts array with blank values for keys
+        //senderFullName and recipientFullName
+        
+        
+        
+        for (int j = 0; j < [peopleSetArray count]; j++) {
+            personId = [peopleSetArray[j] valueForKey:@"personId"];
+            personFullName = [peopleSetArray[j] valueForKey:@"fullName"];
             
-            
-            //NSLog(@"personId: %@", personId);
-            //NSLog(@"personFullName: %@", personFullName);
-            
-            [contacts enumerateObjectsUsingBlock:^(id obj, NSUInteger i, BOOL *stop) {
-                NSNumber *senderId = [obj valueForKey:@"sender_id"];
-                NSNumber *recipientId = [obj valueForKey:@"recipient_id"];
+            for (int k = 0; k < [contacts count]; k++) {
+                senderId = [contacts[k] valueForKey:@"sender_id"];
+                recipientId = [contacts[k] valueForKey:@"recipient_id"];
                 
-                //NSLog(@"senderId: %@", senderId);
-                //NSLog(@"recipientId: %@", recipientId);
-                
-                
-                //always make sure there exists the keys 'senderFullName' and
-                //'recipientFullName'
-                [contacts[i] setObject:[NSNull null] forKey:@"senderFullName"];
-                [contacts[i] setObject:[NSNull null] forKey:@"recipientFullName"];
+                //[contacts[k] setValue:[NSNull null] forKey:@"senderFullName"];
+                //[contacts[k] setValue:[NSNull null] forKey:@"recipientFullName"];
                 
                 if ([senderId isEqual:personId]) {
-                    NSLog(@"senderId isEqual to personId");
-                    [contacts[i] setObject:personFullName forKey:@"senderFullName"];
+                    //NSLog(@"senderId isEqual to personId");
+                    [contacts[k] setValue:personFullName forKey:@"senderFullName"];
+                    NSLog(@"%@", [contacts[k] valueForKey:@"senderFullName"]);
                 }
-            
+                
                 if ([recipientId isEqual:personId]) {
-                    NSLog(@"recipientId isEqual to personId");
-                    [contacts[i] setObject:personFullName forKey:@"recipientFullName"];
+                    //NSLog(@"recipientId isEqual to personId");
+                    [contacts[k] setValue:personFullName forKey:@"recipientFullName"];
+                    NSLog(@"%@", [contacts[k] valueForKey:@"recipientFullName"]);
                 }
-                
-                if (i == ([contacts count] - 1)) {
-                    [self addContactViews];
-                }
-                
-                //k++;
-                //if (k == [peopleSet count]) {
-                //    [self addContactViews];
-                //}
-                
-            }];
-        }];
+            }
+        }
         
-        
+        [self addContactViews];
         
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
