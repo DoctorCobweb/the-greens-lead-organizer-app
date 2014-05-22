@@ -296,9 +296,12 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
         NSNumber *recipientId = [[NSNumber alloc] init];
         
         
-        #warning TODO: prefill contacts senderFullName, recipientFullName with nils
         //fill out contacts array with blank values for keys
-        //senderFullName and recipientFullName
+        //senderFullName and recipientFullName.
+        for (int i = 0; i < [contacts count]; i++) {
+            [contacts[i] setObject:[NSNull null] forKey:@"senderFullName"];
+            [contacts[i] setObject:[NSNull null] forKey:@"recipientFullName"];
+        }
         
         
         
@@ -373,6 +376,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 - (void)addContactViews
 {
     NSLog(@"adding in the contact views...");
+    //NSLog(@"contacts: %@", contacts);
     
     int number_of_contacts = [contacts count];
     for (int i = 0; i < number_of_contacts; i++) {

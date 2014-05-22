@@ -62,12 +62,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 {
     self.title = @"Person";
     
-    //UIColor * white_color = [UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:1.0f];
-    
-    //NSLog(@"[self navigationItem]: %@", [self navigationItem]);
-    //NSLog(@"[self navigationItem] rightBarButton]: %@", [[self navigationItem] rightBarButtonItem]);
     //NSLog(@"permissionlevel: %@", [TGLOUtils getUserPermissionLevel]);
-    
     if ([TGLOUtils isAdminPermissionLevel]) {
         [([[self navigationItem] rightBarButtonItem]) setEnabled:YES];
         ([[self navigationItem] rightBarButtonItem]).title = @"Edit";
@@ -266,9 +261,13 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
         NSNumber *recipientId = [[NSNumber alloc] init];
         
         
-#warning TODO: prefill contacts senderFullName, recipientFullName with nils
         //fill out contacts array with blank values for keys
         //senderFullName and recipientFullName
+        for (int i = 0; i < [contacts count]; i++) {
+            [contacts[i] setObject:[NSNull null] forKey:@"senderFullName"];
+            [contacts[i] setObject:[NSNull null] forKey:@"recipientFullName"];
+        }
+        
         
         
         

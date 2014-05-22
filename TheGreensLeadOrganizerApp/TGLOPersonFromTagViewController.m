@@ -62,11 +62,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 {
     self.title = @"Person";
     
-    
-    //NSLog(@"[self navigationItem]: %@", [self navigationItem]);
-    //NSLog(@"[self navigationItem] rightBarButton]: %@", [[self navigationItem] rightBarButtonItem]);
     //NSLog(@"permissionlevel: %@", [TGLOUtils getUserPermissionLevel]);
-    
     //NSLog(@"admin: %d", [TGLOUtils isAdminPermissionLevel]);
     //NSLog(@"volunteer: %d", [TGLOUtils isVolunteerPermissionLevel]);
     if ([TGLOUtils isAdminPermissionLevel]) {
@@ -78,8 +74,6 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
         [([[self navigationItem] rightBarButtonItem]) setEnabled:NO];
         ([[self navigationItem] rightBarButtonItem]).title = @"";
     }
-    
-    //UIColor * white_color = [UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:1.0f];
     
     
     //set an initial scroll view size
@@ -111,6 +105,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     [self addTagViews];
 }
 
+
 -(void)addTagViews
 {
     NSLog(@"SETTING UP ALL MY TAGS");
@@ -123,8 +118,6 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     rowNumber = -1;
     
     [self getAllMyContacts];
-    
-    
 }
 
 
@@ -264,10 +257,12 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
         NSNumber *recipientId = [[NSNumber alloc] init];
         
         
-#warning TODO: prefill contacts senderFullName, recipientFullName with nils
         //fill out contacts array with blank values for keys
         //senderFullName and recipientFullName
-        
+        for (int i = 0; i < [contacts count]; i++) {
+            [contacts[i] setObject:[NSNull null] forKey:@"senderFullName"];
+            [contacts[i] setObject:[NSNull null] forKey:@"recipientFullName"];
+        }
         
         
         for (int j = 0; j < [peopleSetArray count]; j++) {
