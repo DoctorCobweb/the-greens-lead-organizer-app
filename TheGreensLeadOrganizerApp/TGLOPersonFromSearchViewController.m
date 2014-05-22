@@ -272,7 +272,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     //is responded
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     [manager POST:translateIdsToNamesUrl_ parameters:postBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"=> CONTACT ids to names translation response %@",responseObject);
+        //NSLog(@"=> CONTACT ids to names translation response %@",responseObject);
         
         NSSet *peopleSet = [responseObject objectForKey:@"translatedPeople"];
         NSArray *peopleSetArray = [peopleSet allObjects];
@@ -302,13 +302,13 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
                 if ([senderId isEqual:personId]) {
                     //NSLog(@"senderId isEqual to personId");
                     [contacts[k] setValue:personFullName forKey:@"senderFullName"];
-                    NSLog(@"%@", [contacts[k] valueForKey:@"senderFullName"]);
+                    //NSLog(@"%@", [contacts[k] valueForKey:@"senderFullName"]);
                 }
                 
                 if ([recipientId isEqual:personId]) {
                     //NSLog(@"recipientId isEqual to personId");
                     [contacts[k] setValue:personFullName forKey:@"recipientFullName"];
-                    NSLog(@"%@", [contacts[k] valueForKey:@"recipientFullName"]);
+                    //NSLog(@"%@", [contacts[k] valueForKey:@"recipientFullName"]);
                 }
             }
         }
@@ -377,9 +377,8 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     CGFloat labelSpacing = 15; //spacing between the views
     CGFloat labelWidth = 280;  //new label width
     
-    NSString *senderIdString = [[NSString alloc] initWithFormat:@"%@", [contacts[index] objectForKey:@"sender_id"]];
-    
-    NSString *recipientIdString = [[NSString alloc] initWithFormat:@"%@", [contacts[index] objectForKey:@"recipient_id"]];
+    //NSString *senderIdString = [[NSString alloc] initWithFormat:@"%@", [contacts[index] objectForKey:@"sender_id"]];
+    //NSString *recipientIdString = [[NSString alloc] initWithFormat:@"%@", [contacts[index] objectForKey:@"recipient_id"]];
     
     NSString *typeString;
     NSString *methodString;
