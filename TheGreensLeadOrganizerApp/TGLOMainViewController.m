@@ -15,6 +15,8 @@
 #import "TGLOEditMyProfileViewController.h"
 #import "TGLOUtils.h"
 
+
+// *** IMPORTANT ***
 //view with tag = 654 is Tags label. needed when updating UI after person is updated
 
 NSString * const meUrl= @"https://%@.nationbuilder.com/api/v1/people/%@?access_token=%@";
@@ -381,11 +383,11 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
         CGRectMake(0,
                    contactSentenceParagraphRect.size.height + padding,
                    contactWidth,
-                   dateParagraphRect.size.height + padding);
+                   dateParagraphRect.size.height + (padding/2));
     
     noteLabel.frame =
         CGRectMake(0,
-                   dateParagraphRect.size.height + contactSentenceParagraphRect.size.height + (2 * padding),
+                   dateParagraphRect.size.height + contactSentenceParagraphRect.size.height + (1.5 * padding),
                    contactWidth,
                    noteParagraphRect.size.height + 35);
     

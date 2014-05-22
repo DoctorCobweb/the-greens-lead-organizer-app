@@ -14,6 +14,7 @@
 #import "TGLOUtils.h"
 
 
+// *** IMPORTANT ***
 //view with tag = 654 is Tags label. needed when updating UI after person is updated
 
 #warning TODO: handle proper pagination!!!! set to 100 results. eeek.
@@ -158,16 +159,13 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
 
 - (void)getAllMyContacts
 {
+    NSLog(@"in getAllMyContacts");
     
     //this method is always called after all
     //the tags have rendered. therefore, before
     //going off to call the contacts api, create
     //the contact label and add it to ui
     [self addContactsLabel];
-    
-    NSLog(@"in getAllMyContacts");
-    //NSLog(@"self.person.recordID: %@", self.person.recordID);
-    //NSLog(@"token: %@", token);
     
     
     //this evals to true if token is not set
@@ -193,10 +191,7 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
             
             //make latest contact appear first in contacts array
             NSArray *contacts_ = [self reverseArray:[contacts_set allObjects]];
-            
             contacts = [[NSMutableArray alloc] initWithArray:contacts_];
-            
-            
             [self addContactViews];
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -272,8 +267,6 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     NSString *noteLabelString;
     
     
-    
-    
     //make sure we dont try to assign null to
     //text property of a view
     //using view.tag to find respective views of
@@ -313,7 +306,6 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     
     contactSentenceLabelString = [[NSString alloc] initWithFormat:@"%@ contacted %@ for  %@ via %@. Status is: %@.", senderIdString, recipientIdString, typeString, methodString, statusString];
     noteLabelString = noteString;
-    
     
     
     
@@ -357,11 +349,11 @@ static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%
     CGRectMake(0,
                contactSentenceParagraphRect.size.height + padding,
                contactWidth,
-               dateParagraphRect.size.height + padding);
+               dateParagraphRect.size.height + (padding/2));
     
     noteLabel.frame =
     CGRectMake(0,
-               dateParagraphRect.size.height + contactSentenceParagraphRect.size.height + (2 * padding),
+               dateParagraphRect.size.height + contactSentenceParagraphRect.size.height + (1.5 * padding),
                contactWidth,
                noteParagraphRect.size.height + 35);
     

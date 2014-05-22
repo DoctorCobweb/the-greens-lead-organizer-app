@@ -135,7 +135,6 @@ static NSDictionary *contactStatuses;
 
 
 
-
 + (NSString *)getFormattedTypeValue:(NSString *)typeValue
 {
     if (!![contactTypes valueForKey:typeValue]) {
