@@ -20,6 +20,7 @@
 //view with tag = 654 is Tags label. needed when updating UI after person is updated
 
 static NSString *myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=1000&access_token=%@";
+static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuapp.com/namesForIds/%@/%@";
 
 
 @interface TGLOPersonFromListViewController ()
@@ -167,6 +168,9 @@ static NSString *myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     //the contact label and add it to ui
     [self addContactsLabel];
     
+    
+    NSMutableArray *contactIds = [[NSMutableArray alloc] init];
+    
     //this evals to true if token is not set
     if (!token) {
         
@@ -191,9 +195,42 @@ static NSString *myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
             //make latest contact appear first in contacts array
             NSArray *contacts_ = [self reverseArray:[contacts_set allObjects]];
             
-            contacts = [[NSMutableArray alloc] initWithArray:contacts_];
+            //NSMutableArray *contactsMutable = [[NSMutableArray alloc] initWithArray:contacts_];
+            NSMutableArray *contactsMutable = [[NSMutableArray alloc] init];
             
-            [self addContactViews];
+            [contacts_ enumerateObjectsUsingBlock:^(id obj, NSUInteger i, BOOL *stop) {
+                NSMutableDictionary *aMutableContact = [[NSMutableDictionary alloc] initWithDictionary:(NSDictionary *)obj];
+                
+                [contactsMutable addObject:aMutableContact];
+                
+                if (i == ([contacts_ count] - 1)) {
+                    
+                    contacts = [[NSMutableArray alloc] initWithArray:contactsMutable];
+                    //contacts = [[NSMutableArray alloc] initWithArray:contacts_];
+                    
+                    
+                    [contacts_set enumerateObjectsUsingBlock: ^(id obj, BOOL *stop) {
+                        
+                        [contactIds addObject:[obj valueForKey:@"sender_id"]];
+                        [contactIds addObject:[obj valueForKey:@"recipient_id"]];
+                        
+                    }];
+                    
+                    
+                    NSSet *contactIdsSet = [[NSSet alloc] initWithArray:contactIds];
+                    NSArray *filteredContactIds = [contactIdsSet allObjects];
+                    
+                    //NSLog(@"====> contacts: %@", contacts);
+                    //NSLog(@"====> contactIds: %@", contactIds);
+                    //NSLog(@"====> contactIdsSet: %@", contactIdsSet);
+                    //NSLog(@"====> filteredContactIds: %@", filteredContactIds);
+                    
+                    [self translateContactIdsToNames: (NSArray *)filteredContactIds];
+                }
+            }];
+            
+            //contacts = [[NSMutableArray alloc] initWithArray:contacts_];
+            //[self addContactViews];
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"Error: %@", error);
@@ -201,6 +238,74 @@ static NSString *myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     } else {
         NSLog(@"ERROR in TGLOPersonViewController.m. access_token is nil OR person.recordID is nil");
     }
+}
+
+
+- (void) translateContactIdsToNames:(NSArray *)filteredContactIds
+{
+    //translate ids to names by
+    //1. looking at ios app db with People Entity
+    //2. POST /namesForIds/:myNBId/:access_token route to heroku backend
+    
+    NSString * translateIdsToNamesUrl_ = [NSString stringWithFormat:translateIdsToNamesUrl, [TGLOUtils getUserNationBuilderId], token];
+    
+    NSDictionary *postBody = @{ @"peopleIds": filteredContactIds};
+    
+    //need to get notes on the person from a different api, namely
+    // the contacts api
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    //must set request serializer to application/json. otherwise 406
+    //is responded
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [manager POST:translateIdsToNamesUrl_ parameters:postBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"=> CONTACT ids to names translation response %@",responseObject);
+        
+        NSSet *peopleSet = [responseObject objectForKey:@"translatedPeople"];
+        NSArray *peopleSetArray = [peopleSet allObjects];
+        NSNumber *personId = [[NSNumber alloc] init];
+        NSString *personFullName = [[NSString alloc] init];
+        NSNumber *senderId = [[NSNumber alloc] init];
+        NSNumber *recipientId = [[NSNumber alloc] init];
+        
+        
+#warning TODO: prefill contacts senderFullName, recipientFullName with nils
+        //fill out contacts array with blank values for keys
+        //senderFullName and recipientFullName
+        
+        
+        
+        for (int j = 0; j < [peopleSetArray count]; j++) {
+            personId = [peopleSetArray[j] valueForKey:@"personId"];
+            personFullName = [peopleSetArray[j] valueForKey:@"fullName"];
+            
+            for (int k = 0; k < [contacts count]; k++) {
+                senderId = [contacts[k] valueForKey:@"sender_id"];
+                recipientId = [contacts[k] valueForKey:@"recipient_id"];
+                
+                //[contacts[k] setValue:[NSNull null] forKey:@"senderFullName"];
+                //[contacts[k] setValue:[NSNull null] forKey:@"recipientFullName"];
+                
+                if ([senderId isEqual:personId]) {
+                    //NSLog(@"senderId isEqual to personId");
+                    [contacts[k] setValue:personFullName forKey:@"senderFullName"];
+                    NSLog(@"%@", [contacts[k] valueForKey:@"senderFullName"]);
+                }
+                
+                if ([recipientId isEqual:personId]) {
+                    //NSLog(@"recipientId isEqual to personId");
+                    [contacts[k] setValue:personFullName forKey:@"recipientFullName"];
+                    NSLog(@"%@", [contacts[k] valueForKey:@"recipientFullName"]);
+                }
+            }
+        }
+        
+        [self addContactViews];
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
 }
 
 
@@ -268,6 +373,8 @@ static NSString *myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     NSString *contactSentenceLabelString;
     NSString *noteLabelString;
     
+    NSString *senderFullName;
+    NSString *recipientFullName;
     
     
     
@@ -308,7 +415,29 @@ static NSString *myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     }
     
     
-    contactSentenceLabelString = [[NSString alloc] initWithFormat:@"%@ contacted %@ for  %@ via %@. Status is: %@.", senderIdString, recipientIdString, typeString, methodString, statusString];
+    //NSLog(@"senderFullName obj: %@",[contacts[index] objectForKey:@"senderFullName"] );
+    if ([contacts[index] objectForKey:@"senderFullName"] != null) {
+        //NSLog(@"1");
+        
+        senderFullName = [contacts[index] objectForKey:@"senderFullName"];
+    } else {
+        //NSLog(@"2");
+        senderFullName = @"";
+    }
+    
+    //NSLog(@"recipientFullName obj: %@",[contacts[index] objectForKey:@"recipientFullName"] );
+    if ([contacts[index] objectForKey:@"recipientFullName"] != null) {
+        //NSLog(@"3");
+        recipientFullName = [contacts[index] objectForKey:@"recipientFullName"];
+    } else {
+        //NSLog(@"4");
+        recipientFullName = @"";
+    }
+    
+    
+    //contactSentenceLabelString = [[NSString alloc] initWithFormat:@"%@ contacted %@ for  %@ via %@. Status is: %@.", senderIdString, recipientIdString, typeString, methodString, statusString];
+    contactSentenceLabelString = [[NSString alloc] initWithFormat:@"%@ contacted %@ for  %@ via %@. Status is: %@.", senderFullName, recipientFullName, typeString, methodString, statusString];
+    
     noteLabelString = noteString;
     
     
@@ -369,7 +498,7 @@ static NSString *myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     noteLabel.attributedText = noteAttributedString;
     
     
-    [self updateScrollAndContainerViewSize:customHeight + 10];
+    [self updateScrollAndContainerViewSize:customHeight + 30];
     
     //finally add the new custom contact view
     [self.containerView addSubview:customView];

@@ -26,6 +26,7 @@
 
 - (void)setUpAppearance;
 - (void)getAllMyContacts;
+- (void) translateContactIdsToNames:(NSArray *)filteredContactIds;
 - (void)addTagViews;
 - (void)addASingleTag:(NSString *)tag;
 - (void)addContactsLabel;

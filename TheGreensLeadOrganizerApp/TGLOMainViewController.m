@@ -225,12 +225,12 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
         //NSLog(@" got contacts in MAIN DETAIL VIEW CONTROLLER and CONTACTS response: %@", responseObject);
         
         NSSet * contacts_set = [responseObject objectForKey:@"results"];
+        
         //make latest contact appear first in contacts array
         NSArray *contacts_ = [self reverseArray:[contacts_set allObjects]];
         
         //NSMutableArray *contactsMutable = [[NSMutableArray alloc] initWithArray:contacts_];
         NSMutableArray *contactsMutable = [[NSMutableArray alloc] init];
-        
         
         [contacts_ enumerateObjectsUsingBlock:^(id obj, NSUInteger i, BOOL *stop) {
             NSMutableDictionary *aMutableContact = [[NSMutableDictionary alloc] initWithDictionary:(NSDictionary *)obj];
@@ -239,11 +239,9 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
             
             if (i == ([contacts_ count] - 1)) {
                 
-                
                 contacts = [[NSMutableArray alloc] initWithArray:contactsMutable];
                 //contacts = [[NSMutableArray alloc] initWithArray:contacts_];
                 
-                //NSLog(@"====> contacts: %@", contacts);
                 
                 [contacts_set enumerateObjectsUsingBlock: ^(id obj, BOOL *stop) {
                     
@@ -256,6 +254,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
                 NSSet *contactIdsSet = [[NSSet alloc] initWithArray:contactIds];
                 NSArray *filteredContactIds = [contactIdsSet allObjects];
                 
+                //NSLog(@"====> contacts: %@", contacts);
                 //NSLog(@"====> contactIds: %@", contactIds);
                 //NSLog(@"====> contactIdsSet: %@", contactIdsSet);
                 //NSLog(@"====> filteredContactIds: %@", filteredContactIds);
@@ -387,9 +386,8 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     CGFloat labelSpacing = 15; //spacing between the views
     CGFloat labelWidth = 280;  //new label width
     
-    NSString *senderIdString = [[NSString alloc] initWithFormat:@"%@", [contacts[index] objectForKey:@"sender_id"]];
-    
-    NSString *recipientIdString = [[NSString alloc] initWithFormat:@"%@", [contacts[index] objectForKey:@"recipient_id"]];
+    //NSString *senderIdString = [[NSString alloc] initWithFormat:@"%@", [contacts[index] objectForKey:@"sender_id"]];
+    //NSString *recipientIdString = [[NSString alloc] initWithFormat:@"%@", [contacts[index] objectForKey:@"recipient_id"]];
     
     NSString *typeString;
     NSString *methodString;
@@ -442,23 +440,22 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     }
     
     
-    
     //NSLog(@"senderFullName obj: %@",[contacts[index] objectForKey:@"senderFullName"] );
     if ([contacts[index] objectForKey:@"senderFullName"] != null) {
-        NSLog(@"1");
+        //NSLog(@"1");
     
         senderFullName = [contacts[index] objectForKey:@"senderFullName"];
     } else {
-        NSLog(@"2");
+        //NSLog(@"2");
         senderFullName = @"";
     }
     
     //NSLog(@"recipientFullName obj: %@",[contacts[index] objectForKey:@"recipientFullName"] );
     if ([contacts[index] objectForKey:@"recipientFullName"] != null) {
-        NSLog(@"3");
+        //NSLog(@"3");
         recipientFullName = [contacts[index] objectForKey:@"recipientFullName"];
     } else {
-        NSLog(@"4");
+        //NSLog(@"4");
         recipientFullName = @"";
     }
     
@@ -526,7 +523,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     noteLabel.attributedText = noteAttributedString;
     
     
-    [self updateScrollAndContainerViewSize:customHeight + 10];
+    [self updateScrollAndContainerViewSize:customHeight + 30];
     
     //finally add the new custom contact view
     [self.containerView addSubview:customView];
