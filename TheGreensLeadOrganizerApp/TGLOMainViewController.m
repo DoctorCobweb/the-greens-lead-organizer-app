@@ -20,7 +20,8 @@
 //view with tag = 654 is Tags label. needed when updating UI after person is updated
 
 NSString * const meUrl= @"https://%@.nationbuilder.com/api/v1/people/%@?access_token=%@";
-NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=100&access_token=%@";
+NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=1000&access_token=%@";
+static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuapp.com/namesForIds/%@/%@";
 
 @interface TGLOMainViewController ()
 {
@@ -207,6 +208,7 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     //the contact label and add it to ui
     [self addContactsLabel];
     
+    NSMutableArray *contactIds = [[NSMutableArray alloc] init];
     
     //now go onto getting all the contacts
     //and eventually rendering them too.
@@ -226,8 +228,115 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
         //make latest contact appear first in contacts array
         NSArray *contacts_ = [self reverseArray:[contacts_set allObjects]];
         
-        contacts = [[NSMutableArray alloc] initWithArray:contacts_];
-        [self addContactViews];
+        //NSMutableArray *contactsMutable = [[NSMutableArray alloc] initWithArray:contacts_];
+        NSMutableArray *contactsMutable = [[NSMutableArray alloc] init];
+        
+        
+        [contacts_ enumerateObjectsUsingBlock:^(id obj, NSUInteger i, BOOL *stop) {
+            NSMutableDictionary *aMutableContact = [[NSMutableDictionary alloc] initWithDictionary:(NSDictionary *)obj];
+        
+            [contactsMutable addObject:aMutableContact];
+            
+            if (i == ([contacts_ count] - 1)) {
+                
+                
+                contacts = [[NSMutableArray alloc] initWithArray:contactsMutable];
+                //contacts = [[NSMutableArray alloc] initWithArray:contacts_];
+                
+                //NSLog(@"====> contacts: %@", contacts);
+                
+                [contacts_set enumerateObjectsUsingBlock: ^(id obj, BOOL *stop) {
+                    
+                    [contactIds addObject:[obj valueForKey:@"sender_id"]];
+                    [contactIds addObject:[obj valueForKey:@"recipient_id"]];
+                    
+                }];
+                
+                
+                NSSet *contactIdsSet = [[NSSet alloc] initWithArray:contactIds];
+                NSArray *filteredContactIds = [contactIdsSet allObjects];
+                
+                //NSLog(@"====> contactIds: %@", contactIds);
+                //NSLog(@"====> contactIdsSet: %@", contactIdsSet);
+                //NSLog(@"====> filteredContactIds: %@", filteredContactIds);
+                
+                [self translateContactIdsToNames: (NSArray *)filteredContactIds];
+            }
+        }];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+- (void) translateContactIdsToNames:(NSArray *)filteredContactIds
+{
+    //translate ids to names by
+    //1. looking at ios app db with People Entity
+    //2. POST /namesForIds/:myNBId/:access_token route to heroku backend
+    
+    NSString * translateIdsToNamesUrl_ = [NSString stringWithFormat:translateIdsToNamesUrl, [TGLOUtils getUserNationBuilderId], token];
+    
+    NSDictionary *postBody = @{ @"peopleIds": filteredContactIds};
+    
+    //need to get notes on the person from a different api, namely
+    // the contacts api
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    //must set request serializer to application/json. otherwise 406
+    //is responded
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [manager POST:translateIdsToNamesUrl_ parameters:postBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"=> CONTACT ids to names translation response %@",responseObject);
+        
+        NSSet *peopleSet = [responseObject objectForKey:@"translatedPeople"];
+        
+        __block int k = 0;
+        [peopleSet enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+            __block NSNumber *personId = [obj valueForKey:@"personId"];
+            __block NSString *personFullName = [obj valueForKey:@"fullName"];
+            
+            
+            //NSLog(@"personId: %@", personId);
+            //NSLog(@"personFullName: %@", personFullName);
+            
+            [contacts enumerateObjectsUsingBlock:^(id obj, NSUInteger i, BOOL *stop) {
+                NSNumber *senderId = [obj valueForKey:@"sender_id"];
+                NSNumber *recipientId = [obj valueForKey:@"recipient_id"];
+                
+                //NSLog(@"senderId: %@", senderId);
+                //NSLog(@"recipientId: %@", recipientId);
+                
+                
+                //always make sure there exists the keys 'senderFullName' and
+                //'recipientFullName'
+                [contacts[i] setObject:[NSNull null] forKey:@"senderFullName"];
+                [contacts[i] setObject:[NSNull null] forKey:@"recipientFullName"];
+                
+                if ([senderId isEqual:personId]) {
+                    NSLog(@"senderId isEqual to personId");
+                    [contacts[i] setObject:personFullName forKey:@"senderFullName"];
+                }
+            
+                if ([recipientId isEqual:personId]) {
+                    NSLog(@"recipientId isEqual to personId");
+                    [contacts[i] setObject:personFullName forKey:@"recipientFullName"];
+                }
+                
+                if (i == ([contacts count] - 1)) {
+                    [self addContactViews];
+                }
+                
+                //k++;
+                //if (k == [peopleSet count]) {
+                //    [self addContactViews];
+                //}
+                
+            }];
+        }];
+        
+        
+        
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
@@ -297,6 +406,9 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     NSString *contactSentenceLabelString;
     NSString *noteLabelString;
     
+    NSString *senderFullName;
+    NSString *recipientFullName;
+    
     
     
     
@@ -337,7 +449,30 @@ NSString * const myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@
     }
     
     
-    contactSentenceLabelString = [[NSString alloc] initWithFormat:@"%@ contacted %@ for  %@ via %@. Status is: %@.", senderIdString, recipientIdString, typeString, methodString, statusString];
+    
+    //NSLog(@"senderFullName obj: %@",[contacts[index] objectForKey:@"senderFullName"] );
+    if ([contacts[index] objectForKey:@"senderFullName"] != null) {
+        NSLog(@"1");
+    
+        senderFullName = [contacts[index] objectForKey:@"senderFullName"];
+    } else {
+        NSLog(@"2");
+        senderFullName = @"";
+    }
+    
+    //NSLog(@"recipientFullName obj: %@",[contacts[index] objectForKey:@"recipientFullName"] );
+    if ([contacts[index] objectForKey:@"recipientFullName"] != null) {
+        NSLog(@"3");
+        recipientFullName = [contacts[index] objectForKey:@"recipientFullName"];
+    } else {
+        NSLog(@"4");
+        recipientFullName = @"";
+    }
+    
+    
+    //contactSentenceLabelString = [[NSString alloc] initWithFormat:@"%@ contacted %@ for  %@ via %@. Status is: %@.", senderIdString, recipientIdString, typeString, methodString, statusString];
+    contactSentenceLabelString = [[NSString alloc] initWithFormat:@"%@ contacted %@ for  %@ via %@. Status is: %@.", senderFullName, recipientFullName, typeString, methodString, statusString];
+    
     noteLabelString = noteString;
     
     
