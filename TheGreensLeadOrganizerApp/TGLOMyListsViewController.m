@@ -72,6 +72,8 @@ static NSString * allListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/allL
 
 - (void)setUpAppearance
 {
+    self.navigationItem.title = @"My Lists";
+    
     // Change button color
     self.sidebarButton.tintColor = [UIColor colorWithWhite:0.05f alpha:1.0f];
     

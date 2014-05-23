@@ -442,7 +442,7 @@
         <scene sceneID="WOn-HQ-z4p">
             <objects>
                 <navigationController definesPresentationContext="YES" id="SzL-ul-UCU" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="60" title="MY LISTS" image="star30x30.png" id="e9K-xW-xtr"/>
+                    <tabBarItem key="tabBarItem" title="MY LISTS" image="star30x30.png" id="e9K-xW-xtr"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="7q4-CT-N2s">
                         <rect key="frame" x="0.0" y="-44" width="0.0" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
