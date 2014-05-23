@@ -38,6 +38,7 @@ static NSString * updatePeopleUrl = @"https://%@.nationbuilder.com/api/v1/people
 static NSString * postRsvpUrl = @"https://%@.nationbuilder.com/api/v1/sites/%@/pages/events/%@/rsvps?access_token=%@";
 static NSString * putRsvpUrl = @"https://%@.nationbuilder.com/api/v1/sites/%@/pages/events/%@/rsvps/%@?access_token=%@";
 static NSString *postListUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/listings?access_token=%@";
+static NSString *deleteListUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/listings/%@?access_token=%@";
 
 
 static NSString *buttonBackground = @"%@/appIcon120x120.png";
@@ -827,39 +828,83 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 
 - (void)saveToList
 {
-    NSLog(@"saveToList");
     NSDictionary *listBody = [[NSDictionary alloc] init];
     
+    NSLog(@"self.listDetails: %@", self.listDetails);
     
-    //post endpoint for making new contact
-    NSString *postListUrl_ = [NSString stringWithFormat:postListUrl, nationBuilderSlugValue, [self.listDetails valueForKey:@"id"], token];
+    NSString *httpMethod = [self.listDetails valueForKey:@"httpMethod"];
     
-    listBody =
-    @{ @"listing": @{@"person_id":  self.person.recordID}};
-    NSLog(@"POST listBody: %@", listBody);
-    
-    
-    //need to get notes on the person from a different api, namely
-    // the contacts api
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     
-    [manager POST:postListUrl_ parameters:listBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@" POST => added person to LIST with response %@",responseObject);
-        NSLog(@"SUCCESSfully added person to list.");
+    if ([httpMethod isEqualToString:@"POST"]) {
         
-        //remember to reset the sendInANewContact back to false
-        self.sendInAddToList = false;
+        //post endpoint for making new contact
+        NSString *postListUrl_ = [NSString stringWithFormat:postListUrl, nationBuilderSlugValue, [self.listDetails valueForKey:@"id"], token];
         
-        // *** CONTROL FLOW ***
-        //and FINALLY we done
-        [self reRenderUI];
+        listBody =
+        @{ @"listing": @{@"person_id":  self.person.recordID}};
+        NSLog(@"POST listBody: %@", listBody);
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-    }];
+        [manager POST:postListUrl_ parameters:listBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@" POST => added person to LIST with response %@",responseObject);
+            NSLog(@"SUCCESSfully added person to list.");
+            
+            //remember to reset the sendInANewContact back to false
+            self.sendInAddToList = false;
+            
+            
+#warning TODO
+            //also update the specific List Entity count
+            [self updateListCount:[responseObject objectForKey:@"listing"]];
+            
+            // *** CONTROL FLOW ***
+            //and FINALLY we done
+            [self reRenderUI];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Error: %@", error);
+        }];
+        
+    } else if ([httpMethod isEqualToString:@"DELETE"]) {
+        
+        //delete endpoint to delete person from the list
+        NSString *deleteListUrl_ = [NSString stringWithFormat:deleteListUrl, nationBuilderSlugValue, [self.listDetails valueForKey:@"id"], self.person.recordID, token];
+        
+        NSLog(@"deleteListUrl_: %@", deleteListUrl_);
+        [manager DELETE:deleteListUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@" DELETE => deleted person from LIST with response %@",responseObject);
+            
+            //remember to reset the sendInANewContact back to false
+            self.sendInAddToList = false;
+            
+            
+            #warning TODO
+            //also update the specific List Entity count
+            //[self updateListCount:[responseObject objectForKey:@"listing"]];
+            
+            // *** CONTROL FLOW ***
+            //and FINALLY we done
+            [self reRenderUI];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Error: %@", error);
+        }];
+        
+        
+    } else {
+        NSLog(@"we are in the gutter");
+        return;
+    }
+    
 }
 
+
+- (void)updateListCount:(NSDictionary *)updatedList
+{
+#warning  TODO: update list entitiy
+    NSLog(@"updateListCount: %@", updatedList);
+}
 
 
 
@@ -1189,6 +1234,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     
     listsViewController.modalPresentationStyle = UIModalPresentationFullScreen;
     listsViewController.delegate = self;
+    listsViewController.personId = self.person.recordID;
     
     
     UINavigationController *navigationController =

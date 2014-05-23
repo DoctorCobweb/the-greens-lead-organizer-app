@@ -14,6 +14,8 @@
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+@property (strong, nonatomic) NSNumber *personId;
 @property (strong, nonatomic) TGLOEditPersonFromListViewController *delegate;
 
 
@@ -25,11 +27,10 @@ typedef void (^allListsCompletionHandler)(NSError *error);
 - (void) loadAllListEntities;
 - (void) saveAllListEntities:(NSMutableArray *)results;
 - (void)getAllLists:(allListsCompletionHandler)completionBlock;
+- (void)addPersonToList;
+- (void)deltePersonFromList;
 - (void)displayErrorAlert:(NSString *)errorTitle message:(NSString *)message;
 
 - (IBAction)cancelModal:(id)sender;
-
-
-
 
 @end

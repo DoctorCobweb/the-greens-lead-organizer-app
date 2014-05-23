@@ -413,19 +413,19 @@ static NSString * isPersonInListUrl = @"https://cryptic-tundra-9564.herokuapp.co
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"seelcted: %@", allLists[indexPath.row]);
+    
     self.delegate.listDetails = [[NSMutableDictionary alloc] initWithDictionary:allLists[indexPath.row]];
     UIButton *listButton = (UIButton *)[[self.delegate view] viewWithTag:44];
     [listButton setTitle:[allLists[indexPath.row] objectForKey:@"name"] forState:UIControlStateNormal];
     
-    
-    NSLog(@"seelcted: %@", allLists[indexPath.row]);
     NSString *myNBId = [TGLOUtils getUserNationBuilderId];
     NSString *token = [TGLOUtils getUserAccessToken];
+    
     
     //first have to check if user is already added to the list.
     //
     // GET /isPersonInList/:myNBId/:access_token heroku backend
-    
     
     NSString *isPersonInListUrl_ = [NSString stringWithFormat:isPersonInListUrl, myNBId , token, [allLists[indexPath.row] valueForKey:@"id"], self.personId];
     
@@ -438,7 +438,8 @@ static NSString * isPersonInListUrl = @"https://cryptic-tundra-9564.herokuapp.co
     [manager_ GET:isPersonInListUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@" GET => is person in list with response %@",responseObject);
         
-        //[self postToList];
+        //heroku backend responds with true/false if in list. which gets translated
+        //to 1/0 respectively.
         if ([[responseObject objectForKey:@"isInList"] isEqual:@0]) {
             NSLog(@"isInList = @0");
             [self addPersonToList];
@@ -451,18 +452,6 @@ static NSString * isPersonInListUrl = @"https://cryptic-tundra-9564.herokuapp.co
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
-    
-    
-    
-    /*
-    UIButton *listButton = (UIButton *)[[self.delegate view] viewWithTag:44];
-    [listButton setTitle:[allLists[indexPath.row] objectForKey:@"name"] forState:UIControlStateNormal];
-    
-    self.delegate.listDetails = [[NSMutableDictionary alloc] initWithDictionary:allLists[indexPath.row]];
-    self.delegate.sendInAddToList = YES;
-    
-    [self.delegate dismissViewControllerAnimated:YES completion:nil];
-     */
 }
 
 

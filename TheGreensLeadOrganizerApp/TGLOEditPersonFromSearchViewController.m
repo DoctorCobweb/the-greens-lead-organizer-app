@@ -43,8 +43,6 @@ static NSString *postListUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/li
 static NSString *deleteListUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/listings/%@?access_token=%@";
 
 
-//static NSString * isPersonInListUrl = @"https://cryptic-tundra-9564.herokuapp.com/isPersonInList/%@/%@";
-
 
 static NSString *buttonBackground = @"%@/appIcon120x120.png";
 static NSString *greyButtonBackground =  @"%@/grey120x120.png";
@@ -877,8 +875,6 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
             
     } else if ([httpMethod isEqualToString:@"DELETE"]) {
         
-//static NSString *deleteListUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/listings/%@?access_token=%@";
-        
         //delete endpoint to delete person from the list
         NSString *deleteListUrl_ = [NSString stringWithFormat:deleteListUrl, nationBuilderSlugValue, [self.listDetails valueForKey:@"id"], self.person.recordID, token];
         
@@ -911,16 +907,13 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 }
 
 
-
-
 - (void)updateListCount:(NSDictionary *)updatedList
 {
-
     #warning  TODO: update list entitiy
     NSLog(@"updateListCount: %@", updatedList);
-
-
 }
+
+
 
 
 - (void)parseTagString:(NSMutableDictionary *)tagsToKeep

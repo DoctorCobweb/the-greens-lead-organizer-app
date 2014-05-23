@@ -64,6 +64,7 @@
 - (void)saveTheRsvp;
 
 - (void)saveToList;
+- (void)updateListCount:(NSDictionary *)updatedList;
 
 - (IBAction)chooseListToAddTo:(id)sender;
 
