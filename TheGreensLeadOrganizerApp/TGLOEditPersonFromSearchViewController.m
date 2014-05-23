@@ -33,6 +33,7 @@
 #import "TGLOUtils.h"
 #import "TGLOEventsModalSearchViewController.h"
 #import "TGLOListsModalSearchViewController.h"
+#import "TGLOListModel.h"
 
 
 static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=10&access_token=%@";
@@ -861,9 +862,9 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
             self.sendInAddToList = false;
             
             
-            #warning TODO
             //also update the specific List Entity count
-            [self updateListCount:[responseObject objectForKey:@"listing"]];
+            [self updateListCount:[responseObject objectForKey:@"listing"] change:@1];
+            
             
             // *** CONTROL FLOW ***
             //and FINALLY we done
@@ -886,9 +887,9 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
             self.sendInAddToList = false;
             
             
-            #warning TODO
             //also update the specific List Entity count
-            //[self updateListCount:[responseObject objectForKey:@"listing"]];
+            [self updateListCount:[responseObject objectForKey:@"listing"] change:@-1];
+            
             
             // *** CONTROL FLOW ***
             //and FINALLY we done
@@ -907,10 +908,57 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 }
 
 
-- (void)updateListCount:(NSDictionary *)updatedList
+
+- (void)updateListCount:(NSDictionary *)updatedList change:(NSNumber *)change
 {
-    #warning  TODO: update list entitiy
     NSLog(@"updateListCount: %@", updatedList);
+    
+    NSNumber *listId = [updatedList objectForKey:@"list_id"];
+    
+    TGLOAppDelegate *delegate = (TGLOAppDelegate *)[[UIApplication sharedApplication] delegate];
+    NSManagedObjectContext *moc = [delegate managedObjectContext];
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"List" inManagedObjectContext:moc];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    [fetchRequest setEntity:entityDescription];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id = %@", listId];
+    [fetchRequest setPredicate:predicate];
+    
+    NSError *error;
+    NSArray *fetchedListsArray = [moc executeFetchRequest:fetchRequest error:&error];
+    NSLog(@"fetchedListsArray: %@", fetchedListsArray);
+    
+    if (fetchedListsArray == nil || error !=nil) {
+        NSLog(@"ERROR: fetching the Lists");
+        return;
+        
+    } else {
+        
+        //list_id is a primary id therefore id in List entity should be unique.
+        //=> fetchedListsArray should only have 1 managed object. check this anyway.
+        if ([fetchedListsArray count] == 1) {
+            NSLog(@"GOOD: fetchedListsArray should only have count == 1");
+            TGLOListModel *mObj = (TGLOListModel *)fetchedListsArray[0];
+            
+            //update count attribute
+            int count_ = [mObj.count intValue];
+            int change_ = [change intValue];
+            int finalCount = count_ + change_;
+            
+            NSNumber *finalCountNumber = [[NSNumber alloc] initWithInt:finalCount];
+            
+            mObj.count = finalCountNumber;
+            
+            NSError *saveError = nil;
+            if(![moc save:&saveError]) {
+                NSLog(@"DATABASE ERROR: Cant save updates to TGLOListModel: error: %@", error);
+                return;
+            }
+            
+        } else {
+            NSLog(@"WEIRD: fetchedListsArray has count > 1. should be == 1");
+            return;
+        }
+    }
 }
 
 
