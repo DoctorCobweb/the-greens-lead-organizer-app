@@ -10,7 +10,7 @@
 #import "TGLOPerson.h"
 #import "TGLOUpdatePersonDelegate.h"
 
-@interface TGLOEditPersonFromSearchViewController : UIViewController<UITextFieldDelegate, UIActionSheetDelegate>
+@interface TGLOEditPersonFromSearchViewController : UIViewController<UITextFieldDelegate, UIActionSheetDelegate, UIActionSheetDelegate>
 
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -65,6 +65,10 @@
 - (void)saveTheRsvp;
 
 - (void)saveToList;
+//- (void)addPersonToList;
+//- (void)deletePersonFromList;
+//- (void)postToList;
+- (void)updateListCount:(NSDictionary *)updatedList;
 
 - (IBAction)chooseListToAddTo:(id)sender;
 
