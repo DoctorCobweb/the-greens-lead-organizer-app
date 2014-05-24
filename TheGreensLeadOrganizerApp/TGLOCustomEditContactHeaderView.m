@@ -33,8 +33,10 @@
         contactSwitch.onTintColor = greenColor;
         
         
-        contactSwitch.tag = 1;
-        contactLabel.tag = 2;
+        //contactSwitch.tag = 1;
+        //contactLabel.tag = 2;
+        contactSwitch.tag = 401;
+        contactLabel.tag = 402;
         
         [self addSubview:contactLabel];
         [self addSubview:contactSwitch];

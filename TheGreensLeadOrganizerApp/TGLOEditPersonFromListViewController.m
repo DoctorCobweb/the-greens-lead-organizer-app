@@ -10,15 +10,16 @@
 //IMPORTANT INFO on tags set for Views
 //
 //0.views with tag = 123 are the tags to_be_removed when save button is hit
-//1. view with tag = 50 is the edit/deltel tags ui label
-//2. the edit contact view has tag = 300 which allows us to get at
+//1. the edit contact view has tag = 300 which allows us to get at
 //the text input when save button is hit
 //we need this to rerender add/remove tags in ui after saving
+//2. the label "Current Tags" has tag = 50. set in storyboard.
 //3. the UIButton for Support Level has tag = 40. set in storyboard.
 //4. the UIButton for RSVP to an event has tag = 41. set in storybrd.
 //5. the RSVP lable above RSVP UIButton has tag = 42. set in storybrd.
 //6. the LIST lable above LIST UIButton has tag = 43. set in storybrd.
 //7. the UIButton for add to LIST  has tag = 44. set in storybrd.
+//8. the contact header view has tags 401 (switch) and 402 (label)
 
 
 #import "TGLOEditPersonFromListViewController.h"
@@ -264,7 +265,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     TGLOCustomEditContactHeaderView *newContactHeader = (TGLOCustomEditContactHeaderView *)[self fabricateANewView:@"TGLOCustomEditContactHeaderView" width:labelWidth height:labelHeight spacing:labelSpacing];
     
     //setup the switch toggle for logging a new contact
-    UISwitch *newContactSwitch = (UISwitch *)[newContactHeader viewWithTag:1];
+    UISwitch *newContactSwitch = (UISwitch *)[newContactHeader viewWithTag:401];
     
     [newContactSwitch addTarget:self action:@selector(toggleContact:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -614,24 +615,6 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         
         
         //*** CONTROL FLOW ***
-        //we should go onto saving a new contact as soon as possible
-        //if it has been signalled to be added
-        
-        //OLD CONTROL FLOW
-        /*
-         if (sendInANewContact) {
-         //we will handle saving RSVP in callback
-         //of saving new contact
-         [self saveTheNewContact];
-         } else if (self.sendInRSVP) {
-         [self saveTheRsvp];
-         } else {
-         //we are done with network calls
-         [self reRenderUI];
-         }
-         */
-        
-        
         if (sendInANewContact) {
             //we will handle saving RSVP, Lists in callback
             //of saving new contact
@@ -711,18 +694,11 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 
         //remember to reset the sendInANewContact back to false
         sendInANewContact = false;
+        UISwitch *newContactSwitch = (UISwitch *)[self.containerView viewWithTag:401];
+        newContactSwitch.on = NO;
+        [self toggleContact:newContactSwitch];
     
         // *** CONTROL FLOW ***
-        
-        //OLD CONTROLE FLOW
-        /*
-         if (self.sendInRSVP) {
-         [self saveTheRsvp];
-         } else {
-         [self reRenderUI];
-         }
-         */
-        
         if (self.sendInRSVP) {
             [self saveTheRsvp];
         } else if(self.sendInAddToList) {
@@ -744,14 +720,8 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 - (void)saveTheRsvp
 {
     NSLog(@"saveTheRsvp");
-    //construct uri
-    //make network call
-    //reset sendInNewRSVP to NO
-    //re render ui
     
-    NSString *myNBId = [TGLOUtils getUserNationBuilderId];
     NSDictionary *rsvpBody = [[NSDictionary alloc] init];
-    
     
     //need to get notes on the person from a different api, namely
     // the contacts api
@@ -771,7 +741,6 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         
         rsvpBody =
         @{ @"rsvp": @{
-                   //@"person_id":    myNBId,
                    @"person_id":    self.person.recordID,
                    @"guests_count": [self.rsvpDetails objectForKey:@"guests_count"],
                    @"private":      @"false",
@@ -792,9 +761,6 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
             
             
             // *** CONTROLE FLOW ***
-            // OLD CONTROL FLOW
-            //[self reRenderUI];
-            
             if (self.sendInAddToList) {
                 [self saveToList];
             } else {
@@ -817,7 +783,6 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         
         rsvpBody =
         @{ @"rsvp": @{
-                   //@"person_id":    myNBId,
                    @"person_id":    self.person.recordID,
                    @"guests_count": [self.rsvpDetails objectForKey:@"guests_count"],
                    @"private":      @"false",
@@ -837,9 +802,6 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
             self.sendInRSVP = false;
             
             // *** CONTROLE FLOW ***
-            // OLD CONTROL FLOW
-            //[self reRenderUI];
-            
             if (self.sendInAddToList) {
                 [self saveToList];
             } else {
@@ -858,14 +820,11 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 }
 
 
-
-
 - (void)saveToList
 {
-    NSDictionary *listBody = [[NSDictionary alloc] init];
-    
     NSLog(@"self.listDetails: %@", self.listDetails);
     
+    NSDictionary *listBody = [[NSDictionary alloc] init];
     NSString *httpMethod = [self.listDetails valueForKey:@"httpMethod"];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
