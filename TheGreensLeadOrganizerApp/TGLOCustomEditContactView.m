@@ -116,10 +116,10 @@ static NSDictionary *contactStatuses;
         UILabel *statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 70, 80, 30)];
         UILabel *noteLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 105, 320, 30)];
         
-        typeLabel.text =   @"Type";
-        methodLabel.text = @"Method";
-        statusLabel.text = @"Status";
-        noteLabel.text =   @"Note";
+        typeLabel.text =   @"Type:";
+        methodLabel.text = @"Method:";
+        statusLabel.text = @"Status:";
+        noteLabel.text =   @"Note:";
         
         //set the font
         typeLabel.font = [UIFont boldSystemFontOfSize:14];
@@ -148,7 +148,7 @@ static NSDictionary *contactStatuses;
         //[statusValue setTitle:@"random STATUS text" forState:UIControlStateNormal];
         
         
-        UITextView *noteValue = [[UITextView alloc] initWithFrame:CGRectMake(0, 140, 280, 150)];
+        UITextView *noteValue = [[UITextView alloc] initWithFrame:CGRectMake(0, 140, 280, 200)];
         
         //add tags to these. used in other classes to get a ref
         //to them
@@ -171,7 +171,8 @@ static NSDictionary *contactStatuses;
         
         
         //customize textview a bit more
-        noteValue.text = @"Add note content";
+        //noteValue.text = @"Add note content";
+        noteValue.font = [UIFont systemFontOfSize:14];
         
         //set the font
         UIFont *font_ = [UIFont systemFontOfSize:14];

@@ -248,7 +248,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     CGFloat labelSpacing = 20; //spacing between the views
     CGFloat makeMoreRoom = 350; //additional room on end of scrollview
     CGFloat labelWidth = 280;  //new label width
-    CGFloat labelHeight= 230;   //new label height
+    CGFloat labelHeight= 280;   //new label height
     
     
     TGLOCustomEditContactView *customView = (TGLOCustomEditContactView*)[self fabricateANewView:@"TGLOCustomEditContactView" width:labelWidth height:labelHeight spacing:labelSpacing];
@@ -325,7 +325,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         typeValue.titleLabel.text = [TGLOCustomEditContactView defaultContactType];
         methodValue.titleLabel.text = [TGLOCustomEditContactView defaultContactMethod];
         statusValue.titleLabel.text = [TGLOCustomEditContactView defaultContactStatus];
-        noteValue.text = @"Add note content";
+        //noteValue.text = @"Add note content";
         
         [typeValue setTitle:typeValue.titleLabel.text forState:UIControlStateNormal];
         [methodValue setTitle:methodValue.titleLabel.text forState:UIControlStateNormal];
