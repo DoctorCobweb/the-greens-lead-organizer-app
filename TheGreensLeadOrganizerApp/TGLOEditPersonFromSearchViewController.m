@@ -63,10 +63,12 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 }
 
 @property (strong, nonatomic) UIAlertView *updateAlert;
+@property (strong, nonatomic) UITapGestureRecognizer *tapRecognizer;
 
 @end
 
 @implementation TGLOEditPersonFromSearchViewController
+@synthesize tapRecognizer;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -81,6 +83,19 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    
+    [nc addObserver:self selector:@selector(keyboardWillShow:) name:
+     UIKeyboardWillShowNotification object:nil];
+    
+    [nc addObserver:self selector:@selector(keyboardWillHide:) name:
+     UIKeyboardWillHideNotification object:nil];
+    
+    tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                            action:@selector(didTapAnywhere:)];
+    
     
     //used to determine if user has signified they want to
     //add a new contact to  save
@@ -103,6 +118,25 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     [self makeABlankContactView];
     [self addEditTagsLabel];
     [self addTagViews];
+}
+
+
+
+- (void)keyboardWillShow:(NSNotification *)note
+{
+    [self.view addGestureRecognizer:tapRecognizer];
+}
+
+- (void)keyboardWillHide:(NSNotification *)note
+{
+    [self.view removeGestureRecognizer:tapRecognizer];
+}
+
+
+-(void)didTapAnywhere: (UITapGestureRecognizer*) recognizer {
+    NSLog(@"in didTapAnythere method");
+    //[textField resignFirstResponder];
+    [self.view endEditing:YES];
 }
 
 - (void)setupTagsToDeleteArray

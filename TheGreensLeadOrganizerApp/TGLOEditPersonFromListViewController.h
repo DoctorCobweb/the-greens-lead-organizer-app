@@ -31,6 +31,8 @@
 
 @property (nonatomic, weak) id<TGLOUpdatePersonDelegate>delegate;
 
+- (void)keyboardWillShow:(NSNotification *)note;
+- (void)keyboardWillHide:(NSNotification *)note;
 - (void)setUpAppearance;
 - (void)addEditTagsLabel;
 - (void)addTagViews;
