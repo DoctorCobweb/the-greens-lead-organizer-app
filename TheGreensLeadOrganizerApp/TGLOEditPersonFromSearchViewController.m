@@ -139,6 +139,26 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     [self.view endEditing:YES];
 }
 
+
+
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    NSLog(@"textViewDidBeginEditing");
+    CGRect cFrame = ((TGLOCustomEditContactView *)[self.containerView viewWithTag:300]).frame;
+    NSLog(@"cFrame rect: %@", NSStringFromCGRect(cFrame));
+    
+    [self.scrollView scrollRectToVisible:CGRectMake(0, 0, 280, 280) animated:NO];
+    [self.scrollView scrollRectToVisible:CGRectMake(20, CGRectGetMinY(cFrame) + 220, 280, 280) animated:NO];
+    
+}
+
+
+- (void)textFieldDidBeginEditing:(UITextField*)textField
+{
+    NSLog(@"textFieldDidBeginEditing");
+    
+}
+
 - (void)setupTagsToDeleteArray
 {
     //create a dictionary of 1's, keys corresponging to tag (slug?) name
@@ -289,6 +309,12 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     
     
     TGLOCustomEditContactView *customView = (TGLOCustomEditContactView*)[self fabricateANewView:@"TGLOCustomEditContactView" width:labelWidth height:labelHeight spacing:labelSpacing];
+    
+    
+    //set self to be the delegate of all <UITextViewDelegate> methods.
+    //delegate methods are called to reposition customView when keyboard shows
+    ((UITextView *)[customView viewWithTag:308]).delegate = (id) self;
+    
     
     customView.clipsToBounds = YES;
     customView.opaque = NO;

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "TGLOEditPersonFromSearchViewController.h"
 
-@interface TGLOCustomEditContactView : UIView 
+@interface TGLOCustomEditContactView : UIView
 
 
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
