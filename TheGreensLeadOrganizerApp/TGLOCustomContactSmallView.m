@@ -106,6 +106,11 @@ static NSDictionary *contactStatuses_;
         note.font = [UIFont systemFontOfSize:14];
         
         
+        contactSentence.textAlignment = NSTextAlignmentCenter;
+        date.textAlignment = NSTextAlignmentCenter;
+        note.textAlignment = NSTextAlignmentCenter;
+        
+        
         //this makes labels use as many lines as needed to fit all the text in
         contactSentence.numberOfLines = 0;
         date.numberOfLines = 1;

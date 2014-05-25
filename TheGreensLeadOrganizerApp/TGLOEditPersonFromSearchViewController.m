@@ -345,6 +345,9 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     UILabel *methodLabel = ((UILabel *)[theContact viewWithTag:302]);
     UILabel *statusLabel = ((UILabel *)[theContact viewWithTag:303]);
     UILabel *noteLabel = ((UILabel *)[theContact viewWithTag:304]);
+    
+    UILabel *noteBuffer = ((UILabel *)[theContact viewWithTag:309]);
+    
     UIButton *typeValue = ((UIButton *)[theContact viewWithTag:305]);
     UIButton *methodValue = ((UIButton *)[theContact viewWithTag:306]);
     UIButton *statusValue = ((UIButton *)[theContact viewWithTag:307]);
@@ -368,6 +371,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         typeLabel.backgroundColor = backgroundLabel;
         methodLabel.backgroundColor = backgroundLabel;
         statusLabel.backgroundColor = backgroundLabel;
+        noteBuffer.backgroundColor = backgroundLabel;
         noteLabel.backgroundColor = backgroundLabel;
         
         typeValue.backgroundColor = backgroundValue;
@@ -403,6 +407,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         typeLabel.backgroundColor = disabledEditing;
         methodLabel.backgroundColor = disabledEditing;
         statusLabel.backgroundColor = disabledEditing;
+        noteBuffer.backgroundColor = disabledEditing;
         noteLabel.backgroundColor = disabledEditing;
         
         typeValue.backgroundColor = disabledEditing;

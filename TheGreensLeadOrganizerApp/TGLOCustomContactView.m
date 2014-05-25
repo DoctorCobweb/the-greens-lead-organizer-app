@@ -115,7 +115,6 @@ static NSDictionary *contactStatuses;
         
         
         
-        
         UILabel *typeValue = [[UILabel alloc] initWithFrame:CGRectMake(85, 0, 200, 30)];
         UILabel *methodValue = [[UILabel alloc] initWithFrame:CGRectMake(85, 35, 200, 30)];
         UILabel *statusValue = [[UILabel alloc] initWithFrame:CGRectMake(85, 70, 200, 30)];

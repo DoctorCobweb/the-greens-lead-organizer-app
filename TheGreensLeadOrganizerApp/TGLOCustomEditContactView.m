@@ -114,7 +114,8 @@ static NSDictionary *contactStatuses;
         UILabel *typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 30)];
         UILabel *methodLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 35, 80, 30)];
         UILabel *statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 70, 80, 30)];
-        UILabel *noteLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 105, 320, 30)];
+        UILabel *noteLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 105, 80, 30)];
+        UILabel *noteBuffer= [[UILabel alloc] initWithFrame:CGRectMake(80, 105, (320 - 80), 30)];
         
         typeLabel.text =   @"Type:";
         methodLabel.text = @"Method:";
@@ -127,7 +128,15 @@ static NSDictionary *contactStatuses;
         statusLabel.font = [UIFont boldSystemFontOfSize:14];
         noteLabel.font = [UIFont boldSystemFontOfSize:14];
         
+        typeLabel.textColor = [UIColor whiteColor];
+        methodLabel.textColor = [UIColor whiteColor];
+        statusLabel.textColor = [UIColor whiteColor];
+        noteLabel.textColor = [UIColor whiteColor];
         
+        typeLabel.textAlignment = NSTextAlignmentCenter;
+        methodLabel.textAlignment = NSTextAlignmentCenter;
+        statusLabel.textAlignment = NSTextAlignmentCenter;
+        noteLabel.textAlignment = NSTextAlignmentCenter;
         
         
         //setup the button
@@ -161,6 +170,7 @@ static NSDictionary *contactStatuses;
         methodValue.tag = 306;
         statusValue.tag = 307;
         noteValue.tag =   308;
+        noteBuffer.tag =  309;
         
         //default editing is OFF
         typeValue.userInteractionEnabled = NO;
@@ -193,6 +203,7 @@ static NSDictionary *contactStatuses;
         typeValue.backgroundColor = backgroundLabel;
         methodValue.backgroundColor = backgroundLabel;
         statusValue.backgroundColor = backgroundLabel;
+        noteBuffer.backgroundColor = backgroundLabel;
         noteValue.backgroundColor = backgroundLabel;
         
         
@@ -203,6 +214,7 @@ static NSDictionary *contactStatuses;
         [self addSubview:typeValue];
         [self addSubview:methodValue];
         [self addSubview:statusValue];
+        [self addSubview:noteBuffer];
         [self addSubview:noteValue];
     }
     return self;
