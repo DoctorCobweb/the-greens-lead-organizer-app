@@ -52,6 +52,21 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    NSString *test = [[NSString alloc] init];
+    NSString *test1;
+    NSLog(@"test: %@", test);
+    NSLog(@"test1: %@", test1);
+    if ([test1 isEqual:nil]) {
+        NSLog(@"test1 isEqual: nil");
+    }
+    if (test1 == nil) {
+        NSLog(@"test1 == nil");
+    }
+    if (test1) {
+        NSLog(@"(test1) is true");
+    }
+    
+    
     
     //since Lists tab hides our app wide nav bar
     //make sure it is NOT hidden before displaying

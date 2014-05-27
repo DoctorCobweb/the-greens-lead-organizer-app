@@ -418,9 +418,30 @@ static NSString * isPersonInListUrl = @"https://cryptic-tundra-9564.herokuapp.co
     NSLog(@"seelcted: %@", allLists[indexPath.row]);
     
     self.delegate.listDetails = [[NSMutableDictionary alloc] initWithDictionary:allLists[indexPath.row]];
+    [self.delegate.listDetails setValue:@"list" forKey:@"jobType"];
+    
+    
     UIButton *listButton = (UIButton *)[[self.delegate view] viewWithTag:44];
     [listButton setTitle:[allLists[indexPath.row] objectForKey:@"name"] forState:UIControlStateNormal];
     
+    
+    UIActionSheet *actionSheet =
+    [[UIActionSheet alloc]
+     initWithTitle:@"Add or Delete person to/from list?"
+     delegate:self
+     cancelButtonTitle:@"Cancel"
+     destructiveButtonTitle:nil
+     otherButtonTitles:@"Add", @"Delete", nil];
+    
+    [actionSheet showInView:self.view];
+
+    
+    
+    
+    
+    
+    
+    /*
     NSString *myNBId = [TGLOUtils getUserNationBuilderId];
     NSString *token = [TGLOUtils getUserAccessToken];
     
@@ -455,7 +476,7 @@ static NSString * isPersonInListUrl = @"https://cryptic-tundra-9564.herokuapp.co
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
-
+     */
 }
 
 
@@ -546,6 +567,38 @@ static NSString * isPersonInListUrl = @"https://cryptic-tundra-9564.herokuapp.co
         
         [self.delegate dismissViewControllerAnimated:YES completion:nil];
         return;
+    }
+    
+    
+    if ([actionSheet.title isEqualToString:@"Add or Delete person to/from list?"]){
+        NSLog(@"ADD or DELETE person from list");
+    
+        if (buttonIndex == [actionSheet cancelButtonIndex]) {
+            // User pressed cancel -- abort
+            return;
+        }
+        
+        if (buttonIndex == 0) {
+            NSLog(@"add person hit");
+            self.delegate.sendInAddToList = YES;
+            [self.delegate.listDetails setValue:@"POST" forKey:@"httpMethod"];
+            
+            listLabel.text = @"Add to LIST";
+            
+            [self.delegate dismissViewControllerAnimated:YES completion:nil];
+            return;
+        }
+    
+        if (buttonIndex == 1) {
+            NSLog(@"delete person hit");
+            self.delegate.sendInAddToList = YES;
+            [self.delegate.listDetails setValue:@"DELETE" forKey:@"httpMethod"];
+            
+            listLabel.text = @"Delete person from list";
+            
+            [self.delegate dismissViewControllerAnimated:YES completion:nil];
+            return;
+        }
     }
 }
 

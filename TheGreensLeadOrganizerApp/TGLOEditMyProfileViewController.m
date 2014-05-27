@@ -42,6 +42,7 @@ static NSString * postRsvpUrl = @"https://%@.nationbuilder.com/api/v1/sites/%@/p
 static NSString * putRsvpUrl = @"https://%@.nationbuilder.com/api/v1/sites/%@/pages/events/%@/rsvps/%@?access_token=%@";
 static NSString *postListUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/listings?access_token=%@";
 static NSString *deleteListUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/listings/%@?access_token=%@";
+static NSString *addAJobUrl = @"https://cryptic-tundra-9564.herokuapp.com/addAJob";
 
 
 
@@ -862,11 +863,49 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     
     NSLog(@"self.listDetails: %@", self.listDetails);
     
+    //NSNumber *myNBIdNumber = [[NSNumber alloc] initWithInt:[[TGLOUtils getUserNationBuilderId] intValue]];
     NSString *httpMethod = [self.listDetails valueForKey:@"httpMethod"];
+    NSString *jobType = [self.listDetails valueForKey:@"jobType"];
+    NSNumber *listId = [self.listDetails valueForKey:@"id"];
+    
+    listBody = @{@"httpMethod": httpMethod,
+                 @"jobType":    jobType,
+                 @"personId":   myNBId,
+                 @"listId":     listId
+                 };
+    
+    
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     
+    [manager POST:addAJobUrl parameters:listBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@" SUCCESSFULLY POST JOB=> added a job %@",responseObject);
+        
+        //remember to reset the sendInANewContact back to false
+        self.sendInAddToList = false;
+        
+        
+        //update the list entity count
+        if ([httpMethod isEqualToString:@"POST"]) {
+            [self updateListCount:[responseObject objectForKey:@"listing"] change:@1];
+        }
+        if ([httpMethod isEqualToString:@"DELETE"]) {
+            [self updateListCount:[responseObject objectForKey:@"listing"] change:@-1];
+        }
+        
+        
+        // *** CONTROL FLOW ***
+        //and FINALLY we done
+        [self reRenderUI];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+    
+    
+    
+    /*
     if ([httpMethod isEqualToString:@"POST"]) {
         
         //post endpoint for making new contact
@@ -925,6 +964,8 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         NSLog(@"we are in the gutter");
         return;
     }
+     
+     */
 }
 
 
