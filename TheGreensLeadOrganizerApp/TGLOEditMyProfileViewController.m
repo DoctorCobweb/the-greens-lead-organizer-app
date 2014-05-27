@@ -858,12 +858,10 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 
 - (void)saveToList
 {
-    NSDictionary *listBody = [[NSDictionary alloc] init];
-    NSString *myNBId = [TGLOUtils getUserNationBuilderId];
-    
     NSLog(@"self.listDetails: %@", self.listDetails);
     
-    //NSNumber *myNBIdNumber = [[NSNumber alloc] initWithInt:[[TGLOUtils getUserNationBuilderId] intValue]];
+    NSDictionary *listBody = [[NSDictionary alloc] init];
+    NSString *myNBId = [TGLOUtils getUserNationBuilderId];
     NSString *httpMethod = [self.listDetails valueForKey:@"httpMethod"];
     NSString *jobType = [self.listDetails valueForKey:@"jobType"];
     NSNumber *listId = [self.listDetails valueForKey:@"id"];
@@ -875,7 +873,6 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
                  };
     
     
-    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     
@@ -885,13 +882,14 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         //remember to reset the sendInANewContact back to false
         self.sendInAddToList = false;
         
+        NSDictionary *jobAdded = [responseObject objectForKey:@"jobAdded"];
         
         //update the list entity count
         if ([httpMethod isEqualToString:@"POST"]) {
-            [self updateListCount:[responseObject objectForKey:@"listing"] change:@1];
+            [self updateListCount:jobAdded change:@1];
         }
         if ([httpMethod isEqualToString:@"DELETE"]) {
-            [self updateListCount:[responseObject objectForKey:@"listing"] change:@-1];
+            [self updateListCount:jobAdded change:@-1];
         }
         
         
@@ -973,8 +971,9 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 - (void)updateListCount:(NSDictionary *)updatedList change:(NSNumber *)change
 {
     NSLog(@"updateListCount: %@", updatedList);
+    NSNumber *listId = [updatedList valueForKeyPath:@"listId"];
     
-    NSNumber *listId = [updatedList objectForKey:@"list_id"];
+    //NSNumber *listId = [updatedList objectForKey:@"list_id"];
     
     TGLOAppDelegate *delegate = (TGLOAppDelegate *)[[UIApplication sharedApplication] delegate];
     NSManagedObjectContext *moc = [delegate managedObjectContext];
