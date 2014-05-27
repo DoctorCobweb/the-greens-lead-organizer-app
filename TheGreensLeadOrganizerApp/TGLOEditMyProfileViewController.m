@@ -900,70 +900,6 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
-    
-    
-    
-    /*
-    if ([httpMethod isEqualToString:@"POST"]) {
-        
-        //post endpoint for making new contact
-        NSString *postListUrl_ = [NSString stringWithFormat:postListUrl, nationBuilderSlugValue, [self.listDetails valueForKey:@"id"], token];
-        
-        listBody =
-        @{ @"listing": @{@"person_id":  myNBId}};
-        NSLog(@"POST listBody: %@", listBody);
-        
-        [manager POST:postListUrl_ parameters:listBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@" POST => added person to LIST with response %@",responseObject);
-            NSLog(@"SUCCESSfully added person to list.");
-            
-            //remember to reset the sendInANewContact back to false
-            self.sendInAddToList = false;
-            
-            
-            //update the list entity count
-            [self updateListCount:[responseObject objectForKey:@"listing"] change:@1];
-            
-            
-            // *** CONTROL FLOW ***
-            //and FINALLY we done
-            [self reRenderUI];
-            
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Error: %@", error);
-        }];
-        
-    } else if ([httpMethod isEqualToString:@"DELETE"]) {
-        
-        //delete endpoint to delete person from the list
-        NSString *deleteListUrl_ = [NSString stringWithFormat:deleteListUrl, nationBuilderSlugValue, [self.listDetails valueForKey:@"id"], myNBId, token];
-        
-        NSLog(@"deleteListUrl_: %@", deleteListUrl_);
-        [manager DELETE:deleteListUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@" DELETE => deleted person from LIST with response %@",responseObject);
-            
-            //remember to reset the sendInANewContact back to false
-            self.sendInAddToList = false;
-            
-            //update the list entity count
-            [self updateListCount:[responseObject objectForKey:@"listing"] change:@-1];
-            
-            
-            // *** CONTROL FLOW ***
-            //and FINALLY we done
-            [self reRenderUI];
-            
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Error: %@", error);
-        }];
-        
-        
-    } else {
-        NSLog(@"we are in the gutter");
-        return;
-    }
-     
-     */
 }
 
 
@@ -973,7 +909,6 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     NSLog(@"updateListCount: %@", updatedList);
     NSNumber *listId = [updatedList valueForKeyPath:@"listId"];
     
-    //NSNumber *listId = [updatedList objectForKey:@"list_id"];
     
     TGLOAppDelegate *delegate = (TGLOAppDelegate *)[[UIApplication sharedApplication] delegate];
     NSManagedObjectContext *moc = [delegate managedObjectContext];

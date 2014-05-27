@@ -41,6 +41,8 @@ static NSString * postRsvpUrl = @"https://%@.nationbuilder.com/api/v1/sites/%@/p
 static NSString * putRsvpUrl = @"https://%@.nationbuilder.com/api/v1/sites/%@/pages/events/%@/rsvps/%@?access_token=%@";
 static NSString *postListUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/listings?access_token=%@";
 static NSString *deleteListUrl = @"https://%@.nationbuilder.com/api/v1/lists/%@/listings/%@?access_token=%@";
+static NSString *addAJobUrl = @"https://cryptic-tundra-9564.herokuapp.com/addAJob";
+
 
 
 static NSString *buttonBackground = @"%@/appIcon120x120.png";
@@ -850,81 +852,55 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 - (void)saveToList
 {
     NSLog(@"self.listDetails: %@", self.listDetails);
-    
     NSDictionary *listBody = [[NSDictionary alloc] init];
     NSString *httpMethod = [self.listDetails valueForKey:@"httpMethod"];
+    NSString *jobType = [self.listDetails valueForKey:@"jobType"];
+    NSNumber *listId = [self.listDetails valueForKey:@"id"];
+    
+    listBody = @{@"httpMethod": httpMethod,
+                 @"jobType":    jobType,
+                 @"personId":   self.person.recordID,
+                 @"listId":     listId
+                 };
+    
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     
-    if ([httpMethod isEqualToString:@"POST"]) {
+    [manager POST:addAJobUrl parameters:listBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@" SUCCESSFULLY POST JOB=> added a job %@",responseObject);
         
-        //post endpoint for making new contact
-        NSString *postListUrl_ = [NSString stringWithFormat:postListUrl, nationBuilderSlugValue, [self.listDetails valueForKey:@"id"], token];
+        //remember to reset the sendInANewContact back to false
+        self.sendInAddToList = false;
         
-        listBody =
-        @{ @"listing": @{@"person_id":  self.person.recordID}};
-        NSLog(@"POST listBody: %@", listBody);
+        NSDictionary *jobAdded = [responseObject objectForKey:@"jobAdded"];
         
-        [manager POST:postListUrl_ parameters:listBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@" POST => added person to LIST with response %@",responseObject);
-            NSLog(@"SUCCESSfully added person to list.");
-            
-            //remember to reset the sendInANewContact back to false
-            self.sendInAddToList = false;
-            
-            
-            //also update the specific List Entity count
-            [self updateListCount:[responseObject objectForKey:@"listing"] change:@1];
-            
-            // *** CONTROL FLOW ***
-            //and FINALLY we done
-            [self reRenderUI];
-            
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Error: %@", error);
-        }];
-        
-    } else if ([httpMethod isEqualToString:@"DELETE"]) {
-        
-        //delete endpoint to delete person from the list
-        NSString *deleteListUrl_ = [NSString stringWithFormat:deleteListUrl, nationBuilderSlugValue, [self.listDetails valueForKey:@"id"], self.person.recordID, token];
-        
-        NSLog(@"deleteListUrl_: %@", deleteListUrl_);
-        [manager DELETE:deleteListUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@" DELETE => deleted person from LIST with response %@",responseObject);
-            
-            //remember to reset the sendInANewContact back to false
-            self.sendInAddToList = false;
-            
-            
-            //also update the specific List Entity count
-            [self updateListCount:[responseObject objectForKey:@"listing"] change:@-1];
-            
-            // *** CONTROL FLOW ***
-            //and FINALLY we done
-            [self reRenderUI];
-            
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Error: %@", error);
-        }];
+        //update the list entity count
+        if ([httpMethod isEqualToString:@"POST"]) {
+            [self updateListCount:jobAdded change:@1];
+        }
+        if ([httpMethod isEqualToString:@"DELETE"]) {
+            [self updateListCount:jobAdded change:@-1];
+        }
         
         
-    } else {
-        NSLog(@"we are in the gutter");
-        return;
-    }
-    
+        // *** CONTROL FLOW ***
+        //and FINALLY we done
+        [self reRenderUI];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
 }
 
 
 
 - (void)updateListCount:(NSDictionary *)updatedList change:(NSNumber *)change
 {
-#warning  TODO: update list entitiy
     NSLog(@"updateListCount: %@", updatedList);
     
-    NSNumber *listId = [updatedList objectForKey:@"list_id"];
+    NSNumber *listId = [updatedList valueForKeyPath:@"listId"];
+    
     
     TGLOAppDelegate *delegate = (TGLOAppDelegate *)[[UIApplication sharedApplication] delegate];
     NSManagedObjectContext *moc = [delegate managedObjectContext];

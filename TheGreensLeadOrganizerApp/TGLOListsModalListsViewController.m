@@ -416,76 +416,21 @@ static NSString * isPersonInListUrl = @"https://cryptic-tundra-9564.herokuapp.co
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"seelcted: %@", allLists[indexPath.row]);
-    
     self.delegate.listDetails = [[NSMutableDictionary alloc] initWithDictionary:allLists[indexPath.row]];
+    [self.delegate.listDetails setValue:@"list" forKey:@"jobType"];
+    
+    
     UIButton *listButton = (UIButton *)[[self.delegate view] viewWithTag:44];
     [listButton setTitle:[allLists[indexPath.row] objectForKey:@"name"] forState:UIControlStateNormal];
     
-    NSString *myNBId = [TGLOUtils getUserNationBuilderId];
-    NSString *token = [TGLOUtils getUserAccessToken];
     
-    
-    //first have to check if user is already added to the list.
-    //
-    // GET /isPersonInList/:myNBId/:access_token heroku backend
-    
-    NSString *isPersonInListUrl_ = [NSString stringWithFormat:isPersonInListUrl, myNBId , token, [allLists[indexPath.row] valueForKey:@"id"], self.personId];
-    
-    
-    //need to get notes on the person from a different api, namely
-    // the contacts api
-    AFHTTPRequestOperationManager *manager_ = [AFHTTPRequestOperationManager manager];
-    manager_.requestSerializer = [AFJSONRequestSerializer serializer];
-    
-    [manager_ GET:isPersonInListUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@" GET => is person in list with response %@",responseObject);
-        
-        //heroku backend responds with true/false if in list. which gets translated
-        //to 1/0 respectively.
-        if ([[responseObject objectForKey:@"isInList"] isEqual:@0]) {
-            NSLog(@"isInList = @0");
-            [self addPersonToList];
-        } else {
-            NSLog(@"isInList = @1");
-            [self deletePersonFromList];
-        }
-        
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-    }];
-}
-
-
-
-
-
-- (void)addPersonToList
-{
-    NSLog(@"in addPersonToList");
     UIActionSheet *actionSheet =
     [[UIActionSheet alloc]
-     initWithTitle:@"Add person to this list?"
+     initWithTitle:@"Add or Delete person to/from list?"
      delegate:self
      cancelButtonTitle:@"Cancel"
      destructiveButtonTitle:nil
-     otherButtonTitles:@"Yes - add to list", nil];
-    
-    [actionSheet showInView:self.view];
-    
-}
-
-
-- (void)deletePersonFromList
-{
-    NSLog(@"in deletePersonFromList");
-    UIActionSheet *actionSheet =
-    [[UIActionSheet alloc]
-     initWithTitle:@"Person is already on this list. Remove them?"
-     delegate:self
-     cancelButtonTitle:@"Cancel"
-     destructiveButtonTitle:nil
-     otherButtonTitles:@"Yes - remove from list", nil];
+     otherButtonTitles:@"Add", @"Delete", nil];
     
     [actionSheet showInView:self.view];
 }
@@ -501,51 +446,35 @@ static NSString * isPersonInListUrl = @"https://cryptic-tundra-9564.herokuapp.co
     
     //also update the list label
     UILabel *listLabel = (UILabel *)[self.delegate.containerView viewWithTag:43];
-    
-    if ([actionSheet.title isEqualToString:@"Add person to this list?"]) {
-        NSLog(@"ADD person to list ACTIONSHEET");
+    if ([actionSheet.title isEqualToString:@"Add or Delete person to/from list?"]){
+        NSLog(@"ADD or DELETE person from list");
+        
         if (buttonIndex == [actionSheet cancelButtonIndex]) {
             // User pressed cancel -- abort
-            NSLog(@"user cancelled adding to list");
+            return;
+        }
+        
+        if (buttonIndex == 0) {
+            NSLog(@"add person hit");
+            self.delegate.sendInAddToList = YES;
+            [self.delegate.listDetails setValue:@"POST" forKey:@"httpMethod"];
             
-            //just dismiss actionsheet
+            listLabel.text = @"Add to LIST";
+            [self.delegate dismissViewControllerAnimated:YES completion:nil];
+            
             return;
         }
         
-        //[self.delegate.rsvpDetails setObject:@"false" forKey:@"canceled"];
-        
-        NSLog(@"delegate.listDetails : %@", self.delegate.listDetails);
-        
-        self.delegate.sendInAddToList = YES;
-        [self.delegate.listDetails setValue:@"POST" forKey:@"httpMethod"];
-        
-        //also update the list label to show additional guests
-        listLabel.text = [[NSString alloc] initWithFormat:@"LIST to add is"];
-        
-        [self.delegate dismissViewControllerAnimated:YES completion:nil];
-        return;
-    }
-    
-    
-    if ([actionSheet.title isEqualToString:@"Person is already on this list. Remove them?"]) {
-        NSLog(@"ALREADY on list ACTIONSHEET");
-        
-        if (buttonIndex == [actionSheet cancelButtonIndex]) {
-            // User pressed cancel -- abort
+        if (buttonIndex == 1) {
+            NSLog(@"delete person hit");
+            self.delegate.sendInAddToList = YES;
+            [self.delegate.listDetails setValue:@"DELETE" forKey:@"httpMethod"];
+            
+            listLabel.text = @"Delete person from list";
+            [self.delegate dismissViewControllerAnimated:YES completion:nil];
+            
             return;
         }
-        
-        NSLog(@"user wants to delte person from list");
-        //user wants to cancel the event
-        //[self.delegate.rsvpDetails setObject:@"true" forKey:@"canceled"];
-        
-        self.delegate.sendInAddToList = YES;
-        [self.delegate.listDetails setValue:@"DELETE" forKey:@"httpMethod"];
-        
-        listLabel.text = @"Delete person from list";
-        
-        [self.delegate dismissViewControllerAnimated:YES completion:nil];
-        return;
     }
 }
 
