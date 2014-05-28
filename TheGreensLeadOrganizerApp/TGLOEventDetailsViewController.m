@@ -85,7 +85,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
         //NSLog(@"EVENT DETAILS VIEW CONTROLLER and response: %@", responseObject);
         
         NSSet *event_set = [responseObject objectForKey:@"event"];
-        //NSLog(@"event_set: %@", event_set);
+        NSLog(@"event_set: %@", event_set);
         
         
         parsedEvent = [TGLOEvent eventFieldsForObject:event_set];
@@ -110,8 +110,9 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     self.nameLabel.backgroundColor = lightOrange;
     
     
+    NSDate *startDate = [TGLOUtils formattedDateFromString:event.dateString];
+    self.dateLabel.text = [TGLOUtils formattedDateStringFromDate:startDate];
     
-    self.dateLabel.text = [TGLOUtils formatTheDate:event.dateString withCustomFormat:@"yyyy-MM-dd'T'HH:mm:ss+HH:mm"];
     self.venue.text = [[NSString alloc] initWithFormat:@"%@, %@",address1, city];
     self.detailsTextView.text = event.details;
     

@@ -33,6 +33,7 @@
 		6526A3931926052B00B7BB1F /* star30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = 6526A3921926052B00B7BB1F /* star30x30.png */; };
 		6526A3961926096000B7BB1F /* TGLOAllListsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6526A3951926096000B7BB1F /* TGLOAllListsViewController.m */; };
 		6526A39C1927267000B7BB1F /* TGLOListsTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6526A39B1927267000B7BB1F /* TGLOListsTabBarController.m */; };
+		653BCDAD19358F6F0014DA84 /* checkerMark60x60.png in Resources */ = {isa = PBXBuildFile; fileRef = 653BCDAC19358F6F0014DA84 /* checkerMark60x60.png */; };
 		654CC32119152F5D00600473 /* the-greens-rally.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 654CC32019152F5D00600473 /* the-greens-rally.jpg */; };
 		654CC32919163BE700600473 /* appIcon58x58.png in Resources */ = {isa = PBXBuildFile; fileRef = 654CC32619163BE600600473 /* appIcon58x58.png */; };
 		654CC32A19163BE700600473 /* appIcon80x80.png in Resources */ = {isa = PBXBuildFile; fileRef = 654CC32719163BE600600473 /* appIcon80x80.png */; };
@@ -165,6 +166,7 @@
 		6526A3951926096000B7BB1F /* TGLOAllListsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOAllListsViewController.m; sourceTree = "<group>"; };
 		6526A39A1927267000B7BB1F /* TGLOListsTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOListsTabBarController.h; sourceTree = "<group>"; };
 		6526A39B1927267000B7BB1F /* TGLOListsTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOListsTabBarController.m; sourceTree = "<group>"; };
+		653BCDAC19358F6F0014DA84 /* checkerMark60x60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkerMark60x60.png; sourceTree = "<group>"; };
 		654CC32019152F5D00600473 /* the-greens-rally.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "the-greens-rally.jpg"; sourceTree = "<group>"; };
 		654CC32619163BE600600473 /* appIcon58x58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon58x58.png; sourceTree = "<group>"; };
 		654CC32719163BE600600473 /* appIcon80x80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon80x80.png; sourceTree = "<group>"; };
@@ -474,6 +476,7 @@
 		65BC972318F3CFE7006063CA /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				653BCDAC19358F6F0014DA84 /* checkerMark60x60.png */,
 				6526A3921926052B00B7BB1F /* star30x30.png */,
 				65B3283A192A218100336CBD /* phone30x30.png */,
 				65B32836192A1CF500336CBD /* clock30x30.png */,
@@ -622,6 +625,7 @@
 				65BC975318F3D144006063CA /* Default.png in Resources */,
 				65EDAC4A19278AC40048A78D /* listsIcon30x30.png in Resources */,
 				65A812981910F34700C46959 /* theGreens120x120.png in Resources */,
+				653BCDAD19358F6F0014DA84 /* checkerMark60x60.png in Resources */,
 				65A812AA19112A9B00C46959 /* walking.jpg in Resources */,
 				65A812A219111D5C00C46959 /* forest-fog-1.jpg in Resources */,
 				65EDAC4C19278B400048A78D /* logoutIcon30x30.png in Resources */,
