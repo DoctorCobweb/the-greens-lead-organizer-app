@@ -53,7 +53,7 @@
 - (void)statusValueHit:(id)sender;
 - (void)supportLevelButtonHit:(id)sender;
 
-
+- (void)disableSaveButton:(BOOL)disable;
 - (IBAction)saveChanges:(id)sender;
 - (void)toggleTag:(id)sender;
 - (void)toggleContact:(id)sender;

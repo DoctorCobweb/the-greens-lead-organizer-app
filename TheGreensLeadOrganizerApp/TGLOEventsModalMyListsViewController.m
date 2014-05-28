@@ -422,12 +422,20 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
 
     //whillst we are enumerating, change the date type to formatted string for
     //results
+    
+    
+    
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     //now set the format to a simpler detail form for date
     [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
     [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
     
     NSString *dateString = [dateFormatter stringFromDate:[anEvent objectForKey:@"startTime"]];
+    
+    
+    //NSLog(@"****");
+    //NSLog(@"[anEvent objectForKey:startTime]: %@", [anEvent objectForKey:@"startTime"]);
+    //NSLog(@"startTime: %@", dateString);
     
     cell.dateLabel.text = dateString;
     

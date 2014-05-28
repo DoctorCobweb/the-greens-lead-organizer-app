@@ -537,9 +537,27 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 }
 
 
+
+- (void)disableSaveButton:(BOOL)disable
+{
+    NSLog(@"in disableSaveButton");
+    
+    if (disable == YES) {
+        [[[self navigationItem] rightBarButtonItem] setEnabled:NO];
+    }
+    
+    if (disable == NO) {
+        [[[self navigationItem] rightBarButtonItem] setEnabled:YES];
+    }
+}
+
+
+
 - (IBAction)saveChanges:(id)sender {
     NSLog(@"saveChanges button hit");
     
+    [self disableSaveButton: YES];
+
     [self resignAllFirstResponders];
     
     //1.
@@ -659,6 +677,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
+        [self disableSaveButton: NO];
     }];
 }
 
@@ -738,6 +757,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
+        [self disableSaveButton: NO];
     }];
 }
 
@@ -799,6 +819,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"Error: %@", error);
+            [self disableSaveButton: NO];
         }];
     } else if([httpMethod isEqualToString:@"PUT"]) {
         //for now hardcode automatically change guests to 1
@@ -840,6 +861,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"Error: %@", error);
+            [self disableSaveButton: NO];
         }];
     } else {
         //we're in the gutter.
@@ -890,6 +912,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
+        [self disableSaveButton: NO];
     }];
 }
 
@@ -997,6 +1020,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 
 - (void)reRenderUI
 {
+    [self disableSaveButton: NO];
     //reset the field
     self.addANewTag.text = @"";
     
