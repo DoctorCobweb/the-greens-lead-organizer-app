@@ -1273,6 +1273,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 - (IBAction)chooseListToAddTo:(id)sender
 {
     NSLog(@"chooseListToAddTo button clicked");
+    /*
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     TGLOListsModalTagsViewController *listsViewController = [storyboard instantiateViewControllerWithIdentifier:@"listsModalTagsVC"];
     
@@ -1288,6 +1289,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     
     //finally, present the events model VC
     [self presentViewController:navigationController animated:YES completion: nil];
+     */
 }
 
 @end
