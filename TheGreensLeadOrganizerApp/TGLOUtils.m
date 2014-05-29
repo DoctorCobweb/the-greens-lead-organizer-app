@@ -213,6 +213,7 @@ static NSString *permissionLevelVolunteer = @"volunteer";
     return[dateFormatter stringFromDate:date];
 }
 
+// need 2 different kinds of custom date formatting
 + (NSDate *)formattedDateFromString:(NSString *)dateString page:(NSString *)page
 {
     //we get a string of date formate
