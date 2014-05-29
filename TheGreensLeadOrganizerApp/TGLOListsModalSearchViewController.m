@@ -272,7 +272,7 @@ static NSString * isPersonInListUrl = @"https://cryptic-tundra-9564.herokuapp.co
     NSInteger searchTextLength = [searchText length];
     NSInteger previousSearchTermLength = [previousSearchTerm length];
     
-    NSLog(@"searchBar textDidChange");
+    //NSLog(@"searchBar textDidChange");
     
     if ([searchText isEqualToString:@""]) {
         //NSLog(@"searchText is empty String");

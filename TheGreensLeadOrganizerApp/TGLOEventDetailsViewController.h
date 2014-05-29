@@ -27,11 +27,12 @@
 - (void)getEvent;
 - (void)getAllRsvps;
 - (void)fillOutEventFields:(TGLOEvent *)event;
-- (void) addRsvpsLabel;
-- (void) translateRsvpIdsToNames:(NSSet *)rsvps;
+- (void)addRsvpsLabel;
+- (void)translateRsvpIdsToNames:(NSSet *)rsvps;
 - (void)addRsvpsToUI;
 - (id) fabricateANewView:(NSString *)viewType width:(CGFloat)viewWidth height:(CGFloat)viewHeight spacing: (CGFloat)viewSpacing;
 - (void)rsvpButtonHit:(id)sender;
+- (void)attendedButtonHit:(id)sender;
 - (void)updateRsvpDetails:(NSDictionary *)matchedJoinedRsvp;
 - (void)updateTheRsvpOnNationBuilder;
 - (void)updateScrollAndContainerViewSize:(CGFloat)makeMoreRoom;

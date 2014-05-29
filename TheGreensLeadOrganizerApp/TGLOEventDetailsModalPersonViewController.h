@@ -1,18 +1,17 @@
 //
-//  TGLOMainViewController.h
-//  TheGreensLeadOrganizerApp
+//  TGLOEventDetailsModalPersonViewController.h
+//  Vic Greens
 //
-//  Created by andre on 8/04/2014.
+//  Created by andre on 29/05/2014.
 //  Copyright (c) 2014 andre trosky. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "TGLOPerson.h"
-#import "TGLOUpdatePersonDelegate.h"
+#import "TGLOEventDetailsViewController.h"
 
-@interface TGLOMainViewController : UIViewController<TGLOUpdatePersonDelegate>
+@interface TGLOEventDetailsModalPersonViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 @property (weak, nonatomic) IBOutlet UILabel *fullName;
@@ -21,8 +20,16 @@
 @property (weak, nonatomic) IBOutlet UIButton *phone;
 @property (weak, nonatomic) IBOutlet UIButton *mobile;
 
+
 @property (strong, nonatomic) TGLOPerson *person;
 @property (strong, nonatomic) NSMutableArray *contacts;
+
+
+
+@property (strong, nonatomic) NSNumber *personId;
+@property (strong, nonatomic) TGLOEventDetailsViewController *delegate;
+
+- (IBAction)cancelItemHit:(id)sender;
 
 
 - (void)getMyNationBuilderDetails;
@@ -42,5 +49,9 @@
 - (void)addContactViews;
 - (void)addASingleContact:(int)index;
 - (NSArray *)reverseArray:(NSArray *)array;
+
+
+- (IBAction)makeCall:(id)sender;
+- (IBAction)writeEmail:(id)sender;
 
 @end

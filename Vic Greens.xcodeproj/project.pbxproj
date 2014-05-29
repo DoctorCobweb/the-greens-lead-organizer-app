@@ -58,6 +58,7 @@
 		65A812A419111E2000C46959 /* forest-fog-2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65A812A319111E2000C46959 /* forest-fog-2.jpg */; };
 		65A812AA19112A9B00C46959 /* walking.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65A812A919112A9B00C46959 /* walking.jpg */; };
 		65B022F018FD27A50057E741 /* TGLOPersonFromListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B022EF18FD27A50057E741 /* TGLOPersonFromListViewController.m */; };
+		65B0E6CA1936DEF200B6E30E /* TGLOEventDetailsModalPersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B0E6C91936DEF200B6E30E /* TGLOEventDetailsModalPersonViewController.m */; };
 		65B25AE01914F61C000A8349 /* grey120x120.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B25ADF1914F61C000A8349 /* grey120x120.png */; };
 		65B32837192A1CF500336CBD /* clock30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B32836192A1CF500336CBD /* clock30x30.png */; };
 		65B32839192A1CFF00336CBD /* home30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B32838192A1CFF00336CBD /* home30x30.png */; };
@@ -202,6 +203,8 @@
 		65A812A919112A9B00C46959 /* walking.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = walking.jpg; sourceTree = "<group>"; };
 		65B022EE18FD27A50057E741 /* TGLOPersonFromListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOPersonFromListViewController.h; sourceTree = "<group>"; };
 		65B022EF18FD27A50057E741 /* TGLOPersonFromListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOPersonFromListViewController.m; sourceTree = "<group>"; };
+		65B0E6C81936DEF200B6E30E /* TGLOEventDetailsModalPersonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGLOEventDetailsModalPersonViewController.h; sourceTree = "<group>"; };
+		65B0E6C91936DEF200B6E30E /* TGLOEventDetailsModalPersonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGLOEventDetailsModalPersonViewController.m; sourceTree = "<group>"; };
 		65B25ADF1914F61C000A8349 /* grey120x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grey120x120.png; sourceTree = "<group>"; };
 		65B32836192A1CF500336CBD /* clock30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clock30x30.png; sourceTree = "<group>"; };
 		65B32838192A1CFF00336CBD /* home30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home30x30.png; sourceTree = "<group>"; };
@@ -437,6 +440,8 @@
 				65B32846192B52E300336CBD /* TGLOListsModalSearchViewController.m */,
 				65B3284E192F6E3800336CBD /* TGLOListModel.h */,
 				65B3284F192F6E3800336CBD /* TGLOListModel.m */,
+				65B0E6C81936DEF200B6E30E /* TGLOEventDetailsModalPersonViewController.h */,
+				65B0E6C91936DEF200B6E30E /* TGLOEventDetailsModalPersonViewController.m */,
 			);
 			name = "Vic Greens";
 			path = TheGreensLeadOrganizerApp;
@@ -736,6 +741,7 @@
 				651318D7190508E600995995 /* TGLOEditPersonFromTagViewController.m in Sources */,
 				655572A518FAB34C00FA4297 /* TGLOListViewController.m in Sources */,
 				65D63A28192244D400533C3F /* TGLOEventsModalMyProfileViewController.m in Sources */,
+				65B0E6CA1936DEF200B6E30E /* TGLOEventDetailsModalPersonViewController.m in Sources */,
 				651626ED18F6253900DCC064 /* TGLOPerson.m in Sources */,
 				651318DD1905136000995995 /* TGLOEditMyProfileViewController.m in Sources */,
 				65D63A2E19225FF200533C3F /* TGLOEventsModalSearchViewController.m in Sources */,

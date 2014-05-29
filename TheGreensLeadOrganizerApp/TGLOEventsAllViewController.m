@@ -283,7 +283,7 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
 
 
 - (IBAction)menuHit:(id)sender {
-    NSLog(@"menuHit action");
+    //NSLog(@"menuHit action");
     [self.searchBar resignFirstResponder];
     // Set the side bar button action. When it's tapped, it'll show up the sidebar.
     [self.revealViewController revealToggle:nil];
@@ -296,14 +296,14 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    NSLog(@"%@", searchText);
+    //NSLog(@"%@", searchText);
     NSInteger searchTextLength = [searchText length];
     NSInteger previousSearchTermLength = [previousSearchTerm length];
     
     
     
     if ([searchText isEqualToString:@""]) {
-        NSLog(@"searchText is empty String");
+        //NSLog(@"searchText is empty String");
         
         //reload table with original all events array
         searchResults = [[NSMutableArray alloc] initWithArray:searchResultsCache];
@@ -322,7 +322,7 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
     }
     
     if (searchTextLength > previousSearchTermLength) {
-        NSLog(@"drilling down");
+        //NSLog(@"drilling down");
         //push removed objects to undo stack
         NSMutableArray *collectionOfEvents = [[NSMutableArray alloc] init];
         
@@ -355,14 +355,14 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
         [[self tableView] reloadData];
         previousSearchTerm = searchText;
         
-        NSLog(@"pushing: %d objects to undoStack", [[undoStack lastObject ] count]);
+        //NSLog(@"pushing: %d objects to undoStack", [[undoStack lastObject ] count]);
         //NSLog(@"collectionOfEvents: %@", collectionOfEvents);
         //NSLog(@"undoStack: %@", undoStack);
         return;
     }
     
     if (searchTextLength < previousSearchTermLength) {
-        NSLog(@"drilling up");
+        //NSLog(@"drilling up");
         //pop objects off stack back onto searchResults
         
         //NSLog(@"searchResults count BEFORE POP: %d", [searchResults count]);
@@ -403,7 +403,7 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar_
 {
-    NSLog(@"searchBar SEARCH clicked");
+    //NSLog(@"searchBar SEARCH clicked");
     [searchBar_ resignFirstResponder];
 }
 

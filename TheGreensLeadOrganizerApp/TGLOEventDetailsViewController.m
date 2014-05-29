@@ -12,6 +12,7 @@
 #import "TGLOUtils.h"
 #import "TGLOAppDelegate.h"
 #import "TGLOCustomRsvpView.h"
+#import "TGLOEventDetailsModalPersonViewController.h"
 
 //default to get 1000 (max) people for a list. not making multiple
 //page calls to get all people as yet.
@@ -184,6 +185,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     
     
     NSString * translateIdsToNamesUrl_ = [NSString stringWithFormat:translateIdsToNamesUrl, [TGLOUtils getUserNationBuilderId], token];
+    
     NSMutableArray *idsArray = [[NSMutableArray alloc] init];
     
     //extract only person_ids which we want to translate
@@ -198,10 +200,8 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     //need to get notes on the person from a different api, namely
     // the contacts api
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    //must set request serializer to application/json. otherwise 406
-    //is responded
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    
     [manager POST:translateIdsToNamesUrl_ parameters:postBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"=> RSVPS ids to names translation response %@",responseObject);
         
@@ -262,15 +262,19 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
         NSNumber *guestsCount= [joinedRsvps[i] objectForKey:@"guests_count"];
         NSString *canceled = [[NSString alloc] init];
         NSString *rsvpButtonTitle;
-        TGLOCustomRsvpView *newRsvpView = (TGLOCustomRsvpView *)[self fabricateANewView:@"TGLOCustomRsvpView" width:labelWidth height:labelHeight spacing:labelSpacing];
         NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
         NSString *imageLocation;
         UIImage *backgroundImage;
         
+        TGLOCustomRsvpView *newRsvpView = (TGLOCustomRsvpView *)[self fabricateANewView:@"TGLOCustomRsvpView" width:labelWidth height:labelHeight spacing:labelSpacing];
+        
         newRsvpView.personId = [joinedRsvps[i] objectForKey:@"person_id"];
         newRsvpView.fullName = [joinedRsvps[i] objectForKey:@"fullName"];
         
+        [newRsvpView.attendedButton addTarget:self action:@selector(attendedButtonHit:) forControlEvents:UIControlEventTouchUpInside];
+        
         [newRsvpView.rsvpButton addTarget:self action:@selector(rsvpButtonHit:) forControlEvents:UIControlEventTouchUpInside];
+        
         
         
         //check if canceled
@@ -281,7 +285,9 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
             //cant have a checker mark sayin they attended if they cancelled.
             imageLocation = [[NSString alloc] initWithFormat:@"%@/grey120x120.png", bundlePath ];
             backgroundImage = [[UIImage alloc] initWithContentsOfFile:imageLocation];
-            [newRsvpView.attendedImageView setImage:backgroundImage];
+            //[newRsvpView.attendedImageView setImage:backgroundImage];
+            
+            [newRsvpView.attendedButton setBackgroundImage:backgroundImage forState:UIControlStateNormal];
             
         } else {
             canceled = @"";
@@ -290,7 +296,9 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
                 //person has attended
                 imageLocation = [[NSString alloc] initWithFormat:@"%@/checkerMark60x60.png", bundlePath ];
                 backgroundImage = [[UIImage alloc] initWithContentsOfFile:imageLocation];
-                [newRsvpView.attendedImageView setImage:backgroundImage];
+                //[newRsvpView.attendedImageView setImage:backgroundImage];
+                
+                [newRsvpView.attendedButton setBackgroundImage:backgroundImage forState:UIControlStateNormal];
             }
         }
         
@@ -310,8 +318,34 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     
 }
 
+
 - (void)rsvpButtonHit:(id)sender
 {
+    TGLOCustomRsvpView *theCustomView = (TGLOCustomRsvpView *)[sender superview];
+    NSLog(@"rsvpButtonHit, fullName: %@", theCustomView.fullName);
+    NSLog(@"rsvpButtonHit, fullName: %@", theCustomView.personId);
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    TGLOEventDetailsModalPersonViewController *personVC = [storyboard instantiateViewControllerWithIdentifier:@"eventDetailsModalPersonVC"];
+    
+    personVC.delegate = self;
+    personVC.modalPresentationStyle = UIModalPresentationFullScreen;
+    personVC.personId = theCustomView.personId;
+    
+    UINavigationController *navigationController =
+    [[UINavigationController alloc]
+     initWithRootViewController:personVC];
+    [navigationController navigationBar].topItem.title = @"Rsvp Person";
+    
+    //finally, present the events model VC
+    [self presentViewController:navigationController animated:YES completion: nil];
+}
+
+
+- (void)attendedButtonHit:(id)sender
+{
+    NSLog(@"attendedButtonHit, sender => %@", sender);
+    
     NSNumber *personId = ((TGLOCustomRsvpView *)[sender superview]).personId;
     
     //find specific joined person record using personId
@@ -485,8 +519,13 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
             imageLocation = [[NSString alloc] initWithFormat:@"%@/checkerMark60x60.png", bundlePath ];
             backgroundImage = [[UIImage alloc] initWithContentsOfFile:imageLocation];
             
+            
             //also reset button title to fullName and also set background color to purple (default)
-            [hitButton setTitle:((TGLOCustomRsvpView *)[hitButton superview]).fullName forState:UIControlStateNormal];
+            TGLOCustomRsvpView *hitCustomRsvpView = (TGLOCustomRsvpView *)[hitButton superview];
+            
+            [hitCustomRsvpView.rsvpButton setTitle:hitCustomRsvpView.fullName forState:UIControlStateNormal];
+            //[hitButton setTitle:((TGLOCustomRsvpView *)[hitButton superview]).fullName forState:UIControlStateNormal];
+            
             [hitButton setBackgroundColor: ((TGLOCustomRsvpView *)[hitButton superview]).defaultColor];
             
         } else {
@@ -503,7 +542,8 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
         }
         
         //finally set the actaul image to be the background
-        [((TGLOCustomRsvpView *)[hitButton superview]).attendedImageView setImage:backgroundImage];
+        //[((TGLOCustomRsvpView *)[hitButton superview]).attendedImageView setImage:backgroundImage];
+        [((TGLOCustomRsvpView *)[hitButton superview]).attendedButton setBackgroundImage:backgroundImage forState:UIControlStateNormal];
         
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

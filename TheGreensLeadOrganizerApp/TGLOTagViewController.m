@@ -17,7 +17,7 @@
 
 //default to get 1000 (max) people for a list. not making multiple
 //page calls to get all people as yet.
-static NSString *peopleForTagUrl= @"https://%@.nationbuilder.com/api/v1/tags/%@/people?page=1&per_page=1000&access_token=%@";
+static NSString *peopleForTagUrl= @"https://%@.nationbuilder.com/api/v1/tags/%@/people?page=1&per_page=100&access_token=%@";
 
 @interface TGLOTagViewController ()
 {

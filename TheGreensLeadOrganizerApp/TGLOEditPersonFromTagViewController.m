@@ -1034,6 +1034,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     int no_of_subviews = [allSubViews count];
     int delete_tags_label_index;
     BOOL foundIt = NO;
+    
     //this removes all subviews after deleteTagsLabel
     for (int j = 0; j < no_of_subviews; j++) {
         

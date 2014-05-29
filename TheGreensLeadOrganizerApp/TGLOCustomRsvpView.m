@@ -13,9 +13,6 @@
 - (id)initWithFrame:(CGRect)frame
 {
     
-    
-    
-    
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
@@ -27,22 +24,26 @@
         [self.rsvpButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.rsvpButton setBackgroundColor:self.defaultColor];
         
-        self.attendedImageView =[[UIImageView alloc] initWithFrame:CGRectMake(245, 0, 35, 35)];
+        //self.attendedImageView =[[UIImageView alloc] initWithFrame:CGRectMake(245, 0, 35, 35)];
+        
+        
+        self.attendedButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        self.attendedButton.frame = CGRectMake(245, 0, 35, 35);
+        [self.attendedButton setBackgroundColor:[UIColor yellowColor]];
         
         
         
         NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
-        //NSLog(@"bundlePath: %@", bundlePath);
         NSString *imageLocation = [[NSString alloc] initWithFormat:@"%@/appIcon120x120.png", bundlePath ];
-        //NSString *imageLocation = [[NSString alloc] initWithFormat:@"%@/checkerMark60x60.png", bundlePath ];
         UIImage *backgroundImage = [[UIImage alloc] initWithContentsOfFile:imageLocation];
-        //NSLog(@"backgroundImage: %@", backgroundImage);
         
-        [self.attendedImageView setImage:backgroundImage];
+        //[self.attendedImageView setImage:backgroundImage];
+        [self.attendedButton setBackgroundImage:backgroundImage forState:UIControlStateNormal];
 
         
         [self addSubview:self.rsvpButton];
-        [self addSubview:self.attendedImageView];
+        [self addSubview:self.attendedButton];
+        //[self addSubview:self.attendedImageView];
     }
     return self;
 }

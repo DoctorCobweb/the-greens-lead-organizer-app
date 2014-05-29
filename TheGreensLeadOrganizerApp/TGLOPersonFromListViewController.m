@@ -19,7 +19,7 @@
 // *** IMPORTANT ***
 //view with tag = 654 is Tags label. needed when updating UI after person is updated
 
-static NSString *myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=1000&access_token=%@";
+static NSString *myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=100&access_token=%@";
 static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuapp.com/namesForIds/%@/%@";
 
 
@@ -687,6 +687,8 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     
 }
 
+
+#pragma TGLODidUpdatePersonDelegate protocol
 -(void) didUpdatePerson:(TGLOPerson *)updatedPerson
 {
     NSLog(@"...didUpdatePerson called!!!");

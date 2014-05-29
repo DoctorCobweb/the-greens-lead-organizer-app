@@ -1,42 +1,41 @@
 //
-//  TGLOPersonFromSearchViewController.m
-//  TheGreensLeadOrganizerApp
+//  TGLOEventDetailsModalPersonViewController.m
+//  Vic Greens
 //
-//  Created by andre on 12/04/2014.
+//  Created by andre on 29/05/2014.
 //  Copyright (c) 2014 andre trosky. All rights reserved.
 //
 
-#import "TGLOPersonFromSearchViewController.h"
-#import "TGLOAppDelegate.h"
+#import "TGLOEventDetailsModalPersonViewController.h"
 #import "AFNetworking.h"
+#import "TGLOAppDelegate.h"
 #import "TGLOCustomContactView.h"
 #import "TGLOCustomContactSmallView.h"
-#import "TGLOEditPersonFromSearchViewController.h"
-#import "TGLOSearchResultsViewController.h"
+#import "TGLOEditMyProfileViewController.h"
 #import "TGLOUtils.h"
 
 // *** IMPORTANT ***
 //view with tag = 654 is Tags label. needed when updating UI after person is updated
 
-static NSString * myContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=1000&access_token=%@";
+static NSString *personUrl= @"https://%@.nationbuilder.com/api/v1/people/%@?access_token=%@";
+static NSString *personContactsUrl = @"https://%@.nationbuilder.com/api/v1/people/%@/contacts?page=1&per_page=1000&access_token=%@";
 static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuapp.com/namesForIds/%@/%@";
 
 
-@interface TGLOPersonFromSearchViewController ()
+@interface TGLOEventDetailsModalPersonViewController ()
 {
     NSString *token;
     NSInteger tagCount;
     NSInteger rowNumber;
     CGFloat finalXPos;
     CGFloat finalYPos;
-    
 }
-@property (nonatomic, strong) UIAlertView *tokenAlert;
 
+@property (strong, nonatomic) UIAlertView *tokenAlert;
 
 @end
 
-@implementation TGLOPersonFromSearchViewController
+@implementation TGLOEventDetailsModalPersonViewController
 @synthesize contacts;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -49,35 +48,33 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 }
 
 
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	// Do any additional setup after loading the view.
+    
+    //since Lists tab hides our app wide nav bar
+    //make sure it is NOT hidden before displaying
+    //this view controllers' view
+    [[[self navigationController] navigationBar] setHidden:NO];
     
     token = [TGLOUtils getUserAccessToken];
     [self setUpAppearance];
+    
+    if (token) {
+        [self getMyNationBuilderDetails];
+        
+    } else {
+        NSLog(@"ERROR in TGLOMainViewController.m. access_token is nil");
+    }
 }
 
 
 - (void)setUpAppearance
 {
-    self.title = @"Person";
-    
-    
-    //NSLog(@"permissionlevel: %@", [TGLOUtils getUserPermissionLevel]);
-    if ([TGLOUtils isAdminPermissionLevel]) {
-        NSLog(@"admin");
-        [([[self navigationItem] rightBarButtonItem]) setEnabled:YES];
-        ([[self navigationItem] rightBarButtonItem]).title = @"Edit";
-    }
-    
-    if ([TGLOUtils isVolunteerPermissionLevel]) {
-        NSLog(@"volunteer");
-        [([[self navigationItem] rightBarButtonItem]) setEnabled:NO];
-        ([[self navigationItem] rightBarButtonItem]).title = @"";
-    }
-    
-    //UIColor * white_color = [UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:1.0f];
-    
+    //self.title = @"My Profile";
     
     //set an initial scroll view size
     self.scrollView.contentSize =CGSizeMake(320, 550);
@@ -86,54 +83,92 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     //to scroll view size
     self.containerView.frame = CGRectMake(0, 0, 320, 550);
     
-    if(self.person){
-        //get the person object passed through from segue
-        //self.firstName.text = self.person.firstName;
-        //self.lastName.text = self.person.lastName;
-        
-        self.fullName.text = [[NSString alloc] initWithFormat:@"%@ %@", self.person.firstName, self.person.lastName];
-        self.supportLevel.text = [TGLOPerson formattedSupportLevel:self.person.supportLevel];
-        
-        
-        
-        [self.email setTitle:self.person.email forState:UIControlStateNormal];
-        //[self.email setTitleColor:white_color forState:UIControlStateNormal];
-        
-        [self.phone setTitle:self.person.phone forState:UIControlStateNormal];
-        //[self.phone setTitleColor:white_color forState:UIControlStateNormal];
-        
-        [self.mobile setTitle:self.person.mobile forState:UIControlStateNormal];
-        //[self.mobile setTitleColor:white_color forState:UIControlStateNormal];
-        
-    }
+    UINavigationBar *navbar = [[self navigationController] navigationBar];
     
-    [self addTagViews];
+    //NSLog(@"navigation bar: %@", navbar);
+    UIColor * black_color = [UIColor colorWithRed:0/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f];
     
-    
+    //this will set the 'back button' to be black
+    navbar.tintColor = black_color;
 }
 
--(void)addTagViews
+
+- (void)getMyNationBuilderDetails
+{
+    NSString * personUrl_ = [NSString stringWithFormat:personUrl, nationBuilderSlugValue, self.personId, token];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:personUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //NSLog(@"in MAIN VIEW CONTROLLER and response: %@", responseObject);
+        
+        NSDictionary * person_dic = [responseObject objectForKey:@"person"];
+        
+        NSLog(@"person_dic[id] SET: %@", [person_dic valueForKey:@"id"]);
+        
+        
+        //start setting up the ui stuff
+        [self setupPerson: person_dic];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+
+
+- (void)setupPerson:(NSDictionary *)person_dic
+{
+    NSLog(@"Setting up the person obj, fields...");
+    
+    
+    self.person = [TGLOPerson personFieldsForObject:person_dic];
+    
+    
+    self.fullName.text = [[NSString alloc] initWithFormat:@"%@ %@", self.person.firstName, self.person.lastName];
+    
+    self.supportLevel.text = [TGLOPerson formattedSupportLevel:self.person.supportLevel];
+    
+    [self.email setTitle:self.person.email forState:UIControlStateNormal];
+    //[self.email setTitleColor:white_color forState:UIControlStateNormal];
+    
+    [self.phone setTitle:self.person.phone forState:UIControlStateNormal];
+    //[self.phone setTitleColor:white_color forState:UIControlStateNormal];
+    
+    [self.mobile setTitle:self.person.mobile forState:UIControlStateNormal];
+    //[self.mobile setTitleColor:white_color forState:UIControlStateNormal];
+    
+    //now we can be sure that we have myNBId in
+    //user defaults. onwards to getting tags and
+    //contacts API calls, which rely on having
+    //myNBId non-nil.
+    [self addTagViews];
+}
+
+
+- (void)addTagViews
 {
     NSLog(@"SETTING UP ALL MY TAGS");
     rowNumber = -1;
     
+    //for (NSString *tag in taggings) {
     for (NSString *tag in self.person.tags) {
         [self addASingleTag:tag];
     }
+    
+    //reset rowNumber
     rowNumber = -1;
     
     [self getAllMyContacts];
 }
 
 
-- (void)addASingleTag:(NSString *)tag
+- (void) addASingleTag:(NSString*)tag
 {
-    CGFloat labelSpacing = 10; //spacing between the views
+    CGFloat labelSpacing = 5; //spacing between the views
     CGFloat makeMoreRoom = 20; //additional room on end of scroll/container view
     CGFloat labelHeight= 15;   //new label height
     
     UIColor *lightGrey = [UIColor colorWithRed:240/255.0f green:240/255.0f blue:240/255.0f alpha:1.0f];
-    
     
     CGFloat tagWidth = (320 - (2 * 20) - (2 * 8))/3;
     
@@ -145,7 +180,6 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     newLabel.backgroundColor = lightGrey;
     newLabel.textColor = [UIColor blackColor];
     
-    
     //update the scroll and container view to fit/display new content
     [self updateScrollAndContainerViewSize:makeMoreRoom];
     
@@ -156,8 +190,6 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 
 - (void)getAllMyContacts
 {
-    NSLog(@"in getAllMyContacts");
-    
     //this method is always called after all
     //the tags have rendered. therefore, before
     //going off to call the contacts api, create
@@ -166,91 +198,62 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     
     NSMutableArray *contactIds = [[NSMutableArray alloc] init];
     
-    
-    //playing with 'nothing'
-    if ([token isEqual:nil]){
-        NSLog(@"token is equal to nil");
-    }
-    if ([token isEqual:Nil]){
-        NSLog(@"token is equal to Nil");
-    }
-    if ([token isEqual:[NSNull null]]){
-        NSLog(@"token is equal to [NSNull null]");
-    }
-    
-    //this evals to true if token is not set
-    if (!token) {
-        NSLog(@"!token is true");
-    }
+    //now go onto getting all the contacts
+    //and eventually rendering them too.
+    NSString * personContactsUrl_ = [NSString stringWithFormat:personContactsUrl, nationBuilderSlugValue, self.personId , token];
     
     
+    //need to get notes on the person from a different api, namely
+    // the contacts api
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
-    if (!!self.person.recordID && !!token) {
+    
+    [manager GET:personContactsUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //NSLog(@" got contacts : %@", responseObject);
         
-        NSString * myContactsUrl_ = [NSString stringWithFormat:myContactsUrl, nationBuilderSlugValue, self.person.recordID, token];
+        NSSet * contacts_set = [responseObject objectForKey:@"results"];
         
+        //make latest contact appear first in contacts array
+        NSArray *contacts_ = [self reverseArray:[contacts_set allObjects]];
         
-        //need to get notes on the person from a different api, namely
-        // the contacts api
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        //NSMutableArray *contactsMutable = [[NSMutableArray alloc] initWithArray:contacts_];
+        NSMutableArray *contactsMutable = [[NSMutableArray alloc] init];
         
-        
-        [manager GET:myContactsUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            //NSLog(@" got contacts in MAIN DETAIL VIEW CONTROLLER and CONTACTS response: %@", responseObject);
+        [contacts_ enumerateObjectsUsingBlock:^(id obj, NSUInteger i, BOOL *stop) {
+            NSMutableDictionary *aMutableContact = [[NSMutableDictionary alloc] initWithDictionary:(NSDictionary *)obj];
             
-            NSSet * contacts_set = [responseObject objectForKey:@"results"];
-            //NSLog(@"contacts_set: %@", contacts_set);
+            [contactsMutable addObject:aMutableContact];
             
-            //make latest contact appear first in contacts array
-            NSArray *contacts_ = [self reverseArray:[contacts_set allObjects]];
-            
-            
-            //NSMutableArray *contactsMutable = [[NSMutableArray alloc] initWithArray:contacts_];
-            NSMutableArray *contactsMutable = [[NSMutableArray alloc] init];
-            
-            [contacts_ enumerateObjectsUsingBlock:^(id obj, NSUInteger i, BOOL *stop) {
-                NSMutableDictionary *aMutableContact = [[NSMutableDictionary alloc] initWithDictionary:(NSDictionary *)obj];
+            if (i == ([contacts_ count] - 1)) {
                 
-                [contactsMutable addObject:aMutableContact];
+                contacts = [[NSMutableArray alloc] initWithArray:contactsMutable];
+                //contacts = [[NSMutableArray alloc] initWithArray:contacts_];
                 
-                if (i == ([contacts_ count] - 1)) {
+                
+                [contacts_set enumerateObjectsUsingBlock: ^(id obj, BOOL *stop) {
                     
-                    contacts = [[NSMutableArray alloc] initWithArray:contactsMutable];
-                    //contacts = [[NSMutableArray alloc] initWithArray:contacts_];
+                    [contactIds addObject:[obj valueForKey:@"sender_id"]];
+                    [contactIds addObject:[obj valueForKey:@"recipient_id"]];
                     
-                    
-                    [contacts_set enumerateObjectsUsingBlock: ^(id obj, BOOL *stop) {
-                        
-                        [contactIds addObject:[obj valueForKey:@"sender_id"]];
-                        [contactIds addObject:[obj valueForKey:@"recipient_id"]];
-                        
-                    }];
-                    
-                    
-                    NSSet *contactIdsSet = [[NSSet alloc] initWithArray:contactIds];
-                    NSArray *filteredContactIds = [contactIdsSet allObjects];
-                    
-                    //NSLog(@"====> contacts: %@", contacts);
-                    //NSLog(@"====> contactIds: %@", contactIds);
-                    //NSLog(@"====> contactIdsSet: %@", contactIdsSet);
-                    //NSLog(@"====> filteredContactIds: %@", filteredContactIds);
-                    
-                    [self translateContactIdsToNames: (NSArray *)filteredContactIds];
-                }
-            }];
-            
-            //contacts = [[NSMutableArray alloc] initWithArray:contacts_];
-            //[self addContactViews];
-            
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Error: %@", error);
+                }];
+                
+                
+                NSSet *contactIdsSet = [[NSSet alloc] initWithArray:contactIds];
+                NSArray *filteredContactIds = [contactIdsSet allObjects];
+                
+                //NSLog(@"====> contacts: %@", contacts);
+                //NSLog(@"====> contactIds: %@", contactIds);
+                //NSLog(@"====> contactIdsSet: %@", contactIdsSet);
+                //NSLog(@"====> filteredContactIds: %@", filteredContactIds);
+                
+                [self translateContactIdsToNames: (NSArray *)filteredContactIds];
+            }
         }];
-    } else {
-        NSLog(@"ERROR in TGLOPersonViewController.m. access_token is nil OR person.recordID is nil");
-    }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
 }
-
-
 
 - (void) translateContactIdsToNames:(NSArray *)filteredContactIds
 {
@@ -281,13 +284,11 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
         
         
         //fill out contacts array with blank values for keys
-        //senderFullName and recipientFullName
+        //senderFullName and recipientFullName.
         for (int i = 0; i < [contacts count]; i++) {
             [contacts[i] setObject:[NSNull null] forKey:@"senderFullName"];
             [contacts[i] setObject:[NSNull null] forKey:@"recipientFullName"];
         }
-        
-        
         
         
         for (int j = 0; j < [peopleSetArray count]; j++) {
@@ -324,20 +325,16 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 }
 
 
-
-
 - (NSArray *)reverseArray:(NSArray *)array
 {
     int no_of_contacts = [array count];
     NSMutableArray *reversed_contacts_ = [[NSMutableArray alloc] initWithCapacity:no_of_contacts];
-    
     for (int i = no_of_contacts - 1; i >= 0; i--) {
         [reversed_contacts_ addObject:array[i]];
     }
     
-    return [[NSArray alloc] initWithArray:reversed_contacts_];;
+    return [[NSArray alloc] initWithArray:reversed_contacts_];
 }
-
 
 - (void)addContactsLabel
 {
@@ -361,9 +358,11 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 
 
 
+
 - (void)addContactViews
 {
     NSLog(@"adding in the contact views...");
+    //NSLog(@"contacts: %@", contacts);
     
     int number_of_contacts = [contacts count];
     for (int i = 0; i < number_of_contacts; i++) {
@@ -372,15 +371,10 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 }
 
 
-
-
 - (void)addASingleContact:(int)index
 {
     CGFloat labelSpacing = 15; //spacing between the views
     CGFloat labelWidth = 280;  //new label width
-    
-    //NSString *senderIdString = [[NSString alloc] initWithFormat:@"%@", [contacts[index] objectForKey:@"sender_id"]];
-    //NSString *recipientIdString = [[NSString alloc] initWithFormat:@"%@", [contacts[index] objectForKey:@"recipient_id"]];
     
     NSString *typeString;
     NSString *methodString;
@@ -389,11 +383,8 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     NSString *noteString;
     NSString *contactSentenceLabelString;
     NSString *noteLabelString;
-    
     NSString *senderFullName;
     NSString *recipientFullName;
-    
-    
     
     
     //make sure we dont try to assign null to
@@ -453,12 +444,9 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     }
     
     
-    //contactSentenceLabelString = [[NSString alloc] initWithFormat:@"%@ contacted %@ for  %@ via %@. Status is: %@.", senderIdString, recipientIdString, typeString, methodString, statusString];
     contactSentenceLabelString = [[NSString alloc] initWithFormat:@"%@ contacted %@ for  %@ via %@. Status is: %@.", senderFullName, recipientFullName, typeString, methodString, statusString];
     
     noteLabelString = noteString;
-    
-    
     
     
     NSAttributedString *noteAttributedString = [[NSAttributedString alloc] initWithString:noteLabelString];
@@ -509,7 +497,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
                contactWidth,
                noteParagraphRect.size.height + 35);
     
- 
+    
     
     contactSentenceLabel.attributedText = contactSentenceAttributedString;
     dateLabel.attributedText = dateAttributedString;
@@ -524,15 +512,12 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 
 
 
-
+// utility method for construct different types of views
 - (UILabel *) fabricateANewTagWithWidth:(CGFloat)viewWidth height:(CGFloat)viewHeight spacing: (CGFloat)viewSpacing
 {
     NSInteger mod = tagCount % 3;
     tagCount++;
-    
     //NSLog(@"mod: %d", mod);
-    //NSLog(@"lastViewFrame: %@", NSStringFromCGRect(lastViewFrame));
-    
     
     if (mod == 0) {
         //NSLog(@"mod == 0");
@@ -556,18 +541,16 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     //NSLog(@"(finalXPos, finalYPos) = (%f, %f)", finalXPos, finalYPos);
     //NSLog(@"viewRect: %@", NSStringFromCGRect(viewRect));
     
-    
     return [[UILabel alloc] initWithFrame:viewRect];
 }
-
 
 
 
 // utility method for construct different types of views
 - (id) fabricateANewView:(NSString *)viewType width:(CGFloat)viewWidth height:(CGFloat)viewHeight spacing: (CGFloat)viewSpacing
 {
-    NSArray *containerSubviews = [self.containerView subviews];
     
+    NSArray *containerSubviews = [self.containerView subviews];
     CGRect lastViewFrame = ((UILabel *)[containerSubviews lastObject]).frame;
     
     //get dimensions of the lower left corner of
@@ -581,6 +564,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
         lastViewXLocation = CGRectGetMinX(lastViewFrame);
     }
     
+    
     //now create a new rect, taking into account
     //location of last subview
     CGRect viewRect = CGRectMake(lastViewXLocation, lastViewYLocation + viewSpacing, viewWidth, viewHeight);
@@ -590,12 +574,14 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
         return [[UILabel alloc] initWithFrame:viewRect];
     } else if ([viewType isEqualToString:@"UITextField"]) {
         return [[UITextField alloc] initWithFrame:viewRect];
-    } else if ([viewType isEqualToString:@"TGLOCustomContactSmallView"]) {
+    } else if([viewType isEqualToString:@"TGLOCustomContactSmallView"]) {
         return [[TGLOCustomContactSmallView alloc] initWithFrame:viewRect];
     } else {
         return @"ERROR";
     }
 }
+
+
 
 
 //adding in more room to the scroll and container view to fit in newly added content
@@ -612,6 +598,50 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     CGRect containerViewFrame = self.containerView.frame;
     
     self.containerView.frame = CGRectMake(0, 0, (CGRectGetMaxX(containerViewFrame)), (CGRectGetMaxY(containerViewFrame)) + makeMoreRoom);
+}
+
+
+#pragma mark - Navigation
+/*
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"showEditMyProfile"]) {
+        
+        TGLOEditMyProfileViewController *destViewController = (TGLOEditMyProfileViewController *) segue.destinationViewController;
+        destViewController.person = self.person;
+        destViewController.contacts= self.contacts;
+        
+        //set self as delegate for <TGLOUpdatePersonDelegate> protocol
+        destViewController.delegate = self;
+    }
+    
+}
+ */
+
+-(void) didUpdatePerson:(TGLOPerson *)updatedPerson
+{
+    NSLog(@"...didUpdatePerson called!!!");
+    NSLog(@"updated person is: %@", updatedPerson);
+    NSLog(@"updated person.lastName is: %@", updatedPerson.lastName);
+    NSLog(@"updated person.supportLevel: %@", updatedPerson.supportLevel);
+    
+    //**update person**
+    //set person to be the newly saved/updated person
+    self.person = updatedPerson;
+    
+    
+    //reset the parameters used for adding tags at proper locations
+    finalXPos = 20;
+    
+    //find the bottom of the Tags label
+    finalYPos = CGRectGetMaxY(((UILabel *)[self.containerView viewWithTag:654]).frame);
+    tagCount = 0;
+    
+#warning TODO: find better way to update UI instead of completely nil ing the view
+    //rerender all the ui now
+    //1. get rid of all subviews
+    self.view = nil;
+    
 }
 
 
@@ -686,90 +716,30 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     }
 }
 
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
+
+/*
 #pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"showEditPersonFromSearch"]) {
-        
-        TGLOEditPersonFromSearchViewController *destViewController = (TGLOEditPersonFromSearchViewController *) segue.destinationViewController;
-        destViewController.person = self.person;
-        destViewController.contacts= self.contacts;
-        
-        //set self as delegate for <TGLOUpdatePersonDelegate> protocol
-        destViewController.delegate = self;
-    }
-    
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
 }
+*/
 
-#pragma TGLODidUpdatePersonDelegate protocol
--(void) didUpdatePerson:(TGLOPerson *)updatedPerson
-{
-    NSLog(@"...didUpdatePerson called!!!");
-    //NSLog(@"updated person is: %@", updatedPerson);
-    //NSLog(@"updated person.lastName is: %@", updatedPerson.lastName);
-    //NSLog(@"updated person.supportLevel: %@", updatedPerson.supportLevel);
+- (IBAction)cancelItemHit:(id)sender {
+    NSLog(@"cancelItemHit");
     
-    //**update person**
-    //set person to be the newly saved/updated person
-    self.person = updatedPerson;
+   [[self delegate] dismissViewControllerAnimated:YES completion:nil];
     
     
-    //reset the parameters used for adding tags at proper locations
-    finalXPos = 20;
-    
-    //find the bottom of the Tags label
-    finalYPos = CGRectGetMaxY(((UILabel *)[self.containerView viewWithTag:654]).frame);
-    tagCount = 0;
-    
-    #warning TODO: find better way to update UI instead of completely nil ing the view
-    //rerender all the ui now
-    //1. get rid of all subviews
-    self.view = nil;
-    
-    //2. populate the ui
-    //[self viewDidLoad];
-
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    NSLog(@"viewWillDisappear");
-    //get reference to previous view controller from the nav stack
-    //NAVIGATION STUFF
-    //view controller stuff. get the navigation stack. get the
-    //previous view controller etc
-    
-    NSLog(@"self.parentViewController: %@",self.parentViewController);
-    UINavigationController *navController = (UINavigationController *)self.parentViewController;
-    NSArray *viewControllers = [navController viewControllers];
-    NSLog(@"viewControllers: %@", viewControllers);
-    
-    // output array
-    //["<TGLOSearchViewController: 0x8e0a770>",
-    //"<TGLOSearchResultsViewController: 0x8c62580>"]
-    TGLOSearchResultsViewController *lastViewController = [viewControllers lastObject];
-    NSLog(@"lastViewController class: %@", [lastViewController class]);
-    
-    //check to see if we are going back instead of drilling down
-    //further into the app.
-    //if we are drilling down further i.e. selecting to edit the
-    //person then the last view controller will be
-    //TGLOEditPersonFromSearchViewController instead of
-    //TGLOSearchResultsViewController
-    if ([lastViewController class] == [TGLOSearchResultsViewController class]) {
-        NSLog(@"we have a match for TGLOSearchResultsViewController");
-        
-        [lastViewController.searchResults replaceObjectAtIndex:lastViewController.lastPersonSelected withObject:self.person];
-        
-        //tell the table to reload its data
-        [lastViewController.tableView reloadData];
-    
-    }
 }
 @end

@@ -662,6 +662,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     
 }
 
+#pragma TGLODidUpdatePersonDelegate protocol
 -(void) didUpdatePerson:(TGLOPerson *)updatedPerson
 {
     NSLog(@"...didUpdatePerson called!!!");
