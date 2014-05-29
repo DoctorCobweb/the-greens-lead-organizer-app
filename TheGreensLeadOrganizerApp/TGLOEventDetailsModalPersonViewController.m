@@ -419,7 +419,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     NSString *dateValue = [contacts[index] objectForKey:@"created_at"];
     if ([contacts[index] objectForKey:@""] != null) {
         
-        dateString = [TGLOUtils formattedDateStringFromDate:[TGLOUtils formattedDateFromString:dateValue]];
+        dateString = [TGLOUtils formattedDateStringFromDate:[TGLOUtils formattedDateFromString:dateValue page:@"eventDetails"]];
         
     }
     

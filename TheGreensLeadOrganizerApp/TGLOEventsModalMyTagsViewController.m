@@ -166,7 +166,7 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
         // Create a new managed object, new Event
         NSManagedObject *newE = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:moc];
         
-        NSDate *date = [TGLOUtils formattedDateFromString:[obj valueForKey:@"startTime"]];
+        NSDate *date = [TGLOUtils formattedDateFromString:[obj valueForKey:@"startTime"] page:@"eventsList"];
         
         [newE setValue:[obj valueForKey:@"eventId"] forKey:@"eventId"];
         [newE setValue:[obj valueForKey:@"name"] forKey:@"name"];

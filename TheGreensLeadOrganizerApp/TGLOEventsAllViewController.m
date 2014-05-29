@@ -116,6 +116,9 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
             
             if (error == nil) {
                 NSLog(@"error is nil");
+                //NSLog(@"searchResults: %@", searchResults);
+                
+                #warning TODO: order events in searchResults, searchResultsCache by startTime
                 [self.tableView reloadData];
             }
             
@@ -140,6 +143,7 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
     }];
     
     searchResults = [extractedEvents mutableCopy];
+    NSLog(@"searchResults: %@", searchResults);
     searchResultsCache = [[NSArray alloc] initWithArray:extractedEvents];
 }
 
@@ -181,7 +185,7 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
         // Create a new managed object, new Event
         NSManagedObject *newE = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:moc];
         
-        NSDate *date = [TGLOUtils formattedDateFromString:[obj valueForKey:@"startTime"]];
+        NSDate *date = [TGLOUtils formattedDateFromString:[obj valueForKey:@"startTime"] page:@"eventsList"];
         
         [newE setValue:[obj valueForKey:@"eventId"] forKey:@"eventId"];
         [newE setValue:[obj valueForKey:@"name"] forKey:@"name"];
@@ -216,6 +220,8 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
         
         if (error == nil) {
             NSLog(@"error is nil");
+            
+            //NSLog(@"searchResults: %@", searchResults);
             [self.tableView reloadData];
         }
         
@@ -439,20 +445,17 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
     }
     
     
-    //NSLog(@"VENUE: %@", venue);
-    //NSLog(@"ADDRESS: %@", address);
-    //cell.dateLabel.text = [TGLOUtils formatTheDate:[anEvent objectForKey:@"startTime"] withCustomFormat:@"yyyy-MM-dd'T'HH:mm:ss+HH:mm"];
+    //whillst we are enumerating, change the date type to formatted string
+    NSDate *theDate = [anEvent valueForKey:@"startTime"];
+    NSLog(@"theDate: %@", theDate);
+    NSString *theDateString = [[NSString alloc] initWithFormat:@"%@", theDate];
+    NSLog(@"theDateString: %@", theDateString);
+    NSDate *date = [TGLOUtils formattedDateFromString:theDateString page:@"eventsList"];
+    NSLog(@"date: %@", date);
+    NSString *formattedDateString = [TGLOUtils formattedDateStringFromDate:date];
+    NSLog(@"formattedDateString: %@",formattedDateString);
     
-    //whillst we are enumerating, change the date type to formatted string for
-    //results
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    //now set the format to a simpler detail form for date
-    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-    
-    NSString *dateString = [dateFormatter stringFromDate:[anEvent objectForKey:@"startTime"]];
-    
-    cell.dateLabel.text = dateString;
+    cell.dateLabel.text = formattedDateString;
     
     
     //set the text contents finally

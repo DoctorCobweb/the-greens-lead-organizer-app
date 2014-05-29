@@ -213,13 +213,24 @@ static NSString *permissionLevelVolunteer = @"volunteer";
     return[dateFormatter stringFromDate:date];
 }
 
-+ (NSDate *)formattedDateFromString:(NSString *)dateString
++ (NSDate *)formattedDateFromString:(NSString *)dateString page:(NSString *)page
 {
     //we get a string of date formate
     //2014-05-04T19:13:34+10:00
 
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZZZZ"];
+    
+    
+    //we get two different types of formats depending on if it came from NB or came
+    //from the Event Entity (which changes format as it saves to core data)
+    if ([page isEqualToString:@"eventsList"]) {
+        [dateFormatter setDateFormat:@"yyyy'-'MM'-'dd HH':'mm':'ss ZZZZ"];
+    }
+    
+    if ([page isEqualToString:@"eventDetails"]) {
+        [dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZZZZ"];
+    }
+    
     [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:10]];
     
     NSDate *date =[dateFormatter dateFromString:dateString];
