@@ -112,7 +112,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     
     
     NSLog(@"event.dateString: %@", event.dateString);
-    NSDate *startDate = [TGLOUtils formattedDateFromString:event.dateString page:@"eventDetails"];
+    NSDate *startDate = [TGLOUtils formattedDateFromString:event.dateString];
     self.dateLabel.text = [TGLOUtils formattedDateStringFromDate:startDate];
     
     self.venue.text = [[NSString alloc] initWithFormat:@"%@, %@",address1, city];

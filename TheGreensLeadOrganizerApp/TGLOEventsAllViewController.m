@@ -157,12 +157,9 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
      
 - (void)sortResults
 {
-    NSSortDescriptor *sortDescriptor;
-    sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"startTime"
-                                                 ascending:YES];
-    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
     NSArray *sortedArray;
-    sortedArray = [searchResults sortedArrayUsingDescriptors:sortDescriptors];
+    
+    sortedArray = [TGLOUtils sortResultsOnDate:searchResults];
     
     searchResults = [[NSMutableArray alloc] initWithArray:sortedArray];
     searchResultsCache = [[NSMutableArray alloc] initWithArray:sortedArray];
@@ -208,7 +205,7 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
         // Create a new managed object, new Event
         NSManagedObject *newE = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:moc];
         
-        NSDate *date = [TGLOUtils formattedDateFromString:[obj valueForKey:@"startTime"] page:@"eventDetails"];
+        NSDate *date = [TGLOUtils formattedDateFromString:[obj valueForKey:@"startTime"]];
         
         
         [newE setValue:[obj valueForKey:@"eventId"] forKey:@"eventId"];

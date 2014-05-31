@@ -214,23 +214,14 @@ static NSString *permissionLevelVolunteer = @"volunteer";
 }
 
 // need 2 different kinds of custom date formatting
-+ (NSDate *)formattedDateFromString:(NSString *)dateString page:(NSString *)page
++ (NSDate *)formattedDateFromString:(NSString *)dateString
 {
     //we get a string of date formate
     //2014-05-04T19:13:34+10:00
 
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     
-    
-    //we get two different types of formats depending on if it came from NB or came
-    //from the Event Entity (which changes format as it saves to core data)
-    if ([page isEqualToString:@"eventsList"]) {
-        [dateFormatter setDateFormat:@"yyyy'-'MM'-'dd HH':'mm':'ss ZZZZ"];
-    }
-    
-    if ([page isEqualToString:@"eventDetails"]) {
-        [dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZZZZ"];
-    }
+    [dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZZZZ"];
     
     [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:10]];
     
@@ -250,9 +241,24 @@ static NSString *permissionLevelVolunteer = @"volunteer";
     NSString *dateString = [dateFormatter stringFromDate:date];
 
 
-
-
     return dateString;
+}
+
+
++ (NSArray *)sortResultsOnDate:(NSMutableArray *)searchResults
+{
+    return [searchResults sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+        
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        //now set the format to a simpler detail form for date
+        [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+        [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+        
+        NSDate *dateA = [dateFormatter dateFromString:[a objectForKey:@"startTime"]];
+        NSDate *dateB = [dateFormatter dateFromString:[b objectForKey:@"startTime"]];
+        
+        return [dateA compare:dateB];
+    }];
 }
 
 
