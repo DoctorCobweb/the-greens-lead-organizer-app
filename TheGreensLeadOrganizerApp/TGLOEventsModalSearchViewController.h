@@ -19,11 +19,14 @@
 @property (strong, nonatomic) NSNumber *personIdFromList;
 @property (strong, nonatomic) TGLOEditPersonFromSearchViewController *delegate;
 
-typedef void (^allEventsCompletionHandler)(NSError *error);
+typedef void (^allEventsCompletionHandler)(NSError *error, NSMutableArray *resultsArray);
 
 
 - (IBAction)cancelModal:(id)sender;
 
+
+- (void)sortResults;
+- (void)populateSearchArrays:(NSArray *)theArray;
 - (void)loadAllEventEntities;
 - (void)saveAllEventEntities:(NSMutableArray *)results;
 - (void)getAllEvents: (allEventsCompletionHandler)completionBlock;

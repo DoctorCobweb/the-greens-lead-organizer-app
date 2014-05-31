@@ -96,12 +96,14 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     
     //first time visit to this 'page', automatically fetch events
     if ([fetchedEventsArray count] == 0) {
-        [self getAllEvents:^(NSError *error) {
+        [self getAllEvents:^(NSError *error, NSMutableArray *resultsArray) {
             NSLog(@"in getAllEvents completionHandler, error: %@", error);
             
             if (error == nil) {
                 NSLog(@"error is nil");
-                [self.tableView reloadData];
+                
+                [self saveAllEventEntities:resultsArray];
+                
             }
             
             if (error) {
@@ -109,15 +111,25 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
                 [self displayErrorAlert:@"Network Error" message:@"Unable to download events. Pleas try again."];
             }
         }];
-    }
+    } else {
     
+        [self populateSearchArrays:fetchedEventsArray];
+    
+    }
+}
+
+
+-(void)populateSearchArrays:(NSArray *)theArray
+{
     __block NSMutableArray *extractedEvents = [[NSMutableArray alloc] init];
     
-    [fetchedEventsArray enumerateObjectsUsingBlock:^(id obj, NSUInteger i, BOOL *stop) {
+    [theArray enumerateObjectsUsingBlock:^(id obj, NSUInteger i, BOOL *stop) {
+        
+        NSString *quickDate = [TGLOUtils formattedDateStringFromDate:[obj valueForKey:@"startTime"]];
         
         NSDictionary *dic = @{ @"eventId":   [obj valueForKey:@"eventId"],
                                @"name":      [obj valueForKey:@"name"],
-                               @"startTime": [obj valueForKey:@"startTime"],
+                               @"startTime": quickDate,
                                @"venue":     [obj valueForKey:@"venue"]
                                };
         
@@ -126,6 +138,26 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     
     searchResults = [extractedEvents mutableCopy];
     searchResultsCache = [[NSArray alloc] initWithArray:extractedEvents];
+    
+    [self sortResults];
+}
+
+
+
+
+- (void)sortResults
+{
+    NSSortDescriptor *sortDescriptor;
+    sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"startTime"
+                                                 ascending:YES];
+    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    NSArray *sortedArray;
+    sortedArray = [searchResults sortedArrayUsingDescriptors:sortDescriptors];
+    
+    searchResults = [[NSMutableArray alloc] initWithArray:sortedArray];
+    searchResultsCache = [[NSMutableArray alloc] initWithArray:sortedArray];
+    
+    [self.tableView reloadData];
 }
 
 
@@ -166,7 +198,7 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
         // Create a new managed object, new Event
         NSManagedObject *newE = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:moc];
         
-        NSDate *date = [TGLOUtils formattedDateFromString:[obj valueForKey:@"startTime"] page:@"eventsList"];
+        NSDate *date = [TGLOUtils formattedDateFromString:[obj valueForKey:@"startTime"] page:@"eventDetails"];
         
         [newE setValue:[obj valueForKey:@"eventId"] forKey:@"eventId"];
         [newE setValue:[obj valueForKey:@"name"] forKey:@"name"];
@@ -184,9 +216,8 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
         
     }];
     
-    //success in saving to database so we can assigned results to table data source
-    searchResults =      [[NSMutableArray alloc] initWithArray:results];
-    searchResultsCache = [[NSArray alloc] initWithArray:results];
+    
+    [self loadAllEventEntities];
 }
 
 
@@ -194,13 +225,14 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
 - (void)refresh:(UIRefreshControl *)refreshControl {
     NSLog(@"in refresh method");
     
-    [self getAllEvents:^(NSError *error) {
+    [self getAllEvents:^(NSError *error, NSMutableArray *resultsArray) {
         NSLog(@"in getAllEvents completionHandler, error: %@", error);
         [refreshControl endRefreshing];
         
         if (error == nil) {
             NSLog(@"error is nil");
-            [self.tableView reloadData];
+            
+            [self saveAllEventEntities:resultsArray];
         }
         
         if (error) {
@@ -229,21 +261,14 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
         NSArray *results_array = [[responseObject objectForKey:@"events"] allObjects];
         NSMutableArray *results_array_mutable = [[NSMutableArray alloc] initWithArray:results_array];
         
-        //searchResults = [[NSMutableArray alloc] initWithArray:results_array];
-        //searchResultsCache = [[NSArray alloc] initWithArray:results_array];
-        //reload tableview to display new data returned from server
-        //[self.tableView reloadData];
         
-        //refresh the events databse with new events
-        [self saveAllEventEntities:results_array_mutable];
-        
-        completionBlock(error);
+        completionBlock(error, results_array_mutable);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         
         error = [NSError errorWithDomain:@"GreensApp" code:1 userInfo:nil];
-        completionBlock(error);
+        completionBlock(error, nil);
     }];
 }
 
@@ -270,122 +295,6 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.a
 }
-
-
-#pragma UISearchBarDelegate methods
-
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
-{
-    NSInteger searchTextLength = [searchText length];
-    NSInteger previousSearchTermLength = [previousSearchTerm length];
-    
-    
-    
-    if ([searchText isEqualToString:@""]) {
-        //NSLog(@"searchText is empty String");
-        
-        //reload table with original all events array
-        searchResults = [[NSMutableArray alloc] initWithArray:searchResultsCache];
-        [[self tableView] reloadData];
-        
-        [undoStack removeAllObjects];
-        previousSearchTerm = @"";
-        
-        
-        //check we are bak to start
-        for (int k = 0; k < [searchResultsCache count]; k++) {
-            [searchResults containsObject:[searchResultsCache objectAtIndex:k]] ? nil: NSLog(@"ERROR: cache and searchResults not equal!");
-        }
-        
-        return;
-    }
-    
-    if (searchTextLength > previousSearchTermLength) {
-        //NSLog(@"drilling down");
-        //push removed objects to undo stack
-        NSMutableArray *collectionOfEvents = [[NSMutableArray alloc] init];
-        
-        NSMutableIndexSet *removeEventsAtIndexes = [self getIndexSetOfMatches:searchText];
-        
-        
-        NSArray *tempArray = [[NSArray alloc] initWithArray:searchResults];
-        int tempArrayCount = [tempArray count];
-        
-        [searchResults removeObjectsAtIndexes:removeEventsAtIndexes];
-        
-        for (int j = 0; j < tempArrayCount; j++) {
-            if (![searchResults containsObject:tempArray[j]]) {
-                //add this to dic of undo stack
-                [collectionOfEvents addObject:tempArray[j]];
-            }
-        }
-        
-        //commented out for the sake of easily poping undoStack
-        //(at expense of adding empty arrays as last object...)
-        /*
-         //only add to undoStack nonempty array
-         if (!![collectionOfEvents count]) {
-         [undoStack addObject:collectionOfEvents];
-         }
-         */
-        
-        [undoStack addObject:collectionOfEvents];
-        
-        [[self tableView] reloadData];
-        previousSearchTerm = searchText;
-        
-        //NSLog(@"pushing: %d objects to undoStack", [[undoStack lastObject ] count]);
-        //NSLog(@"collectionOfEvents: %@", collectionOfEvents);
-        //NSLog(@"undoStack: %@", undoStack);
-        return;
-    }
-    
-    if (searchTextLength < previousSearchTermLength) {
-        //NSLog(@"drilling up");
-        //pop objects off stack back onto searchResults
-        
-        //NSLog(@"searchResults count BEFORE POP: %d", [searchResults count]);
-        [searchResults addObjectsFromArray:[undoStack lastObject]];
-        //NSLog(@"poping: %d objects off undoStack", [[undoStack lastObject ] count]);
-        
-        [undoStack removeLastObject];
-        //NSLog(@"searchResults count AFTER POP: %d", [searchResults count]);
-        
-        [[self tableView] reloadData];
-        previousSearchTerm = searchText;
-        return;
-    }
-}
-
-
-- (NSMutableIndexSet *)getIndexSetOfMatches:(NSString *)searchTerm
-{
-    NSMutableIndexSet *indexes = [[NSMutableIndexSet alloc] init];
-    int searchCount = [searchResults count];
-    
-    for (int i = 0; i < searchCount; i++) {
-        NSString *tempName = [[searchResults[i] objectForKey:@"name"] lowercaseString];
-        
-        if ([tempName rangeOfString:[searchTerm lowercaseString]].location == NSNotFound) {
-            //no match so add to index set
-            [indexes addIndex:i];
-            
-        } else {
-            //match, do nothing
-            
-        }
-    }
-    return indexes;
-}
-
-
-
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar_
-{
-    //NSLog(@"searchBar SEARCH clicked");
-    [searchBar_ resignFirstResponder];
-}
-
 
 
 #pragma mark - Table view data source
@@ -416,30 +325,8 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     }
     
     
-    //NSLog(@"VENUE: %@", venue);
-    //NSLog(@"ADDRESS: %@", address);
-    //cell.dateLabel.text = [TGLOUtils formatTheDate:[anEvent objectForKey:@"startTime"] withCustomFormat:@"yyyy-MM-dd'T'HH:mm:ss+HH:mm"];
-
-    //whillst we are enumerating, change the date type to formatted string for
-    //results
-    
-    
-    
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    //now set the format to a simpler detail form for date
-    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-    
-    NSString *dateString = [dateFormatter stringFromDate:[anEvent objectForKey:@"startTime"]];
-    
-    
-    //NSLog(@"****");
-    //NSLog(@"[anEvent objectForKey:startTime]: %@", [anEvent objectForKey:@"startTime"]);
-    //NSLog(@"startTime: %@", dateString);
-    
-    cell.dateLabel.text = dateString;
-    
     //set the text contents finally
+    cell.dateLabel.text = [anEvent objectForKey:@"startTime"];;
     cell.nameLabel.text = [anEvent objectForKey:@"name"];
     cell.venueLabel.text = [anEvent objectForKey:@"venue"];
     
@@ -676,6 +563,126 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     
     
 }
+
+
+
+
+#pragma UISearchBarDelegate methods
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    NSInteger searchTextLength = [searchText length];
+    NSInteger previousSearchTermLength = [previousSearchTerm length];
+    
+    
+    
+    if ([searchText isEqualToString:@""]) {
+        //NSLog(@"searchText is empty String");
+        
+        //reload table with original all events array
+        searchResults = [[NSMutableArray alloc] initWithArray:searchResultsCache];
+        [[self tableView] reloadData];
+        
+        [undoStack removeAllObjects];
+        previousSearchTerm = @"";
+        
+        
+        //check we are bak to start
+        for (int k = 0; k < [searchResultsCache count]; k++) {
+            [searchResults containsObject:[searchResultsCache objectAtIndex:k]] ? nil: NSLog(@"ERROR: cache and searchResults not equal!");
+        }
+        
+        return;
+    }
+    
+    if (searchTextLength > previousSearchTermLength) {
+        //NSLog(@"drilling down");
+        //push removed objects to undo stack
+        NSMutableArray *collectionOfEvents = [[NSMutableArray alloc] init];
+        
+        NSMutableIndexSet *removeEventsAtIndexes = [self getIndexSetOfMatches:searchText];
+        
+        
+        NSArray *tempArray = [[NSArray alloc] initWithArray:searchResults];
+        int tempArrayCount = [tempArray count];
+        
+        [searchResults removeObjectsAtIndexes:removeEventsAtIndexes];
+        
+        for (int j = 0; j < tempArrayCount; j++) {
+            if (![searchResults containsObject:tempArray[j]]) {
+                //add this to dic of undo stack
+                [collectionOfEvents addObject:tempArray[j]];
+            }
+        }
+        
+        //commented out for the sake of easily poping undoStack
+        //(at expense of adding empty arrays as last object...)
+        /*
+         //only add to undoStack nonempty array
+         if (!![collectionOfEvents count]) {
+         [undoStack addObject:collectionOfEvents];
+         }
+         */
+        
+        [undoStack addObject:collectionOfEvents];
+        
+        [[self tableView] reloadData];
+        previousSearchTerm = searchText;
+        
+        //NSLog(@"pushing: %d objects to undoStack", [[undoStack lastObject ] count]);
+        //NSLog(@"collectionOfEvents: %@", collectionOfEvents);
+        //NSLog(@"undoStack: %@", undoStack);
+        return;
+    }
+    
+    if (searchTextLength < previousSearchTermLength) {
+        //NSLog(@"drilling up");
+        //pop objects off stack back onto searchResults
+        
+        //NSLog(@"searchResults count BEFORE POP: %d", [searchResults count]);
+        [searchResults addObjectsFromArray:[undoStack lastObject]];
+        //NSLog(@"poping: %d objects off undoStack", [[undoStack lastObject ] count]);
+        
+        [undoStack removeLastObject];
+        //NSLog(@"searchResults count AFTER POP: %d", [searchResults count]);
+        
+        [[self tableView] reloadData];
+        previousSearchTerm = searchText;
+        return;
+    }
+}
+
+
+- (NSMutableIndexSet *)getIndexSetOfMatches:(NSString *)searchTerm
+{
+    NSMutableIndexSet *indexes = [[NSMutableIndexSet alloc] init];
+    int searchCount = [searchResults count];
+    
+    for (int i = 0; i < searchCount; i++) {
+        NSString *tempName = [[searchResults[i] objectForKey:@"name"] lowercaseString];
+        
+        if ([tempName rangeOfString:[searchTerm lowercaseString]].location == NSNotFound) {
+            //no match so add to index set
+            [indexes addIndex:i];
+            
+        } else {
+            //match, do nothing
+            
+        }
+    }
+    return indexes;
+}
+
+
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar_
+{
+    //NSLog(@"searchBar SEARCH clicked");
+    [searchBar_ resignFirstResponder];
+}
+
+
+
 
 /*
  // Override to support conditional editing of the table view.

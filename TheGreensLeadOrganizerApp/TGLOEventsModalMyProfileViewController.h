@@ -17,12 +17,13 @@
 @property (strong, nonatomic) TGLOEditMyProfileViewController *delegate;
 
 
-typedef void (^allEventsCompletionHandler)(NSError *error);
+typedef void (^allEventsCompletionHandler)(NSError *error, NSMutableArray *resultsArray);
 
 
 - (IBAction)cancelModal:(id)sender;
 
-
+- (void)sortResults;
+-(void)populateSearchArrays:(NSArray *)theArray;
 - (void)loadAllEventEntities;
 - (void)saveAllEventEntities:(NSMutableArray *)results;
 - (void)getAllEvents: (allEventsCompletionHandler)comletionBlock;

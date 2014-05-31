@@ -115,6 +115,7 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
                 
                 
                 [self saveAllEventEntities:resultsArray];
+                
             }
             
             if (error) {
@@ -208,7 +209,6 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
         NSManagedObject *newE = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:moc];
         
         NSDate *date = [TGLOUtils formattedDateFromString:[obj valueForKey:@"startTime"] page:@"eventDetails"];
-        //NSLog(@"saveAllEntities, date: %@", date);
         
         
         [newE setValue:[obj valueForKey:@"eventId"] forKey:@"eventId"];
