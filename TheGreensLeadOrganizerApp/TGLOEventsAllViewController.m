@@ -57,6 +57,8 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
     //preserve selection between presentations.
     self.tableView.clearsContextBeforeDrawing = NO;
     
+    searchBar.delegate = self;
+    
     // Do any additional setup after loading the view.
     //since Lists tab hides our app wide nav bar
     //make sure it is NOT hidden before displaying
@@ -72,11 +74,9 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
     undoStack = [[NSMutableArray alloc] init];
     
     [self setUpAppearance];
-    
-    searchBar.delegate = self;
-    
     [self loadAllEventEntities];
 }
+
 
 -(void)setUpAppearance
 {
@@ -86,10 +86,6 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
     
     // Set the gesture
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
-    
-
-
-
 }
 
 
@@ -107,19 +103,18 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Event"];
     
     //an array of managedObjects of Entity type Event
-    __block NSArray *fetchedEventsArray = [moc executeFetchRequest:fetchRequest error:nil];
+    NSArray *fetchedEventsArray = [moc executeFetchRequest:fetchRequest error:nil];
     
     //first time visit to this 'page', automatically fetch events
     if ([fetchedEventsArray count] == 0) {
-        [self getAllEvents:^(NSError *error) {
+        [self getAllEvents:^(NSError *error, NSMutableArray *resultsArray ) {
             NSLog(@"in getAllEvents completionHandler, error: %@", error);
             
             if (error == nil) {
                 NSLog(@"error is nil");
-                //NSLog(@"searchResults: %@", searchResults);
                 
-                #warning TODO: order events in searchResults, searchResultsCache by startTime
-                [self.tableView reloadData];
+                
+                [self saveAllEventEntities:resultsArray];
             }
             
             if (error) {
@@ -127,15 +122,24 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
                 [self displayErrorAlert:@"Network Error" message:@"Unable to download events. Pleas try again."];
             }
         }];
+        
+    } else {
+        [self populateSearchArrays:fetchedEventsArray];
     }
     
+}
+
+-(void)populateSearchArrays:(NSArray *)theArray
+{
     __block NSMutableArray *extractedEvents = [[NSMutableArray alloc] init];
     
-    [fetchedEventsArray enumerateObjectsUsingBlock:^(id obj, NSUInteger i, BOOL *stop) {
+    [theArray enumerateObjectsUsingBlock:^(id obj, NSUInteger i, BOOL *stop) {
+        
+        NSString *quickDate = [TGLOUtils formattedDateStringFromDate:[obj valueForKey:@"startTime"]];
         
         NSDictionary *dic = @{ @"eventId":   [obj valueForKey:@"eventId"],
                                @"name":      [obj valueForKey:@"name"],
-                               @"startTime": [obj valueForKey:@"startTime"],
+                               @"startTime": quickDate,
                                @"venue":     [obj valueForKey:@"venue"]
                                };
         
@@ -143,8 +147,26 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
     }];
     
     searchResults = [extractedEvents mutableCopy];
-    NSLog(@"searchResults: %@", searchResults);
     searchResultsCache = [[NSArray alloc] initWithArray:extractedEvents];
+    
+    [self sortResults];
+}
+
+     
+     
+- (void)sortResults
+{
+    NSSortDescriptor *sortDescriptor;
+    sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"startTime"
+                                                 ascending:YES];
+    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    NSArray *sortedArray;
+    sortedArray = [searchResults sortedArrayUsingDescriptors:sortDescriptors];
+    
+    searchResults = [[NSMutableArray alloc] initWithArray:sortedArray];
+    searchResultsCache = [[NSMutableArray alloc] initWithArray:sortedArray];
+    
+    [self.tableView reloadData];
 }
 
 
@@ -185,7 +207,9 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
         // Create a new managed object, new Event
         NSManagedObject *newE = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:moc];
         
-        NSDate *date = [TGLOUtils formattedDateFromString:[obj valueForKey:@"startTime"] page:@"eventsList"];
+        NSDate *date = [TGLOUtils formattedDateFromString:[obj valueForKey:@"startTime"] page:@"eventDetails"];
+        //NSLog(@"saveAllEntities, date: %@", date);
+        
         
         [newE setValue:[obj valueForKey:@"eventId"] forKey:@"eventId"];
         [newE setValue:[obj valueForKey:@"name"] forKey:@"name"];
@@ -203,9 +227,7 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
         
     }];
     
-    //success in saving to database so we can assigned results to table data source
-    searchResults =      [[NSMutableArray alloc] initWithArray:results];
-    searchResultsCache = [[NSArray alloc] initWithArray:results];
+    [self loadAllEventEntities];
 }
 
 
@@ -214,15 +236,14 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
 - (void)refresh:(UIRefreshControl *)refreshControl {
     NSLog(@"in refresh method");
     
-    [self getAllEvents:^(NSError *error) {
+    [self getAllEvents:^(NSError *error, NSMutableArray *resultsArray) {
         NSLog(@"in getAllEvents completionHandler, error: %@", error);
         [refreshControl endRefreshing];
         
         if (error == nil) {
             NSLog(@"error is nil");
             
-            //NSLog(@"searchResults: %@", searchResults);
-            [self.tableView reloadData];
+            [self saveAllEventEntities:resultsArray];
         }
         
         if (error) {
@@ -250,22 +271,13 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
         NSMutableArray *results_array_mutable = [[NSMutableArray alloc] initWithArray:results_array];
         
         
-        //searchResults = [[NSMutableArray alloc] initWithArray:results_array];
-        //searchResultsCache = [[NSArray alloc] initWithArray:results_array];
-        //reload tableview to display new data returned from server
-        //[self.tableView reloadData];
-        
-        
-        //refresh the events databse with new events
-        [self saveAllEventEntities:results_array_mutable];
-        
-        completionBlock(error);
+        completionBlock(error, results_array_mutable);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         
         error = [NSError errorWithDomain:@"GreensApp" code:1 userInfo:nil];
-        completionBlock(error);
+        completionBlock(error, nil);
     }];
 }
 
@@ -293,6 +305,65 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
     [self.searchBar resignFirstResponder];
     // Set the side bar button action. When it's tapped, it'll show up the sidebar.
     [self.revealViewController revealToggle:nil];
+}
+
+
+
+
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    // Return the number of sections.
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    // Return the number of rows in the section.
+    return [searchResults count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView_ cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *eventCellIdentifier = @"eventTableCell";
+    NSDictionary *anEvent = [searchResults objectAtIndex:indexPath.row];
+    //NSLog(@"anEvent: %@", anEvent);
+    
+    TGLOEventTableViewCell *cell = (TGLOEventTableViewCell *)[tableView dequeueReusableCellWithIdentifier:eventCellIdentifier];
+    
+    if (cell == nil)
+    {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TGLOEventTableCell" owner:self options:nil];
+        cell = [nib objectAtIndex:0];
+    }
+    
+    
+    //set the text contents finally
+    cell.dateLabel.text = [anEvent valueForKey:@"startTime"];
+    cell.nameLabel.text = [anEvent objectForKey:@"name"];
+    cell.venueLabel.text = [anEvent objectForKey:@"venue"];
+    
+    return cell;
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 70;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    [self.searchBar resignFirstResponder];
+    
+    NSLog(@"selected event: %@", searchResults[ indexPath.row]);
+
+    //manually call the segue giving its identifier string which is
+    //set in storyboard
+    [self performSegueWithIdentifier:@"showEventDetails" sender:self];
 }
 
 
@@ -413,76 +484,6 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
     [searchBar_ resignFirstResponder];
 }
 
-
-
-
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    // Return the number of sections.
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    // Return the number of rows in the section.
-    return [searchResults count];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView_ cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *eventCellIdentifier = @"eventTableCell";
-    NSDictionary *anEvent = [searchResults objectAtIndex:indexPath.row];
-    //NSLog(@"anEvent: %@", anEvent);
-    
-    TGLOEventTableViewCell *cell = (TGLOEventTableViewCell *)[tableView dequeueReusableCellWithIdentifier:eventCellIdentifier];
-    
-    if (cell == nil)
-    {
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TGLOEventTableCell" owner:self options:nil];
-        cell = [nib objectAtIndex:0];
-    }
-    
-    
-    //whillst we are enumerating, change the date type to formatted string
-    NSDate *theDate = [anEvent valueForKey:@"startTime"];
-    NSLog(@"theDate: %@", theDate);
-    NSString *theDateString = [[NSString alloc] initWithFormat:@"%@", theDate];
-    NSLog(@"theDateString: %@", theDateString);
-    NSDate *date = [TGLOUtils formattedDateFromString:theDateString page:@"eventsList"];
-    NSLog(@"date: %@", date);
-    NSString *formattedDateString = [TGLOUtils formattedDateStringFromDate:date];
-    NSLog(@"formattedDateString: %@",formattedDateString);
-    
-    cell.dateLabel.text = formattedDateString;
-    
-    
-    //set the text contents finally
-    cell.nameLabel.text = [anEvent objectForKey:@"name"];
-    cell.venueLabel.text = [anEvent objectForKey:@"venue"];
-    
-    return cell;
-}
-
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 70;
-}
-
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    [self.searchBar resignFirstResponder];
-    
-    NSLog(@"selected event: %@", searchResults[ indexPath.row]);
-
-    //manually call the segue giving its identifier string which is
-    //set in storyboard
-    [self performSegueWithIdentifier:@"showEventDetails" sender:self];
-}
 
 
 - (void)didReceiveMemoryWarning

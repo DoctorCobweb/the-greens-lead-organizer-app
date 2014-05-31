@@ -15,10 +15,12 @@
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-typedef void (^allEventsCompletionHandler)(NSError *error);
+typedef void (^allEventsCompletionHandler)(NSError *error, NSMutableArray *resultsArray);
 
 
 
+- (void)sortResults;
+-(void)populateSearchArrays:(NSArray *)theArray;
 - (void)loadAllEventEntities;
 - (void)saveAllEventEntities:(NSMutableArray *)results;
 - (void)getAllEvents: (allEventsCompletionHandler)completionBlock;
