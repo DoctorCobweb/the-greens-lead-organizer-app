@@ -40,6 +40,7 @@
 - (void)updateScrollAndContainerViewSize:(CGFloat)makeMoreRoom;
 
 - (void)addContactViews;
+- (void)sortContacts;
 - (void)addASingleContact:(int)index;
 - (NSArray *)reverseArray:(NSArray *)array;
 

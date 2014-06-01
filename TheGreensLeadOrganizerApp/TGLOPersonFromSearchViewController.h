@@ -33,6 +33,7 @@
 - (void)addTagViews;
 - (void)addASingleTag:(NSString *)tag;
 - (void)addContactsLabel;
+- (void)sortContacts;
 
 - (UILabel *) fabricateANewTagWithWidth:(CGFloat)viewWidth height:(CGFloat)viewHeight spacing: (CGFloat)viewSpacing;
 
@@ -41,7 +42,6 @@
 
 - (IBAction)makeCall:(id)sender;
 - (IBAction)writeEmail:(id)sender;
-- (NSArray *)reverseArray:(NSArray *)array;
 
 @end
 

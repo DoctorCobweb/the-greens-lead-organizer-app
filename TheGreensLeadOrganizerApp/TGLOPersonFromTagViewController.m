@@ -184,11 +184,9 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
             //NSLog(@" got contacts in MAIN DETAIL VIEW CONTROLLER and CONTACTS response: %@", responseObject);
             
             NSSet * contacts_set = [responseObject objectForKey:@"results"];
-            
-            //make latest contact appear first in contacts array
-            NSArray *contacts_ = [self reverseArray:[contacts_set allObjects]];
-            //NSMutableArray *contactsMutable = [[NSMutableArray alloc] initWithArray:contacts_];
+            NSArray *contacts_ = [contacts_set allObjects];
             NSMutableArray *contactsMutable = [[NSMutableArray alloc] init];
+            
             [contacts_ enumerateObjectsUsingBlock:^(id obj, NSUInteger i, BOOL *stop) {
                 NSMutableDictionary *aMutableContact = [[NSMutableDictionary alloc] initWithDictionary:(NSDictionary *)obj];
                 
@@ -300,18 +298,6 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 
 
 
-- (NSArray *)reverseArray:(NSArray *)array
-{
-    int no_of_contacts = [array count];
-    NSMutableArray *reversed_contacts_ = [[NSMutableArray alloc] initWithCapacity:no_of_contacts];
-    for (int i = no_of_contacts - 1; i >= 0; i--) {
-        [reversed_contacts_ addObject:array[i]];
-    }
-    
-    return [[NSArray alloc] initWithArray:reversed_contacts_];
-}
-
-
 - (void)addContactsLabel
 {
     CGFloat labelSpacing = 10; //spacing between the views
@@ -338,6 +324,8 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 {
     NSLog(@"adding in the contact views...");
     
+    [self sortContacts];
+    
     int number_of_contacts = [contacts count];
     for (int i = 0; i < number_of_contacts; i++) {
         [self addASingleContact:i];
@@ -345,14 +333,18 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 }
 
 
+- (void)sortContacts
+{
+    NSArray *sortedArray;
+    sortedArray = [TGLOUtils sortResultsOnDate:contacts];
+    contacts = [[NSMutableArray alloc] initWithArray:sortedArray];
+}
+
 
 - (void)addASingleContact:(int)index
 {
     CGFloat labelSpacing = 15; //spacing between the views
     CGFloat labelWidth = 280;  //new label width
-    
-    //NSString *senderIdString = [[NSString alloc] initWithFormat:@"%@", [contacts[index] objectForKey:@"sender_id"]];
-    //NSString *recipientIdString = [[NSString alloc] initWithFormat:@"%@", [contacts[index] objectForKey:@"recipient_id"]];
     
     NSString *typeString;
     NSString *methodString;
@@ -361,7 +353,6 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     NSString *noteString;
     NSString *contactSentenceLabelString;
     NSString *noteLabelString;
-    
     NSString *senderFullName;
     NSString *recipientFullName;
     
@@ -422,9 +413,6 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
         recipientFullName = @"";
     }
     
-    
-    
-    //contactSentenceLabelString = [[NSString alloc] initWithFormat:@"%@ contacted %@ for  %@ via %@. Status is: %@.", senderIdString, recipientIdString, typeString, methodString, statusString];
     
     contactSentenceLabelString = [[NSString alloc] initWithFormat:@"%@ contacted %@ for  %@ via %@. Status is: %@.", senderFullName, recipientFullName, typeString, methodString, statusString];
     

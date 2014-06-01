@@ -249,15 +249,24 @@ static NSString *permissionLevelVolunteer = @"volunteer";
 {
     return [searchResults sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
         
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        //now set the format to a simpler detail form for date
-        [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-        [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+        NSDate *dateA = [self formattedDateFromString:[a objectForKey:@"created_at"]];
+        NSDate *dateB = [self formattedDateFromString:[b objectForKey:@"created_at"]];
+        //NSLog(@"dateA: %@", dateA);
+        //NSLog(@"dateB: %@", dateB);
         
-        NSDate *dateA = [dateFormatter dateFromString:[a objectForKey:@"startTime"]];
-        NSDate *dateB = [dateFormatter dateFromString:[b objectForKey:@"startTime"]];
+        NSComparisonResult comparison = [dateA compare:dateB];
         
-        return [dateA compare:dateB];
+        //determine how to order
+        if (comparison == NSOrderedDescending) {
+            //NSLog(@"1: older first");
+            return NSOrderedAscending;
+        } else if (comparison == NSOrderedAscending) {
+            //NSLog(@"2: younger first");
+            return NSOrderedDescending;
+        } else {
+            //NSLog(@"3: in else block");
+            return NSOrderedDescending;
+        }
     }];
 }
 
