@@ -75,7 +75,7 @@ static NSString *searchUrl = @"https://%@.nationbuilder.com/api/v1/people/search
 
 - (NSString *)makeSearchUrl
 {
-    NSLog(@"startSearch button hit");
+    //NSLog(@"startSearch button hit");
     NSMutableString *queryString_ = [[NSMutableString alloc] init];
     
     NSString *searchUrl_ = [[NSString alloc] init];
@@ -89,31 +89,31 @@ static NSString *searchUrl = @"https://%@.nationbuilder.com/api/v1/people/search
     
     
     if (![firstName_ isEqualToString:@""]) {
-        NSLog(@"firstName_ != empyty String");
+        //NSLog(@"firstName_ != empyty String");
         [queryString_ appendFormat:@"first_name=%@&", firstName_ ];
     
     }
     
     if (![lastName_ isEqualToString:@""]) {
-        NSLog(@"lastName_ != empyty String");
+        //NSLog(@"lastName_ != empyty String");
         [queryString_ appendFormat:@"last_name=%@&", lastName_];
         
     }
     
     if (![city_ isEqualToString:@""]) {
-        NSLog(@"city_ != empyty String");
+        //NSLog(@"city_ != empyty String");
         [queryString_ appendFormat:@"city=%@&", city_];
     
     }
     
     if (![state_ isEqualToString:@""]) {
-        NSLog(@"state_ != empyty String");
+        //NSLog(@"state_ != empyty String");
         [queryString_ appendFormat:@"state=%@&", state_];
     
     }
     
     if (![mobile_ isEqualToString:@""]) {
-        NSLog(@"mobile_ != empyty String");
+        //NSLog(@"mobile_ != empyty String");
         [queryString_ appendFormat:@"with_mobile=%@&", mobile_];
     }
     
@@ -147,8 +147,6 @@ static NSString *searchUrl = @"https://%@.nationbuilder.com/api/v1/people/search
 // In a story board-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    NSLog(@"preparing for segue...");
-    
     //first we must construct the searchUrl to
     //pass to next view controller
     NSString *searchUrl_ = [self makeSearchUrl];

@@ -35,8 +35,8 @@ NSString *const nationBuilderLoginEmailKey = @"loginEmail";
     [self initAppearance];
     
     //testing extern variable stuff
-    NSLog(@"EXTERN: nationBuilderRequestToken: %@", nationBuilderRequestToken);
-    NSLog(@"EXTERN: nationBuilderAccessToken: %@", nationBuilderAccessToken);
+    //NSLog(@"EXTERN: nationBuilderRequestToken: %@", nationBuilderRequestToken);
+    //NSLog(@"EXTERN: nationBuilderAccessToken: %@", nationBuilderAccessToken);
    
     
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
@@ -46,7 +46,7 @@ NSString *const nationBuilderLoginEmailKey = @"loginEmail";
     
 
     NSString *token = [userDefaults valueForKey:@"access_token"];
-    NSLog(@"APP DELEGATE didFinishLaunchingWithOptions");
+    //NSLog(@"APP DELEGATE didFinishLaunchingWithOptions");
     
     //NSString *controllerId = token ? @"signedIn" : @"login";
     NSString *controllerId = token ? @"signedIn" : @"accountLogin";

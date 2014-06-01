@@ -91,7 +91,7 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
 
 - (void) loadAllEventEntities
 {
-    NSLog(@"in loadEventsFromDatabase method");
+    //NSLog(@"in loadEventsFromDatabase method");
     //get all events and assign them to searchResults and searchResultsCache arrays
     
     TGLOAppDelegate *delegate = (TGLOAppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -111,10 +111,10 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
     //first time visit to this 'page', automatically fetch events
     if ([fetchedEventsArray count] == 0) {
         [self getAllEvents:^(NSError *error, NSMutableArray *resultsArray ) {
-            NSLog(@"in getAllEvents completionHandler, error: %@", error);
+            //NSLog(@"in getAllEvents completionHandler, error: %@", error);
             
             if (error == nil) {
-                NSLog(@"error is nil");
+                //NSLog(@"error is nil");
                 
                 
                 [self saveAllEventEntities:resultsArray];
@@ -219,14 +219,14 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
 
 
 - (void)refresh:(UIRefreshControl *)refreshControl {
-    NSLog(@"in refresh method");
+    //NSLog(@"in refresh method");
     
     [self getAllEvents:^(NSError *error, NSMutableArray *resultsArray) {
-        NSLog(@"in getAllEvents completionHandler, error: %@", error);
+        //NSLog(@"in getAllEvents completionHandler, error: %@", error);
         [refreshControl endRefreshing];
         
         if (error == nil) {
-            NSLog(@"error is nil");
+            //NSLog(@"error is nil");
             
             [self saveAllEventEntities:resultsArray];
         }
@@ -344,7 +344,7 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
     
     [self.searchBar resignFirstResponder];
     
-    NSLog(@"selected event: %@", searchResults[ indexPath.row]);
+    //NSLog(@"selected event: %@", searchResults[ indexPath.row]);
 
     //manually call the segue giving its identifier string which is
     //set in storyboard
@@ -483,7 +483,7 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"showEventDetails"]) {
-        NSLog(@"showEventDetails segue hit");
+        //NSLog(@"showEventDetails segue hit");
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         
         TGLOEventDetailsViewController *destViewController = (TGLOEventDetailsViewController *) segue.destinationViewController;

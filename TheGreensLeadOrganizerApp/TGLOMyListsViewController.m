@@ -84,10 +84,10 @@ static NSString * allListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/allL
 
 
 - (void)refresh:(UIRefreshControl *)refreshControl {
-    NSLog(@"in refresh method");
+    //NSLog(@"in refresh method");
     
     [self getAllLists:^(NSError *error) {
-        NSLog(@"in getAllLists completionHandler, error: %@", error);
+        //NSLog(@"in getAllLists completionHandler, error: %@", error);
         [refreshControl endRefreshing];
         
         if (error == nil) {
@@ -107,17 +107,17 @@ static NSString * allListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/allL
 
 - (void) loadAllListEntities
 {
-    NSLog(@"in loadListsFromDatabase method");
+    //NSLog(@"in loadListsFromDatabase method");
     
     __block NSArray *fetchedListsArray = [self filterForMyLists];
     
     //first time visit or no lists to this 'page', automatically fetch events
     if ([fetchedListsArray count] == 0) {
         [self getAllLists:^(NSError *error) {
-            NSLog(@"in getAllLists completionHandler, error: %@", error);
+            //NSLog(@"in getAllLists completionHandler, error: %@", error);
             
             if (error == nil) {
-                NSLog(@"error is nil");
+                //NSLog(@"error is nil");
                 [self.tableView reloadData];
             }
             
@@ -256,7 +256,7 @@ static NSString * allListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/allL
 
 - (NSArray *)filterForMyLists
 {
-    NSLog(@"in filterForMyLists");
+    //NSLog(@"in filterForMyLists");
     
     TGLOAppDelegate *delegate = (TGLOAppDelegate *)[[UIApplication sharedApplication] delegate];
     NSManagedObjectContext *moc = [delegate managedObjectContext];
@@ -281,7 +281,7 @@ static NSString * allListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/allL
 
     
     NSArray *fetchedListsArray = [moc executeFetchRequest:request error:nil];
-    NSLog(@"fetchedListsArray count: %d", [fetchedListsArray count]);
+    //NSLog(@"fetchedListsArray count: %d", [fetchedListsArray count]);
     
     return  fetchedListsArray;
 }
@@ -337,7 +337,6 @@ static NSString * allListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/allL
 }
 
 - (IBAction)menuHit:(id)sender {
-    NSLog(@"menuHit action");
     [self.searchBar resignFirstResponder];
     // Set the side bar button action. When it's tapped, it'll show up the sidebar.
     [self.revealViewController revealToggle:nil];
@@ -461,10 +460,8 @@ static NSString * allListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/allL
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    NSLog(@"viewWillDisappear");
+    //NSLog(@"viewWillDisappear");
     [self.searchBar resignFirstResponder];
-    
-    
 }
 
 
@@ -501,8 +498,7 @@ static NSString * allListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/allL
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"seelcted: %@", allLists[indexPath.row]);
-    
+    //NSLog(@"seelcted: %@", allLists[indexPath.row]);
 }
 
 

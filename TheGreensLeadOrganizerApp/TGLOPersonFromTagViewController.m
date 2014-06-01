@@ -108,7 +108,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 
 -(void)addTagViews
 {
-    NSLog(@"SETTING UP ALL MY TAGS");
+    //NSLog(@"SETTING UP ALL MY TAGS");
     rowNumber = -1;
     
     for (NSString *tag in self.person.tags) {
@@ -153,7 +153,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 
 - (void)getAllMyContacts
 {
-    NSLog(@"in getAllMyContacts");
+    //NSLog(@"in getAllMyContacts");
     
     //this method is always called after all
     //the tags have rendered. therefore, before
@@ -322,7 +322,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 
 - (void)addContactViews
 {
-    NSLog(@"adding in the contact views...");
+    //NSLog(@"adding in the contact views...");
     
     [self sortContacts];
     
@@ -585,7 +585,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 -(void)makeCall:(id)sender
 {
     
-    NSLog(@"makeCall method called, sender is: %@", sender);
+    //NSLog(@"makeCall method called, sender is: %@", sender);
     NSString *title = [((UIButton *) sender) currentTitle];
     //NSLog(@"currentTitle: %@", title);
     
@@ -603,7 +603,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     
     //check to see if the app can make calls before making the call
     if ([myApp canOpenURL:theCallUrl]) {
-        NSLog(@"this app can open the url %@", theCallUrl);
+        //NSLog(@"this app can open the url %@", theCallUrl);
         [myApp openURL:theCallUrl];
     } else {
         NSLog(@"ERROR: this app can NOT open the url: %@", theCallUrl);
@@ -622,7 +622,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 
 - (IBAction)writeEmail:(id)sender
 {
-    NSLog(@"writeEmail method called, sender is: %@", sender);
+    //NSLog(@"writeEmail method called, sender is: %@", sender);
     NSString *title = [((UIButton *) sender) currentTitle];
     //NSLog(@"currentTitle: %@", title);
     
@@ -634,7 +634,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     
     //check to see if the app can make calls before making the call
     if ([myApp canOpenURL:theEmailUrl]) {
-        NSLog(@"this app can open the url %@", theEmailUrl);
+        //NSLog(@"this app can open the url %@", theEmailUrl);
         [myApp openURL:theEmailUrl];
     } else {
         NSLog(@"ERROR: this app can NOT open the url: %@", theEmailUrl);

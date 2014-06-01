@@ -52,8 +52,11 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    /*
     NSString *test = [[NSString alloc] init];
     NSString *test1;
+
     NSLog(@"test: %@", test);
     NSLog(@"test1: %@", test1);
     if ([test1 isEqual:nil]) {
@@ -65,6 +68,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     if (test1) {
         NSLog(@"(test1) is true");
     }
+     */
     
     
     
@@ -129,7 +133,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
          
         NSDictionary * me_dic = [responseObject objectForKey:@"person"];
         
-        NSLog(@"me_dic[id] SET: %@", [me_dic valueForKey:@"id"]);
+        //NSLog(@"me_dic[id] SET: %@", [me_dic valueForKey:@"id"]);
         
         
         //start setting up the ui stuff
@@ -144,7 +148,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 
 - (void)setupPerson:(NSDictionary *)me_dic
 {
-    NSLog(@"Setting up the person obj, fields...");
+    //NSLog(@"Setting up the person obj, fields...");
     
     
     //TGLOPerson *me = [self personFieldsForObject:me_dic];
@@ -174,7 +178,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 
 - (void)addTagViews
 {
-    NSLog(@"SETTING UP ALL MY TAGS");
+    //NSLog(@"SETTING UP ALL MY TAGS");
     rowNumber = -1;
     
     //for (NSString *tag in taggings) {
@@ -375,7 +379,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 
 - (void)addContactViews
 {
-    NSLog(@"adding in the contact views...");
+    //NSLog(@"adding in the contact views...");
     //NSLog(@"contacts: %@", contacts);
     
     

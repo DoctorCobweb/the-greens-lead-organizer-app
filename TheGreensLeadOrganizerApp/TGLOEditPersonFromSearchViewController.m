@@ -156,7 +156,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 
 - (void)textFieldDidBeginEditing:(UITextField*)textField
 {
-    NSLog(@"textFieldDidBeginEditing");
+    //NSLog(@"textFieldDidBeginEditing");
     
 }
 
@@ -170,7 +170,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         [tagsToDelete setObject:@"1" forKey:self.person.tags[i]];
     }
     
-    NSLog(@"tagsToDelete: %@", tagsToDelete);
+    //NSLog(@"tagsToDelete: %@", tagsToDelete);
 }
 
 
@@ -241,7 +241,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 
 -(void)addTagViews
 {
-    NSLog(@"SETTING UP ALL MY TAGS");
+    //NSLog(@"SETTING UP ALL MY TAGS");
     
     for (NSString *tag in self.person.tags) {
         [self addASingleTag:tag];
@@ -506,7 +506,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 
 - (void)toggleTag:(id)sender
 {
-    NSLog(@"toggleTag called, sender: %@", sender);
+    //NSLog(@"toggleTag called, sender: %@", sender);
     UISwitch *switch_ = (UISwitch *)sender;
     //get reference to parent TGLOCustomEditTagView, then
     //find the corresponding UIButton
@@ -522,7 +522,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     
     if (!switch_.on) {
         //user wants to delete the corresponding tag
-        NSLog(@"DELETE corresponding tag");
+        //NSLog(@"DELETE corresponding tag");
         
         NSString *imageLocation = [[NSString alloc] initWithFormat:greyButtonBackground, bundlePath ];
         UIImage *backgroundImage = [[UIImage alloc] initWithContentsOfFile:imageLocation];
@@ -550,14 +550,14 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         
         [tagsToDelete setObject:@"1" forKey:correspondingButton.titleLabel.text];
     }
-    NSLog(@"tagsToDelete is now: %@", tagsToDelete);
+    //NSLog(@"tagsToDelete is now: %@", tagsToDelete);
 }
 
 
 
 - (void)disableSaveButton:(BOOL)disable
 {
-    NSLog(@"in disableSaveButton");
+    //NSLog(@"in disableSaveButton");
     
     if (disable == YES) {
         [[[self navigationItem] rightBarButtonItem] setEnabled:NO];
@@ -570,7 +570,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 
 
 - (IBAction)saveChanges:(id)sender {
-    NSLog(@"saveChanges button hit");
+    //NSLog(@"saveChanges button hit");
     
     [self disableSaveButton: YES];
     [self resignAllFirstResponders];
@@ -614,7 +614,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     //nation builder will parse these into individual tags
     //separated by commas. cool!
     if (![self.addANewTag.text isEqualToString:@""]) {
-        NSLog(@"adding in a new tag also: %@", self.addANewTag.text);
+        //NSLog(@"adding in a new tag also: %@", self.addANewTag.text);
         //need to parse if string has multiple tags
         //separated by commas
         
@@ -667,7 +667,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     [manager PUT:updatePeopleUrl_ parameters:updateBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //NSLog(@" PUT => updating tags and person details with response %@",responseObject);
-        NSLog(@"SUCCESSfully deleted tags, added a new tag and updated person details.");
+        //NSLog(@"SUCCESSfully deleted tags, added a new tag and updated person details.");
         
         //UPDATE PERSON DETAILS property
         //because changes were successul we can now swap over the
@@ -719,10 +719,10 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     NSString *contactMethod = [newContact apiVersionOfContactMethod:contactMethod_];
     NSString *contactStatus = [newContact apiVersionOfContactStatus:contactStatus_];
     
-    NSLog(@"contactType: %@", contactType);
-    NSLog(@"contactMethod: %@", contactMethod);
-    NSLog(@"contactStatus: %@", contactStatus);
-    NSLog(@"noteType: %@", noteType);
+    //NSLog(@"contactType: %@", contactType);
+    //NSLog(@"contactMethod: %@", contactMethod);
+    //NSLog(@"contactStatus: %@", contactStatus);
+    //NSLog(@"noteType: %@", noteType);
     
     NSString *myNBId = [TGLOUtils getUserNationBuilderId];
 
@@ -751,7 +751,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     [manager POST:myContactsUrl_ parameters:contactBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //NSLog(@" POST => updating contact with response %@",responseObject);
-        NSLog(@"SUCCESSfully added new contact.");
+        //NSLog(@"SUCCESSfully added new contact.");
         
         //remember to reset the sendInANewContact back to false
         sendInANewContact = false;
@@ -779,7 +779,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 //must use persons recordId for person_id here
 - (void)saveTheRsvp
 {
-    NSLog(@"saveTheRsvp");
+    //NSLog(@"saveTheRsvp");
     
     NSDictionary *rsvpBody = [[NSDictionary alloc] init];
     
@@ -790,7 +790,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     //must set request serializer to application/json. otherwise 406
     //is responded
     NSString *httpMethod = [self.rsvpDetails valueForKey:@"httpMethod"];
-    NSLog(@"rsvpDetails httpMethod is: %@", httpMethod);
+    //NSLog(@"rsvpDetails httpMethod is: %@", httpMethod);
     
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     
@@ -810,11 +810,11 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
                    @"shift_ids":    @[]
                    }};
         
-        NSLog(@"POST rsvpBody: %@", rsvpBody);
+        //NSLog(@"POST rsvpBody: %@", rsvpBody);
         
         [manager POST:postRsvpUrl_ parameters:rsvpBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@" POST => create new RSVP with response %@",responseObject);
-            NSLog(@"SUCCESSfully added new RSVP.");
+            //NSLog(@" POST => create new RSVP with response %@",responseObject);
+            //NSLog(@"SUCCESSfully added new RSVP.");
             
             //remember to reset the sendInANewContact back to false
             self.sendInRSVP = false;
@@ -835,12 +835,12 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     } else if([httpMethod isEqualToString:@"PUT"]) {
         //for now hardcode automatically change guests to 1
         
-        NSLog(@"PUT rsvp and matchedRsvpId: %@", [self.rsvpDetails objectForKey:@"matchedRsvpId"]);
+        //NSLog(@"PUT rsvp and matchedRsvpId: %@", [self.rsvpDetails objectForKey:@"matchedRsvpId"]);
         
         //post endpoint for making new contact
         NSString *putRsvpUrl_ = [NSString stringWithFormat:putRsvpUrl, nationBuilderSlugValue, nationBuilderSlugValue, [self.rsvpDetails objectForKey:@"eventId"], [self.rsvpDetails objectForKey:@"matchedRsvpId"], token];
         
-        NSLog(@"guests_count: %@", [self.rsvpDetails objectForKey:@"guests_count"]);
+        //NSLog(@"guests_count: %@", [self.rsvpDetails objectForKey:@"guests_count"]);
         
         rsvpBody =
         @{ @"rsvp": @{
@@ -853,11 +853,11 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
                    @"shift_ids":    @[]
                    }};
         
-        NSLog(@"PUT rsvpBody: %@", rsvpBody);
+        //NSLog(@"PUT rsvpBody: %@", rsvpBody);
         
         [manager PUT:putRsvpUrl_ parameters:rsvpBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@" PUT => updating RSVP with response %@",responseObject);
-            NSLog(@"SUCCESSfully updated RSVP.");
+            //NSLog(@" PUT => updating RSVP with response %@",responseObject);
+            //NSLog(@"SUCCESSfully updated RSVP.");
             
             //remember to reset the sendInANewContact back to false
             self.sendInRSVP = false;
@@ -885,7 +885,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 
 - (void)saveToList
 {
-    NSLog(@"self.listDetails: %@", self.listDetails);
+    //NSLog(@"self.listDetails: %@", self.listDetails);
     NSDictionary *listBody = [[NSDictionary alloc] init];
     NSString *httpMethod = [self.listDetails valueForKey:@"httpMethod"];
     NSString *jobType = [self.listDetails valueForKey:@"jobType"];
@@ -902,7 +902,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     
     [manager POST:addAJobUrl parameters:listBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@" SUCCESSFULLY POST JOB=> added a job %@",responseObject);
+        //NSLog(@" SUCCESSFULLY POST JOB=> added a job %@",responseObject);
         
         //remember to reset the sendInANewContact back to false
         self.sendInAddToList = false;
@@ -932,7 +932,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 
 - (void)updateListCount:(NSDictionary *)updatedList change:(NSNumber *)change
 {
-    NSLog(@"updateListCount: %@", updatedList);
+    //NSLog(@"updateListCount: %@", updatedList);
     
     NSNumber *listId = [updatedList valueForKeyPath:@"listId"];
     
@@ -946,7 +946,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     
     NSError *error;
     NSArray *fetchedListsArray = [moc executeFetchRequest:fetchRequest error:&error];
-    NSLog(@"fetchedListsArray: %@", fetchedListsArray);
+    //NSLog(@"fetchedListsArray: %@", fetchedListsArray);
     
     if (fetchedListsArray == nil || error !=nil) {
         NSLog(@"ERROR: fetching the Lists");
@@ -957,7 +957,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         //list_id is a primary id therefore id in List entity should be unique.
         //=> fetchedListsArray should only have 1 managed object. check this anyway.
         if ([fetchedListsArray count] == 1) {
-            NSLog(@"GOOD: fetchedListsArray should only have count == 1");
+            //NSLog(@"GOOD: fetchedListsArray should only have count == 1");
             TGLOListModel *mObj = (TGLOListModel *)fetchedListsArray[0];
             
             //update count attribute
@@ -1039,7 +1039,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     
     //this block of code removes all the views below
     //deleteTagsLabel in preparation of rerending updated details
-    NSLog(@"finding deleteTagsLabel view...");
+    //NSLog(@"finding deleteTagsLabel view...");
     int no_of_subviews = [allSubViews count];
     int delete_tags_label_index;
     BOOL foundIt = NO;
@@ -1069,7 +1069,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 {
     if([self.delegate respondsToSelector:@selector(didUpdatePerson:)])
     {
-        NSLog(@"calling didUpdatePerson....");
+        //NSLog(@"calling didUpdatePerson....");
         [self.delegate didUpdatePerson:self.person];
     }
 }
@@ -1157,7 +1157,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     NSString *supportLevel_;
     
     if ([actionSheet.title isEqualToString:@"Choose type"]) {
-        NSLog(@"actionSheet.title: %@", actionSheet.title);
+        //NSLog(@"actionSheet.title: %@", actionSheet.title);
         if (buttonIndex == [actionSheet cancelButtonIndex]) {
             // User pressed cancel -- abort
             typeValue_ = @"";
@@ -1165,12 +1165,12 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
             return;
         }
         typeValue_ = [TGLOCustomEditContactView translateContactType:buttonIndex];
-        NSLog(@"translated typeValue_: %@", typeValue_);
+        //NSLog(@"translated typeValue_: %@", typeValue_);
         [contactTypeButton setTitle:typeValue_ forState:UIControlStateNormal];
     }
     
     if ([actionSheet.title isEqualToString:@"Choose method"]) {
-        NSLog(@"actionSheet.title: %@", actionSheet.title);
+        //NSLog(@"actionSheet.title: %@", actionSheet.title);
         if (buttonIndex == [actionSheet cancelButtonIndex]) {
             // User pressed cancel -- abort
             methodValue_ = @"";
@@ -1178,12 +1178,12 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
             return;
         }
         methodValue_ = [TGLOCustomEditContactView translateContactMethod:buttonIndex];
-        NSLog(@"translated methodValue_: %@", methodValue_);
+        //NSLog(@"translated methodValue_: %@", methodValue_);
         [methodTypeButton setTitle:methodValue_ forState:UIControlStateNormal];
     }
     
     if ([actionSheet.title isEqualToString:@"Choose status"]) {
-        NSLog(@"actionSheet.title: %@", actionSheet.title);
+        //NSLog(@"actionSheet.title: %@", actionSheet.title);
         if (buttonIndex == [actionSheet cancelButtonIndex]) {
             // User pressed cancel -- abort
             statusValue_ = @"";
@@ -1191,11 +1191,11 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
             return;
         }
         statusValue_ = [TGLOCustomEditContactView translateContactStatus:buttonIndex];
-        NSLog(@"translated statusValue_: %@", statusValue_);
+        //NSLog(@"translated statusValue_: %@", statusValue_);
         [statusTypeButton setTitle:statusValue_ forState:UIControlStateNormal];
     }
     if ([actionSheet.title isEqualToString:@"Choose support level"]) {
-        NSLog(@"actionSheet.title: %@", actionSheet.title);
+        //NSLog(@"actionSheet.title: %@", actionSheet.title);
         if (buttonIndex == [actionSheet cancelButtonIndex]) {
             // User pressed cancel -- abort
             //dont reset the title! because it will throw error
@@ -1203,9 +1203,9 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
             return;
         }
         supportLevel_= [self translateSupportLevel:buttonIndex];
-        NSLog(@"translated supportLevel_: %@", supportLevel_);
+        //NSLog(@"translated supportLevel_: %@", supportLevel_);
         [supportLevelButton  setTitle:supportLevel_ forState:UIControlStateNormal];
-        NSLog(@"supportLevelButton title: %@", supportLevelButton.titleLabel.text);
+        //NSLog(@"supportLevelButton title: %@", supportLevelButton.titleLabel.text);
     }
 }
 
@@ -1280,7 +1280,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 
 - (IBAction)chooseEventToRsvp:(id)sender {
     
-    NSLog(@"chooseEventToRsvp button clicked");
+    //NSLog(@"chooseEventToRsvp button clicked");
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     TGLOEventsModalSearchViewController *eventsViewController = [storyboard instantiateViewControllerWithIdentifier:@"eventsModalSearchVC"];

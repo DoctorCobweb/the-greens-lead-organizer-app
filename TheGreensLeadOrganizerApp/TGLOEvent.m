@@ -137,6 +137,7 @@
     }
     
     
+    /*
     NSLog(@"_event.eventId: %@", _event.eventId);
     NSLog(@"_event.name: %@", _event.name);
     NSLog(@"_event.dateString: %@", _event.dateString);
@@ -145,6 +146,7 @@
     NSLog(@"_event.contactDetails: %@", _event.contactDetails);
     NSLog(@"_event.venue: %@", _event.venue);
     NSLog(@"_event.autoresponse: %@", _event.autoresponse);
+     */
     
     return _event;
 }
@@ -181,9 +183,9 @@
     
     NSString *finalFilteredString = [NSString stringWithString:filteredInfo];
     
+    //NSLog(@"UNFILTEREDSTRING info: %@", info);
+    //NSLog(@"finalFilteredString: %@", finalFilteredString);
     
-    NSLog(@"UNFILTEREDSTRING info: %@", info);
-    NSLog(@"finalFilteredString: %@", finalFilteredString);
     return finalFilteredString;
 }
 

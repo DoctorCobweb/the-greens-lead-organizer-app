@@ -103,7 +103,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
         
         NSDictionary * person_dic = [responseObject objectForKey:@"person"];
         
-        NSLog(@"person_dic[id] SET: %@", [person_dic valueForKey:@"id"]);
+        //NSLog(@"person_dic[id] SET: %@", [person_dic valueForKey:@"id"]);
         
         
         //start setting up the ui stuff
@@ -118,7 +118,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 
 - (void)setupPerson:(NSDictionary *)person_dic
 {
-    NSLog(@"Setting up the person obj, fields...");
+    //NSLog(@"Setting up the person obj, fields...");
     
     
     self.person = [TGLOPerson personFieldsForObject:person_dic];
@@ -147,7 +147,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 
 - (void)addTagViews
 {
-    NSLog(@"SETTING UP ALL MY TAGS");
+    //NSLog(@"SETTING UP ALL MY TAGS");
     rowNumber = -1;
     
     //for (NSString *tag in taggings) {
@@ -361,7 +361,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 
 - (void)addContactViews
 {
-    NSLog(@"adding in the contact views...");
+    //NSLog(@"adding in the contact views...");
     //NSLog(@"contacts: %@", contacts);
     
     int number_of_contacts = [contacts count];
@@ -620,10 +620,10 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 
 -(void) didUpdatePerson:(TGLOPerson *)updatedPerson
 {
-    NSLog(@"...didUpdatePerson called!!!");
-    NSLog(@"updated person is: %@", updatedPerson);
-    NSLog(@"updated person.lastName is: %@", updatedPerson.lastName);
-    NSLog(@"updated person.supportLevel: %@", updatedPerson.supportLevel);
+    //NSLog(@"...didUpdatePerson called!!!");
+    //NSLog(@"updated person is: %@", updatedPerson);
+    //NSLog(@"updated person.lastName is: %@", updatedPerson.lastName);
+    //NSLog(@"updated person.supportLevel: %@", updatedPerson.supportLevel);
     
     //**update person**
     //set person to be the newly saved/updated person
@@ -668,7 +668,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     
     //check to see if the app can make calls before making the call
     if ([myApp canOpenURL:theCallUrl]) {
-        NSLog(@"this app can open the url %@", theCallUrl);
+        //NSLog(@"this app can open the url %@", theCallUrl);
         [myApp openURL:theCallUrl];
     } else {
         NSLog(@"ERROR: this app can NOT open the url: %@", theCallUrl);
@@ -699,7 +699,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     
     //check to see if the app can make calls before making the call
     if ([myApp canOpenURL:theEmailUrl]) {
-        NSLog(@"this app can open the url %@", theEmailUrl);
+        //NSLog(@"this app can open the url %@", theEmailUrl);
         [myApp openURL:theEmailUrl];
     } else {
         NSLog(@"ERROR: this app can NOT open the url: %@", theEmailUrl);
@@ -736,10 +736,8 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 */
 
 - (IBAction)cancelItemHit:(id)sender {
-    NSLog(@"cancelItemHit");
+    //NSLog(@"cancelItemHit");
     
    [[self delegate] dismissViewControllerAnimated:YES completion:nil];
-    
-    
 }
 @end

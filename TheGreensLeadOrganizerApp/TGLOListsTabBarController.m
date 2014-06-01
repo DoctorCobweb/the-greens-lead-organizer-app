@@ -40,7 +40,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    NSLog(@"in viewWillDisapper");
+    //NSLog(@"in viewWillDisapper");
     //[[[self navigationController] navigationBar] setHidden:NO];
 
 

@@ -66,14 +66,14 @@ static NSString * isPersonInListUrl = @"https://cryptic-tundra-9564.herokuapp.co
 
 
 - (void)refresh:(UIRefreshControl *)refreshControl {
-    NSLog(@"in refresh method");
+    //NSLog(@"in refresh method");
     
     [self getAllLists:^(NSError *error) {
-        NSLog(@"in getAllLists completionHandler, error: %@", error);
+        //NSLog(@"in getAllLists completionHandler, error: %@", error);
         [refreshControl endRefreshing];
         
         if (error == nil) {
-            NSLog(@"error is nil");
+            //NSLog(@"error is nil");
             [self.tableView reloadData];
         }
         
@@ -101,7 +101,7 @@ static NSString * isPersonInListUrl = @"https://cryptic-tundra-9564.herokuapp.co
 
 - (void) loadAllListEntities
 {
-    NSLog(@"in loadListsFromDatabase method");
+    //NSLog(@"in loadListsFromDatabase method");
     
     TGLOAppDelegate *delegate = (TGLOAppDelegate *)[[UIApplication sharedApplication] delegate];
     NSManagedObjectContext *moc = [delegate managedObjectContext];
@@ -112,15 +112,15 @@ static NSString * isPersonInListUrl = @"https://cryptic-tundra-9564.herokuapp.co
     
     //an array of managedObjects of Entity type List
     __block NSArray *fetchedListsArray = [moc executeFetchRequest:fetchRequest error:nil];
-    NSLog(@"fetchedListsArray count: %d", [fetchedListsArray count]);
+    //NSLog(@"fetchedListsArray count: %d", [fetchedListsArray count]);
     
     //first time visit to this 'page', automatically fetch events
     if ([fetchedListsArray count] == 0) {
         [self getAllLists:^(NSError *error) {
-            NSLog(@"in getAllLists completionHandler, error: %@", error);
+            //NSLog(@"in getAllLists completionHandler, error: %@", error);
             
             if (error == nil) {
-                NSLog(@"error is nil");
+                //NSLog(@"error is nil");
                 [self.tableView reloadData];
             }
             
@@ -413,7 +413,7 @@ static NSString * isPersonInListUrl = @"https://cryptic-tundra-9564.herokuapp.co
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"seelcted: %@", allLists[indexPath.row]);
+    //NSLog(@"seelcted: %@", allLists[indexPath.row]);
     self.delegate.listDetails = [[NSMutableDictionary alloc] initWithDictionary:allLists[indexPath.row]];
     [self.delegate.listDetails setValue:@"list" forKey:@"jobType"];
     
@@ -444,7 +444,7 @@ static NSString * isPersonInListUrl = @"https://cryptic-tundra-9564.herokuapp.co
     //also update the list label
     UILabel *listLabel = (UILabel *)[self.delegate.containerView viewWithTag:43];
     if ([actionSheet.title isEqualToString:@"Add or Delete person to/from list?"]){
-        NSLog(@"ADD or DELETE person from list");
+        //NSLog(@"ADD or DELETE person from list");
         
         if (buttonIndex == [actionSheet cancelButtonIndex]) {
             // User pressed cancel -- abort
@@ -452,7 +452,7 @@ static NSString * isPersonInListUrl = @"https://cryptic-tundra-9564.herokuapp.co
         }
         
         if (buttonIndex == 0) {
-            NSLog(@"add person hit");
+            //NSLog(@"add person hit");
             self.delegate.sendInAddToList = YES;
             [self.delegate.listDetails setValue:@"POST" forKey:@"httpMethod"];
             
@@ -463,7 +463,7 @@ static NSString * isPersonInListUrl = @"https://cryptic-tundra-9564.herokuapp.co
         }
         
         if (buttonIndex == 1) {
-            NSLog(@"delete person hit");
+            //NSLog(@"delete person hit");
             self.delegate.sendInAddToList = YES;
             [self.delegate.listDetails setValue:@"DELETE" forKey:@"httpMethod"];
             

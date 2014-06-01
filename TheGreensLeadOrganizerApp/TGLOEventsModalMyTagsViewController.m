@@ -80,7 +80,7 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
 
 - (void) loadAllEventEntities
 {
-    NSLog(@"in loadEventsFromDatabase method");
+    //NSLog(@"in loadEventsFromDatabase method");
     //get all events and assign them to searchResults and searchResultsCache arrays
     
     TGLOAppDelegate *delegate = (TGLOAppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -100,10 +100,10 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     //first time visit to this 'page', automatically fetch events
     if ([fetchedEventsArray count] == 0) {
         [self getAllEvents:^(NSError *error, NSMutableArray *resultsArray) {
-            NSLog(@"in getAllEvents completionHandler, error: %@", error);
+            //NSLog(@"in getAllEvents completionHandler, error: %@", error);
             
             if (error == nil) {
-                NSLog(@"error is nil");
+                //NSLog(@"error is nil");
                 
                 [self saveAllEventEntities:resultsArray];
             }
@@ -168,7 +168,7 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     //save delete all changes
     NSError *saveError = nil;
     if(![moc save:&saveError]) {
-        NSLog(@"Can't Save reset! %@ %@", error, [error localizedDescription]);
+        //NSLog(@"Can't Save reset! %@ %@", error, [error localizedDescription]);
         [self displayErrorAlert:@"Database Reset Error" message:@"Unable to reset database. Please try again."];
         return;
     }
@@ -190,7 +190,7 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
         NSError *error = nil;
         // Save the object to persistent store
         if (![moc save:&error]) {
-            NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+            //NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
             *stop = YES;
             [self displayErrorAlert:@"Database Error" message:@"Unable to save event to database. Please try again."];
             return;
@@ -204,14 +204,14 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
 
 
 - (void)refresh:(UIRefreshControl *)refreshControl {
-    NSLog(@"in refresh method");
+    //NSLog(@"in refresh method");
     
     [self getAllEvents:^(NSError *error, NSMutableArray *resultsArray) {
-        NSLog(@"in getAllEvents completionHandler, error: %@", error);
+        //NSLog(@"in getAllEvents completionHandler, error: %@", error);
         [refreshControl endRefreshing];
         
         if (error == nil) {
-            NSLog(@"error is nil");
+            //NSLog(@"error is nil");
             
             [self saveAllEventEntities:resultsArray];
             
@@ -327,7 +327,7 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"selected event: %@", searchResults[ indexPath.row]);
+    //NSLog(@"selected event: %@", searchResults[ indexPath.row]);
     
     [self.searchBar resignFirstResponder];
     
@@ -341,13 +341,13 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:eventRsvpsUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"EVENTS RSVP check and response for events: %@", responseObject);
+        //NSLog(@"EVENTS RSVP check and response for events: %@", responseObject);
         
         NSArray *results_array = [[responseObject objectForKey:@"results"] allObjects];
         //NSString *myNBId = [TGLOUtils getUserNationBuilderId];
         
         if (![results_array isEqual:[NSNull null]] && [results_array count] > 0) {
-            NSLog(@"we HAVE rsvps. check to see if user NB id is in there");
+            //NSLog(@"we HAVE rsvps. check to see if user NB id is in there");
             [results_array enumerateObjectsUsingBlock: ^(id obj, NSUInteger indx, BOOL *stop){
                 
                 NSString *personIdString = [[NSString alloc] initWithFormat:@"%@",[obj valueForKey:@"person_id"]];
@@ -357,7 +357,7 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
                 
                 //if ([personIdString isEqualToString:myNBId]) {
                 if ([personIdString isEqualToString:[[NSString alloc] initWithFormat:@"%@", self.personIdFromList]]) {
-                    NSLog(@"MATCH => person has ALREADY resvpd to this event");
+                    //NSLog(@"MATCH => person has ALREADY resvpd to this event");
                     
                     //extract the rsvp id for match. we need it when PUTing the rsvp
                     //to update it
@@ -366,7 +366,7 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
                     
                     NSNumber *canceled = [obj valueForKey:@"canceled"];
                     if ([canceled isEqualToNumber:@1]) {
-                        NSLog(@"ALREADY CANCELED RSVP");
+                        //NSLog(@"ALREADY CANCELED RSVP");
                         alreadyCanceledRsvpd = YES;
                     }
                     
@@ -419,14 +419,14 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     
     
     if ([status isEqualToString:@"newRsvp"]) {
-        NSLog(@"NEW RSVPD to EVENT");
+        //NSLog(@"NEW RSVPD to EVENT");
         
         if (!alreadyCanceledRsvp) {
             //also set the http method to POST
             [delegate.rsvpDetails setObject:@"POST" forKey:@"httpMethod"];
-            NSLog(@"alreadyCanceledRsvp is NO so we are POSTting");
+            //NSLog(@"alreadyCanceledRsvp is NO so we are POSTting");
         } else {
-            NSLog(@"alreadyCanceledRsvp is YES so we are PUTting");
+            //NSLog(@"alreadyCanceledRsvp is YES so we are PUTting");
             //remember that an already canceled rsvp needs to use PUT instead
             [delegate.rsvpDetails setObject:@"PUT" forKey:@"httpMethod"];
             [delegate.rsvpDetails setObject:matchedRsvpId forKey:@"matchedRsvpId"];
@@ -438,7 +438,7 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
         [self chooseHowManyGuests];
         
     } else if ([status isEqualToString:@"alreadyRsvpd"]) {
-        NSLog(@"USER HAS ALREADY RSVPD to EVENT!!!");
+        //NSLog(@"USER HAS ALREADY RSVPD to EVENT!!!");
         
         //set the http method to PUT
         //and the matchedRsvpId which we need for PUT req
@@ -494,10 +494,10 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     UILabel *rsvpLabel = (UILabel *)[delegate.containerView viewWithTag:42];
     
     if ([actionSheet.title isEqualToString:@"New RSVP. Any guests?"]) {
-        NSLog(@"NEW RSVP ACTIONSHEET");
+        //NSLog(@"NEW RSVP ACTIONSHEET");
         if (buttonIndex == [actionSheet cancelButtonIndex]) {
             // User pressed cancel -- abort
-            NSLog(@"user cancelled guest selection");
+            //NSLog(@"user cancelled guest selection");
             
             //just dismiss actionsheet
             return;
@@ -506,7 +506,7 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
         [delegate.rsvpDetails setObject:[NSNumber numberWithInt:buttonIndex] forKey:@"guests_count"];
         [delegate.rsvpDetails setObject:@"false" forKey:@"canceled"];
         
-        NSLog(@"delegate.rsvpDetails: %@", delegate.rsvpDetails);
+        //NSLog(@"delegate.rsvpDetails: %@", delegate.rsvpDetails);
         
         //also update the RSVP label to show additional guests
         rsvpLabel.text = [[NSString alloc] initWithFormat:@"RSVP + %d guests", buttonIndex];
@@ -517,7 +517,7 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     
     
     if ([actionSheet.title isEqualToString:@"Already RSVPd: Cancel RSVP or update number of guests"]) {
-        NSLog(@"ALREADY RSVPED ACTIONSHEET");
+        //NSLog(@"ALREADY RSVPED ACTIONSHEET");
         
         if (buttonIndex == [actionSheet cancelButtonIndex]) {
             // User pressed cancel -- abort
@@ -525,7 +525,7 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
         }
         
         if (buttonIndex == 0) {
-            NSLog(@"user wants to CANCEL RSVP");
+            //NSLog(@"user wants to CANCEL RSVP");
             //user wants to cancel the event
             [delegate.rsvpDetails setObject:@"true" forKey:@"canceled"];
             

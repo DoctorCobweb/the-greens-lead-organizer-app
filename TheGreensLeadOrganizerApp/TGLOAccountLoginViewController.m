@@ -38,7 +38,7 @@ static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logt
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    NSLog(@"in ACCOUT LOGIN view controller");
+    //NSLog(@"in ACCOUT LOGIN view controller");
     
     //setup the burring of the background image
     self.blurView.dynamic = NO;
@@ -60,7 +60,7 @@ static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logt
     
     NSString *loginEmail = [uDef valueForKey:nationBuilderLoginEmailKey];
     if (![loginEmail isEqual:nil]) {
-        NSLog(@"loginEmail: %@", loginEmail);
+        //NSLog(@"loginEmail: %@", loginEmail);
         self.email.text = loginEmail;
     }
    
@@ -143,7 +143,7 @@ static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logt
         
         if(!!accessToken && !!myNBId && !!returnedPermissionLevel) {
             //log in SUCCESS
-            NSLog(@"login SUCCESS");
+            //NSLog(@"login SUCCESS");
             
             //SET THE SESSION VARIABLES
             [TGLOUtils setAccessTokenInUserDefaults:accessToken];

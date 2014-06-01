@@ -60,7 +60,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     self.containerView.frame = CGRectMake(0, 0, 320, 550);
     
     
-    NSLog(@"eventId: %@", self.selectedEventId);
+    //NSLog(@"eventId: %@", self.selectedEventId);
     
     //enable afnetworking to show spinner in top bar
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
@@ -86,7 +86,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
         //NSLog(@"EVENT DETAILS VIEW CONTROLLER and response: %@", responseObject);
         
         NSSet *event_set = [responseObject objectForKey:@"event"];
-        NSLog(@"event_set: %@", event_set);
+        //NSLog(@"event_set: %@", event_set);
         
         
         parsedEvent = [TGLOEvent eventFieldsForObject:event_set];
@@ -111,7 +111,8 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     self.nameLabel.backgroundColor = lightOrange;
     
     
-    NSLog(@"event.dateString: %@", event.dateString);
+    //NSLog(@"event.dateString: %@", event.dateString);
+    
     NSDate *startDate = [TGLOUtils formattedDateFromString:event.dateString];
     self.dateLabel.text = [TGLOUtils formattedDateStringFromDate:startDate];
     
@@ -125,7 +126,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     NSMutableString *tagsConcatenated = [[NSMutableString alloc] init];
     //only first tag for now
     if (event.tags && [event.tags count]) {
-        NSLog(@"TAGS NOT EMPTY");
+        //NSLog(@"TAGS NOT EMPTY");
         [event.tags enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             
             NSString *addStr = [[NSString alloc] initWithFormat:@"%@, ", (NSString *)obj];
@@ -145,7 +146,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:rsvpsUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"RSVPS TO EVENT DETAILS VIEW CONTROLLER and response: %@", responseObject);
+        //NSLog(@"RSVPS TO EVENT DETAILS VIEW CONTROLLER and response: %@", responseObject);
         
         NSSet *rsvpsSet = [responseObject objectForKey:@"results"];
         //NSLog(@"rsvpsSet: %@", rsvpsSet);
@@ -182,8 +183,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 
 -(void) translateRsvpIdsToNames:(NSSet *)rsvps
 {
-    NSLog(@"translating rsvp ids to names...");
-    
+    //NSLog(@"translating rsvp ids to names...");
     
     NSString * translateIdsToNamesUrl_ = [NSString stringWithFormat:translateIdsToNamesUrl, [TGLOUtils getUserNationBuilderId], token];
     
@@ -204,7 +204,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     
     [manager POST:translateIdsToNamesUrl_ parameters:postBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"=> RSVPS ids to names translation response %@",responseObject);
+        //NSLog(@"=> RSVPS ids to names translation response %@",responseObject);
         
         NSSet *translatedPeopleSet = [responseObject objectForKey:@"translatedPeople"];
         
@@ -235,7 +235,8 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
             }];
         }];
         
-        NSLog(@"joinedRsvps: %@", joinedRsvps);
+        //***imporetant ***
+        //NSLog(@"joinedRsvps: %@", joinedRsvps);
         
         [self addRsvpsToUI];
         
@@ -249,7 +250,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 
 - (void)addRsvpsToUI
 {
-    NSLog(@"adding in RSVPS to UI...");
+    //NSLog(@"adding in RSVPS to UI...");
     
     int rsvpsCount = [joinedRsvps count];
     CGFloat labelSpacing = 15; //spacing between the views
@@ -323,8 +324,8 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 - (void)rsvpButtonHit:(id)sender
 {
     TGLOCustomRsvpView *theCustomView = (TGLOCustomRsvpView *)[sender superview];
-    NSLog(@"rsvpButtonHit, fullName: %@", theCustomView.fullName);
-    NSLog(@"rsvpButtonHit, fullName: %@", theCustomView.personId);
+    //NSLog(@"rsvpButtonHit, fullName: %@", theCustomView.fullName);
+    //NSLog(@"rsvpButtonHit, fullName: %@", theCustomView.personId);
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     TGLOEventDetailsModalPersonViewController *personVC = [storyboard instantiateViewControllerWithIdentifier:@"eventDetailsModalPersonVC"];
@@ -345,7 +346,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 
 - (void)attendedButtonHit:(id)sender
 {
-    NSLog(@"attendedButtonHit, sender => %@", sender);
+    //NSLog(@"attendedButtonHit, sender => %@", sender);
     
     NSNumber *personId = ((TGLOCustomRsvpView *)[sender superview]).personId;
     
@@ -354,7 +355,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
         NSNumber *runningPersonId = [obj valueForKey:@"person_id"];
         
         if ([runningPersonId isEqual:personId]) {
-            NSLog(@"hit person, matched personId record: %@", joinedRsvps[i]);
+            //NSLog(@"hit person, matched personId record: %@", joinedRsvps[i]);
             
             
             //we need to keep a ref to the hit rsvp button because later we will need to
@@ -385,7 +386,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     [[aRsvpToUpdate objectForKey:@"rsvpDetails" ]setObject:[matchedJoinedRsvp valueForKey:@"canceled"] forKey:@"canceled"];
     [[aRsvpToUpdate objectForKey:@"rsvpDetails" ]setObject:[matchedJoinedRsvp valueForKey:@"shift_ids"] forKey:@"shift_ids"];
     
-    NSLog(@"aRsvpToUpdate PARTOAL FILL: %@", aRsvpToUpdate);
+    //NSLog(@"aRsvpToUpdate PARTOAL FILL: %@", aRsvpToUpdate);
     
     
     UIActionSheet *updateRsvpActionSheet =
@@ -408,14 +409,14 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     if ([actionSheet.title isEqualToString:@"Did the person attend?"]) {
         if (buttonIndex == [actionSheet cancelButtonIndex]) {
             // User pressed cancel -- abort
-            NSLog(@"user cancelled guest selection");
+            //NSLog(@"user cancelled guest selection");
             
             //just dismiss actionsheet
             return;
         }
         
         if (buttonIndex == 0) {
-            NSLog(@"YES button hit");
+            //NSLog(@"YES button hit");
             
             [[aRsvpToUpdate objectForKey:@"rsvpDetails"] setObject:@"true" forKey:@"attended"];
             
@@ -427,7 +428,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
         }
         
         if (buttonIndex == 1) {
-            NSLog(@"NO button hit");
+            //NSLog(@"NO button hit");
             //just leave canceled value as it is
             
             [[aRsvpToUpdate objectForKey:@"rsvpDetails"] setObject:@"false" forKey:@"attended"];
@@ -442,7 +443,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 
 - (void)updateTheRsvpOnNationBuilder
 {
-    NSLog(@"THE RSVP TO UPDATE: aRsvpToUpdate: %@", aRsvpToUpdate);
+    //NSLog(@"THE RSVP TO UPDATE: aRsvpToUpdate: %@", aRsvpToUpdate);
 
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Updating rsvp" message:@"Syncing the rsvp with Nation Builder" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     
@@ -459,8 +460,8 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     NSMutableDictionary *theRsvpDetails = [aRsvpToUpdate objectForKey:@"rsvpDetails"];
     NSString *eventId = [[NSString alloc] initWithFormat:@"%@", [theRsvpDetails objectForKey:@"event_id"]];
     NSString *rsvpId = [[NSString alloc] initWithFormat:@"%@", [theRsvpDetails objectForKey:@"id"]];
-    NSLog(@"eventId: %@", eventId);
-    NSLog(@"rsvpId: %@", rsvpId);
+    //NSLog(@"eventId: %@", eventId);
+    //NSLog(@"rsvpId: %@", rsvpId);
     
     //post endpoint for updating rsvp for person
     NSString *putRsvpUrl_ = [NSString stringWithFormat:putRsvpUrl, nationBuilderSlugValue, nationBuilderSlugValue, eventId, rsvpId, token];
@@ -484,11 +485,11 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     
     rsvpBody = @{ @"rsvp": [aRsvpToUpdate objectForKey:@"rsvpDetails"]};
     
-    NSLog(@"PUT rsvpBody: %@", rsvpBody);
+    //NSLog(@"PUT rsvpBody: %@", rsvpBody);
     
     [manager PUT:putRsvpUrl_ parameters:rsvpBody success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@" PUT => updating RSVP with response %@",responseObject);
-        NSLog(@"SUCCESSfully updated RSVP.");
+        //NSLog(@" PUT => updating RSVP with response %@",responseObject);
+        //NSLog(@"SUCCESSfully updated RSVP.");
         
         [alert dismissWithClickedButtonIndex:0 animated:NO];
         
@@ -515,7 +516,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
         //NSLog(@"joinedRsvps AFTER: %@", joinedRsvps);
         
         if ([attended isEqual:@1]) {
-            NSLog(@"person DID attended");
+            //NSLog(@"person DID attended");
             
             imageLocation = [[NSString alloc] initWithFormat:@"%@/checkerMark60x60.png", bundlePath ];
             backgroundImage = [[UIImage alloc] initWithContentsOfFile:imageLocation];
@@ -597,8 +598,8 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 }
 
 - (IBAction)viewAutoresponse:(id)sender {
-    NSLog(@"viewAutoresponse");
-    NSLog(@"parsedEvent.autoresponse: %@", parsedEvent.autoresponse);
+    //NSLog(@"viewAutoresponse");
+    //NSLog(@"parsedEvent.autoresponse: %@", parsedEvent.autoresponse);
     
     NSString *autoresponse;
     if (parsedEvent.autoresponse == nil) {

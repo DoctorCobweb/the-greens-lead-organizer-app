@@ -32,7 +32,11 @@
 - (NSString *) apiVersionOfSupportLevel:(NSString *)support_
 {
 
-    NSDictionary *supportDic = @{@"Strong support":@"1",@"Weak support":@"2",@"Undecided":@"3",@"Weak oppose":@"4",@"Strong oppose":@"5"};
+    NSDictionary *supportDic = @{@"Strong support":@"1",
+                                 @"Weak support":@"2",
+                                 @"Undecided":@"3",
+                                 @"Weak oppose":@"4",
+                                 @"Strong oppose":@"5"};
 
     return [supportDic valueForKey:support_];
 }
@@ -53,9 +57,12 @@
 
 + (NSDictionary *)getSupportLevelDic
 {
-    NSDictionary *supportLevel = @{ @"1":@"Strong support", @"2":@"Weak support", @"3":@"Undecided", @"4":@"Weak oppose", @"5":@"Strong oppose"};
+    NSDictionary *supportLevel = @{ @"1":@"Strong support",
+                                    @"2":@"Weak support",
+                                    @"3":@"Undecided",
+                                    @"4":@"Weak oppose",
+                                    @"5":@"Strong oppose"};
 
-    
     
     return supportLevel;
 }

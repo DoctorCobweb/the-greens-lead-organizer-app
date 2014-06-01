@@ -179,7 +179,7 @@ static NSString *permissionLevelVolunteer = @"volunteer";
 
 + (BOOL)clearOutUserSession
 {
-    NSLog(@"clearing out all session data...");
+    //NSLog(@"clearing out all session data...");
     NSUserDefaults *uDef = [NSUserDefaults standardUserDefaults];
     //delete the access_token
     [uDef setObject:nil forKey:nationBuilderAccessTokenKey];

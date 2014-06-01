@@ -65,13 +65,13 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     
     //NSLog(@"permissionlevel: %@", [TGLOUtils getUserPermissionLevel]);
     if ([TGLOUtils isAdminPermissionLevel]) {
-        NSLog(@"admin");
+        //NSLog(@"admin");
         [([[self navigationItem] rightBarButtonItem]) setEnabled:YES];
         ([[self navigationItem] rightBarButtonItem]).title = @"Edit";
     }
     
     if ([TGLOUtils isVolunteerPermissionLevel]) {
-        NSLog(@"volunteer");
+        //NSLog(@"volunteer");
         [([[self navigationItem] rightBarButtonItem]) setEnabled:NO];
         ([[self navigationItem] rightBarButtonItem]).title = @"";
     }
@@ -114,7 +114,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 
 -(void)addTagViews
 {
-    NSLog(@"SETTING UP ALL MY TAGS");
+    //NSLog(@"SETTING UP ALL MY TAGS");
     rowNumber = -1;
     
     for (NSString *tag in self.person.tags) {
@@ -156,7 +156,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 
 - (void)getAllMyContacts
 {
-    NSLog(@"in getAllMyContacts");
+    //NSLog(@"in getAllMyContacts");
     
     //this method is always called after all
     //the tags have rendered. therefore, before
@@ -167,6 +167,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     NSMutableArray *contactIds = [[NSMutableArray alloc] init];
     
     
+    /*
     //playing with 'nothing'
     if ([token isEqual:nil]){
         NSLog(@"token is equal to nil");
@@ -182,6 +183,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     if (!token) {
         NSLog(@"!token is true");
     }
+     */
     
     
     
@@ -343,7 +345,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 
 - (void)addContactViews
 {
-    NSLog(@"adding in the contact views...");
+    //NSLog(@"adding in the contact views...");
     
     [self sortContacts];
     
@@ -619,7 +621,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     
     //check to see if the app can make calls before making the call
     if ([myApp canOpenURL:theCallUrl]) {
-        NSLog(@"this app can open the url %@", theCallUrl);
+        //NSLog(@"this app can open the url %@", theCallUrl);
         [myApp openURL:theCallUrl];
     } else {
         NSLog(@"ERROR: this app can NOT open the url: %@", theCallUrl);
@@ -650,7 +652,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     
     //check to see if the app can make calls before making the call
     if ([myApp canOpenURL:theEmailUrl]) {
-        NSLog(@"this app can open the url %@", theEmailUrl);
+        //NSLog(@"this app can open the url %@", theEmailUrl);
         [myApp openURL:theEmailUrl];
     } else {
         NSLog(@"ERROR: this app can NOT open the url: %@", theEmailUrl);

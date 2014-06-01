@@ -51,7 +51,7 @@ static NSString *peopleForTagUrl= @"https://%@.nationbuilder.com/api/v1/tags/%@/
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     UINavigationBar *navbar = [[self navigationController] navigationBar];
     
-    NSLog(@"navigation bar: %@", navbar);
+    
     UIColor * black_color = [UIColor colorWithRed:0/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f];
     
     //this will set the 'back button' to be black
@@ -75,7 +75,6 @@ static NSString *peopleForTagUrl= @"https://%@.nationbuilder.com/api/v1/tags/%@/
 
 - (void) getPeopleInTag
 {
-    #warning TODO: default to getting 1000 people for now
     //do pagination later
     //you must percent encode self.tag because sometimes
     //can have spaces in the.
