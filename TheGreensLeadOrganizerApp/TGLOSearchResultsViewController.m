@@ -117,8 +117,10 @@
     NSString *firstName_ = ((TGLOPerson *)searchResults[indexPath.row]).firstName;
     NSString *lastName_= ((TGLOPerson *)searchResults[indexPath.row]).lastName;
     NSString *fullName_ = [[NSString alloc] initWithFormat:@"%@ %@", firstName_, lastName_ ];
+    int tagCount = [((TGLOPerson *)searchResults[indexPath.row]).tags count];
     
     cell.textLabel.text = fullName_;
+    cell.detailTextLabel.text = [[NSString alloc] initWithFormat:@"%d tags", tagCount ? tagCount: 0];
     
     return cell;
 }
