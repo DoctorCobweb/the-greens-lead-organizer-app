@@ -598,10 +598,17 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 
 - (IBAction)viewAutoresponse:(id)sender {
     NSLog(@"viewAutoresponse");
-    
     NSLog(@"parsedEvent.autoresponse: %@", parsedEvent.autoresponse);
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Autoresponse" message:parsedEvent.autoresponse delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil];
+    NSString *autoresponse;
+    if (parsedEvent.autoresponse == nil) {
+        autoresponse = @"No autoresponse set";
+    } else {
+        autoresponse = parsedEvent.autoresponse;
+    }
+    
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Autoresponse" message:autoresponse delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil];
     [alert show];
 }
 
