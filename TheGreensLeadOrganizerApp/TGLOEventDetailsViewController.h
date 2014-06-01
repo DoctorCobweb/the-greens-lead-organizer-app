@@ -36,5 +36,6 @@
 - (void)updateRsvpDetails:(NSDictionary *)matchedJoinedRsvp;
 - (void)updateTheRsvpOnNationBuilder;
 - (void)updateScrollAndContainerViewSize:(CGFloat)makeMoreRoom;
+- (IBAction)viewAutoresponse:(id)sender;
 
 @end

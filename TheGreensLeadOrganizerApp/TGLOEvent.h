@@ -17,6 +17,7 @@
 @property (nonatomic, strong) NSString        *details;
 @property (nonatomic, strong) NSDictionary    *contactDetails;
 @property (nonatomic, strong) NSMutableArray  *tags;
+@property (nonatomic, strong) NSString        *autoresponse;
 
 + (TGLOEvent *) eventFieldsForObject:(NSSet *)event;
 + (NSString *)parseOutHtml:(NSString *)info;

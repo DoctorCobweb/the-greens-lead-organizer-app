@@ -596,6 +596,15 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     self.containerView.frame = CGRectMake(0, 0, (CGRectGetMaxX(containerViewFrame)), (CGRectGetMaxY(containerViewFrame)) + makeMoreRoom);
 }
 
+- (IBAction)viewAutoresponse:(id)sender {
+    NSLog(@"viewAutoresponse");
+    
+    NSLog(@"parsedEvent.autoresponse: %@", parsedEvent.autoresponse);
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Autoresponse" message:parsedEvent.autoresponse delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil];
+    [alert show];
+}
+
 
 - (void)didReceiveMemoryWarning
 {

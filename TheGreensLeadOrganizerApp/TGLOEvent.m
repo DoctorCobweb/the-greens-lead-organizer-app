@@ -19,10 +19,11 @@
 @synthesize details;
 @synthesize contactDetails;
 @synthesize tags;
+@synthesize autoresponse;
 
 
 //get arbitrary fields from each person.
-+ (TGLOEvent *) eventFieldsForObject:(NSSet *)event
++ (TGLOEvent *)eventFieldsForObject:(NSSet *)event
 {
     //create a temp person to which we will
     //return the reference to to caller
@@ -131,6 +132,15 @@
         _event.tags = [event valueForKey:@"tags"];
     }
     
+    
+    
+    if ([[event valueForKey:@"autoresponse"] objectForKey:@"body"] == [NSNull null]) {
+        _event.autoresponse = nil;
+    } else {
+        _event.autoresponse = [[event valueForKey:@"autoresponse"] objectForKey:@"body"];
+    }
+    
+    
     NSLog(@"_event.eventId: %@", _event.eventId);
     NSLog(@"_event.name: %@", _event.name);
     NSLog(@"_event.dateString: %@", _event.dateString);
@@ -138,6 +148,8 @@
     NSLog(@"_event.tags: %@", _event.tags);
     NSLog(@"_event.contactDetails: %@", _event.contactDetails);
     NSLog(@"_event.venue: %@", _event.venue);
+    NSLog(@"_event.autoresponse: %@", _event.autoresponse);
+    
     return _event;
 }
 
