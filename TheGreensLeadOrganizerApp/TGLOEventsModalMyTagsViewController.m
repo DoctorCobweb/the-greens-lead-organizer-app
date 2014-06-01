@@ -90,6 +90,9 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     
     // Fetch the devices from persistent data store
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Event"];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]initWithKey:@"startTime" ascending:YES];
+    
+    [fetchRequest setSortDescriptors:@[sortDescriptor]];
     
     //an array of managedObjects of Entity type Event
     __block NSArray *fetchedEventsArray = [moc executeFetchRequest:fetchRequest error:nil];
@@ -136,20 +139,6 @@ static NSString *eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events/
     
     searchResults = [extractedEvents mutableCopy];
     searchResultsCache = [[NSArray alloc] initWithArray:extractedEvents];
-    
-    [self sortResults];
-}
-
-
-
-- (void)sortResults
-{
-    NSArray *sortedArray;
-    sortedArray = [TGLOUtils sortResultsOnDate:searchResults];
-    
-    searchResults = [[NSMutableArray alloc] initWithArray:sortedArray];
-    searchResultsCache = [[NSMutableArray alloc] initWithArray:sortedArray];
-    
     [self.tableView reloadData];
 }
 

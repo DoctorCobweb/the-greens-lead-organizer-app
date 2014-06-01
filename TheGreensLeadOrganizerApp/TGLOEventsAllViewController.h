@@ -19,7 +19,6 @@ typedef void (^allEventsCompletionHandler)(NSError *error, NSMutableArray *resul
 
 
 
-- (void)sortResults;
 - (void)populateSearchArrays:(NSArray *)theArray;
 - (void)loadAllEventEntities;
 - (void)saveAllEventEntities:(NSMutableArray *)results;

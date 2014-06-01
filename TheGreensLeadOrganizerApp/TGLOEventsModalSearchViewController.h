@@ -25,7 +25,6 @@ typedef void (^allEventsCompletionHandler)(NSError *error, NSMutableArray *resul
 - (IBAction)cancelModal:(id)sender;
 
 
-- (void)sortResults;
 - (void)populateSearchArrays:(NSArray *)theArray;
 - (void)loadAllEventEntities;
 - (void)saveAllEventEntities:(NSMutableArray *)results;
