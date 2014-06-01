@@ -32,7 +32,7 @@
 - (void)getAllMyContacts;
 - (void)translateContactIdsToNames:(NSArray *)filteredContactIds;
 - (void)addTagViews;
-- (void)addASingleTag:(NSString *)tag;
+- (void)addASingleTag:(NSString *)tag tagNumber:(int)tagNumber;
 - (void)addContactsLabel;
 - (UILabel *)fabricateANewTagWithWidth:(CGFloat)viewWidth height:(CGFloat)viewHeight spacing:(CGFloat)viewSpacing;
 

@@ -597,9 +597,8 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     self.containerView.frame = CGRectMake(0, 0, (CGRectGetMaxX(containerViewFrame)), (CGRectGetMaxY(containerViewFrame)) + makeMoreRoom);
 }
 
-- (IBAction)viewAutoresponse:(id)sender {
-    //NSLog(@"viewAutoresponse");
-    //NSLog(@"parsedEvent.autoresponse: %@", parsedEvent.autoresponse);
+- (IBAction)viewAutoresponse:(id)sender
+{
     
     NSString *autoresponse;
     if (parsedEvent.autoresponse == nil) {

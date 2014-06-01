@@ -116,9 +116,10 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 {
     //NSLog(@"SETTING UP ALL MY TAGS");
     rowNumber = -1;
+    int j;
     
-    for (NSString *tag in self.person.tags) {
-        [self addASingleTag:tag];
+    for (j = 0; j < [self.person.tags count]; j++) {
+        [self addASingleTag:self.person.tags[j] tagNumber:j];
     }
     rowNumber = -1;
     
@@ -126,7 +127,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 }
 
 
-- (void)addASingleTag:(NSString *)tag
+- (void)addASingleTag:(NSString *)tag tagNumber:(int)tagNumber
 {
     CGFloat labelSpacing = 10; //spacing between the views
     CGFloat makeMoreRoom = 20; //additional room on end of scroll/container view
@@ -146,8 +147,10 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     newLabel.textColor = [UIColor blackColor];
     
     
-    //update the scroll and container view to fit/display new content
-    [self updateScrollAndContainerViewSize:makeMoreRoom];
+    if (tagNumber % 3 == 0) {
+        //update the scroll and container view to fit/display new content
+        [self updateScrollAndContainerViewSize:makeMoreRoom];
+    }
     
     //finally add the new view to as last subview
     [self.containerView addSubview:newLabel];

@@ -72,7 +72,7 @@ static NSString * allListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/allL
 - (void)refresh:(UIRefreshControl *)refreshControl {
     
     [self getAllLists:^(NSError *error) {
-        NSLog(@"in getAllLists completionHandler, error: %@", error);
+        //NSLog(@"in getAllLists completionHandler, error: %@", error);
         [refreshControl endRefreshing];
         
         if (error == nil) {
@@ -119,7 +119,7 @@ static NSString * allListsUrl = @"https://cryptic-tundra-9564.herokuapp.com/allL
     //first time visit to this 'page', automatically fetch events
     if ([fetchedListsArray count] == 0) {
         [self getAllLists:^(NSError *error) {
-            NSLog(@"in getAllLists completionHandler, error: %@", error);
+            //NSLog(@"in getAllLists completionHandler, error: %@", error);
             
             if (error == nil) {
                 //NSLog(@"error is nil");

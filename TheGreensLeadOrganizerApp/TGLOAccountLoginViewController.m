@@ -115,9 +115,11 @@ static NSString *loginEndpoint =@"https://cryptic-tundra-9564.herokuapp.com/logt
         
         NSString *accessToken = [responseObject objectForKey:@"access_token"];
         NSString *error = [responseObject objectForKey:@"error"];
-        NSLog(@"error: %@", error);
         NSString *myNBId = [responseObject objectForKey:@"myNBId"];
         NSString *returnedPermissionLevel = [responseObject objectForKey:@"permissionLevel"];
+        
+        //NSLog(@"error: %@", error);
+        
         
         if (!([responseObject objectForKey:@"error"] == [NSNull null])) {
             //log in FAILURE
