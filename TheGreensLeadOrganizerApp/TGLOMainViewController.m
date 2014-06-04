@@ -660,10 +660,10 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 #pragma TGLODidUpdatePersonDelegate protocol
 -(void) didUpdatePerson:(TGLOPerson *)updatedPerson
 {
-    NSLog(@"...didUpdatePerson called!!!");
-    NSLog(@"updated person is: %@", updatedPerson);
-    NSLog(@"updated person.lastName is: %@", updatedPerson.lastName);
-    NSLog(@"updated person.supportLevel: %@", updatedPerson.supportLevel);
+    //NSLog(@"...didUpdatePerson called!!!");
+    //NSLog(@"updated person is: %@", updatedPerson);
+    //NSLog(@"updated person.lastName is: %@", updatedPerson.lastName);
+    //NSLog(@"updated person.supportLevel: %@", updatedPerson.supportLevel);
     
     //**update person**
     //set person to be the newly saved/updated person

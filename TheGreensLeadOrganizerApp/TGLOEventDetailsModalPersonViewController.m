@@ -11,7 +11,7 @@
 #import "TGLOAppDelegate.h"
 #import "TGLOCustomContactView.h"
 #import "TGLOCustomContactSmallView.h"
-#import "TGLOEditMyProfileViewController.h"
+#import "TGLOEditPersonFromRsvpViewController.h"
 #import "TGLOUtils.h"
 
 // *** IMPORTANT ***
@@ -335,6 +335,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     
     return [[NSArray alloc] initWithArray:reversed_contacts_];
 }
+
 
 - (void)addContactsLabel
 {
@@ -724,7 +725,6 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 }
 
 
-/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -732,8 +732,23 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"showEditPersonFromRsvp"]) {
+        
+        TGLOEditPersonFromRsvpViewController *destViewController = (TGLOEditPersonFromRsvpViewController *) segue.destinationViewController;
+        destViewController.person = self.person;
+        destViewController.contacts= self.contacts;
+        
+        //set self as delegate for <TGLOUpdatePersonDelegate> protocol
+        destViewController.delegate = self;
+    }
+    
 }
-*/
+
+
+
+
+
+
 
 - (IBAction)cancelItemHit:(id)sender {
     //NSLog(@"cancelItemHit");

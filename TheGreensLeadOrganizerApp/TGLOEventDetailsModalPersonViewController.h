@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "TGLOPerson.h"
 #import "TGLOEventDetailsViewController.h"
+#import "TGLOUpdatePersonDelegate.h"
 
-@interface TGLOEventDetailsModalPersonViewController : UIViewController
+@interface TGLOEventDetailsModalPersonViewController : UIViewController<TGLOUpdatePersonDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *containerView;
