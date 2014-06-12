@@ -32,8 +32,9 @@
 #import "AFNetworkActivityIndicatorManager.h"
 #import "TGLOAppDelegate.h"
 #import "TGLOUtils.h"
-#import "TGLOEventsModalSearchViewController.h"
-#import "TGLOListsModalSearchViewController.h"
+#import "TGLOEventDetailsEventsModalViewController.h"
+//#import "TGLOEventsModalSearchViewController.h"
+//#import "TGLOListsModalSearchViewController.h"
 #import "TGLOListModel.h"
 
 
@@ -1281,13 +1282,13 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 
 
 - (IBAction)chooseEventToRsvp:(id)sender {
-    /*
     
     
     //NSLog(@"chooseEventToRsvp button clicked");
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    TGLOEventsModalSearchViewController *eventsViewController = [storyboard instantiateViewControllerWithIdentifier:@"eventsModalSearchVC"];
+    TGLOEventDetailsEventsModalViewController *eventsViewController = [storyboard instantiateViewControllerWithIdentifier:@"eventDetailsEventsModalVC"];
+    
     
     eventsViewController.modalPresentationStyle = UIModalPresentationFullScreen;
     eventsViewController.delegate = self;
@@ -1304,7 +1305,6 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     
     //finally, present the events model VC
     [self presentViewController:navigationController animated:YES completion: nil];
-     */
 }
 
 - (IBAction)chooseListToAddTo:(id)sender
