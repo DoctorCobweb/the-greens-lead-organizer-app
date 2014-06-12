@@ -1133,7 +1133,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
                  delegate:self
         cancelButtonTitle:@"Cancel"
    destructiveButtonTitle:nil
-        otherButtonTitles:@"Delivery", @"Door knock",@"Email",@"Email blast",@"Face to face",@"Facebook",@"Meeting",@"Phone call",@"Robocall",@"Snail mail",@"Text",@"Text blast",@"Tweet",@"Video call",@"Webinar",@"Other", nil];
+        otherButtonTitles:@"Delivery", @"Door knock",@"Email",@"Email blast",@"Face to face",@"Facebook",@"Meeting",@"Phone call",@"Robocall",@"Snail mail",@"Text",@"Text blast",@"Tweet",@"Video call",@"Webinar", @"LinkedIn", @"Other", nil];
     
     [methodValueActionSheet showInView:self.containerView];
 }

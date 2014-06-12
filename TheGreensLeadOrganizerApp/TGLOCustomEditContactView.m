@@ -76,6 +76,7 @@ static NSDictionary *contactStatuses;
             
         }
         
+        
         contactMethods = @{@"delivery":@"Delivery",
                            @"door_knock":@"Door knock",
                            @"email":@"Email",
@@ -91,6 +92,7 @@ static NSDictionary *contactStatuses;
                            @"tweet":@"Tweet",
                            @"video_call":@"Video call",
                            @"webinar":@"Webinar",
+                           @"linkedin":@"LinkedIn",
                            @"other":@"Other"};
         
         
@@ -316,7 +318,7 @@ static NSDictionary *contactStatuses;
 + (NSString *)translateContactMethod:(NSInteger)index
 {
     
-    NSDictionary *contactMethods = @{@"0":@"Delivery",@"1":@"Door knock",@"2":@"Email",@"3":@"Email blast",@"4":@"Face to face",@"5":@"Facebook",@"6":@"Meeting",@"7":@"Phone call",@"8":@"Robocall",@"9":@"Snail mail",@"10":@"Text",@"11":@"Text blast",@"12":@"Tweet",@"13":@"Video call",@"14":@"Webinar",@"15":@"Other"};
+    NSDictionary *contactMethods = @{@"0":@"Delivery",@"1":@"Door knock",@"2":@"Email",@"3":@"Email blast",@"4":@"Face to face",@"5":@"Facebook",@"6":@"Meeting",@"7":@"Phone call",@"8":@"Robocall",@"9":@"Snail mail",@"10":@"Text",@"11":@"Text blast",@"12":@"Tweet",@"13":@"Video call",@"14":@"Webinar",@"15": @"LinkedIn", @"16":@"Other"};
     
     
     return [contactMethods objectForKey:[[NSString alloc] initWithFormat:@"%d", index]];
