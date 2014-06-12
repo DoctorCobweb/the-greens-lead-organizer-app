@@ -675,6 +675,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         //change over to use new person details. careful.
         self.person = updatedPerson;
         
+        
         //*** CONTROL FLOW ***
         if (sendInANewContact) {
             //we will handle saving RSVP, Lists in callback
@@ -694,10 +695,9 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         [self disableSaveButton: NO];
-        
+        [self displayErrorAlert:@"Network Error" message:@"Unable to update person. Please try again."];
     }];
 }
-
 
 
 
@@ -773,6 +773,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         [self disableSaveButton: NO];
+        [self displayErrorAlert:@"Network Error" message:@"Unable to log new contact. Please try again."];
     }];
 }
 
@@ -831,6 +832,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"Error: %@", error);
             [self disableSaveButton: NO];
+            [self displayErrorAlert:@"Network Error" message:@"Unable to post new rsvp. Please try again."];
         }];
     } else if([httpMethod isEqualToString:@"PUT"]) {
         //for now hardcode automatically change guests to 1
@@ -873,6 +875,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"Error: %@", error);
             [self disableSaveButton: NO];
+            [self displayErrorAlert:@"Network Error" message:@"Unable to update rsvp. Please try again."];
         }];
     } else {
         //we're in the gutter.
@@ -925,6 +928,7 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         [self disableSaveButton: NO];
+        [self displayErrorAlert:@"Network Error" message:@"Unable to post to list. Please try again."];
     }];
 }
 
@@ -1016,7 +1020,6 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
 - (void)displaySuccessAlert
 {
         NSString *message = @"You successfully updated the record for the person.";
-        // show alert view saying we are getting token
         _updateAlert =
             [[UIAlertView alloc]
                  initWithTitle:@"Update success"
@@ -1027,6 +1030,24 @@ static NSString *greyButtonBackground =  @"%@/grey120x120.png";
     
         [_updateAlert show];
 }
+
+
+
+- (void)displayErrorAlert:(NSString *)errorTitle message:(NSString *)message
+{
+    // show alert view saying we are getting token
+    UIAlertView *alert =
+    [[UIAlertView alloc]
+     initWithTitle:errorTitle
+     message:message
+     delegate:nil
+     cancelButtonTitle:@"Okay"
+     otherButtonTitles:nil];
+    
+    [alert show];
+}
+
+
 
 - (void)reRenderUI
 {

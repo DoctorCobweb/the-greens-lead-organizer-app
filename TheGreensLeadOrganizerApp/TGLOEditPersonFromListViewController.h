@@ -45,6 +45,7 @@
 
 - (void)saveTheNewContact;
 - (void)displaySuccessAlert;
+- (void)displayErrorAlert:(NSString *)errorTitle message:(NSString *)message;
 - (void)reRenderUI;
 - (void)reRenderPreviousControllerUI;
 

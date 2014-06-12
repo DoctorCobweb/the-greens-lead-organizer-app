@@ -123,7 +123,7 @@ static NSString * eventsUrl = @"https://cryptic-tundra-9564.herokuapp.com/events
             
             if (error) {
                 NSLog(@"ERROR: %@", error);
-                [self displayErrorAlert:@"Network Error" message:@"Unable to download events. Pleas try again."];
+                [self displayErrorAlert:@"Network Error" message:@"Unable to download events. Please try again."];
             }
         }];
         
