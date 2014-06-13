@@ -72,6 +72,7 @@ static NSDictionary *contactStatuses;
                            @"tweet":@"Tweet",
                            @"video_call":@"Video call",
                            @"webinar":@"Webinar",
+                           @"linkedin":@"LinkedIn",
                            @"other":@"Other"};
         
         contactStatuses = @{@"answered":@"Answered",

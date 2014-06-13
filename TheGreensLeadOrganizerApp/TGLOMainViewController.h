@@ -42,6 +42,6 @@
 - (void)addContactViews;
 - (void)sortContacts;
 - (void)addASingleContact:(int)index;
-- (NSArray *)reverseArray:(NSArray *)array;
+//- (NSArray *)reverseArray:(NSArray *)array;
 
 @end

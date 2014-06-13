@@ -183,6 +183,7 @@ static NSDictionary *contactStatuses_;
                        @"tweet":@"Tweet",
                        @"video_call":@"Video call",
                        @"webinar":@"Webinar",
+                       @"linkedin":@"LinkedIn",
                        @"other":@"Other"};
     
     

@@ -201,7 +201,7 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
         
         
         [manager GET:myContactsUrl_ parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            //NSLog(@" got contacts in MAIN DETAIL VIEW CONTROLLER and CONTACTS response: %@", responseObject);
+            //NSLog(@" got contacts in PERSON SEARCH VIEW CONTROLLER and CONTACTS response: %@", responseObject);
             
             NSSet * contacts_set = [responseObject objectForKey:@"results"];
             NSArray *contacts_ = [contacts_set allObjects];
@@ -396,9 +396,11 @@ static NSString *translateIdsToNamesUrl = @"https://cryptic-tundra-9564.herokuap
     }
     
     NSString *methodValue = [contacts[index] objectForKey:@"method"];
+    //NSLog(@"**** methodValue: %@", methodValue);
     if ([contacts[index] objectForKey:@"method"] != null) {
         
         methodString = [TGLOCustomContactSmallView getFormattedMethodValue:methodValue];
+        //NSLog(@"**** methodString: %@", methodString);
     }
     
     NSString *statusValue = [contacts[index] objectForKey:@"status"];
